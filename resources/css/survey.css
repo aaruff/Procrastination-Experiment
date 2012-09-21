@@ -1,0 +1,183 @@
+@CHARSET "UTF-8";
+
+body{
+    background: #F6F6F6;
+}
+
+.error{
+    color: #ff5757;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+span.question_number{
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+div.radio_buttons{
+    float: left;
+}
+
+.ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }
+.ui-timepicker-div dl{ text-align: left; }
+.ui-timepicker-div dl dt{ height: 25px; }
+.ui-timepicker-div dl dd{ margin: -25px 0 10px 65px; }
+.ui-timepicker-div td { font-size: 14px; }
+#ui-datepicker-div{ font-size: 12px; }
+
+input[type=text]{
+    width: 220px;
+    border:1px solid #C3C3C3;
+    text-align: center;
+}
+
+input:hover, input:focus {
+    border-color: #C9C9C9;
+    box-shadow: rgba(0,0,0, 0.2) 0px 0px 4px;
+    -moz-box-shadow: rgba(0,0,0, 0.2) 0px 0px 4px;
+    -webkit-box-shadow: rgba(0,0,0, 0.2) 0px 0px 4px;
+}
+
+div.date_time{
+    float: left;
+    width: 100%;
+}
+
+label{
+    color: #575757;
+}
+
+option{
+    color: #575757;
+}
+
+label.start_date_time{
+    margin-right: 10px;
+}
+label.end_date_time{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+div.inserted_date{
+    width: 100%;
+    float: left;
+    margin-top: 5px;
+}
+
+div.startdatetime{
+    float:left;
+    display:inline-block;
+}
+div.enddatetime{
+    float:left;
+    display:inline-block;
+}
+
+
+label.question{
+    margin-right: 20px;
+}
+
+div.add_button_container{
+    float:left;
+    padding-right: 21px;
+}
+div.remove_button_container{
+    float:left;
+    padding-right: 20px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+img.add_remove{
+    vertical-align:middle;
+}
+
+
+
+#heading{
+    font-family:'Helvetica', 'Arial';
+    font-size: 40px;
+    font-weight: bold;
+	color: #3d3d3d;
+	text-align: Left;	
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+label#sub_heading{
+    font-family:'Helvetica', 'Arial';
+    font-size: 20px;
+    font-weight: bold;
+	color: #3d3d3d;
+	text-align: Left;	
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+#content{
+    font-family:'Helvetica', 'Arial';
+    background-color: #FFF;
+    border:1px solid #C3C3C3;
+    margin-top: 30px;
+    margin-bottom: auto;
+    margin-right:auto;
+    margin-left:auto;
+    padding: 10px 100px 40px 100px; 
+    width: 900px;
+}
+
+.sub_question{
+    color: #575757;
+    margin-top: 20px;
+    margin-bottom: 10px;
+	margin-left: 30px;
+    margin-right: auto;
+    width: 100%;
+    float: left;
+}
+
+.large_question{
+	line-height: 1.8em;
+}
+
+div.radio{
+	margin-top: 10px;
+}
+
+input[type=radio]{
+    display:inline;
+    margin-left: 5px;
+}
+.sub_field{
+    margin-top: 10px;
+	margin-left: 20px;
+    margin-right: auto;
+    width: 100%;
+    float: left;
+}
+
+div.question{
+	margin-bottom: 20px;
+    margin-top: 20px;
+    height: auto;
+    float:left;
+    margin-right:auto;
+    margin-left: auto;
+    width: 100%;
+}
+
+.submit_button {
+    margin-top: 20px;
+    color: #FFFFFF;
+    width: auto;
+    padding: 9px 15px;
+    background: #617798;
+    border: 0;
+    font-size: 14px;
+}
+.submit_button:hover {
+    background: #45556D;
+}

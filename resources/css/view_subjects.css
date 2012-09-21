@@ -1,0 +1,93 @@
+body{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	text-align: left;
+    background: #FFFFFF;
+}
+
+td{
+    font-size: 10px;
+}
+
+th{
+    font-size: 12px;
+}
+
+.dataTables_length{
+    font-size: 12px;
+}
+
+.dataTables_info{
+    font-size:12px;
+}
+.dataTables_filter{
+    font-size:12px;
+}
+.dataTables_paginate{
+    font-size:12px;
+}
+#parent_container{
+    float: left;
+}
+
+div#content{
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding: 20px 50px 40px 50px; 
+    width: 95%;
+}
+
+#heading h2{
+	margin-bottom: 40px;
+	font-size: 30px;
+}
+
+#navigation{
+    width: 100%;
+    margin-bottom: 10px;
+    float: left;
+}
+
+#navigation ul{
+    width: 75%;
+    margin-left:45px;
+	padding : 0 10px;	
+	/*text-align: center;*/
+	list-style-type: none;
+}
+
+
+#navigation ul li{
+	display: inline;
+}
+
+
+#navigation ul li a{
+	border-radius: 10px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #484848;
+	display: block;	
+	width: 260px;
+    margin-right: 20px;
+	padding: 10px 0 10px 0;
+	border:1px solid #D3D3D3;
+    background: url("http://localhost/procrastination/resources/img/button_background.png") repeat-x scroll 50% 50% #CCCCCC;
+	text-decoration: none;
+	text-align: center;
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+img{
+    vertical-align: middle;
+    margin-right: 20px;
+}
+
+#navigation ul li a:hover {
+    background: url("http://localhost/procrastination/resources/img/button_background_hover.png") repeat-x scroll 50% 50% #CCCCCC;
+	text-decoration: none;
+	
+}
