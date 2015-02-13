@@ -16,8 +16,8 @@ class ExperimenterLogin{
 		'login_error'=>'',
 		'password_error'=>'',
 	);
-	
-	/**
+
+    /**
 	 * Initialize instance variables variables, and post_url.
 	 * @param string $page
 	 */
@@ -27,53 +27,53 @@ class ExperimenterLogin{
 		$this->db = new ExperimenterLoginModel();
 		$this->view = new ExperimenterView();
 		$this->page = $page;
-		
+
 		$this->form_fields['post_url'] = WEB_ROOT.EXPERIMENTER_DIR.$page;
 	}
-	
-	/**
-	 * Processes email and registration login page requests.
-	 */
-	public function process_page_request(){		
-		
-		// Experimenter Session Active
-		if($this->session->experimenter_session_active()){	
-			$this->http->redirect_experimenter('viewSubjects');
-			return;
-		}
-		
-		// HTTP GET Request
-		if($this->http->is_get_request()){
-			$this->process_get_request();
-			return;
-		}
-		
-		// HTTP POST Request
-		$this->process_post_request();
-		return;
-	}
-	
-	/**
+
+    /**
 	 * Processes email registration and login authentication
 	 * post requests.
-	 * @param string $page 
+	 * @param string $page
 	 */
     private function process_post_request(){
 		$this->set_entries();
-		$this->set_errors();		
+		$this->set_errors();
 		// form entries or authentication invalid: redisplay form
-        if(!$this->validate_entries()){	
+        if(!$this->validate_entries()){
 			$form_values = array_merge($this->form_fields, $this->form_errors);
 			$this->view->display($this->page, $form_values);
 			return;
-		}	
-		
-		$experimenter_records = $this->db->get_experimenter_records($_POST['login'], $_POST['password']);	
+		}
+
+		$experimenter_records = $this->db->get_experimenter_records($_POST['login'], $_POST['password']);
         $this->session->save('experimenter_id', $experimenter_records['id']);
 		$this->http->redirect_experimenter("viewSubjects");
-	}	
-	
-	/**
+	}
+
+    /**
+     * Processes email and registration login page requests.
+     */
+    public function process_page_request(){
+
+        // Experimenter Session Active
+        if($this->session->experimenter_session_active()){
+            $this->http->redirect_experimenter('viewSubjects');
+            return;
+        }
+
+        // HTTP GET Request
+        if($this->http->is_get_request()){
+            $this->process_get_request();
+            return;
+        }
+
+        // HTTP POST Request
+        $this->process_post_request();
+        return;
+    }
+
+    /**
 	 * Process get requests for the email registration authentication page.
 	 * @param unknown_type $page
 	 */
