@@ -50,23 +50,23 @@ class CreateTreatment{
 	/**
 	 * Processes email and registration login page requests.
 	 */
-	public function process_page_request(){		
-		
-		// Experimenter Session Not Active
+	public function process_page_request()
+    {
+		// Unauthorized
 		if(!$this->session->experimenter_session_active()){	
 			$this->http->redirect_experimenter('login');
-			return;
 		}
-		
-		// HTTP GET Request
-		if($this->http->is_get_request()){
-			$this->process_get_request();
-			return;
-		}
-		
-		// HTTP POST Request
-		$this->process_post_request();
-		return;
+        // Authorized
+        else {
+            // GET
+            if($this->http->is_get_request()){
+                $this->process_get_request();
+            }
+            // POST
+            else {
+                $this->process_post_request();
+            }
+        }
 	}
 	
 	/**
@@ -87,7 +87,7 @@ class CreateTreatment{
 		// Add subject accounts to the database
 		$subjects = $this->create_subject_accounts();	
 		foreach( $subjects as $subject){
-			$result = $this->db->add_subject($subject);
+			$this->db->add_subject($subject);
 		}
 		
 		$this->http->redirect_experimenter("viewSubjects");
