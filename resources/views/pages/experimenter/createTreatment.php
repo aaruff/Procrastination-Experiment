@@ -13,8 +13,8 @@
     <div id="parent_container">
         <div id="navigation"> 
             <ul>
-                <li><a href="./viewSubjects.php"><img src="../resources/img/home.png"/>View Treatments</a></li> 
-                <li><a href="./outputFile.php"><img src="../resources/img/add_doc.png"/>Output File</a></li> 
+                <li><a href="viewSubjects.php"><img src="../resources/img/home.png"/>View Treatments</a></li>
+                <li><a href="outputFile.php"><img src="../resources/img/add_doc.png"/>Output File</a></li>
             </ul> 
         </div>
 
