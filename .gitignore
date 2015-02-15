@@ -1,6 +1,4 @@
-/nbproject/private/
-/.settings/
-/nbproject
-tags
-/resources/img
+/vendor
+.env
+/public/img
 .idea
