@@ -2,7 +2,4 @@
 $app->get('/researcher/login', function() {
     echo "Login";
 });
-
-$app->get('/', function() {
-    echo "Home";
-});
+$app->get('/experimenter/login', 'Officium\Controllers\Experimenter\Login:get');
