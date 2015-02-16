@@ -15,7 +15,7 @@ class BaseController {
      * @param $template
      * @param $params
      */
-    protected function view($template, $params = []){
+    protected function render($template, $params = []){
         /**
          * Enable use to pass in the path to the view as '/' or '.' for example
          * 'foldername/viewname'
@@ -24,6 +24,11 @@ class BaseController {
          */
         $view = str_replace('.', '/', $template);
         $this->app->render($view . '.twig', $params);
+    }
+
+    protected function getPost($key = null, $default = null)
+    {
+        return $this->app->request->post($key, $default);
     }
 
 }
