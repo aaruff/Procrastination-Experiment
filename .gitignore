@@ -2,3 +2,4 @@
 .env
 /public/img
 .idea
+/storage
