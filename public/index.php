@@ -3,8 +3,17 @@ define('BASE_DIR', __DIR__ . "/..");
 
 require BASE_DIR . '/vendor/autoload.php';
 
-$config = require BASE_DIR . '/config/app.php';
-$app = new Slim\Slim($config);
+Dotenv::load(BASE_DIR);
+
+$appConfig = require BASE_DIR . '/config/app.php';
+$app = new Slim\Slim($appConfig);
+
+$dbConfig = require BASE_DIR . '/config/database.php';
+$dbManager = new Illuminate\Database\Capsule\Manager();
+$dbManager->addConnection($dbConfig);
+$dbManager->setAsGlobal();
+$dbManager->bootEloquent();
+
 
 require BASE_DIR . '/app/routes.php';
 
