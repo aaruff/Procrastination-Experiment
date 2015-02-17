@@ -12,7 +12,7 @@
 	<div id="content">
 		<div id="login_border">
 			<h2>Experimenter Login</h2>
-			<form action=" {{ post_url }} " method="post">
+			<form action="{{ currentUrl() }}" method="post">
 				<table cellpadding="2">
 					<tr>
 						<td>
@@ -20,7 +20,11 @@
 							<input type="text" class="text_field" value="{{ login }}" name="login" />
 						</td>
 					</tr>
-					<tr><td class="error">{{ login_error  }}</td></tr>
+                    {% for error in errors.login %}
+                        <tr>
+                            <td class="error">{{ error }}</td>
+                        </tr>
+                    {% endfor %}
 <tr>
     <td>
         <label class="text_label">Password</label>
