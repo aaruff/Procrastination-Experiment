@@ -4,7 +4,9 @@
     "slim/slim": "2.*",
     "slim/views": "0.1.*",
     "twig/twig": "~1.0",
-    "respect/validation": "0.8.*"
+    "vlucas/valitron": "~1.2",
+    "illuminate/database": "~5.0",
+    "vlucas/phpdotenv": "~1.1"
   },
   "autoload": {
     "psr-4": {
