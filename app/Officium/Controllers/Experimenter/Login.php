@@ -3,9 +3,13 @@
 namespace Officium\Controllers\Experimenter;
 
 use Valitron\Validator as Validator;
-use Officium\Controllers\BaseController;
-use Illuminate\Database\Capsule\Manager as Database;
 
+/**
+ * The Experimenter Login Controller
+ *
+ * Class Login
+ * @package Officium\Controllers\Experimenter
+ */
 class Login extends BaseController
 {
 
@@ -14,23 +18,50 @@ class Login extends BaseController
         parent::__construct();
     }
 
+    /**
+     * Handles the login get request.
+     */
     public function get()
     {
+        $this->logout();
         $this->render('pages.experimenter.login');
     }
 
+    /**
+     * Handles the login post request.
+     */
     public function post()
     {
         $postEntries = $this->getPost();
-        $validator = $this->getValidator($postEntries);
+        $validator = $this->getLoginValidator($postEntries);
+
+        $errors = [];
         if ( ! $validator->validate()) {
-            $this->render('pages.experimenter.login', ['errors'=>$validator->errors()]);
+            $errors = $validator->errors();
         }
 
-        $user = Database::table('experimenter')->where('login', '=', $postEntries['login'])->first();
+        $experimenterId = $this->getExperimenterId($postEntries);
+        if ( ! isset($experimenterId)) {
+            $errors[] = 'There seems to be an error in either your login or password. Please try again.';
+        }
+
+        if ( ! empty($errors)) {
+            $this->app->flash('errors', $errors);
+            $this->redirect($this->app->request()->getPath());
+        }
+        else {
+            $this->login($experimenterId);
+            $this->redirect('/experiment/dashboard');
+        }
     }
 
-    private function getValidator($postEntries)
+    /**
+     * Returns the login validator with predefined rules.
+     *
+     * @param $postEntries
+     * @return Validator
+     */
+    private function getLoginValidator($postEntries)
     {
         $validator = new Validator($postEntries);
         $validator->rule('required', ['login', 'password']);
