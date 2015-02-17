@@ -1,9 +1,9 @@
 <?php 
 class Database extends mysqli {
 	const DBHOST = 'localhost';
-	const DBUSER = 'pro';
-	const DBPASS = 'pro0011'; 
-	const DB = 'pro_one_task';
+	const DBUSER = 'root';
+	const DBPASS = 'secret';
+	const DB = 'pro';
 	
 
 	/**
