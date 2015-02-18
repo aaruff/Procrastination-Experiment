@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Create A Treatment</title>
+    <link href='{{ baseUrl }}/css/create_treatment.css' rel='stylesheet' type='text/css' />
+    <link href="{{ baseUrl }}/js/ui/css/smoothness/jquery-ui-1.8.11.custom.css" rel='stylesheet' type='text/css' />
+    <script type="text/javascript" src="{{ baseUrl }}/js/ui/js/jquery-1.5.1.min.js"></script>
+    <script type="text/javascript" src="{{ baseUrl }}/js/ui/js/jquery-ui-1.8.11.custom.min.js"></script>
+    <script type="text/javascript" src="{{ baseUrl }}/js/jquery-ui-timepicker-addon.js"></script>
+</head>
+<body>
+    <div id="parent_container">
+        <div id="navigation">
+            <ul>
+                <li><a href="{{ baseUrl }}/experiment/dashboard"><img src="{{ baseUrl }}/img/home.png"/>Experiment Dashboard</a></li>
+                <li><a href="../outputFile.php"><img src="{{ baseUrl }}/img/add_doc.png"/>Output File</a></li>
+            </ul> 
+        </div>
+
+        <div id="content"> 	
+            <form action="{{  currentUrl()  }}" method="post">
+                <div>
+                <label><h2>Treatment</h2></label>
+                </div>
+
+                <div class="question">
+                    <label>
+                        Number of Subjects
+                    </label>
+                    <input type="text" name="numberSubjects" placeholder="Number of subjects" class="text_field" value="{{  numberSubjects }}"/>
+                    <label class="error">{{  errors.numberSubject  }}</label>
+                </div>
+                 
+                <div>
+                    <!-- SUBJECT SET REMINDERS -->
+                    <div class="question">
+                    <label><h3>Deadline</h3></label>
+                        <label>Subject set deadline enabled
+                            <select name="subjectDeadlineEnabled">
+                                <option value="yes"
+                                    {{  subjectDeadlineEnabled == "yes" ? "selected"  }}>Yes</option>
+                                <option value="no"
+                                    {{  subjectDeadlineEnabled == "no" ? "selected"  }}>No</option>
+                            </select>
+                        </label>
+                        <label class="error">{{  errors.deadlineEnabled  }}</label>
+                    </div>
+
+                    <!-- FIRST TASK DEADLINE-->
+                    <div class="sub_question">
+                        <label>Task 1</label>
+                        <input type="text" class="dtime" name="firstDeadline" placeholder="mm/dd/yyyy hh:mm am/pm" value="{{  firstDeadline  }}" />
+                        <label class="error">{{  errors.firstDeadline  }}</label>
+                    </div>
+
+                    <!-- SECOND TASK DEADLINE-->
+                    <div class="sub_question">
+                        <label>Task 2</label>
+                        <input type="text" class="dtime" name="secondDeadline" placeholder="mm/dd/yyyy hh:mm am/pm" value="{{  secondDeadline  }}" />
+                        <label class="error">{{  errors.secondDeadline  }}</label>
+                    </div>
+
+                    <!-- THIRD TASK DEADLINE-->
+                    <div class="sub_question">
+                        <label>Task 3</label>
+                        <input type="text" class="dtime" name="thirdDeadline" placeholder="mm/dd/yyyy hh:mm am/pm" value="{{  thirdDeadline  }}" />
+                        <label class="error">{{  errors.thirdDeadline  }}</label>
+                    </div>
+
+                </div>
+                        
+                    <!-- PROBLEM MAX TIME LIMIT -->
+                <div>
+                    <label>Problem Time Limit</label>
+                    <input type="text" class="text_field time" name="timeLimit" placeholder="hh:mm" value="{{  timeLimit  }}" />
+                    <label class="error">{{  errors.timeLimit  }}</label>
+                </div>
+             
+                <!-- REMINDER NOTIFICATION -->
+                <div> 
+                    <div class="question">
+                        <label><h3>Reminders</h3></label> 
+                        <label>Enabled
+                            <select id="reminder" name="reminderEnabled"> <option value="yes" {{  reminderEnabled == "yes" ? "selected"  }}>Yes</option>
+                                <option value="no" {{  reminderEnabled == "no" ? "selected"  }}>No</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div id="reminder_field">
+                        <div class="reminder_sub_question">
+                            <label>Notification Time
+                                <input type="text" class="text_field timeampm" name="reminderTime" placeholder="hh:mm am/pm" value="{{  reminderTime  }}" />
+                            </label>
+                            <label class="error">{{  errors.reminderTime  }}</label>
+                        </div>
+                        <div class="reminder_sub_question">
+                            <label>Cost
+                            <input type="text" name="reminderCost" class="text_field" placeholder="Reminder cost" value="{{  reminderCost  }}" /></label>
+                            <label class="error">{{  errors.reminderCost  }}</label>
+                        </div>
+                    </div>
+                    <div class="submit_button">
+                        <input type="submit" id="button" name="submit" value="Create a Treatment" />
+                    </div>
+                </div>
+                
+            </form> 
+        </div> 
+    </div>
+<script>
+  $("#reminder").click(function () {
+    $("p").fadeOut("slow");
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $('.dtime').datetimepicker({
+            ampm: true
+        });
+
+        $('.timeampm').timepicker({
+            ampm: true
+        });
+
+        $('.time').timepicker({
+        });
+
+        $('#reminder').change(function() {
+            reminder_state = (this).val();
+            if(reminder_state == 'no'){
+                $(".reminder_sub_question").fadeOut("fast");
+            }else{
+                $(".reminder_sub_question").fadeToggle("fast");
+            }
+       });
+    });
+</script>
+</body> 
+</html>
