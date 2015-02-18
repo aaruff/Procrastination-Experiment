@@ -80,7 +80,7 @@
                 </div>
              
                 <!-- REMINDER NOTIFICATION -->
-                <div> 
+                <div>
                     <div class="question">
                         <label><h3>Reminders</h3></label> 
                         <label>Enabled
@@ -103,11 +103,25 @@
                             <label class="error">{{  errors.reminderCost  }}</label>
                         </div>
                     </div>
+                </div>
+
+                <!-- Penalty -->
+                <div>
+                    <div class="question">
+                        <label><h3>Penalty</h3></label>
+                    </div>
+
+                    <div class="reminder_sub_question">
+                        <label>Rate
+                            <input type="text" class="text_field" name="penaltyRate" placeholder="Between 0 and 1" value="{{  penaltyRate  }}" />
+                        </label>
+                        <label class="error">{{  errors.penaltyRate  }}</label>
+                    </div>
                     <div class="submit_button">
                         <input type="submit" id="button" name="submit" value="Create a Treatment" />
                     </div>
                 </div>
-                
+
             </form> 
         </div> 
     </div>
