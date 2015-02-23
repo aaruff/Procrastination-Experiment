@@ -8,23 +8,24 @@ create table experimenter(
   password 	varchar(40) null
 ) ENGINE=InnoDB;
 
-drop table if exists experiment;
-create table experiment(
+drop table if exists session;
+create table session(
   id  integer auto_increment primary key,
-  subjects integer not null,
-  default_deadline boolean not null,
-  subject_deadline boolean not null,
-  time_limit time not null,
+  size integer not null,
+  first_task_deadline datetime not null,
+  second_task_deadline datetime not null,
+  third_task_deadline datetime not null,
+  subject_deadline_enabled boolean not null,
+  completion_time_limit time not null,
   penalty double not null,
   payoff integer not null
 ) Engine=InnoDB;
 
-drop table if exists deadline;
-create table deadline(
+drop table if exists subject_task_schedule;
+create table subject_task_schedule(
   id  integer auto_increment primary key,
-  type integer not null, # Subject = 1, Experimenter = 2
-  task integer not null, # Task IDs {1, 2, 3}
   subject_id integer not null,
+  task integer not null, # Task IDs {1, 2, 3}
   deadline datetime not null
 ) Engine=InnoDB;
 
@@ -47,7 +48,8 @@ create table task_log(
   id					integer auto_increment primary key,
   subject_id		integer not null,
   task_id				integer not null,
-  event integer not null, # Issued = 1, Failure = 2, Display Task = 3, Complete Task = 4
+  # Event: Issued = 1, Failure = 2, Display Task = 3, Complete Task = 4
+  event integer not null,
   date_time       datetime not null
 ) ENGINE=InnoDB;
 
@@ -55,6 +57,7 @@ drop table if exists survey_answer;
 create table survey_answer(
     id integer auto_increment primary key,
     subject_id integer not null,
+    type integer not null,
     question integer not null,
     answer varchar(255) not null
 ) ENGINE=InnoDB;
