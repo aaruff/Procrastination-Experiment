@@ -1,73 +1,41 @@
 <?php
 namespace Officium\Controllers\Experimenter;
 
-use Illuminate\Database\Capsule\Manager as Database;
-
 class BaseController {
     protected $app;
-    protected $rules;
 
     public function __construct() {
         global $app;
         $this->app = $app;
     }
 
-    protected function redirectUnauthorizedRequest()
+    protected function redirectToLogin()
     {
-        $this->app->flash('error', 'Login required');
-        $this->app->redirect('/login');
+        $this->app->redirect(Login::route());
     }
 
-    protected function getExperimenterId($credentials)
+
+    protected function login($experimenter)
     {
-        $experimenter = Database::table('experimenter')->select('id')
-            ->where('login', '=', $credentials['login'])
-            ->where('password', '=', sha1($credentials['password']))->first();
-
-        if (isset($experimenter)) {
-            return $experimenter['id'];
-        }
-
-        else null;
-    }
-
-    protected function login($id)
-    {
-        $_SESSION['experimenter_id'] = $id;
+        $_SESSION['experimenter'] = $experimenter;
     }
 
     protected function isLoggedIn()
     {
-        return isset($_SESSION['experimenter_id']);
+        return isset($_SESSION['experimenter']);
     }
 
     protected function logout()
     {
-        unset($_SESSION['experimenter_id']);
+        unset($_SESSION['experimenter']);
     }
 
     /**
-     * Wrapper for the slim redirect function.
-     * @param $dotSlashUrl
-     * @param int $status
-     */
-    protected function redirect($url, $status = 302)
-    {
-        $this->app->redirect($url, $status);
-    }
-
-    /**
-     * Simplify the call to the view render and enable dot syntax for file paths
+     * Add dot notation to paths
      * @param $template
      * @param $params
      */
     protected function render($template, $params = []){
-        /**
-         * Enable use to pass in the path to the view as '/' or '.' for example
-         * 'foldername/viewname'
-         * 'foldername.viewname' this will parse as 'foldername/viewname'
-         * then append a .php to the file name
-         */
         $view = str_replace('.', '/', $template);
         $this->app->render($view . '.twig', $params);
     }
