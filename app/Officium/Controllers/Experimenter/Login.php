@@ -2,7 +2,9 @@
 
 namespace Officium\Controllers\Experimenter;
 
-use Valitron\Validator as Validator;
+use Officium\Controllers\Experimenter\Experiment\Dashboard;
+use Officium\Models\Experimenter as Experimenter;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 /**
  * The Experimenter Login Controller
@@ -12,10 +14,14 @@ use Valitron\Validator as Validator;
  */
 class Login extends BaseController
 {
-
     function __construct()
     {
         parent::__construct();
+    }
+
+    public static function route()
+    {
+        return '/experimenter/login';
     }
 
     /**
@@ -33,42 +39,21 @@ class Login extends BaseController
     public function post()
     {
         $postEntries = $this->getPost();
-        $validator = $this->getLoginValidator($postEntries);
 
-        $errors = [];
-        if ( ! $validator->validate()) {
-            $errors = $validator->errors();
-        }
-
-        $experimenterId = $this->getExperimenterId($postEntries);
-        if ( ! isset($experimenterId)) {
-            $errors[] = 'There seems to be an error in either your login or password. Please try again.';
-        }
-
+        // Error Handling
+        $errors = Experimenter::validate($postEntries);
         if ( ! empty($errors)) {
             $this->app->flash('errors', $errors);
-            $this->redirect($this->app->request()->getPath());
+            $this->app->redirect(Login::route());
+            return;
         }
-        else {
-            $this->login($experimenterId);
-            $this->redirect('/experiment/dashboard');
-        }
-    }
 
-    /**
-     * Returns the login validator with predefined rules.
-     *
-     * @param $postEntries
-     * @return Validator
-     */
-    private function getLoginValidator($postEntries)
-    {
-        $validator = new Validator($postEntries);
-        $validator->rule('required', ['login', 'password']);
-        $validator->rule('alpha', 'login');
-        $validator->rule('lengthMin', '3');
-        $validator->rule('lengthMin', '30');
+        // Login Researcher
+        $experimenter = Capsule::table('experimenter')->select('id')
+            ->where('login', '=', $postEntries['login'])
+            ->where('password', '=', sha1($postEntries['password']))->first();
 
-        return $validator;
+        $this->login($experimenter);
+        $this->app->redirect(Dashboard::route());
     }
 }
