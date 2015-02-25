@@ -27,9 +27,9 @@ class Experiment extends Model
         try {
             Validator::arr()
                 ->key('size', Validator::notEmpty()->int()->between(1,100, true))
-                ->key('task_one_deadline', Validator::sf('DateTime'))
-                ->key('task_two_deadline', Validator::sf('DateTime'))
-                ->key('task_three_deadline', Validator::sf('DateTime'))
+                ->key('task_one_deadline', Validator::notEmpty()->date('m-d-Y H:i:s'))
+                ->key('task_two_deadline', Validator::date('m-d-Y H:i:s'))
+                ->key('task_three_deadline', Validator::date('m-d-Y H:i:s'))
                 ->key('time_limit', Validator::notEmpty()->int()->between(1,1000, true))
                 ->key('payoff', Validator::notEmpty()->int()->between(1,1000, true))
                 ->key('penalty', Validator::notEmpty()->numeric()->between(0,1000, true))
@@ -38,10 +38,10 @@ class Experiment extends Model
         }
             // Handle authentication errors
         catch (ValidationException $e) {
-            $errorMessages = $e->findMessages([
+            $errorMessages = array_filter($e->findMessages([
                 'size', 'task_one_deadline', 'task_two_deadline', 'task_three_deadline', 'time_limit',
                 'payoff', 'penalty', 'subject_deadline_enabled'
-            ]);
+            ]));
         }
 
         return $errorMessages;
