@@ -49,7 +49,7 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Payoff</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control dt" placeholder="" name="payoff" value="{{  payoff  }}" />
+                            <input type="text" class="form-control" placeholder="" name="payoff" value="{{  payoff  }}" />
                         </div>
                     </div>
 
@@ -79,7 +79,7 @@
     </div>
     <script type="text/javascript">
         $(function () {
-            $('.dt').datetimepicker();
+            $('.dt').datetimepicker({format: 'MM-DD-YYYY HH:mm:ss'});
             $('.time').datetimepicker({ format: 'm'});
         });
     </script>
