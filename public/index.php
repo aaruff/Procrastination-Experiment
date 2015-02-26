@@ -12,7 +12,12 @@ Dotenv::load(BASE_DIR);
  * Slim
  *--------------------------------------------------- */
 $appConfig = require BASE_DIR . '/config/app.php';
+
 $app = new Slim\Slim($appConfig);
+
+use Statical\SlimStatic\SlimStatic;
+Slimstatic::boot($app);
+Statical::addNamespace('*', 'Officium\\*');
 
 /*---------------------------------------------------
  * Database
