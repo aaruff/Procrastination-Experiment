@@ -9,7 +9,7 @@ class Experimenter extends Model
 {
     public $timestamps = false;
 
-    protected $table = 'experimenter';
+    protected $table = 'experimenters';
 
     /**
      * Returns error messages if the validation failed.
