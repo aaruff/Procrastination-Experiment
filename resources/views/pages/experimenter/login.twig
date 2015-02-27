@@ -1,44 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-	<title></title>
-	<link href='{{ baseUrl }}/css/login.css' rel='stylesheet' type='text/css' />
-</head>
-<body>
-	<div id="content">
-		<div id="login_border">
-			<h2>Experimenter Login</h2>
-			<form action="{{ currentUrl() }}" method="post">
-				<table cellpadding="2">
-					<tr>
-						<td>
-							<label class="text_label">Login</label>
-							<input type="text" class="text_field" value="{{ login }}" name="login" />
-						</td>
-					</tr>
-                    {% for error in errors.login %}
-                        <tr>
-                            <td class="error">{{ error }}</td>
-                        </tr>
+{% extends 'pages/experimenter/genericMaster.twig' %}
+{% block body %}
+
+<div class="container">
+    <div class="page-header">
+        <h3>Experimenter Login</h3>
+    </div>
+    <div class="jumbotron">
+        {%  if errors %}
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
                     {% endfor %}
-<tr>
-    <td>
-        <label class="text_label">Password</label>
-        <input type="password" class="text_field" value="{{ password  }}" name="password" />
-    </td>
-</tr>
-<tr><td class="error">{{ password_error }}</td></tr>
-<tr>
-    <td><input type="submit" name="submit" value="Log In" class="submit_button" /></td>
-</tr>
-</table>
-</form>
-<label id="error">{{  general_error }}</label>
+                </ul>
+            </div>
+        {% endif %}
+
+        <form class="form-horizontal" action="{{ currentUrl() }}" method="post">
+
+            <div class="form-group">
+                <label class="col-xs-3 control-label">Login</label>
+                <div class="col-xs-9">
+                    <input type="text" class="form-control dt" name="login" value="{{  login  }}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-3 control-label">Password</label>
+                <div class="col-xs-9">
+                    <input type="password" class="form-control dt" name="password" value="{{  password  }}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-offset-3 col-xs-8">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
-</div>
-</body>
-</html>
+{% endblock %}
