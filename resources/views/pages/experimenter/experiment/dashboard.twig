@@ -3,34 +3,34 @@
 {% block body %}
     {% include 'pages/experimenter/experiment/navbar.twig' %}
     <div class="container">
+
         <div class="page-header">
-            <h2>Experiment Dashboard</h2>
+            <h3>Experiment Dashboard</h3>
         </div>
-        <form action="/procrastination/experimenter/manageParticipants.php" method="post">
-            <table class="table table-striped" id="subjects">
-                <thead>
-                <tr>
-                    <th>Session ID</th><th>Subjects</th><th>Size</th>
-                    <th>First Task Deadline</th><th>Second Task Deadline</th><th>Third Task Deadline</th>
-                    <th>Time Limit</th><th>Penalty</th><th>Payoff</th>
-                </tr>
-                </thead>
-                <tbody>
-                 {%  for session in sessions %}
-                <tr>
-                    <td>{{ session.id }}</td>
-                    <td><a href="{{ baseUrl }}">Subjects</a></td>
-                    <td>{{ session.size }}</td>
-                    <td>{{ session.first_task_deadline }}</td>
-                    <td>{{ session.second_task_deadline }}</td>
-                    <td>{{ session.third_task_deadline }}</td>
-                    <td>{{ session.time_limit }}</td>
-                    <td>{{ session.penalty }}</td>
-                    <td>{{ session.payoff }}</td>
-                </tr>
-                {%  endfor %}
-                </tbody>
-            </table>
-        </form>
+
+        <table class="table table-striped" id="subjects">
+            <thead>
+            <tr>
+                <th>Session ID</th><th>Subjects</th><th>Size</th>
+                <th>First Task Deadline</th><th>Second Task Deadline</th><th>Third Task Deadline</th>
+                <th>Time Limit</th><th>Penalty</th><th>Payoff</th>
+            </tr>
+            </thead>
+            <tbody>
+             {%  for session in sessions %}
+            <tr>
+                <td>{{ session.id }}</td>
+                <td><a href="{{ baseUrl }}/experiment/session/{{ session.id }}">Subjects</a></td>
+                <td>{{ session.size }}</td>
+                <td>{{ session.first_task_deadline }}</td>
+                <td>{{ session.second_task_deadline }}</td>
+                <td>{{ session.third_task_deadline }}</td>
+                <td>{{ session.time_limit }}</td>
+                <td>{{ session.penalty }}</td>
+                <td>{{ session.payoff }}</td>
+            </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}
