@@ -1,7 +1,7 @@
 <?php
 namespace Officium\Controllers\Experimenter\Experiment;
 
-use Illuminate\Database\Capsule\Manager as Database;
+use Officium\Models\Session as ExperimentSession;
 use Officium\Controllers\Experimenter\BaseController;
 
 class Dashboard extends BaseController
@@ -22,7 +22,7 @@ class Dashboard extends BaseController
 
     public function get()
     {
-        $subjects = Database::table('subject')->get();
-        $this->render('pages.experimenter.experiment.dashboard', ['subjects'=>$subjects]);
+        $sessions = ExperimentSession::all();
+        $this->render('pages.experimenter.experiment.dashboard', ['sessions'=>$sessions]);
     }
 }
