@@ -2,45 +2,31 @@
 
 {% block body %}
     {% include 'pages/experimenter/experiment/navbar.twig' %}
-    <script type="text/javascript" charset="utf-8">
-        $(document).ready( function() {
-            $('#subjects').dataTable( {
-                "bJQueryUI": true,
-                "sPaginationType": "full_numbers"
-            } );
-        } );
-    </script>
-    <div id="content">
-        <label><h2>Experiment Dashboard</h2></label>
-        <div id="heading">
+    <div class="container">
+        <div class="page-header">
+            <h2>Experiment Dashboard</h2>
         </div>
         <form action="/procrastination/experimenter/manageParticipants.php" method="post">
-            <table id="subjects">
+            <table class="table table-striped" id="subjects">
                 <thead>
                 <tr>
-                    <th>Treatment ID</th><th>Subject ID</th><th>Login</th><th>Password</th>
-                    <th>Email</th><th>Survey Status</th><th>Experimenter Deadlines</th><th>Subject Deadlines Enabled</th>
-                    <th>Subject Deadlines</th><th>Problem Time Restriction</th><th>Reminders Enabled</th><th>Email Delivery Time</th>
-                    <th>Reminder Cost</th><th>First Task Completed</th>
+                    <th>Session ID</th><th>Subjects</th><th>Size</th>
+                    <th>First Task Deadline</th><th>Second Task Deadline</th><th>Third Task Deadline</th>
+                    <th>Time Limit</th><th>Penalty</th><th>Payoff</th>
                 </tr>
                 </thead>
                 <tbody>
-                 {%  for subjects in subject %}
+                 {%  for session in sessions %}
                 <tr>
-                    <td>{{ subject['treatment_id'] }}</td>
-                    <td>{{ subject['id'] }}</td>
-                    <td>{{ subject['login'] }}</td>
-                    <td>{{ subject['password'] }}</td>
-                    <td>{{ subject['email'] }}</td>
-                    <td>{{ subject['survey_status'] }}</td>
-                    <td>{{ subject['first_experimenter_set_deadline'] }}</td>
-                    <td>{{ subject['subject_deadline_enabled'] }}</td>
-                    <td>{{ subject['first_subject_set_deadline'] }}</td>
-                    <td>{{ subject['problem_time_limit'] }}</td>
-                    <td>{{ subject['enable_reminder_notification'] }}</td>
-                    <td>{{ subject['reminder_delivery_time'] }}</td>
-                    <td>{{ subject['reminder_cost'] }}</td>
-                    <td>{{ subject['first_task_completed'] }}</td>
+                    <td>{{ session.id }}</td>
+                    <td><a href="{{ baseUrl }}">Subjects</a></td>
+                    <td>{{ session.size }}</td>
+                    <td>{{ session.first_task_deadline }}</td>
+                    <td>{{ session.second_task_deadline }}</td>
+                    <td>{{ session.third_task_deadline }}</td>
+                    <td>{{ session.time_limit }}</td>
+                    <td>{{ session.penalty }}</td>
+                    <td>{{ session.payoff }}</td>
                 </tr>
                 {%  endfor %}
                 </tbody>
