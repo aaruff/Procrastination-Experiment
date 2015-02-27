@@ -2,9 +2,9 @@
 
 namespace Officium\Controllers\Experimenter;
 
+use Officium\Controllers\BaseController;
 use Officium\Controllers\Experimenter\Experiment\Dashboard;
-use Officium\Models\Experimenter as Experimenter;
-use Illuminate\Database\Capsule\Manager as Capsule;
+use Officium\Models\Experimenter;
 
 /**
  * The Experimenter Login Controller
@@ -14,22 +14,12 @@ use Illuminate\Database\Capsule\Manager as Capsule;
  */
 class Login extends BaseController
 {
-    function __construct()
-    {
-        parent::__construct();
-    }
-
-    public static function route()
-    {
-        return '/experimenter/login';
-    }
-
     /**
      * Handles the login get request.
      */
     public function get()
     {
-        $this->logout();
+        $this->logoutResearcher();
         $this->render('pages.experimenter.login');
     }
 
@@ -38,22 +28,25 @@ class Login extends BaseController
      */
     public function post()
     {
-        $postEntries = $this->getPost();
+        $post = Request::post();
 
         // Error Handling
-        $errors = Experimenter::validate($postEntries);
+        $errors = Experimenter::validate($post);
         if ( ! empty($errors)) {
-            $this->app->flash('errors', $errors);
-            $this->app->redirect(Login::route());
+            App::flash('errors', $errors);
+            Response::redirect(Login::route());
             return;
         }
 
-        // Login Researcher
-        $experimenter = Capsule::table('experimenter')->select('id')
-            ->where('login', '=', $postEntries['login'])
-            ->where('password', '=', sha1($postEntries['password']))->first();
+        $experimenter = Experimenter::where('login', '=', $post['login'])
+            ->where('password', '=', sha1($post['password']))->first();
 
-        $this->login($experimenter);
-        $this->app->redirect(Dashboard::route());
+        $this->loginResearcher($experimenter);
+        Response::redirect(Dashboard::route());
+    }
+
+    public static function route()
+    {
+        return '/experimenter/login';
     }
 }
