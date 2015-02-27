@@ -1,0 +1,28 @@
+{% extends 'pages/experimenter/experiment/master.twig' %}
+
+{% block body %}
+    {% include 'pages/experimenter/experiment/navbar.twig' %}
+    <div class="container">
+
+        <div class="page-header">
+            <h3>Session {{ session.id }}: Subjects</h3>
+        </div>
+
+        <table class="table table-striped" id="subjects">
+            <thead>
+            <tr>
+                <th>ID</th><th>Login</th><th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {%  for subject in subjects %}
+                <tr>
+                    <td>{{ subject.id }}</td>
+                    <td>{{ subject.login }}</td>
+                    <td>{{ subject.status }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
