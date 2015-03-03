@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head> 
-	<meta charset="utf-8" />
-	<title>First Questionnaire</title> 
-    <link href='../resources/css/survey.css' rel='stylesheet' type='text/css' /> 
-    <link href="../resources/js/ui/css/smoothness/jquery-ui-1.8.11.custom.css" rel='stylesheet' type='text/css' />
-    <script type="text/javascript" src="../resources/js/ui/js/jquery-1.5.1.min.js"></script> 
-    <script type="text/javascript" src="../resources/js/ui/js/jquery-ui-1.8.11.custom.min.js"></script> 
-    <script type="text/javascript"  src="../resources/js/jquery-ui-timepicker-addon.js"></script>
-    <script type="text/javascript"  src="../resources/js/survey.js"></script>
-</head> 
-<body> 
-	<div id="content"> 
+{% extends 'pages/subject/master.twig' %}
+
+{% block body %}
+	<div id="content">
         <div id="heading"> 
             <span>Survey Questions</span> 
         </div> 
@@ -644,4 +634,3 @@
 			</form>
 		</div>	
 </body> 
-</html> 
