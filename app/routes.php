@@ -2,6 +2,8 @@
 
 Route::get('/subject/login', '\Officium\Controllers\Subject\Login:get');
 Route::post('/subject/login', '\Officium\Controllers\Subject\Login:post');
+Route::get('/subject/questionnaire/incoming/:id', '\Officium\Controllers\Subject\Questionnaire:get');
+Route::post('/subject/questionnaire/incoming/:id', '\Officium\Controllers\Subject\Questionnaire:post');
 
 /**
  * Experimenter Routes
