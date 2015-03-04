@@ -1,0 +1,68 @@
+{% extends 'pages/subject/master.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Experiment Survey</h3>
+        </div>
+
+        <div class="row">
+            <form action="{{ currentUrl() }}" method="post">
+                <p>Over the course of the next week how many of each of the following do you have:</p>
+                <div class="form-group">
+                    <label>Minor Assignments</label>
+                    <input type="text" class="form-control" name="q1" placeholder="Course Load" value="" />
+                </div>
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Date and Time</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-info">Add Another</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Major assignments and term papers</label>
+                    <input type="text" class="form-control" name="q2" placeholder="Major" value="" />
+                </div>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Date and Time</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-info">Add Another</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="question">Exams</label>
+                    <input type="text" class="form-control" name="q3" placeholder="GPA" value="" />
+                </div>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Date and Time</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-info">Add Another</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Next</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+{% endblock %}
