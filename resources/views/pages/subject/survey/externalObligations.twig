@@ -1,0 +1,48 @@
+{% extends 'pages/subject/master.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Experiment Survey</h3>
+        </div>
+
+        <div class="row">
+            <form action="{{ currentUrl() }}" method="post">
+                <div class="form-group">
+                    <label>Are you presently employed?</label>
+                    <input type="text" class="form-control" name="course_work"/>
+                </div>
+
+                <div class="form-group">
+                    <label>From begin date to end date, how much time (in hours) do you expect to allocate to your job?</label>
+                </div>
+
+                <div class="form-group">
+                    <label>Enter your work schedule over this period.</label>
+                    <input type="text" class="form-control" name="job" />
+                </div>
+
+                <div class="form-group">
+                    <label class="question">Enter your time commitments for social obligations or recreational obligations
+                        over this time period.</label>
+                    <input type="text" class="form-control" name="minor" />
+                </div>
+
+                <div class="form-group">
+                    <label class="question">Major assignments or term papers?</label>
+                    <input type="text" class="form-control" name="major" />
+                </div>
+
+                <div class="form-group">
+                    <label class="question">Exams?</label>
+                    <input type="text" class="form-control" name="exams" />
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Next</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+{% endblock %}
