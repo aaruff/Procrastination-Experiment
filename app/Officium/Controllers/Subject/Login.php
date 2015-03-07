@@ -27,11 +27,12 @@ class Login extends BaseController
             return;
         }
 
-        $subject = Subject::where('login', '=', $post['login'])
-            ->where('password', '=', sha1($post['password']))->first();
-
+        $subject = Subject::where('login', '=', $post['login'])->first();
         $this->loginSubject($subject);
-        Response::redirect();
+
+        if ($subject->status == 0) {
+            return Response::redirect('/subject/questionnaire/incoming/1');
+        }
     }
 
     public static function route()
