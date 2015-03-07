@@ -40,7 +40,7 @@ class Session extends Model
     public static function validateId($id)
     {
         try {
-            v::arr()->key('id', v::int()->notEmpty()->min(1))->assert(['id' => $id]);
+            v::arr()->key('id', v::int()->notEmpty()->min(0))->assert(['id' => $id]);
         }
         catch (ValidationException $e) {
             return null;
