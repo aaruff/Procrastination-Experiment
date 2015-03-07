@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Subject extends Model
 {
     public static $UNREGISTERED = 0;
+    public static $ACADEMIC_SECTION = 1;
+    public static $ACADEMIC_OBLIGATION_SECTION = 2;
+    public static $EXTERNAL_OBLIGATION_SECTION = 3;
 
     public $timestamps = false;
     protected $table = 'subjects';
@@ -89,7 +92,7 @@ class Subject extends Model
         try {
             Validator::arr()
                 ->key('login', Validator::notEmpty()->length(3, 100)->alpha())
-                ->key('password', Validator::notEmpty()->alnum()->length(3, 40))
+                ->key('password', Validator::notEmpty()->alnum()->length(1, 255))
                 ->assert($credentials);
         }
             // Handle authentication errors
@@ -102,12 +105,12 @@ class Subject extends Model
 
         // Check if account exists
         if (empty($errorMessages)) {
-            $experimenter = Subject::where('login', '=', $credentials['login'])
-                ->where('password', '=', sha1($credentials['password']))->first();
+            $subject = Subject::where('login', '=', $credentials['login'])->first();
 
-            if ( ! $experimenter) {
+            if ( ! $subject || ! password_verify($credentials['password'], $subject->password)) {
                 $errorMessages['login'] = 'Invalid Login or Password';
             }
+
         }
 
         return $errorMessages;
