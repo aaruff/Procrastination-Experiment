@@ -29,6 +29,11 @@ class BaseController
         $_SESSION['subject'] = $subject;
     }
 
+    protected function getSubject()
+    {
+        return $_SESSION['subject'];
+    }
+
     protected function isSubject()
     {
         return isset($_SESSION['subject']);
