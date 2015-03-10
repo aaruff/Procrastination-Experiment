@@ -3,34 +3,68 @@
 {% block body %}
     <div class="container">
         <div class="page-header">
-            <h3>Experiment Survey</h3>
+            <h3>Academic Obligations</h3>
         </div>
 
         <div class="row">
             <form action="{{ currentUrl() }}" method="post">
+
+                {# Course Work #}
                 <div class="form-group">
-                    <label>From begin date to end date, how much time (in hours) do you expect to allocate to your
-                    course work?</label>
-                    <input type="text" class="form-control" name="course_work"/>
+                    <label>From begin date to end date, how much time (in hours) do you expect to allocate to course work?</label>
+                    <input type="text" class="form-control" name="course_work" />
                 </div>
 
                 <div class="form-group">
                     <label>From begin date to end date, how many of each of the following do you have:</label>
                 </div>
-                <div class="form-group">
-                    <label class="question">Minor Assignments?</label>
-                    <input type="text" class="form-control" name="minor" />
-                </div>
 
-                <div class="form-group">
-                    <label class="question">Major assignments or term papers?</label>
-                    <input type="text" class="form-control" name="major" />
-                </div>
+                <div class="form-horizontal">
+                    {# Minor Assignments #}
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label">Minor assignments?</label>
+                        <div class="col-xs-6">
+                            <input type="datetime" class="form-control" placeholder="Minor assignment deadline (mm\dd\yyyy)" name="minor_assignments[]" />
+                        </div>
+                        <div class="col-xs-2">
+                            <a class="btn btn-info add_item" data-group="minor" href="#"><i class="fa fa-plus"></i> Add Another</a>
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label class="question">Exams?</label>
-                    <input type="text" class="form-control" name="exams" />
-                </div>
+                    {# Contains dynamically added major assignments deadlines #}
+                    <div class="form-group dynamic-entry" id="minor_insert">
+                    </div>
+
+                    {# Major Assignments #}
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label">Major assignments / Term papers?</label>
+                        <div class="col-xs-6">
+                            <input type="datetime" class="form-control" placeholder="Major assignment deadline (mm\dd\yyyy)" name="major_assignments[]" />
+                        </div>
+                        <div class="col-xs-2">
+                            <a class="btn btn-info add_item" data-group="major" href="#"><i class="fa fa-plus"></i> Add Another</a>
+                        </div>
+                    </div>
+
+                    {# Contains dynamically added minor assignments deadlines #}
+                    <div class="form-group dynamic-entry" id="major_insert">
+                    </div>
+
+                    {# Exams #}
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label">Exams?</label>
+                        <div class="col-xs-6">
+                            <input type="datetime" class="form-control" placeholder="Exam date (mm\dd\yyyy)" name="major_assignments[]" />
+                        </div>
+                        <div class="col-xs-2">
+                            <a class="btn btn-info add_item" data-group="major" href="#"><i class="fa fa-plus"></i> Add Another</a>
+                        </div>
+                    </div>
+
+                    {# Contains dynamically added minor assignments deadlines #}
+                    <div class="form-group dynamic-entry" id="major_insert">
+                    </div>
+                </div>{# End of form-horizontal div #}
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Next</button>
@@ -39,4 +73,38 @@
         </div>
 
     </div>
+    <script>
+        $(document).ready(function() {
+            var max_fields      = 10;
+            var numInputFields = 1;
+
+            $(".add_item").click(function(e){
+                e.preventDefault();
+                if(numInputFields < max_fields){
+                    numInputFields++; //text box increment
+                    var insertId = '#' + $(this).data('group') + '_insert';
+                    $(insertId).append(
+                            '<div class="col-xs-offset-4">' +
+                            '<div class="col-xs-9" >' +
+                            '<input type="text" class="form-control" placeholder="Assignment Deadline (mm\\dd\\yyyy)"  ' +
+                            'name="' + $(this).data('group') + '_assignments[]" /> ' +
+                            '</div>' +
+                            '<div class="col-xs-2 remove_item" >' +
+                            '<a class="btn btn-danger" href="#">' +
+                            '<i class="fa fa-minus"></i> Remove' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>'
+                    );
+                }
+            });
+
+            $(".dynamic-entry").on("click", ".remove_item", function(e) {
+                e.preventDefault();
+                $(this).parent('div').remove();
+                numInputFields--;
+            });
+        });
+    </script>
 {% endblock %}
+
