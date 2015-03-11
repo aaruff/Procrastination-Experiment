@@ -1,0 +1,110 @@
+{% extends 'pages/subject/master.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="page-header">
+            <h2>Work and Family Obligations</h2>
+        </div>
+
+        <div class="row">
+            <form action="{{ currentUrl() }}" method="post">
+
+                {# Employment #}
+                <div class="form-group">
+                    <label>Are you presently employed?</label>
+                    <select class="form-control">
+                        <option>Select One</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <fieldset>
+                    <legend>Work Obligations</legend>
+                    {# Work Hours #}
+                    <div class="form-group">
+                        <label>From begin date to end date, how much time (in hours) do you expect to allocate your job?</label>
+                        <input type="text" class="form-control" name="work_hours" />
+                    </div>
+
+                    {# Work Schedule #}
+                    <div class="form-group">
+                        <label>Enter your work schedule over this time period:</label>
+                    </div>
+                    <div id="work-group" class="form-group form-inline">
+                        <input type="text" class="form-control date start" placeholder="Start Date" name="work_start_date[]" />
+                        <input type="text" class="form-control time start" placeholder="Start Time" name="work_start_time[]" />
+                        <input type="text" class="form-control time end" placeholder="End Time" name="work_end_time[]" />
+                        <input type="text" class="form-control date end" placeholder="End Date" name="work_end_date[]" />
+                        <a class="form-control btn btn-info add_item" data-group="work" href="#"><i class="fa fa-plus"></i></a>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Social Obligations</legend>
+                    {# Social Obligations in Hours #}
+                    <div class="form-group">
+                        <label>From begin date to end date, how much time (in hours) do you expect to your social obligations or recreational activities?</label>
+                        <input type="text" class="form-control" name="social_hours" />
+                    </div>
+
+                    {# Social Obligation Schedule #}
+                    <div class="form-group">
+                        <label>Enter the time commitments for family obligations over this time period:</label>
+                    </div>
+                    <div id="family-group" class="form-group form-inline">
+                        <input type="text" class="form-control date start" placeholder="Start Date" name="social_start_date[]" />
+                        <input type="text" class="form-control time start" placeholder="Start Time" name="social_start_time[]" />
+                        <input type="text" class="form-control time end" placeholder="End Time" name="social_end_time[]" />
+                        <input type="text" class="form-control date end" placeholder="End Date" name="social_end_date[]" />
+                        <a class="form-control btn btn-info add_item" data-group="work" href="#"><i class="fa fa-plus"></i></a>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Family Obligations</legend>
+                    {# Family Obligations in Hours #}
+                    <div class="form-group">
+                        <label>From begin date to end date, how much time (in hours) do you expect to your social obligations
+                            or recreational activities?</label>
+                        <input type="text" class="form-control" name="family_hours" />
+                    </div>
+
+                    {# Family Obligation Schedule #}
+                    <div class="form-group">
+                        <label>Enter the time commitments for family obligations over this time period:</label>
+                    </div>
+                    <div id="family-group" class="form-group form-inline">
+                        <input type="text" class="form-control date start" placeholder="Start Date" name="family_start_date[]" />
+                        <input type="text" class="form-control time start" placeholder="Start Time" name="family_start_time[]" />
+                        <input type="text" class="form-control time end" placeholder="End Time" name="family_end_time[]" />
+                        <input type="text" class="form-control date end" placeholder="End Date" name="family_end_date[]" />
+                        <a class="form-control btn btn-info add_item" data-group="work" href="#"><i class="fa fa-plus"></i></a>
+                    </div>
+                </fieldset>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        // initialize input widgets first
+        $('.time').timepicker({
+            'showDuration': true,
+            'timeFormat': 'g:ia'
+        });
+
+        $('.date').datepicker({
+            'format': 'm/d/yyyy',
+            'autoclose': true
+        });
+
+        // initialize workPair
+        var workGroupPair = document.getElementById('work-group');
+        var workPair = new Datepair(workGroupPair);
+
+        var familyGroupPair = document.getElementById('family-group');
+        var familyPair = new Datepair(familyGroupPair);
+    </script>
+{% endblock %}

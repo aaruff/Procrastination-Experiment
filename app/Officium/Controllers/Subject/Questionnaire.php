@@ -18,8 +18,14 @@ class Questionnaire extends BaseController
         elseif ($sectionId == Subject::$ACADEMIC_OBLIGATION_SECTION) {
             $this->render('pages.subject.survey.academicObligations');
         }
-        elseif ($sectionId == Subject::$EXTERNAL_OBLIGATION_SECTION) {
+        elseif ($sectionId == Subject::$SOCIAL_OBLIGATION_SECTION) {
             $this->render('pages.subject.survey.externalObligations');
+        }
+        elseif ($sectionId == Subject::$ATTENTIVE_ORGANIZED_SECTION) {
+            $this->render('pages.subject.survey.attentiveOrganized');
+        }
+        elseif ($sectionId == Subject::$CERTIFICATE_SECTION) {
+            $this->render('pages.subject.survey.certificate');
         }
     }
 
