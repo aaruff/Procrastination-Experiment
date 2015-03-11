@@ -2,69 +2,64 @@
 
 {% block body %}
     <div class="container">
-        <div class="page-header">
-            <h3>Academic Obligations</h3>
-        </div>
-
-        <div class="row">
+        <div class="jumbotron">
             <form action="{{ currentUrl() }}" method="post">
 
                 {# Course Work #}
                 <div class="form-group">
-                    <label>From begin date to end date, how much time (in hours) do you expect to allocate to course work?</label>
+                    <label>How many hours between [x] and [y] do you expect to spend on course work</label>
                     <input type="text" class="form-control" name="course_work" />
                 </div>
 
-                <div class="form-group">
-                    <label>From begin date to end date, how many of each of the following do you have:</label>
-                </div>
+                <fieldset>
+                    <legend>Assignments and Exams</legend>
 
-                <div class="form-horizontal">
-                    {# Minor Assignments #}
                     <div class="form-group">
-                        <label class="col-xs-4 control-label">Minor assignments?</label>
-                        <div class="col-xs-6">
-                            <input type="datetime" class="form-control" placeholder="Minor assignment deadline (mm\dd\yyyy)" name="minor_assignments[]" />
-                        </div>
-                        <div class="col-xs-2">
-                            <a class="btn btn-info add_item" data-group="minor" href="#"><i class="fa fa-plus"></i> Add Another</a>
-                        </div>
+                        <label>Enter the dates and times you expect to spend between [x] and [y] on</label>
                     </div>
 
-                    {# Contains dynamically added major assignments deadlines #}
+                    {# Minor Assignments #}
+                    <div class="form-group">
+                        <label>Minor Assignments</label>
+                    </div>
+                    <div id="minor-group" class="form-group form-inline">
+                        <input type="text" class="form-control date start" placeholder="Start Date" name="minor_start_date[]" />
+                        <input type="text" class="form-control time start" placeholder="Start Time" name="minor_start_time[]" />
+                        <input type="text" class="form-control time end" placeholder="End Time" name="minor_end_time[]" />
+                        <input type="text" class="form-control date end" placeholder="End Date" name="minor_end_date[]" />
+                        <a class="form-control btn btn-info add_item" data-group="work" href="#"><i class="fa fa-plus"></i></a>
+                    </div>
                     <div class="form-group dynamic-entry" id="minor_insert">
                     </div>
 
                     {# Major Assignments #}
                     <div class="form-group">
-                        <label class="col-xs-4 control-label">Major assignments / Term papers?</label>
-                        <div class="col-xs-6">
-                            <input type="datetime" class="form-control" placeholder="Major assignment deadline (mm\dd\yyyy)" name="major_assignments[]" />
-                        </div>
-                        <div class="col-xs-2">
-                            <a class="btn btn-info add_item" data-group="major" href="#"><i class="fa fa-plus"></i> Add Another</a>
-                        </div>
+                        <label>Major Assignments or Term Papers</label>
                     </div>
-
-                    {# Contains dynamically added minor assignments deadlines #}
+                    <div id="major-group" class="form-group form-inline">
+                        <input type="text" class="form-control date start" placeholder="Start Date" name="major_start_date[]" />
+                        <input type="text" class="form-control time start" placeholder="Start Time" name="major_start_time[]" />
+                        <input type="text" class="form-control time end" placeholder="End Time" name="major_end_time[]" />
+                        <input type="text" class="form-control date end" placeholder="End Date" name="major_end_date[]" />
+                        <a class="form-control btn btn-info add_item" data-group="work" href="#"><i class="fa fa-plus"></i></a>
+                    </div>
                     <div class="form-group dynamic-entry" id="major_insert">
                     </div>
 
                     {# Exams #}
                     <div class="form-group">
-                        <label class="col-xs-4 control-label">Exams?</label>
-                        <div class="col-xs-6">
-                            <input type="datetime" class="form-control" placeholder="Exam date (mm\dd\yyyy)" name="major_assignments[]" />
-                        </div>
-                        <div class="col-xs-2">
-                            <a class="btn btn-info add_item" data-group="major" href="#"><i class="fa fa-plus"></i> Add Another</a>
-                        </div>
+                        <label>Exams</label>
                     </div>
-
-                    {# Contains dynamically added minor assignments deadlines #}
+                    <div id="exam-group" class="form-group form-inline">
+                        <input type="text" class="form-control date start" placeholder="Start Date" name="exam_start_date[]" />
+                        <input type="text" class="form-control time start" placeholder="Start Time" name="exam_start_time[]" />
+                        <input type="text" class="form-control time end" placeholder="End Time" name="exam_end_time[]" />
+                        <input type="text" class="form-control date end" placeholder="End Date" name="exam_end_date[]" />
+                        <a class="form-control btn btn-info add_item" data-group="work" href="#"><i class="fa fa-plus"></i></a>
+                    </div>
                     <div class="form-group dynamic-entry" id="major_insert">
                     </div>
-                </div>{# End of form-horizontal div #}
+                </fieldset>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Next</button>
