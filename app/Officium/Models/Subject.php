@@ -10,7 +10,9 @@ class Subject extends Model
     public static $UNREGISTERED = 0;
     public static $ACADEMIC_SECTION = 1;
     public static $ACADEMIC_OBLIGATION_SECTION = 2;
-    public static $EXTERNAL_OBLIGATION_SECTION = 3;
+    public static $SOCIAL_OBLIGATION_SECTION = 3;
+    public static $ATTENTIVE_ORGANIZED_SECTION = 4;
+    public static $CERTIFICATE_SECTION = 5;
 
     public $timestamps = false;
     protected $table = 'subjects';
