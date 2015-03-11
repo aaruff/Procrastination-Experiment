@@ -1,0 +1,75 @@
+{% extends 'pages/subject/master.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+
+            <form action="{{ currentUrl() }}" method="post">
+                <div class="form-group">
+                    <label>Suppose that you win 10 certificates, each of which can be used (once) to receive a
+                    dream restaurant night. On each such night, you and a companion will get the best table
+                    and an unlimited budget for food and drink at a restaurant of your choosing.
+                    There will be no cost to you: all payments including gratuities come as part of the prize.
+                    The certificates are available for immediate use, starting tonight, and there is an absolute
+                    guarantee that they will be honored by any restaurant you select if they are used within a two year window.
+                    However if they are not used up within this two year period, any that remain are valueless.
+                    The questions below concern how many of the certificates you would ideally like to use in each year,
+                    how tempted you would be to depart from this ideal, and what you expect you would do in practice:
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        From your current perspective, how many of the ten certificates would you ideally like to use in year 1?
+                    </label>
+                    <input type="text" class="form-control" name="question_10" placeholder="Certificate Count" value="" />
+                </div>
+
+
+                <div class="form-group">
+                    <label>
+                        Some people might be tempted to depart from their ideal allocation in the above question.
+                    </label>
+                    <label>1) I would have no temptation in either direction.</label>
+                    <label>2) I would be somewhat/strongly tempted to use more certificates in the first year than would be ideal.</label>
+                    <label>3) I would be strongly/somewhat tempted to keep more certificates for use in the second year than would be ideal.</label>
+                </div>
+                <div class="form-group">
+                    <label>Which of the following best describes you:</label>
+                </div>
+                <div class="form-group">
+                    <select name="question_11" class="form-control">
+                        <option value="" >Selection Required</option>
+                        <option value="1">1</option>
+                        <option value="2" >2</option>
+                        <option value="3" >3</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        If you were to give in to your temptation,
+                        how many certificates do you think you would use in year 1 as opposed to year 2?
+                    </label>
+                    <label>
+                        If you answered Yes to Question 10(1), please enter the response given in Question 10.
+                    </label>
+                    <input type="text" class="form-control" name="question_12" placeholder="Certificate Count" value="" />
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Based on your most accurate forecast of how you think you would actually behave,
+                        how many of the nights would you end up using in year 1?
+                    </label>
+                    <input type="text" class="form-control" name="question_13" placeholder="Certificate Count" value="" />
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
