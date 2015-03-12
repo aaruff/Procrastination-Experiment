@@ -29,13 +29,13 @@ class Questionnaire extends Model
     {
         switch ($sectionId) {
             case self::ACADEMIC:
-                return static::validateQuestionSetOne($credentials);
+                return static::validateGeneralAcademicSurvey($credentials);
             default:
                 return $errorMessages['error'] = 'Question Type Required';
         }
     }
 
-    private static function validateQuestionSetOne($credentials)
+    private static function validateGeneralAcademicSurvey($credentials)
     {
         $errorMessages = [];
 
