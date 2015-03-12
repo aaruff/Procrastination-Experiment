@@ -6,10 +6,14 @@ Route::get('/subject/login', '\Officium\Controllers\Subject\LoginController:get'
 Route::post('/subject/login', '\Officium\Controllers\Subject\LoginController:post');
 
 // Incoming Questionnaire
-Route::get('/subject/questionnaire/a', '\Officium\Controllers\Subject\Questionnaire\AcademicController:get');
-Route::post('/subject/questionnaire/a', '\Officium\Controllers\Subject\Questionnaire:AcademicController:post');
+Route::get('/subject/questionnaire/a', '\Officium\Controllers\Subject\Questionnaire\GeneralAcademicController:get');
+Route::post('/subject/questionnaire/a', '\Officium\Controllers\Subject\Questionnaire\GeneralAcademicController:post');
 Route::get('/subject/questionnaire/ao', '\Officium\Controllers\Subject\Questionnaire\AcademicObligationController:get');
-Route::post('/subject/questionnaire/ao', '\Officium\Controllers\Subject\Questionnaire:AcademicObligationController:post');
+Route::post('/subject/questionnaire/ao', '\Officium\Controllers\Subject\Questionnaire\AcademicObligationController:post');
+Route::get('/subject/questionnaire/eo', '\Officium\Controllers\Subject\Questionnaire\ExternalObligationController:get');
+Route::post('/subject/questionnaire/eo', '\Officium\Controllers\Subject\Questionnaire\ExternalObligationController:post');
+Route::get('/subject/questionnaire/at', '\Officium\Controllers\Subject\Questionnaire\AttentiveOrganizedController:get');
+Route::post('/subject/questionnaire/at', '\Officium\Controllers\Subject\Questionnaire\AttentiveOrganizedController:post');
 
 
 //---------------------------------------------------
