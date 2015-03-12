@@ -35,7 +35,7 @@ class Questionnaire extends Model
         }
     }
 
-    private static function validateGeneralAcademicSurvey($credentials)
+    public static function validateGeneralAcademicSurvey($credentials)
     {
         $errorMessages = [];
 
@@ -44,16 +44,16 @@ class Questionnaire extends Model
             Validator::arr()
                 ->key('major', Validator::notEmpty()->alpha()->length(1, 255))
                 ->key('gpa', Validator::notEmpty()->int()->between(0, 4))
-                ->key('course_load', Validator::notEmpty()->int()->between(0, 20))
-                ->key('clubs', Validator::notEmpty()->int()->between(0, 20))
+                ->key('number_courses', Validator::notEmpty()->int()->between(0, 20))
+                ->key('number_clubs', Validator::notEmpty()->int()->between(0, 20))
                 ->assert($credentials);
         } // Handle authentication errors
         catch (ValidationException $e) {
             $errorMessages = $e->findMessages([
-                'major' => 'Invalid Major',
+                'major' => 'Invalid major',
                 'gpa' => 'Invalid GPA',
-                'course_load' => 'Invalid Course Load',
-                'clubs' => 'Invalid Number of Clubs',
+                'number_coursers' => 'Invalid number of courses',
+                'number_clubs' => 'Invalid number of clubs',
             ]);
         }
 
