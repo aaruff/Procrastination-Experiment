@@ -2,13 +2,13 @@
 namespace Officium\Controllers\Experimenter\Experiment;
 
 use Officium\Models\Session as ExperimentSession;
-use Officium\Controllers\BaseController;
+use Officium\Controllers\ExperimenterBaseController;
 
-class DashboardController extends BaseController
+class DashboardControllerExperimenter extends ExperimenterBaseController
 {
     public function  __construct()
     {
-        if ( ! $this->isResearcher()) {
+        if ( ! $this->isLoggedIn()) {
             $this->redirectToLogin();
         }
     }
