@@ -6,10 +6,10 @@ Route::get('/subject/login', '\Officium\Controllers\Subject\Login:get');
 Route::post('/subject/login', '\Officium\Controllers\Subject\Login:post');
 
 // Incoming Questionnaire
-Route::get('/subject/questionnaire/incoming/a', '\Officium\Controllers\Subject\Questionnaire\Academic:get');
-Route::post('/subject/questionnaire/incoming/a', '\Officium\Controllers\Subject\Questionnaire:Academic:post');
-Route::get('/subject/questionnaire/incoming/ao', '\Officium\Controllers\Subject\Questionnaire\AcademicObligation:get');
-Route::post('/subject/questionnaire/incoming/ao', '\Officium\Controllers\Subject\Questionnaire:AcademicObligation:post');
+Route::get('/subject/questionnaire/a', '\Officium\Controllers\Subject\Questionnaire\Academic:get');
+Route::post('/subject/questionnaire/a', '\Officium\Controllers\Subject\Questionnaire:Academic:post');
+Route::get('/subject/questionnaire/ao', '\Officium\Controllers\Subject\Questionnaire\AcademicObligation:get');
+Route::post('/subject/questionnaire/ao', '\Officium\Controllers\Subject\Questionnaire:AcademicObligation:post');
 
 
 //---------------------------------------------------
