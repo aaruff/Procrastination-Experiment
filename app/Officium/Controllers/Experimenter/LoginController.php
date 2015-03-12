@@ -3,7 +3,7 @@
 namespace Officium\Controllers\Experimenter;
 
 use Officium\Controllers\BaseController;
-use Officium\Controllers\Experimenter\Experiment\Dashboard;
+use Officium\Controllers\Experimenter\Experiment\DashboardController;
 use Officium\Models\Experimenter;
 
 /**
@@ -12,7 +12,7 @@ use Officium\Models\Experimenter;
  * Class Login
  * @package Officium\Controllers\Experimenter
  */
-class Login extends BaseController
+class LoginController extends BaseController
 {
     /**
      * Handles the login get request.
@@ -34,7 +34,7 @@ class Login extends BaseController
         $errors = Experimenter::validate($post);
         if ( ! empty($errors)) {
             App::flash('errors', $errors);
-            Response::redirect(Login::route());
+            Response::redirect(LoginController::route());
             return;
         }
 
@@ -42,7 +42,7 @@ class Login extends BaseController
             ->where('password', '=', sha1($post['password']))->first();
 
         $this->loginResearcher($experimenter);
-        Response::redirect(Dashboard::route());
+        Response::redirect(DashboardController::route());
     }
 
     public static function route()

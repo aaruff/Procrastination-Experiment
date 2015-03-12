@@ -6,7 +6,7 @@ use Officium\Models\Subject;
 use Officium\Models\Session as ExperimentSession;
 use Officium\Controllers\BaseController;
 
-class Session extends BaseController
+class SessionController extends BaseController
 {
     public function get()
     {
@@ -20,7 +20,7 @@ class Session extends BaseController
         $errors = ExperimentSession::validate($post);
         if ( ! empty($errors)) {
             App::flash('errors', $errors);
-            Response::redirect(Session::route());
+            Response::redirect(SessionController::route());
             return;
         }
 
@@ -35,14 +35,14 @@ class Session extends BaseController
             $subject->status = Subject::$UNREGISTERED;
             $subject->save();
         }
-        App::redirect(Dashboard::route());
+        App::redirect(DashboardController::route());
     }
 
     public function show($id='')
     {
         $session = ExperimentSession::validateId($id);
         if ( ! $session) {
-            Response::redirect(Session::route());
+            Response::redirect(SessionController::route());
             return;
         }
 

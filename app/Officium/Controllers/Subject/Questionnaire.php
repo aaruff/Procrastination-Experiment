@@ -39,7 +39,7 @@ class Questionnaire extends BaseController
         $errors = QuestionnaireModel::validate($sectionId, $post);
         if ( ! empty($errors)) {
             App::flash('errors', $errors);
-            Response::redirect(Login::route());
+            Response::redirect(LoginController::route());
             return;
         }
 

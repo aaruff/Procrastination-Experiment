@@ -4,7 +4,7 @@ namespace Officium\Controllers\Experimenter\Experiment;
 use Officium\Models\Session as ExperimentSession;
 use Officium\Controllers\BaseController;
 
-class Dashboard extends BaseController
+class DashboardController extends BaseController
 {
     public function  __construct()
     {

@@ -4,7 +4,7 @@ namespace Officium\Controllers\Subject;
 use Officium\Models\Subject;
 use Officium\Controllers\BaseController;
 
-class Login extends BaseController
+class LoginController extends BaseController
 {
     public function get()
     {
@@ -23,7 +23,7 @@ class Login extends BaseController
         $errors = Subject::validate($post);
         if ( ! empty($errors)) {
             App::flash('errors', $errors);
-            Response::redirect(Login::route());
+            Response::redirect(LoginController::route());
             return;
         }
 
