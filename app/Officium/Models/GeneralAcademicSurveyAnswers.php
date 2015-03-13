@@ -35,16 +35,4 @@ class GeneralAcademicSurveyAnswers extends Model
 
         return $errorMessages;
     }
-
-    public static function questionNameToNumber($name)
-    {
-        $questionIdMap = [
-            'major' => 1,
-            'gpa' => 2,
-            'number_courses' => 3,
-            'number_clubs' => 4,
-        ];
-
-        return $questionIdMap[$name];
-    }
 }
