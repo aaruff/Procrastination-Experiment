@@ -2,8 +2,7 @@
 
 namespace Officium\Controllers\Experimenter;
 
-use Officium\Controllers\BaseController;
-use Officium\Controllers\Experimenter\Experiment\DashboardController;
+use Officium\Controllers\Experimenter\Experiment\DashboardControllerExperimenter;
 use Officium\Models\Experimenter;
 
 /**
@@ -12,14 +11,14 @@ use Officium\Models\Experimenter;
  * Class Login
  * @package Officium\Controllers\Experimenter
  */
-class LoginController extends BaseController
+class ExperimenterLoginController extends ExperimenterBaseController
 {
     /**
      * Handles the login get request.
      */
     public function get()
     {
-        $this->logoutResearcher();
+        $this->logout();
         $this->render('pages.experimenter.login');
     }
 
@@ -34,15 +33,15 @@ class LoginController extends BaseController
         $errors = Experimenter::validate($post);
         if ( ! empty($errors)) {
             App::flash('errors', $errors);
-            Response::redirect(LoginController::route());
+            Response::redirect(ExperimenterLoginController::route());
             return;
         }
 
         $experimenter = Experimenter::where('login', '=', $post['login'])
             ->where('password', '=', sha1($post['password']))->first();
 
-        $this->loginResearcher($experimenter);
-        Response::redirect(DashboardController::route());
+        $this->login($experimenter);
+        Response::redirect(DashboardControllerExperimenter::route());
     }
 
     public static function route()
