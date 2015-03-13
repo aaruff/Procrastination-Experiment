@@ -2,7 +2,7 @@
 namespace Officium\Controllers\Subject\Questionnaire;
 
 use Officium\Controllers\Subject\SubjectBaseController;
-use Officium\Models\GeneralAcademicSurveyAnswers;
+use Officium\Models\GeneralAcademicSurvey;
 use Officium\Controllers\Subject\SubjectLoginController as Login;
 
 class GeneralAcademicController extends SubjectBaseController
@@ -21,9 +21,9 @@ class GeneralAcademicController extends SubjectBaseController
 
     public function post()
     {
-        $post = $this->request->post();
+        $answers = $this->request->post();
 
-        $errors = GeneralAcademicSurveyAnswers::validate($post);
+        $errors = GeneralAcademicSurvey::validate($answers);
         if ( ! empty($errors)) {
             $this->app->flash('errors', $errors);
             $this->response->redirect(Login::route());
@@ -31,13 +31,9 @@ class GeneralAcademicController extends SubjectBaseController
         }
 
         $subject = $this->getSubject();
-        foreach ($post as $name => $answer) {
-            $answer = new GeneralAcademicSurveyAnswers();
-            $answer->subject_id = $subject->id;
-            $answer->number = GeneralAcademicSurveyAnswers::questionNameToNumber($name);
-            $answer->answer = $answer;
-            $answer->save();
-        }
+        $answer = new GeneralAcademicSurvey;
+        $answer->setAnswers($subject, $answers);
+        $answer->save();
 
         $subject->status = self::$GENERAL_ACADEMIC_ID;
         $subject->save();
