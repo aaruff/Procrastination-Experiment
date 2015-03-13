@@ -8,7 +8,7 @@ class ExternalObligationController extends SubjectBaseController
 {
     public function get()
     {
-        $this->render('pages.subject.survey.externalObligations');
+        $this->app->render('/pages/subject/survey/externalObligations.twig');
     }
 
 }
