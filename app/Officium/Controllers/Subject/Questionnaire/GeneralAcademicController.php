@@ -1,51 +1,48 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aruff
- * Date: 3/12/15
- * Time: 11:57 AM
- */
-
 namespace Officium\Controllers\Subject\Questionnaire;
 
+use Officium\Controllers\Subject\SubjectBaseController;
+use Officium\Models\Questionnaire;
+use Officium\Controllers\Subject\SubjectLoginController as Login;
 
-use Officium\Models\Questionnaire as QuestionnaireModel;
-use Officium\Controllers\BaseController;
-
-class GeneralAcademicController extends BaseController
+class GeneralAcademicController extends SubjectBaseController
 {
+    private static $GENERAL_ACADEMIC_ID = 1;
+
     public function __construct()
     {
-        // TODO: Handle out of order, or incorrect requests for the general academic survey.
+        parent::__construct();
     }
+
     public function get()
     {
-        $this->render('pages.subject.survey.academic');
+        $this->app->render('/pages/subject/survey/academic.twig');
     }
 
     public function post()
     {
-        $post = Request::post();
-        $errors = QuestionnaireModel::validateGeneralAcademicSurvey($post);
+        $post = $this->request->post();
+
+        $errors = Questionnaire::validateGeneralAcademicSurvey($post);
         if ( ! empty($errors)) {
-            App::flash('errors', $errors);
-            Response::redirect(Login::route());
+            $this->app->flash('errors', $errors);
+            $this->response->redirect(Login::route());
             return;
         }
 
         $subject = $this->getSubject();
         foreach ($post as $name => $answer) {
-            $answer = new QuestionnaireModel();
+            $answer = new Questionnaire();
             $answer->subject_id = $subject->id;
-            $answer->number = QuestionnaireModel::questionNameToNumber($name);
+            $answer->number = Questionnaire::questionNameToNumber($name);
             $answer->answer = $answer;
             $answer->save();
         }
 
-        $subject->status = Subject::$ACADEMIC_SECTION;
+        $subject->status = self::$GENERAL_ACADEMIC_ID;
         $subject->save();
 
-        Response::redirect('/subject/questionnaire/incoming/2');
+        $this->response->redirect('/subject/questionnaire/incoming/ao');
     }
 
 }
