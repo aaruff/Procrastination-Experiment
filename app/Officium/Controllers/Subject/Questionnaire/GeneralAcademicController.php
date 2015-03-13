@@ -12,6 +12,9 @@ class GeneralAcademicController extends SubjectBaseController
     public function __construct()
     {
         parent::__construct();
+        if ( ! $this->isLoggedIn()) {
+            $this->response->redirect(Login::route());
+        }
     }
 
     public function get()
@@ -30,8 +33,8 @@ class GeneralAcademicController extends SubjectBaseController
             return;
         }
 
-        $subject = $this->getSubject();
         $answer = new GeneralAcademicSurvey;
+        $subject = $this->getSubject();
         $answer->setAnswers($subject, $answers);
         $answer->save();
 
