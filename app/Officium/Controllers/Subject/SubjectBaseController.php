@@ -39,7 +39,7 @@ class SubjectBaseController
 
     protected function getSubject()
     {
-        return Subject::where('id', '=', $_SESSION['subject'])->first();
+        return $_SESSION['subject'];
     }
 
     protected function isLoggedIn()
