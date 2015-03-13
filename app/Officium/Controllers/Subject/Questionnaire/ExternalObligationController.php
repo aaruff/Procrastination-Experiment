@@ -4,7 +4,7 @@ namespace Officium\Controllers\Subject\Questionnaire;
 
 use Officium\Controllers\Subject\SubjectBaseController;
 
-class ExternalObligationControllerExperimenter extends SubjectBaseController
+class ExternalObligationController extends SubjectBaseController
 {
     public function get()
     {
