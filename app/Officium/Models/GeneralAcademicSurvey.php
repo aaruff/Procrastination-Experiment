@@ -6,10 +6,15 @@ use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationExce
 use Respect\Validation\Validator as Validator;
 use Illuminate\Database\Eloquent\Model;
 
-class GeneralAcademicSurveyAnswers extends Model
+class GeneralAcademicSurvey extends Model
 {
     public $timestamps = false;
     protected $table = 'general_academic_survey_answers';
+
+    public function subject()
+    {
+        return $this->belongsTo('Officium\Model\Subject', 'subjects');
+    }
 
     public static function validate($credentials)
     {
@@ -34,5 +39,14 @@ class GeneralAcademicSurveyAnswers extends Model
         }
 
         return $errorMessages;
+    }
+
+    public function setAnswers(Subject $subject, array $answers)
+    {
+        $this->subject_id = $subject->id;
+        $this->major = $answers['major'];
+        $this->gpa = $answers['gpa'];
+        $this->number_courses = $answers['number_courses'];
+        $this->number_clubs = $answers['number_clubs'];
     }
 }
