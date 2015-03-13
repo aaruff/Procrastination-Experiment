@@ -7,12 +7,13 @@ use Officium\Controllers\Subject\SubjectLoginController as Login;
 
 class GeneralAcademicController extends SubjectBaseController
 {
+    private static $NO_SURVEYS_COMPLETED = 0;
     private static $GENERAL_ACADEMIC_ID = 1;
 
     public function __construct()
     {
         parent::__construct();
-        if ( ! $this->isLoggedIn()) {
+        if ( ! $this->isLoggedIn() || ! $this->isNextStage()) {
             $this->response->redirect(Login::route());
         }
     }
@@ -42,5 +43,17 @@ class GeneralAcademicController extends SubjectBaseController
         $subject->save();
 
         $this->response->redirect('/subject/questionnaire/incoming/ao');
+    }
+
+    private function isNextStage()
+    {
+        $subject = $this->getSubject();
+
+        if ($subject->status == self::$NO_SURVEYS_COMPLETED) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
