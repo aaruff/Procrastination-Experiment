@@ -4,9 +4,9 @@ namespace Officium\Controllers\Experimenter\Experiment;
 
 use Officium\Models\Subject;
 use Officium\Models\Session as ExperimentSession;
-use Officium\Controllers\BaseController;
+use Officium\Controllers\ExperimenterBaseController;
 
-class SessionController extends BaseController
+class SessionControllerExperimenter extends ExperimenterBaseController
 {
     public function get()
     {
@@ -20,7 +20,7 @@ class SessionController extends BaseController
         $errors = ExperimentSession::validate($post);
         if ( ! empty($errors)) {
             App::flash('errors', $errors);
-            Response::redirect(SessionController::route());
+            Response::redirect(SessionControllerExperimenter::route());
             return;
         }
 
@@ -35,14 +35,14 @@ class SessionController extends BaseController
             $subject->status = Subject::$UNREGISTERED;
             $subject->save();
         }
-        App::redirect(DashboardController::route());
+        App::redirect(DashboardControllerExperimenter::route());
     }
 
     public function show($id='')
     {
         $session = ExperimentSession::validateId($id);
         if ( ! $session) {
-            Response::redirect(SessionController::route());
+            Response::redirect(SessionControllerExperimenter::route());
             return;
         }
 
