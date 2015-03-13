@@ -5,7 +5,7 @@ namespace Officium\Controllers\Subject\Questionnaire;
 
 use Officium\Controllers\Subject\SubjectBaseController;
 
-class AttentiveOrganizedControllerExperimenter extends SubjectBaseController
+class AttentiveOrganizedController extends SubjectBaseController
 {
     public function get()
     {
