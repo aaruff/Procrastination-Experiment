@@ -14,6 +14,7 @@ return array(
         ),
     ),
     // cookie config
+    'cookies.encrypt' => true,
     'cookies.secret_key' => getenv('SECRET_KEY'),
     'cookies.lifetime' => getenv('SECRET_KEY'),
     'cookies.cipher' => MCRYPT_RIJNDAEL_256,
