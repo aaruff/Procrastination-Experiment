@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Questionnaire extends Model
 {
-    public static $ACADEMIC = 1;
+    public $timestamps = false;
+    protected $table = 'general_academic_survey_answers';
 
     public static function validateSectionId($id)
     {
@@ -22,16 +23,6 @@ class Questionnaire extends Model
         } // Handle authentication errors
         catch (ValidationException $e) {
             return $errorMessages['sid'] = "Invalid section ID";
-        }
-    }
-
-    public static function validate($sectionId, $credentials)
-    {
-        switch ($sectionId) {
-            case self::ACADEMIC:
-                return static::validateGeneralAcademicSurvey($credentials);
-            default:
-                return $errorMessages['error'] = 'Question Type Required';
         }
     }
 
@@ -65,15 +56,10 @@ class Questionnaire extends Model
         $questionIdMap = [
             'major' => 1,
             'gpa' => 2,
-            'course_load' => 3,
-            'clubs' => 4,
+            'number_courses' => 3,
+            'number_clubs' => 4,
         ];
 
         return $questionIdMap[$name];
-    }
-
-    public static function parseEntries($sectionId, $entries)
-    {
-
     }
 }
