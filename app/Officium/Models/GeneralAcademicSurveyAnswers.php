@@ -6,27 +6,12 @@ use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationExce
 use Respect\Validation\Validator as Validator;
 use Illuminate\Database\Eloquent\Model;
 
-class Questionnaire extends Model
+class GeneralAcademicSurveyAnswers extends Model
 {
     public $timestamps = false;
     protected $table = 'general_academic_survey_answers';
 
-    public static function validateSectionId($id)
-    {
-        $errorMessages = [];
-
-        // Validate input
-        try {
-            Validator::arr()
-                ->key('sid', Validator::notEmpty()->int()->equals(1))
-                ->assert($id);
-        } // Handle authentication errors
-        catch (ValidationException $e) {
-            return $errorMessages['sid'] = "Invalid section ID";
-        }
-    }
-
-    public static function validateGeneralAcademicSurvey($credentials)
+    public static function validate($credentials)
     {
         $errorMessages = [];
 
