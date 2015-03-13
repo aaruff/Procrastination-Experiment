@@ -2,8 +2,8 @@
 //---------------------------------------------------
 // Subject Routes
 //---------------------------------------------------
-Route::get('/subject/login', '\Officium\Controllers\Subject\LoginController:get');
-Route::post('/subject/login', '\Officium\Controllers\Subject\LoginController:post');
+Route::get('/subject/login', '\Officium\Controllers\Subject\SubjectLoginController:get');
+Route::post('/subject/login', '\Officium\Controllers\Subject\SubjectLoginController:post');
 
 // Incoming Questionnaire
 Route::get('/subject/questionnaire/a', '\Officium\Controllers\Subject\Questionnaire\GeneralAcademicController:get');
