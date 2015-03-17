@@ -22,6 +22,11 @@ class Subject extends Model
         return $this->belongsTo('Officium\Models\Session', 'sessions');
     }
 
+    public function generalAcademicSurveyAnswers()
+    {
+        return $this->hasOne('Officium\Model\GeneralAcademicSurveyAnswer', 'general_academic_survey_answers');
+    }
+
     public function generateLogin()
     {
         $login = $this->getLoginName();
