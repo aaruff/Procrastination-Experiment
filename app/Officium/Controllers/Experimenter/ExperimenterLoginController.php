@@ -2,7 +2,7 @@
 
 namespace Officium\Controllers\Experimenter;
 
-use Officium\Controllers\Experimenter\Experiment\DashboardControllerExperimenter;
+use Officium\Controllers\Experimenter\Experiment\DashboardController;
 use Officium\Models\Experimenter;
 
 /**
@@ -19,7 +19,7 @@ class ExperimenterLoginController extends ExperimenterBaseController
     public function get()
     {
         $this->logout();
-        $this->render('pages.experimenter.login');
+        $this->app->render('/pages/experimenter/login.twig');
     }
 
     /**
@@ -27,13 +27,13 @@ class ExperimenterLoginController extends ExperimenterBaseController
      */
     public function post()
     {
-        $post = Request::post();
+        $post = $this->request->post();
 
         // Error Handling
         $errors = Experimenter::validate($post);
         if ( ! empty($errors)) {
-            App::flash('errors', $errors);
-            Response::redirect(ExperimenterLoginController::route());
+            $this->app->flash('errors', $errors);
+            $this->response->redirect(ExperimenterLoginController::route());
             return;
         }
 
@@ -41,7 +41,7 @@ class ExperimenterLoginController extends ExperimenterBaseController
             ->where('password', '=', sha1($post['password']))->first();
 
         $this->login($experimenter);
-        Response::redirect(DashboardControllerExperimenter::route());
+        $this->response->redirect(DashboardController::route());
     }
 
     public static function route()
