@@ -2,14 +2,16 @@
 namespace Officium\Controllers\Experimenter\Experiment;
 
 use Officium\Models\Session as ExperimentSession;
-use Officium\Controllers\ExperimenterBaseController;
+use Officium\Controllers\Experimenter\ExperimenterBaseController;
+use Officium\Controllers\Experimenter\ExperimenterLoginController as Login;
 
-class DashboardControllerExperimenter extends ExperimenterBaseController
+class DashboardController extends ExperimenterBaseController
 {
     public function  __construct()
     {
+        parent::__construct();
         if ( ! $this->isLoggedIn()) {
-            $this->redirectToLogin();
+            $this->response->redirect(Login::route());
         }
     }
 
@@ -21,6 +23,6 @@ class DashboardControllerExperimenter extends ExperimenterBaseController
     public function get()
     {
         $sessions = ExperimentSession::all();
-        $this->render('pages.experimenter.experiment.dashboard', ['sessions'=>$sessions]);
+        $this->app->render('/pages/experimenter/experiment/dashboard.twig', ['sessions'=>$sessions]);
     }
 }
