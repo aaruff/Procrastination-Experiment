@@ -19,8 +19,8 @@ Route::post('/subject/questionnaire/at', '\Officium\Controllers\Subject\Question
 //---------------------------------------------------
 // Experimenter Routes
 //---------------------------------------------------
-Route::get('/experimenter/login', '\Officium\Controllers\Experimenter\LoginController:get');
-Route::post('/experimenter/login', 'Officium\Controllers\Experimenter\LoginController:post');
+Route::get('/experimenter/login', '\Officium\Controllers\Experimenter\ExperimenterLoginController:get');
+Route::post('/experimenter/login', 'Officium\Controllers\Experimenter\ExperimenterLoginController:post');
 Route::get('/experiment/dashboard', 'Officium\Controllers\Experimenter\Experiment\DashboardController:get');
 Route::post('/experiment/dashboard', 'Officium\Controllers\Experimenter\Experiment\DashboardController:post');
 Route::get('/experiment/session/:id', 'Officium\Controllers\Experimenter\Experiment\SessionController:show');
