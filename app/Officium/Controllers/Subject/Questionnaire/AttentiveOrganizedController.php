@@ -9,7 +9,7 @@ class AttentiveOrganizedController extends SubjectBaseController
 {
     public function get()
     {
-        $this->render('pages.subject.survey.attentiveOrganized');
+        $this->app->render('/pages/subject/survey/attentiveOrganized.twig');
     }
 
 }
