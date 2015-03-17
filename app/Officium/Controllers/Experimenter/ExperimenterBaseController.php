@@ -1,9 +1,7 @@
 <?php
 namespace Officium\Controllers\Experimenter;
 
-use Officium\Controllers\BaseController;
-
-class ExperimenterBaseController extends BaseController
+class ExperimenterBaseController
 {
     protected $app;
     protected $request;
