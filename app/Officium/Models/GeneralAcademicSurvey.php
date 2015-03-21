@@ -4,17 +4,11 @@ namespace Officium\Models;
 
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator as Validator;
-use Illuminate\Database\Eloquent\Model;
 
-class GeneralAcademicSurvey extends Model
+class GeneralAcademicSurvey
 {
-    public $timestamps = false;
-    protected $table = 'general_academic_survey_answers';
+    private $keys = ['major'=>'', 'gpa'=>'', 'number_courses'=>'', 'number_clubs'=>''];
 
-    public function subject()
-    {
-        return $this->belongsTo('Officium\Model\Subject', 'subjects');
-    }
 
     public static function validate($credentials)
     {
@@ -41,12 +35,10 @@ class GeneralAcademicSurvey extends Model
         return $errorMessages;
     }
 
-    public function setAnswers(Subject $subject, array $answers)
+    public function setAnswers(array $answers)
     {
-        $this->subject_id = $subject->id;
-        $this->major = $answers['major'];
-        $this->gpa = $answers['gpa'];
-        $this->number_courses = $answers['number_courses'];
-        $this->number_clubs = $answers['number_clubs'];
+        foreach ($answers as $key=>$value) {
+            $this->keys[$key] = $answers[$key];
+        }
     }
 }
