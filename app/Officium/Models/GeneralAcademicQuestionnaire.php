@@ -5,7 +5,7 @@ namespace Officium\Models;
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator as Validator;
 
-class GeneralAcademicSurvey
+class GeneralAcademicQuestionnaire
 {
     private $keys = ['major'=>'', 'gpa'=>'', 'number_courses'=>'', 'number_clubs'=>''];
 
