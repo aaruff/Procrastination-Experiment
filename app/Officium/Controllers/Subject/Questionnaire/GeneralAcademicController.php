@@ -2,7 +2,7 @@
 namespace Officium\Controllers\Subject\Questionnaire;
 
 use Officium\Controllers\Subject\SubjectBaseController;
-use Officium\Models\GeneralAcademicSurvey;
+use Officium\Models\GeneralAcademicQuestionnaire;
 use Officium\Controllers\Subject\SubjectLoginController as Login;
 
 class GeneralAcademicController extends SubjectBaseController
@@ -27,27 +27,27 @@ class GeneralAcademicController extends SubjectBaseController
     {
         $answers = $this->request->post();
 
-        $errors = GeneralAcademicSurvey::validate($answers);
+        $errors = GeneralAcademicQuestionnaire::validate($answers);
         if ( ! empty($errors)) {
             $this->app->flash('errors', $errors);
             $this->response->redirect(Login::route());
             return;
         }
 
-        $answer = new GeneralAcademicSurvey;
-        $subject = $this->getSubject();
-        $answer->setAnswers($subject, $answers);
-        $answer->save();
+        $questionnaire = new GeneralAcademicQuestionnaire;
+        $questionnaire->setAnswers($answers);
+        $this->setSession(get_class($questionnaire), $questionnaire);
 
+        $subject = $this->getFromSession('subject');
         $subject->status = self::$GENERAL_ACADEMIC_ID;
         $subject->save();
 
-        $this->response->redirect('/subject/questionnaire/incoming/ao');
+        $this->response->redirect('/subject/questionnaire/ao');
     }
 
     private function isNextStage()
     {
-        $subject = $this->getSubject();
+        $subject = $this->getFromSession('subject');
 
         if ($subject->status == self::$NO_SURVEYS_COMPLETED) {
             return true;
