@@ -5,15 +5,15 @@
 Route::get('/subject/login', '\Officium\Controllers\Subject\SubjectLoginController:get');
 Route::post('/subject/login', '\Officium\Controllers\Subject\SubjectLoginController:post');
 
-// Incoming Questionnaire
-Route::get('/subject/questionnaire/a', '\Officium\Controllers\Subject\Questionnaire\GeneralAcademicController:get');
-Route::post('/subject/questionnaire/a', '\Officium\Controllers\Subject\Questionnaire\GeneralAcademicController:post');
-Route::get('/subject/questionnaire/ao', '\Officium\Controllers\Subject\Questionnaire\AcademicObligationController:get');
-Route::post('/subject/questionnaire/ao', '\Officium\Controllers\Subject\Questionnaire\AcademicObligationController:post');
-Route::get('/subject/questionnaire/eo', '\Officium\Controllers\Subject\Questionnaire\ExternalObligationController:get');
-Route::post('/subject/questionnaire/eo', '\Officium\Controllers\Subject\Questionnaire\ExternalObligationController:post');
-Route::get('/subject/questionnaire/at', '\Officium\Controllers\Subject\Questionnaire\AttentiveOrganizedController:get');
-Route::post('/subject/questionnaire/at', '\Officium\Controllers\Subject\Questionnaire\AttentiveOrganizedController:post');
+// Incoming Survey
+Route::get('/subject/survey/a', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:getGeneralAcademicSurvey');
+Route::post('/subject/survey/a', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:postGeneralAcademicSurvey');
+Route::get('/subject/survey/ao', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:getAcademicObligationSurvey');
+Route::post('/subject/survey/ao', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:postAcademicObligationSurvey');
+Route::get('/subject/survey/eo', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:getExternalObligationSurvey');
+Route::post('/subject/survey/eo', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:postExternalObligationSurvey');
+Route::get('/subject/survey/at', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:getExternalObligationSurvey');
+Route::post('/subject/survey/at', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:postExternalObligationSurvey');
 
 
 //---------------------------------------------------
