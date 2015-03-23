@@ -5,11 +5,19 @@ namespace Officium\Models;
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator as Validator;
 
-class GeneralAcademicSurvey
+class GeneralAcademicSurvey extends Survey
 {
-    private $keys = ['major'=>'', 'gpa'=>'', 'number_courses'=>'', 'number_clubs'=>''];
+    public function __construct()
+    {
+        parent::__construct(['major', 'gpa', 'number_courses', 'number_clubs']);
+    }
 
-
+    /**
+     * Validates general academic form entries.
+     *
+     * @param $credentials
+     * @return array
+     */
     public static function validate($credentials)
     {
         $errorMessages = [];
@@ -35,15 +43,4 @@ class GeneralAcademicSurvey
         return $errorMessages;
     }
 
-    public function setAnswers(array $answers)
-    {
-        foreach ($answers as $key=>$value) {
-            $this->keys[$key] = $answers[$key];
-        }
-    }
-
-    public function getAnswers()
-    {
-        return $this->keys;
-    }
 }
