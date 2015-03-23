@@ -3,7 +3,7 @@
 namespace Officium\Controllers;
 
 
-class Home extends BaseController {
+class Home extends ExperimenterBaseController {
     function __construct() {
         parent::__construct();
     }
