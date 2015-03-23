@@ -1,12 +1,17 @@
 <?php
-namespace Officium\Controllers\Subject\Questionnaire;
+namespace Officium\Controllers\Subject\Survey;
 
 use Officium\Controllers\Subject\SubjectBaseController;
+use Officium\Models\AcademicObligationSurvey;
+use Officium\Models\ExternalObligationSurvey;
 use Officium\Models\GeneralAcademicSurvey;
 use Officium\Controllers\Subject\SubjectLoginController as Login;
+use Officium\Models\Survey;
 
 class IncomingSurveyController extends SubjectBaseController
 {
+    private $route = '/subject/survey/';
+
     /**
      * Renders the general academic questionnaire.
      */
@@ -20,7 +25,27 @@ class IncomingSurveyController extends SubjectBaseController
      */
     public function getAcademicObligationSurvey()
     {
-        $this->app->render('/pages/subject/survey/academic.twig');
+        $this->app->render('/pages/subject/survey/academicObligations.twig');
+    }
+
+    /**
+     * Renders the academic obligation questionnaire.
+     */
+    public function getExternalObligationSurvey()
+    {
+        $this->app->render('/pages/subject/survey/externalObligations.twig');
+    }
+
+    private function post(Survey $survey, $routeName)
+    {
+        if ( $survey->validate()) {
+            $this->app->flash('errors', $survey->getErrors());
+            $this->response->redirect(Login::route());
+            return;
+        }
+
+        $this->setSession($routeName, $survey);
+        $this->response->redirect($this->route . $routeName);
     }
 
     /**
@@ -28,19 +53,22 @@ class IncomingSurveyController extends SubjectBaseController
      */
     public function postGeneralAcademicSurvey()
     {
-        $answers = $this->request->post();
+        $this->post(new GeneralAcademicSurvey($this->request->post()), 'ga');
+    }
 
-        $errors = GeneralAcademicSurvey::validate($answers);
-        if ( ! empty($errors)) {
-            $this->app->flash('errors', $errors);
-            $this->response->redirect(Login::route());
-            return;
-        }
+    /**
+     * Processes the academic obligations post request.
+     */
+    public function postAcademicObligationSurvey()
+    {
+        $this->post(new AcademicObligationSurvey($this->request->post()), 'ao');
+    }
 
-        $questionnaire = new GeneralAcademicSurvey;
-        $questionnaire->setAnswers($answers);
-        $this->setSession(get_class($questionnaire), $questionnaire);
-
-        $this->response->redirect('/subject/questionnaire/ao');
+    /**
+     * Processes the academic obligations post request.
+     */
+    public function postExternalObligationSurvey()
+    {
+        $this->post(new ExternalObligationSurvey($this->request->post()), 'eo');
     }
 }
