@@ -29,7 +29,7 @@ class SessionController extends ExperimenterBaseController
 
         for ($i = 0; $i < $size; ++$i) {
             $subject = new Subject();
-            $subject->login = $subject->generateLogin();
+            $subject->login = $subject->generateSubjectLoginName();
             $subject->password = password_hash($session->id . $subject->login, PASSWORD_DEFAULT);
             $subject->session_id = $session->id;
             $subject->status = Subject::$UNREGISTERED;
