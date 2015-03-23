@@ -5,7 +5,7 @@ namespace Officium\Models;
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator as Validator;
 
-class GeneralAcademicQuestionnaire
+class GeneralAcademicSurvey
 {
     private $keys = ['major'=>'', 'gpa'=>'', 'number_courses'=>'', 'number_clubs'=>''];
 
@@ -40,5 +40,10 @@ class GeneralAcademicQuestionnaire
         foreach ($answers as $key=>$value) {
             $this->keys[$key] = $answers[$key];
         }
+    }
+
+    public function getAnswers()
+    {
+        return $this->keys;
     }
 }
