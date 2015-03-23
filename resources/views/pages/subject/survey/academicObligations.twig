@@ -8,7 +8,7 @@
                 {# Course Work #}
                 <div class="form-group">
                     <label>How many hours between [x] and [y] do you expect to spend on course work</label>
-                    <input type="text" class="form-control" name="course_work" />
+                    <input type="text" class="form-control" name="hours_course_work" />
                 </div>
 
                 <fieldset>
@@ -69,37 +69,23 @@
 
     </div>
     <script>
-        $(document).ready(function() {
-            var max_fields      = 10;
-            var numInputFields = 1;
-
-            $(".add_item").click(function(e){
-                e.preventDefault();
-                if(numInputFields < max_fields){
-                    numInputFields++; //text box increment
-                    var insertId = '#' + $(this).data('group') + '_insert';
-                    $(insertId).append(
-                            '<div class="col-xs-offset-4">' +
-                            '<div class="col-xs-9" >' +
-                            '<input type="text" class="form-control" placeholder="Assignment Deadline (mm\\dd\\yyyy)"  ' +
-                            'name="' + $(this).data('group') + '_assignments[]" /> ' +
-                            '</div>' +
-                            '<div class="col-xs-2 remove_item" >' +
-                            '<a class="btn btn-danger" href="#">' +
-                            '<i class="fa fa-minus"></i> Remove' +
-                            '</a>' +
-                            '</div>' +
-                            '</div>'
-                    );
-                }
-            });
-
-            $(".dynamic-entry").on("click", ".remove_item", function(e) {
-                e.preventDefault();
-                $(this).parent('div').remove();
-                numInputFields--;
-            });
+        // initialize input widgets first
+        $('.time').timepicker({
+            'showDuration': true,
+            'timeFormat': 'g:i a'
         });
+
+        $('.date').datepicker({
+            'format': 'm/d/yyyy',
+            'autoclose': true
+        });
+
+        // initialize workPair
+        var workGroupPair = document.getElementById('work-group');
+        var workPair = new Datepair(workGroupPair);
+
+        var familyGroupPair = document.getElementById('family-group');
+        var familyPair = new Datepair(familyGroupPair);
     </script>
 {% endblock %}
 
