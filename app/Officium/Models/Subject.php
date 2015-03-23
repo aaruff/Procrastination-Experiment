@@ -5,29 +5,51 @@ use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationExce
 use Respect\Validation\Validator as Validator;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Subject
+ * @package Officium\Models
+ */
 class Subject extends Model
 {
     public static $UNREGISTERED = 0;
-    public static $ACADEMIC_SECTION = 1;
-    public static $ACADEMIC_OBLIGATION_SECTION = 2;
-    public static $SOCIAL_OBLIGATION_SECTION = 3;
-    public static $ATTENTIVE_ORGANIZED_SECTION = 4;
-    public static $CERTIFICATE_SECTION = 5;
+    public static $GENERAL_ACADEMIC_QUESTIONNAIRE = 1;
+    public static $ACADEMIC_OBLIGATION_QUESTIONNAIRE = 2;
+    public static $SOCIAL_OBLIGATION_QUESTIONNAIRE = 3;
+    public static $ATTENTION_QUESTIONNAIRE = 4;
+    public static $CERTIFICATE_QUESTIONNAIRE = 5;
 
+    /**
+     * @var bool database timestamp enabled
+     */
     public $timestamps = false;
+
+    /**
+     * @var string database table name
+     */
     protected $table = 'subjects';
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function session()
     {
         return $this->belongsTo('Officium\Models\Session', 'sessions');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function generalAcademicSurveyAnswers()
     {
         return $this->hasOne('Officium\Model\GeneralAcademicSurveyAnswer', 'general_academic_survey_answers');
     }
 
-    public function generateLogin()
+    /**
+     * Returns a uniquely random subject name.
+     *
+     * @return string
+     */
+    public function generateSubjectLoginName()
     {
         $login = $this->getLoginName();
         do {
@@ -37,6 +59,12 @@ class Subject extends Model
         return $login;
     }
 
+    /**
+     * Returns a randomly generated subject name.
+     *
+     * @param int $syllables
+     * @return string
+     */
     private function getLoginName($syllables = 3)
     {
         /**
@@ -91,6 +119,12 @@ class Subject extends Model
 
     }
 
+    /**
+     * Validate the subject's credentials.
+     *
+     * @param $credentials
+     * @return array
+     */
     public static function validate($credentials)
     {
         $errorMessages = [];
