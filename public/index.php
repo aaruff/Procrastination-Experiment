@@ -1,4 +1,10 @@
 <?php
+/*---------------------------------------------------
+ * Session
+ *--------------------------------------------------- */
+session_cache_limiter(false);
+session_start();
+
 define('BASE_DIR', __DIR__ . "/..");
 
 require BASE_DIR . '/vendor/autoload.php';
@@ -45,11 +51,5 @@ require BASE_DIR . '/app/routes.php';
 $template = $app->view();
 $template->parserOptions = require BASE_DIR . '/config/twig.php';
 $template->parserExtensions = array(new \Slim\Views\TwigExtension());
-
-/*---------------------------------------------------
- * Cookies
- *--------------------------------------------------- */
-$cookiesConfig = require BASE_DIR . '/config/cookies.php';
-$app->add(new \Slim\Middleware\SessionCookie($cookiesConfig));
 
 $app->run();
