@@ -52,13 +52,26 @@ create table task_logs(
   date_time       datetime not null
 ) ENGINE=InnoDB;
 
-drop table if exists general_academic_survey_answers;
-create table general_academic_survey_answers(
-    id integer auto_increment primary key,
-    subject_id integer not null,
-    major varchar(255) not null,
-    gpa double not null,
-    number_courses integer not null,
-    number_clubs integer not null
-) ENGINE=InnoDB;
+#----------------------------------------
+# Incoming Survey Tables
+#----------------------------------------
+drop table if exists survey_answers;
+create table survey_answers(
+  id					integer auto_increment primary key,
+  subject_id integer not null,
+  major varchar(255) not null,
+  gpa double not null,
+  number_courses integer not null,
+  number_clubs integer not null,
+  hours_course_work integer not null
 
+) ENGINE InnoDB;
+
+drop table if exists subject_schedules;
+create table subject_schedules(
+  id integer auto_increment primary key,
+  subject_id integer not null,
+  type varchar(255) not null,
+  start_datetime datetime not null,
+  end_datetime datetime not null
+) ENGINE=InnoDB;
