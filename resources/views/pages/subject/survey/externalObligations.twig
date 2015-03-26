@@ -20,7 +20,7 @@
                     {# Work Hours #}
                     <div class="form-group">
                         <label>From begin date to end date, how much time (in hours) do you expect to allocate your job?</label>
-                        <input type="text" class="form-control" name="work_hours" />
+                        <input type="text" class="form-control" name="hours_work" />
                     </div>
 
                     {# Work Schedule #}
@@ -40,7 +40,7 @@
                     {# Social Obligations in Hours #}
                     <div class="form-group">
                         <label>From begin date to end date, how much time (in hours) do you expect to your social obligations or recreational activities?</label>
-                        <input type="text" class="form-control" name="social_hours" />
+                        <input type="text" class="form-control" name="hours_social_obligations" />
                     </div>
 
                     {# Social Obligation Schedule #}
@@ -62,7 +62,7 @@
                     <div class="form-group">
                         <label>From begin date to end date, how much time (in hours) do you expect to your social obligations
                             or recreational activities?</label>
-                        <input type="text" class="form-control" name="family_hours" />
+                        <input type="text" class="form-control" name="hours_family_obligations" />
                     </div>
 
                     {# Family Obligation Schedule #}
@@ -88,7 +88,7 @@
         // initialize input widgets first
         $('.time').timepicker({
             'showDuration': true,
-            'timeFormat': 'g:ia'
+            'timeFormat': 'g:i a'
         });
 
         $('.date').datepicker({
