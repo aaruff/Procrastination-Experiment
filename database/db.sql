@@ -55,18 +55,37 @@ create table task_logs(
 #----------------------------------------
 # Incoming Survey Tables
 #----------------------------------------
-drop table if exists survey_answers;
-create table survey_answers(
+drop table if exists incoming_survey_answers;
+create table incoming_survey_answers(
   id					integer auto_increment primary key,
   subject_id integer not null,
   major varchar(255) not null,
   gpa double not null,
   number_courses integer not null,
   number_clubs integer not null,
-  hours_course_work integer not null
-
+  hours_course_work integer not null,
+  employed boolean not null,
+  hours_work integer default 0,
+  hours_social_obligations integer default 0,
+  hours_family_obligations integer default 0,
+  rank_conscientiousness integer not null,
+  rank_assignment_lateness integer not null,
+  rank_tardiness integer not null,
+  rank_external_distractions integer not null,
+  rank_dependability integer not null,
+  rank_ability_follow_schedule integer not null,
+  rank_ability_organize integer not null,
+  rank_ability_pay_attention integer not null,
+  certificates_year integer not null,
+  temptation integer not null,
+  temptation_certificates_year integer not null,
+  nights_per_year integer not null
 ) ENGINE InnoDB;
 
+
+#----------------------------------------
+# Survey Schedules
+#----------------------------------------
 drop table if exists subject_schedules;
 create table subject_schedules(
   id integer auto_increment primary key,
