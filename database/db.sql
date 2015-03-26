@@ -42,6 +42,14 @@ create table subjects(
   status integer not null
 ) ENGINE=InnoDB;
 
+drop table if exists state_route_maps;
+create table state_route_maps (
+  id integer auto_increment primary key,
+  subject_id integer not null,
+  state_id integer not null,
+  route varchar(255) not null
+) ENGINE=InnoDB;
+
 drop table if exists task_logs;
 create table task_logs(
   id					integer auto_increment primary key,
