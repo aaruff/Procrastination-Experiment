@@ -86,7 +86,7 @@ class SubjectBaseController
     protected function redirect(Subject $subject)
     {
         if ($subject->status == 0) {
-            $this->app->redirect('/subject/questionnaire/a');
+            $this->app->redirect('/subject/survey/a');
         }
     }
 
