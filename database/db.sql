@@ -21,8 +21,8 @@ create table sessions(
   payoff integer not null
 ) Engine=InnoDB;
 
-drop table if exists subject_task_schedules;
-create table subject_task_schedules(
+drop table if exists task_schedules;
+create table task_schedules(
   id  integer auto_increment primary key,
   subject_id integer not null,
   task integer not null, # Task IDs {1, 2, 3}
@@ -37,17 +37,8 @@ create table subjects(
   login	varchar(100) not null,
   password varchar(255) not null,
   email varchar(100) default null,
-  # unregistered = 1, email registered = 2, first completed = 3, deadline set = 4, reminder payment completed = 5
-  # second questionnaire set = 6, survey completed = 7
-  status integer not null
-) ENGINE=InnoDB;
-
-drop table if exists state_route_maps;
-create table state_route_maps (
-  id integer auto_increment primary key,
-  subject_id integer not null,
-  state_id integer not null,
-  route varchar(255) not null
+  status integer default 1, # 1 => in play, 0 = finished
+  state integer not null # A subject only plays one game so placing state here will suffice
 ) ENGINE=InnoDB;
 
 drop table if exists task_logs;
@@ -59,6 +50,7 @@ create table task_logs(
   event integer not null,
   date_time       datetime not null
 ) ENGINE=InnoDB;
+
 
 #----------------------------------------
 # Incoming Survey Tables
@@ -92,10 +84,10 @@ create table incoming_survey_answers(
 
 
 #----------------------------------------
-# Survey Schedules
+# Survey Date Time Intervals
 #----------------------------------------
-drop table if exists subject_schedules;
-create table subject_schedules(
+drop table if exists survey_datetime_intervals;
+create table survey_datetime_intervals(
   id integer auto_increment primary key,
   subject_id integer not null,
   type varchar(255) not null,
