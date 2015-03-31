@@ -3,7 +3,7 @@
 namespace Officium\Models;
 
 
-class Survey
+abstract class Survey
 {
     private $keys = [];
     private $entries;
