@@ -3,12 +3,13 @@ namespace Officium\Controllers\Subject;
 
 use Officium\Models\Subject;
 use Officium\Routers\StateRouter;
+use Officium\Routers\LoginRouter;
 
 class SubjectLoginController extends SubjectBaseController
 {
     public function get()
     {
-        $this->app->render('/pages/subject/login.twig');
+        $this->app->render(LoginRouter::getTemplate());
     }
 
     /**
@@ -26,13 +27,13 @@ class SubjectLoginController extends SubjectBaseController
             return;
         }
 
-        $subject = $this->login($credentials);
-        $this->response->redirect(StateRouter::getRoute($subject));
+        $this->login($credentials);
+        $subject = $this->getSubject();
+        $this->response->redirect(StateRouter::getUri($subject->state));
     }
 
     public static function route()
     {
-        return '/subject/login';
+        return LoginRouter::getUri();
     }
-
 }
