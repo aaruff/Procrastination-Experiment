@@ -6,14 +6,8 @@ Route::get('/subject/login', '\Officium\Controllers\Subject\SubjectLoginControll
 Route::post('/subject/login', '\Officium\Controllers\Subject\SubjectLoginController:post');
 
 // Incoming Survey
-Route::get('/subject/survey/a', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:getGeneralAcademicSurvey');
-Route::post('/subject/survey/a', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:postGeneralAcademicSurvey');
-Route::get('/subject/survey/ao', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:getAcademicObligationSurvey');
-Route::post('/subject/survey/ao', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:postAcademicObligationSurvey');
-Route::get('/subject/survey/eo', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:getExternalObligationSurvey');
-Route::post('/subject/survey/eo', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:postExternalObligationSurvey');
-Route::get('/subject/survey/at', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:getExternalObligationSurvey');
-Route::post('/subject/survey/at', '\Officium\Controllers\Subject\Survey\IncomingSurveyController:postExternalObligationSurvey');
+Route::get('/subject/survey/:id', '\Officium\Controllers\Subject\SurveyController:get');
+Route::post('/subject/survey/:id', '\Officium\Controllers\Subject\SurveyController:post');
 
 
 //---------------------------------------------------
