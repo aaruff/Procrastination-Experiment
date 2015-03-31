@@ -52,9 +52,18 @@ class SubjectBaseController
     protected function login($credentials)
     {
         $subject = Subject::where('login', '=', $credentials['login'])->first();
-        $_SESSION['subject'] = $subject;
+        $_SESSION['subject_id'] = $subject->id;
 
         return $subject;
+    }
+
+    /**
+     * Return the logged in subject
+     * @return mixed
+     */
+    protected function getSubject()
+    {
+        return Subject::where('id', '=', $_SESSION['subject_id'])->first();
     }
 
     /**
@@ -97,7 +106,7 @@ class SubjectBaseController
      */
     protected function isLoggedIn()
     {
-        return isset($_SESSION['subject']);
+        return isset($_SESSION['subject_id']);
     }
 
     /**
@@ -105,6 +114,6 @@ class SubjectBaseController
      */
     protected function logout()
     {
-        if (isset($_SESSION['subject'])) unset($_SESSION['subject']);
+        if (isset($_SESSION['subject_id'])) unset($_SESSION['subject_id']);
     }
 }
