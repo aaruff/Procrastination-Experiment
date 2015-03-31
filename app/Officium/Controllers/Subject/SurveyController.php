@@ -3,15 +3,12 @@ namespace Officium\Controllers\Subject;
 
 use Officium\Controllers\Subject\SubjectLoginController as Login;
 use Officium\Models\Survey;
+use Officium\Models\SurveyFactory;
+use Officium\Routers\StateRouter;
+use Officium\Routers\SurveyRouter;
 
 class SurveyController extends SubjectBaseController
 {
-    private $surveys = [
-        'a' => ['template' => 'academic.twig', 'survey' => 'GeneralAcademicSurvey'],
-        'ao' => ['template' => 'academicObligations.twig', 'survey' => 'AcademicObligationSurvey'],
-        'eo' => ['template' => 'externalObligations.twig', 'survey' => 'ExternalObligationSurvey']
-    ];
-
     /**
      * Handles get requests
      *
@@ -19,8 +16,7 @@ class SurveyController extends SubjectBaseController
      */
     public function get($surveyId)
     {
-        $this->app->render('/pages/subject/survey/' . $this->surveys[$surveyId]['template']);
-        var_dump($_SESSION['a']->getAnswers());
+        $this->app->render(SurveyRouter::getTemplateRoute($surveyId));
     }
 
     /**
@@ -30,8 +26,8 @@ class SurveyController extends SubjectBaseController
      */
     public function post($surveyId)
     {
-        $survey = 'Officium\\Models\\' . $this->surveys[$surveyId]['survey'];
-        $this->postSurvey(new $survey($this->app->request->post()), $surveyId);
+        $survey = SurveyFactory::make($surveyId);
+        $this->postSurvey(new $survey($this->request->post()), $surveyId);
     }
 
     /**
