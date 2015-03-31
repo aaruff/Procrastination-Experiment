@@ -2,6 +2,7 @@
 namespace Officium\Controllers\Subject;
 
 use Officium\Models\Subject;
+use Officium\Routers\StateRouter;
 
 class SubjectLoginController extends SubjectBaseController
 {
@@ -25,7 +26,8 @@ class SubjectLoginController extends SubjectBaseController
             return;
         }
 
-        $this->redirect($this->login($credentials));
+        $subject = $this->login($credentials);
+        $this->response->redirect(StateRouter::getRoute($subject));
     }
 
     public static function route()
