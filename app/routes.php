@@ -1,9 +1,10 @@
 <?php
+use Officium\Routers\LoginRouter;
 //---------------------------------------------------
 // Subject Routes
 //---------------------------------------------------
-Route::get('/login', '\Officium\Controllers\Subject\SubjectLoginController:get');
-Route::post('/login', '\Officium\Controllers\Subject\SubjectLoginController:post');
+Route::get(LoginRouter::getUri(), '\Officium\Controllers\Subject\SubjectLoginController:get');
+Route::post(LoginRouter::getUri(), '\Officium\Controllers\Subject\SubjectLoginController:post');
 
 // Incoming Survey
 Route::get('/survey/:id', '\Officium\Controllers\Subject\SurveyController:get');
