@@ -2,6 +2,7 @@
 
 namespace Officium\Routers;
 
+use Officium\Models\Subject;
 
 class StateRouter
 {
@@ -9,8 +10,8 @@ class StateRouter
         0 => '/survey/a',
     ];
 
-    public static function getRoute(Subject $subject)
+    public static function getUri($state)
     {
-        return self::$routes[$subject];
+        return self::$routes[$state];
     }
 }
