@@ -47,14 +47,14 @@ class SubjectBaseController
      * Logs in the subject with the provided credentials.
      *
      * @param $credentials
-     * @return mixed
+     * @return int subject id
      */
     protected function login($credentials)
     {
         $subject = Subject::where('login', '=', $credentials['login'])->first();
         $_SESSION['subject_id'] = $subject->id;
 
-        return $subject;
+        return $subject->id;
     }
 
     /**
