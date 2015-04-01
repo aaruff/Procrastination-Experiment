@@ -2,6 +2,7 @@
 
 return array(
     'view' => (new \Slim\Views\Twig()),
+    'mode' => 'development',
     'base_url' => 'http://officium:8000/',
     'debug' => true,
     'templates.path' => BASE_DIR .'/resources/views',
