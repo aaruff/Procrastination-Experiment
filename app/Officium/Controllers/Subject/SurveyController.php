@@ -11,20 +11,17 @@ class SurveyController extends SubjectBaseController
 {
     /**
      * Handles get requests
-     *
-     * @param $surveyId
      */
-    public function get($surveyId)
+    public function get()
     {
+        $surveyId = $this->getFromSession('survey_id');
         $this->app->render(SurveyRouter::getTemplateRoute($surveyId));
     }
 
     /**
      * Handles post requests
-     *
-     * @param $surveyId
      */
-    public function post($surveyId)
+    public function post()
     {
         $survey = SurveyFactory::make($surveyId);
         $this->postSurvey(new $survey($this->request->post()), $surveyId);
