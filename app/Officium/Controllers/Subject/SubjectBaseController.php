@@ -85,7 +85,11 @@ class SubjectBaseController
      */
     protected function getFromSession($key)
     {
-        return $_SESSION[$key];
+        if (isset($_SESSION[$key])) {
+            return $_SESSION[$key];
+        }
+
+        return null;
     }
 
     /**
