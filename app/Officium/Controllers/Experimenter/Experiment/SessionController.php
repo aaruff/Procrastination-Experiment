@@ -8,11 +8,17 @@ use Officium\Controllers\Experimenter\ExperimenterBaseController;
 
 class SessionController extends ExperimenterBaseController
 {
+    /**
+     *
+     */
     public function get()
     {
         $this->app->render('/pages/experimenter/experiment/session/create.twig');
     }
 
+    /**
+     *
+     */
     public function create()
     {
         $post = $this->request->post();
@@ -32,12 +38,14 @@ class SessionController extends ExperimenterBaseController
             $subject->login = $subject->generateSubjectLoginName();
             $subject->password = password_hash($session->id . $subject->login, PASSWORD_DEFAULT);
             $subject->session_id = $session->id;
-            $subject->status = Subject::$UNREGISTERED;
             $subject->save();
         }
         $this->app->redirect(DashboardController::route());
     }
 
+    /**
+     * @param string $id
+     */
     public function show($id='')
     {
         $session = ExperimentSession::validateId($id);
@@ -49,6 +57,9 @@ class SessionController extends ExperimenterBaseController
         $this->app->render('/pages/experimenter/experiment/session/show.twig', ['session'=>$session, 'subjects'=>$session->subjects]);
     }
 
+    /**
+     * @return string
+     */
     public static function route()
     {
         return '/experiment/session';
