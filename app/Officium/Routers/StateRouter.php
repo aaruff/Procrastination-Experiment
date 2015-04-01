@@ -2,12 +2,10 @@
 
 namespace Officium\Routers;
 
-use Officium\Models\Subject;
-
 class StateRouter
 {
     private static $routes = [
-        0 => '/survey/a',
+        0 => '/survey',
     ];
 
     public static function getUri($state)
