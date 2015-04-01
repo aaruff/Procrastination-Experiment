@@ -7,8 +7,8 @@ Route::get(LoginRouter::getUri(), '\Officium\Controllers\Subject\SubjectLoginCon
 Route::post(LoginRouter::getUri(), '\Officium\Controllers\Subject\SubjectLoginController:post');
 
 // Incoming Survey
-Route::get('/survey/:id', '\Officium\Controllers\Subject\SurveyController:get');
-Route::post('/survey/:id', '\Officium\Controllers\Subject\SurveyController:post');
+Route::get('/survey', '\Officium\Controllers\Subject\SurveyController:get');
+Route::post('/survey', '\Officium\Controllers\Subject\SurveyController:post');
 
 
 //---------------------------------------------------
