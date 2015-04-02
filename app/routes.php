@@ -1,14 +1,15 @@
 <?php
 use Officium\Routers\LoginRouter;
+use \Officium\Routers\SurveyRouter;
 //---------------------------------------------------
 // Subject Routes
 //---------------------------------------------------
-Route::get(LoginRouter::getUri(), '\Officium\Controllers\Subject\SubjectLoginController:get');
-Route::post(LoginRouter::getUri(), '\Officium\Controllers\Subject\SubjectLoginController:post');
+Route::get(LoginRouter::uri(), LoginRouter::controllerRoute());
+Route::post(LoginRouter::uri(), LoginRouter::controllerRoute('POST'));
 
 // Incoming Survey
-Route::get('/survey', '\Officium\Controllers\Subject\SurveyController:get');
-Route::post('/survey', '\Officium\Controllers\Subject\SurveyController:post');
+Route::get(SurveyRouter::uri(), SurveyRouter::controllerRoute());
+Route::post(SurveyRouter::uri(), SurveyRouter::controllerRoute('POST'));
 
 
 //---------------------------------------------------
