@@ -1,6 +1,6 @@
 <?php
 
-namespace Officium\Routers;
+namespace Officium\Subject\Routers;
 
 
 class LoginRouter
