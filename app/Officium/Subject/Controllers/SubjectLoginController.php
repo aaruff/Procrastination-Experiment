@@ -1,5 +1,5 @@
 <?php
-namespace Officium\Controllers\Subject;
+namespace Officium\Subject\Controllers;
 
 use Officium\Models\Subject;
 use Officium\Routers\StateRouter;

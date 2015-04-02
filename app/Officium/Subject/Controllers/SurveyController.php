@@ -1,7 +1,7 @@
 <?php
-namespace Officium\Controllers\Subject;
+namespace Officium\Subject\Controllers;
 
-use Officium\Controllers\Subject\SubjectLoginController as Login;
+use Officium\Subject\Controllers\SubjectLoginController as Login;
 use Officium\Models\Survey;
 use Officium\Models\SurveyFactory;
 use Officium\Routers\SurveyRouter;
