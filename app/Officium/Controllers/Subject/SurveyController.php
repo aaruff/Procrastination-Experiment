@@ -4,7 +4,6 @@ namespace Officium\Controllers\Subject;
 use Officium\Controllers\Subject\SubjectLoginController as Login;
 use Officium\Models\Survey;
 use Officium\Models\SurveyFactory;
-use Officium\Routers\StateRouter;
 use Officium\Routers\SurveyRouter;
 
 class SurveyController extends SubjectBaseController
@@ -23,8 +22,9 @@ class SurveyController extends SubjectBaseController
      */
     public function post()
     {
-        $survey = SurveyFactory::make($surveyId);
-        $this->postSurvey(new $survey($this->request->post()), $surveyId);
+        $surveyId = $this->getFromSession('survey_id');
+        $surveyEntries = $this->request->post();
+        $this->postSurvey(SurveyFactory::make($surveyId, $surveyEntries), $surveyId);
     }
 
     /**
@@ -41,7 +41,8 @@ class SurveyController extends SubjectBaseController
             return;
         }
 
-        $this->setSession($id, $survey);
-        $this->response->redirect('/subject/survey/' . $id);
+        $this->setSession('survey_id', $id);
+        $this->setSession($id, $survey->getAnswers());
+        $this->response->redirect(SurveyRouter::uri());
     }
 }
