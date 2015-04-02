@@ -1,6 +1,6 @@
 <?php
 
-namespace Officium\Controllers\Experimenter;
+namespace Officium\Experimenter\Controllers;
 
 use Officium\Controllers\Experimenter\Experiment\DashboardController;
 use Officium\Models\Experimenter;

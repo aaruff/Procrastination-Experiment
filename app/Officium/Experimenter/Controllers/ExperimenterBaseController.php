@@ -1,5 +1,5 @@
 <?php
-namespace Officium\Controllers\Experimenter;
+namespace Officium\Experimenter\Controllers;
 
 class ExperimenterBaseController
 {
