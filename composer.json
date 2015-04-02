@@ -15,8 +15,5 @@
   },
   "autoload": {
     "psr-4": { "Officium\\": "app/Officium" }
-  },
-  "autoload-dev": {
-    "psr-4": { "Officium\\Tests\\": "tests/Tests" }
   }
 }
