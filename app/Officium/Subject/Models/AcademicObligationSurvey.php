@@ -1,6 +1,6 @@
 <?php
 
-namespace Officium\Models;
+namespace Officium\Subject\Models;
 
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator;

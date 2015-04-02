@@ -1,6 +1,6 @@
 <?php
 
-namespace Officium\Models;
+namespace Officium\Subject\Models;
 
 
 use Officium\Routers\SurveyRouter;
