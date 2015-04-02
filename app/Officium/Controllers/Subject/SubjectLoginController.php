@@ -34,6 +34,6 @@ class SubjectLoginController extends SubjectBaseController
 
     public static function route()
     {
-        return LoginRouter::getUri();
+        return LoginRouter::uri();
     }
 }
