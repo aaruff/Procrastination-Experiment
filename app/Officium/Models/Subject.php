@@ -11,12 +11,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Subject extends Model
 {
-    public static $UNREGISTERED = 0;
-    public static $GENERAL_ACADEMIC_QUESTIONNAIRE = 1;
-    public static $ACADEMIC_OBLIGATION_QUESTIONNAIRE = 2;
-    public static $SOCIAL_OBLIGATION_QUESTIONNAIRE = 3;
-    public static $ATTENTION_QUESTIONNAIRE = 4;
-    public static $CERTIFICATE_QUESTIONNAIRE = 5;
+    /**
+     * @var int
+     */
+    public static $PLAYING = 1;
 
     /**
      * @var bool database timestamp enabled
@@ -155,5 +153,22 @@ class Subject extends Model
         }
 
         return $errorMessages;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPlaying()
+    {
+        return $this->state == self::$PLAYING;
+    }
+
+    /**
+     * @param $id
+     * @return \Officium\Models\Subject
+     */
+    public static function getSubject($id)
+    {
+        return Subject::find(intval($id));
     }
 }
