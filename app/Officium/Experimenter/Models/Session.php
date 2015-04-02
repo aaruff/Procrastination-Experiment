@@ -1,6 +1,6 @@
 <?php
 
-namespace Officium\Models;
+namespace Officium\Experimenter\Models;
 
 use DateTime;
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
