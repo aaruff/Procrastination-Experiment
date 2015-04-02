@@ -9,8 +9,20 @@ namespace Officium\Routers;
  */
 class SurveyRouter
 {
+    public static $POST = 'POST';
+    public static $GET = 'GET';
+
     private static $templates = ['a' => 'academic.twig', 'ao' => 'academicObligations.twig', 'eo' => 'externalObligations.twig'];
     private static $surveyOrder = ['a', 'ao', 'eo'];
+
+    public static function isSurveyId($id)
+    {
+        if (isset(self::$templates[$id])) {
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * Returns the corresponding template route for the provided id if set, otherwise
@@ -22,7 +34,7 @@ class SurveyRouter
     public static function getTemplateRoute($id)
     {
         $rootPath = '/pages/subject/survey/';
-        if ( isset($id) && isset(self::$templates[$id])) {
+        if (self::isSurveyId($id)) {
             return $rootPath . self::$templates[$id];
         }
 
@@ -35,15 +47,33 @@ class SurveyRouter
      * @param $id
      * @return mixed survey ID or null
      */
-    public static function getNextSurveyId($id)
+    public static function getNextSurveyId($id = null)
     {
-        foreach (self::$surveyOrder as $i => $k) {
-            // Found the survey ID, and there are more surveys to be completed
-            if ($k == $id && $i + 1 < count(self::$surveyOrder)) {
-                return self::$surveyOrder[$i + 1];
+        if ( self::isSurveyId($id)) {
+            // Look for the next survey ID and return it
+            foreach (self::$surveyOrder as $index => $surveyKey) {
+                // Found the survey ID, and there are more surveys to be completed
+                if ($surveyKey == $id && $index + 1 < count(self::$surveyOrder)) {
+                    return self::$surveyOrder[$index + 1];
+                }
             }
         }
 
-        return null;
+        $firstSurvey = 0;
+        return self::$surveyOrder[$firstSurvey];
+    }
+
+    public static function uri()
+    {
+        return '/survey';
+    }
+
+    public static function controllerRoute($method = '')
+    {
+        if ($method == self::$POST) {
+            return '\Officium\Controllers\Subject\SurveyController:post';
+        }
+
+        return '\Officium\Controllers\Subject\SurveyController:get';
     }
 }
