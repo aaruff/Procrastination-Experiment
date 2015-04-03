@@ -21,6 +21,7 @@ Dotenv::load(BASE_DIR);
 $appConfig = require BASE_DIR . '/config/app.php';
 
 $app = new Slim\Slim($appConfig);
+$app->add(new \Officium\Framework\Middleware\AuthMiddleware());
 
 use Statical\SlimStatic\SlimStatic;
 Slimstatic::boot($app);
