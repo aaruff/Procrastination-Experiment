@@ -1,11 +1,11 @@
 <?php
 namespace Officium\Controllers\Experimenter\Experiment;
 
-use Officium\Models\Session as ExperimentSession;
-use Officium\Controllers\Experimenter\ExperimenterBaseController;
-use Officium\Controllers\Experimenter\ExperimenterLoginController as Login;
+use Officium\Experimenter\Models\Session as ExperimentSession;
+use Officium\Experimenter\Controllers\BaseController;
+use Officium\Experimenter\Controllers\LoginController as Login;
 
-class DashboardController extends ExperimenterBaseController
+class DashboardController extends BaseController
 {
     public function  __construct()
     {
