@@ -3,7 +3,7 @@
 namespace Officium\Experimenter\Controllers;
 
 use Officium\Controllers\Experimenter\Experiment\DashboardController;
-use Officium\Models\Experimenter;
+use Officium\Experimenter\Models\Experimenter;
 
 /**
  * The Experimenter Login Controller
@@ -11,7 +11,7 @@ use Officium\Models\Experimenter;
  * Class Login
  * @package Officium\Controllers\Experimenter
  */
-class ExperimenterLoginController extends ExperimenterBaseController
+class LoginController extends BaseController
 {
     /**
      * Handles the login get request.
@@ -33,7 +33,7 @@ class ExperimenterLoginController extends ExperimenterBaseController
         $errors = Experimenter::validate($post);
         if ( ! empty($errors)) {
             $this->app->flash('errors', $errors);
-            $this->response->redirect(ExperimenterLoginController::route());
+            $this->response->redirect(LoginController::route());
             return;
         }
 
