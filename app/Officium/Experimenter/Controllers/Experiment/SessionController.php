@@ -2,11 +2,11 @@
 
 namespace Officium\Controllers\Experimenter\Experiment;
 
-use Officium\Models\Subject;
-use Officium\Models\Session as ExperimentSession;
-use Officium\Controllers\Experimenter\ExperimenterBaseController;
+use Officium\Subject\Models\Subject;
+use Officium\Experimenter\Models\Session as ExperimentSession;
+use Officium\Experimenter\Controllers\BaseController;
 
-class SessionController extends ExperimenterBaseController
+class SessionController extends BaseController
 {
     /**
      *
