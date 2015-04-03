@@ -3,11 +3,10 @@
 namespace Officium\Subject\Routers;
 
 
-class LoginRouter
-{
-    public static $POST = 'POST';
-    public static $GET = 'GET';
+use Officium\Framework\Routers\Router;
 
+class LoginRouter extends Router
+{
     public static function uri()
     {
         return '/login';
@@ -21,9 +20,9 @@ class LoginRouter
     public static function controllerRoute($method = '')
     {
         if ($method == self::$POST) {
-            return '\Officium\Controllers\Subject\SubjectLoginController:post';
+            return '\Officium\Subject\Controllers\LoginController:post';
         }
 
-        return '\Officium\Controllers\Subject\SubjectLoginController:get';
+        return '\Officium\Subject\Controllers\LoginController:get';
     }
 }
