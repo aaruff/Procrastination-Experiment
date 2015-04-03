@@ -1,9 +1,12 @@
 <?php
 
-namespace Officium\Models;
+namespace Officium\Framework\Models;
 
-
-use Officium\Routers\SurveyRouter;
+use Officium\Subject\Models\Subject;
+use Officium\Subject\Models\GameState;
+use Officium\Subject\Routers\LoginRouter as SubjectLoginRouter;
+use Officium\Experimenter\Routers\LoginRouter as ExperimenterLoginRouter;
+use Officium\Subject\Routers\SurveyRouter;
 
 /**
  * Class Auth
@@ -11,12 +14,19 @@ use Officium\Routers\SurveyRouter;
  */
 class Auth
 {
+    private $session;
+
+    public function __construct(array $session)
+    {
+        $this->session = $session;
+    }
+
     /**
      * @return bool
      */
-    public static function isLoggedIn()
+    public function isLoggedIn()
     {
-        if (isset($_SESSION['subject_id'])) {
+        if (isset($this->session['subject_id'])) {
             return true;
         }
 
@@ -29,18 +39,31 @@ class Auth
      * @param $route
      * @return bool
      */
-    public static function isAllowedToVisit($route)
+    public function isAllowedToVisit($route)
     {
-        if (self::isSubject()) {
-            $subject = Subject::getSubject($_SESSION['subject_id']);
-            return self::isSubjectAllowedToVisit($subject, $route);
+        if ($this->isPublicRoute($route)) {
+            return true;
         }
-        elseif (self::isExperimenter()) {
-            return self::isExperimenterAllowedToVisit($route);
+
+        if ($this->isSubject()) {
+            $subject = Subject::getSubject($this->session['subject_id']);
+            return $this->isSubjectAllowedToVisit($subject, $route);
+        }
+        elseif ($this->isExperimenter()) {
+            return $this->isExperimenterAllowedToVisit($route);
         }
         else {
             return false;
         }
+    }
+
+    private function isPublicRoute($route)
+    {
+        if ($route == SubjectLoginRouter::uri() || $route == ExperimenterLoginRouter::uri() ) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -48,9 +71,9 @@ class Auth
      *
      * @return bool
      */
-    private static function isSubject()
+    private function isSubject()
     {
-        if (isset($_SESSION['subject_id'])) {
+        if (isset($this->session['subject_id'])) {
             return true;
         }
 
@@ -62,9 +85,9 @@ class Auth
      *
      * @return bool
      */
-    private static function isExperimenter()
+    private function isExperimenter()
     {
-        if (isset($_SESSION['experimenter_id'])) {
+        if (isset($this->session['experimenter_id'])) {
             return true;
         }
 
@@ -75,18 +98,18 @@ class Auth
      * @param $route
      * @return bool
      */
-    private static function isExperimenterAllowedToVisit($route)
+    private function isExperimenterAllowedToVisit($route)
     {
         return false;
     }
 
 
     /**
-     * @param Subject $subject
+     * @param \Officium\Subject\Models\Subject $subject
      * @param $route
      * @return bool
      */
-    private static function isSubjectAllowedToVisit(Subject $subject, $route)
+    private function isSubjectAllowedToVisit(Subject $subject, $route)
     {
 
         switch($subject->state) {
@@ -95,5 +118,7 @@ class Auth
             default:
                 false;
         }
+
+        return false;
     }
 }
