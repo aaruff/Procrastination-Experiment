@@ -1,15 +1,15 @@
 <?php
 namespace Officium\Subject\Controllers;
 
-use Officium\Models\Subject;
-use Officium\Subject\Controllers\SubjectLoginController as Login;
+use Officium\Subject\Models\Subject;
+use Officium\Subject\Controllers\LoginController as Login;
 
 /**
  * Provides subclasses with convenience wrappers for the framework.
  *
  * @package Officium\Controllers\Subject
  */
-class SubjectBaseController
+class BaseController
 {
     /**
      * @var null|\Slim\Slim

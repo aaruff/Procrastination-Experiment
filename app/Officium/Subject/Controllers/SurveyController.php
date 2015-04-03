@@ -1,12 +1,12 @@
 <?php
 namespace Officium\Subject\Controllers;
 
-use Officium\Subject\Controllers\SubjectLoginController as Login;
-use Officium\Models\Survey;
-use Officium\Models\SurveyFactory;
-use Officium\Routers\SurveyRouter;
+use Officium\Subject\Controllers\LoginController as Login;
+use Officium\Subject\Models\Survey;
+use Officium\Subject\Models\SurveyFactory;
+use Officium\Subject\Routers\SurveyRouter;
 
-class SurveyController extends SubjectBaseController
+class SurveyController extends BaseController
 {
     /**
      * Handles get requests

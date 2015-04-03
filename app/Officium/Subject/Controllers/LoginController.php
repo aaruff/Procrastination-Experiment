@@ -1,11 +1,11 @@
 <?php
 namespace Officium\Subject\Controllers;
 
-use Officium\Models\Subject;
-use Officium\Routers\StateRouter;
-use Officium\Routers\LoginRouter;
+use Officium\Subject\Models\Subject;
+use Officium\Subject\Routers\StateRouter;
+use Officium\Subject\Routers\LoginRouter;
 
-class SubjectLoginController extends SubjectBaseController
+class LoginController extends BaseController
 {
     public function get()
     {
