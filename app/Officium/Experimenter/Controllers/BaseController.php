@@ -1,7 +1,7 @@
 <?php
 namespace Officium\Experimenter\Controllers;
 
-class ExperimenterBaseController
+class BaseController
 {
     protected $app;
     protected $request;
