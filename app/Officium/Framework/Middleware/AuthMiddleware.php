@@ -3,9 +3,16 @@ namespace Officium\Framework\Middleware;
 
 
 use \Slim\Middleware;
+use Officium\Framework\Models\Auth;
 
 class AuthMiddleware extends Middleware
 {
+    private $auth;
+
+    public function __construct()
+    {
+        $this->auth = new Auth($_SESSION);
+    }
 
     /**
      * Call
@@ -19,17 +26,12 @@ class AuthMiddleware extends Middleware
         $app = $this->app;
 
         $uri = $app->request()->getResourceUri();
-        if ($uri === SurveyRouter::uri()) {
-
+        if ( ! $this->auth->isAllowedToVisit($uri)) {
+            $this->app->response->status(401);
+            $this->app->response->header("WWW-Authenticate", sprintf('Basic realm="Protected"'));
+            return;
         }
 
-        var_dump($app->request()->getResourceUri());
-        // Run inner middleware and application
         $this->next->call();
-
-        // Capitalize response body
-        $res = $app->response;
-        $body = $res->getBody();
-        $res->setBody(strtoupper($body));
     }
 }
