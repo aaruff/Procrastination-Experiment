@@ -1,7 +1,7 @@
 <?php
 namespace Officium\Framework\Middleware;
 
-use Officium\Routers\SurveyRouter;
+use Officium\Subject\Routers\SurveyRouter;
 use \Slim\Middleware;
 
 
