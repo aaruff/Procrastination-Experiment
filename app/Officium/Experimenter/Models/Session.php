@@ -17,26 +17,42 @@ class Session extends Model
     protected $fillable = ['size', 'first_task_deadline', 'second_task_deadline',
         'third_task_deadline', 'time_limit', 'payoff', 'penalty', 'subject_deadline_enabled'];
 
+    /**
+     * @param $dateTime
+     */
     public function setFirstTaskDeadlineAttribute($dateTime)
     {
         $this->attributes['first_task_deadline'] = DateTime::createFromFormat('m-d-Y H:i:s', $dateTime);
     }
 
+    /**
+     * @param $dateTime
+     */
     public function setSecondTaskDeadlineAttribute($dateTime)
     {
         $this->attributes['second_task_deadline'] = DateTime::createFromFormat('m-d-Y H:i:s', $dateTime);
     }
 
+    /**
+     * @param $dateTime
+     */
     public function setThirdTaskDeadlineAttribute($dateTime)
     {
         $this->attributes['third_task_deadline'] = DateTime::createFromFormat('m-d-Y H:i:s', $dateTime);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function subjects()
     {
         return $this->hasMany('Officium\Models\Subject', 'session_id');
     }
 
+    /**
+     * @param $id
+     * @return null
+     */
     public static function validateId($id)
     {
         try {
@@ -54,7 +70,8 @@ class Session extends Model
     /**
      * Returns error messages if the validation failed.
      *
-     * @return errorMessages
+     * @param $entries
+     * @return string errorMessages
      */
     public static function validate($entries)
     {
