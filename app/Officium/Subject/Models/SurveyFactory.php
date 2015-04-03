@@ -3,7 +3,7 @@
 namespace Officium\Subject\Models;
 
 
-use Officium\Routers\SurveyRouter;
+use Officium\Subject\Routers\SurveyRouter;
 
 /**
  * Class SurveyFactoryTest
@@ -28,12 +28,12 @@ class SurveyFactory
     public static function make($id, $data)
     {
         if (SurveyRouter::isSurveyId($id)) {
-            $surveyClass = 'Officium\\Models\\' . self::$surveys[$id];
+            $surveyClass = 'Officium\\Subject\\Models\\' . self::$surveys[$id];
             return new $surveyClass($data);
         }
 
         $firstSurveyId = SurveyRouter::getNextSurveyId();
-        $surveyClass = 'Officium\\Models\\' . self::$surveys[$firstSurveyId];
+        $surveyClass = 'Officium\\Subject\\Models\\' . self::$surveys[$firstSurveyId];
         return new $surveyClass($data);
     }
 }
