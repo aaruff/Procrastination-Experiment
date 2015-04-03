@@ -71,7 +71,7 @@ class Task {
      *
      * @param $syllables
      * @param $use_prefix
-     * @return unknown_type
+     * @return string
      */
     private function generate_phrase($syllables = 1, $use_prefix = false){
         // 20 prefixes
