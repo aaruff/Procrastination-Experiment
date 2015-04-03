@@ -165,7 +165,7 @@ class Subject extends Model
 
     /**
      * @param $id
-     * @return \Officium\Models\Subject
+     * @return \Officium\Subject\Models\Subject
      */
     public static function getSubject($id)
     {
