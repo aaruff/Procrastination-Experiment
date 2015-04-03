@@ -71,9 +71,9 @@ class SurveyRouter
     public static function controllerRoute($method = '')
     {
         if ($method == self::$POST) {
-            return '\Officium\Controllers\Subject\SurveyController:post';
+            return '\Officium\Subject\Controllers\SurveyController:post';
         }
 
-        return '\Officium\Controllers\Subject\SurveyController:get';
+        return '\Officium\Subject\Controllers\SurveyController:get';
     }
 }
