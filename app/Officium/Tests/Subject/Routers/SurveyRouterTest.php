@@ -2,7 +2,7 @@
 
 namespace Officium\Tests\Routers;
 
-use Officium\Routers\SurveyRouter;
+use Officium\Subject\Routers\SurveyRouter;
 
 /**
  * Class SurveyRouterTest

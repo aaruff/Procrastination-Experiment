@@ -2,10 +2,10 @@
 
 namespace Officium\Tests\Models;
 
-use Officium\Models\AcademicObligationSurvey;
-use Officium\Models\ExternalObligationSurvey;
-use Officium\Models\GeneralAcademicSurvey;
-use Officium\Models\SurveyFactory;
+use Officium\Subject\Models\AcademicObligationSurvey;
+use Officium\Subject\Models\ExternalObligationSurvey;
+use Officium\Subject\Models\GeneralAcademicSurvey;
+use Officium\Subject\Models\SurveyFactory;
 
 /**
  * Class SurveyFactoryTest
