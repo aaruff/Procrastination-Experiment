@@ -1,6 +1,6 @@
 <?php
-use Officium\Routers\LoginRouter;
-use \Officium\Routers\SurveyRouter;
+use Officium\Subject\Routers\LoginRouter;
+use \Officium\Subject\Routers\SurveyRouter;
 //---------------------------------------------------
 // Subject Routes
 //---------------------------------------------------
