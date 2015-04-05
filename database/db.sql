@@ -1,11 +1,27 @@
 use pro;
 
-drop table if exists experimenters;
-
-create table experimenters(
+drop table if exists users;
+create table users(
   id		integer auto_increment primary key,
+  type integer NOT NULL,
   login 	varchar(100) null,
   password 	varchar(40) null
+) Engine=InnoDB;
+
+drop table if exists experimenters;
+create table experimenters(
+  user_id		integer primary key
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists subjects;
+create table subjects(
+  id integer auto_increment primary key,
+  session_id	integer not null,
+  login	varchar(100) not null,
+  password varchar(255) not null,
+  email varchar(100) default null,
+  status integer default 1, # 1 => in play, 0 = finished
+  state integer not null # A subject only plays one game so placing state here will suffice
 ) ENGINE=InnoDB;
 
 drop table if exists sessions;
@@ -29,18 +45,6 @@ create table task_schedules(
   deadline datetime not null
 ) Engine=InnoDB;
 
-
-drop table if exists subjects;
-create table subjects(
-  id integer auto_increment primary key,
-  session_id	integer not null,
-  login	varchar(100) not null,
-  password varchar(255) not null,
-  email varchar(100) default null,
-  status integer default 1, # 1 => in play, 0 = finished
-  state integer not null # A subject only plays one game so placing state here will suffice
-) ENGINE=InnoDB;
-
 drop table if exists task_logs;
 create table task_logs(
   id					integer auto_increment primary key,
@@ -50,7 +54,6 @@ create table task_logs(
   event integer not null,
   date_time       datetime not null
 ) ENGINE=InnoDB;
-
 
 #----------------------------------------
 # Incoming Survey Tables
