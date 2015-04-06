@@ -7,6 +7,11 @@ use Officium\Subject\Routers\LoginRouter;
 
 class LoginController extends BaseController
 {
+    public function __construct()
+    {
+        parent::__construct();
+        session_unset();
+    }
     public function get()
     {
         $this->app->render(LoginRouter::getTemplate());
