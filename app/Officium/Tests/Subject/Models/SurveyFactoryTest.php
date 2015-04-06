@@ -18,9 +18,9 @@ class SurveyFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function When_AnInvalidSurveyIDProvided_NullReturned()
     {
-        $this->isTrue(SurveyFactory::make('', []) instanceof GeneralAcademicSurvey);
-        $this->isTrue(SurveyFactory::make('wrong', []) instanceof GeneralAcademicSurvey);
-        $this->isInstanceOf(SurveyFactory::make(null, []) instanceof GeneralAcademicSurvey);
+        $this->assertTrue(SurveyFactory::make('', []) instanceof GeneralAcademicSurvey);
+        $this->assertTrue(SurveyFactory::make('wrong', []) instanceof GeneralAcademicSurvey);
+        $this->assertTrue(SurveyFactory::make(null, []) instanceof GeneralAcademicSurvey);
     }
 
     /**
@@ -28,8 +28,8 @@ class SurveyFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function When_ValidIdProvided_CorrectSurveyReturned()
     {
-        $this->isTrue(SurveyFactory::make('a', []) instanceof GeneralAcademicSurvey);
-        $this->isTrue(SurveyFactory::make('ao', []) instanceof AcademicObligationSurvey);
-        $this->isInstanceOf(SurveyFactory::make('eo', []) instanceof ExternalObligationSurvey);
+        $this->assertTrue(SurveyFactory::make('a', []) instanceof GeneralAcademicSurvey);
+        $this->assertTrue(SurveyFactory::make('ao', []) instanceof AcademicObligationSurvey);
+        $this->assertTrue(SurveyFactory::make('eo', []) instanceof ExternalObligationSurvey);
     }
 }
