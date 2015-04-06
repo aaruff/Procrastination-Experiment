@@ -27,8 +27,7 @@ class AuthMiddleware extends Middleware
 
         $uri = $app->request()->getResourceUri();
         if ( ! $this->auth->isAllowedToVisit($uri)) {
-            $this->app->response->status(401);
-            $this->app->response->header("WWW-Authenticate", sprintf('Basic realm="Protected"'));
+            $this->app->redirect('/login');
             return;
         }
 
