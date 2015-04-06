@@ -32,8 +32,7 @@ class SurveyFactory
             return new $surveyClass($data);
         }
 
-        $firstSurveyId = SurveyRouter::getNextSurveyId();
-        $surveyClass = 'Officium\\Subject\\Models\\' . self::$surveys[$firstSurveyId];
+        $surveyClass = 'Officium\\Subject\\Models\\GeneralAcademicSurvey';
         return new $surveyClass($data);
     }
 }
