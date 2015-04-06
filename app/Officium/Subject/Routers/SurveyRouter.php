@@ -59,7 +59,7 @@ class SurveyRouter
             }
         }
 
-        $firstSurvey = 0;
+        $firstSurvey = 1;
         return self::$surveyOrder[$firstSurvey];
     }
 
