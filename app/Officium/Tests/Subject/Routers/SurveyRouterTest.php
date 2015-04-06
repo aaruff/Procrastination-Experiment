@@ -31,6 +31,7 @@ class SurveyRouterTest extends \PHPUnit_Framework_TestCase {
      */
     public function When_SurveyValidKeyProvided_CorrespondingSurveyTemplateRouteReturned()
     {
+        $this->assertEquals('/pages/subject/survey/academic.twig', SurveyRouter::getTemplateRoute(null));
         $this->assertEquals('/pages/subject/survey/academic.twig', SurveyRouter::getTemplateRoute('a'));
         $this->assertEquals('/pages/subject/survey/academicObligations.twig', SurveyRouter::getTemplateRoute('ao'));
         $this->assertEquals('/pages/subject/survey/externalObligations.twig', SurveyRouter::getTemplateRoute('eo'));
@@ -41,8 +42,8 @@ class SurveyRouterTest extends \PHPUnit_Framework_TestCase {
      */
     public function When_SurveyIdProvided_NextIdReturned()
     {
-        $this->assertEquals('a', SurveyRouter::getNextSurveyId());
-        $this->assertEquals('a', SurveyRouter::getNextSurveyId(null));
+        $this->assertEquals('ao', SurveyRouter::getNextSurveyId());
+        $this->assertEquals('ao', SurveyRouter::getNextSurveyId(null));
         $this->assertEquals('ao', SurveyRouter::getNextSurveyId('a'));
         $this->assertEquals('eo', SurveyRouter::getNextSurveyId('ao'));
     }
