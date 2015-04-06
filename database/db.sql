@@ -5,7 +5,8 @@ create table users(
   id		integer auto_increment primary key,
   type integer NOT NULL,
   login 	varchar(100) null,
-  password 	varchar(40) null
+  password 	varchar(40) null,
+  role_id integer not null
 ) Engine=InnoDB;
 
 drop table if exists experimenters;
