@@ -57,6 +57,12 @@ class Auth
         }
     }
 
+    /**
+     * Returns true if the route is public.
+     *
+     * @param $route
+     * @return bool
+     */
     private function isPublicRoute($route)
     {
         if ($route == SubjectLoginRouter::uri() || $route == ExperimenterLoginRouter::uri() ) {
