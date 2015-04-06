@@ -5,64 +5,86 @@ namespace Officium\Subject\Models;
 
 abstract class Survey
 {
-    private $keys = [];
+    private $keys;
     private $entries;
     private $errors;
 
     /**
      * Initialize survey keys.
+     * @param array $entries
      * @param array $keys
      */
-    public function __construct(array $keys)
+    public function __construct(array $keys, array $entries)
     {
+        $this->keys = $keys;
+
         foreach ($keys as $key) {
-            $this->keys[$key] = '';
+            if (isset($entries[$key])) {
+                $this->entries[$key] = $entries[$key];
+            }
+            else {
+                $this->entries[$key] = '';
+            }
         }
     }
 
     /**
      * Validates the survey against the provided entries.
      *
-     * @return mixed
+     * @return boolean
      */
     abstract public function validate();
 
     /**
      * Sets form answers.
-     * @param array $answers
+     *
+     * @param array $entries
      */
-    public function setAnswers(array $answers)
+    public function setEntries(array $entries)
     {
-        foreach ($answers as $key=>$value) {
-            $this->keys[$key] = $answers[$key];
+        foreach ($this->keys as $key) {
+            $this->entries[$key] = $entries[$key];
         }
     }
 
     /**
-     * Returns form answers.
+     * Sets survey keys.
+     *
      * @return array
      */
-    public function getAnswers()
+    protected function getKeys()
     {
         return $this->keys;
     }
 
     /**
-     * Sets valid entries specified by the survey keys.
-     * @param $raw
+     * Sets a survey entry.
+     *
+     * @param $key
+     * @param $value
      */
-    protected function setEntries($raw)
+    protected function setEntry($key, $value)
     {
-        foreach ($this->keys as $key) {
-            $this->entries[$key] = (isset($raw[$key])) ? $raw[$key] : '';
-        }
+        $this->entries[$key] = $value;
     }
 
     /**
-     * Gets entries.
+     * Returns the entry specified by the key param.
+     *
+     * @param $key
      * @return mixed
      */
-    protected function getEntries()
+    protected function getEntry($key)
+    {
+        return (isset($this->entries[$key])) ? $this->entries[$key] : null;
+    }
+
+    /**
+     * Returns form answers.
+     *
+     * @return array
+     */
+    public function getEntries()
     {
         return $this->entries;
     }
@@ -73,7 +95,10 @@ abstract class Survey
      */
     protected function setErrors($errors)
     {
-        $this->errors = $errors;
+        foreach ($this->keys as $key) {
+            if ( isset($errors[$key]) && ! empty($errors[$key]))
+            $this->errors[$key] = $errors[$key];
+        }
     }
 
     /**
@@ -82,6 +107,6 @@ abstract class Survey
      */
     public function getErrors()
     {
-        return $this->errors;
+        return (is_array($this->errors)) ? $this->errors : [];
     }
 }
