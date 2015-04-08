@@ -3,32 +3,23 @@ use pro;
 drop table if exists users;
 create table users(
   id		integer auto_increment primary key,
-  type integer NOT NULL,
   login 	varchar(100) null,
   password 	varchar(40) null,
-  role_id integer not null
+  role integer not null # 1 => Subject, 2 => Experimenter
 ) Engine=InnoDB;
-
-drop table if exists experimenters;
-create table experimenters(
-  user_id		integer primary key
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 drop table if exists subjects;
 create table subjects(
-  id integer auto_increment primary key,
-  session_id	integer not null,
-  login	varchar(100) not null,
-  password varchar(255) not null,
-  email varchar(100) default null,
-  status integer default 1, # 1 => in play, 0 = finished
+  user_id		integer primary key,
   state integer not null # A subject only plays one game so placing state here will suffice
 ) ENGINE=InnoDB;
 
-drop table if exists sessions;
-create table sessions(
-  id  integer auto_increment primary key,
-  size integer not null,
+#--
+# Each subject has a treatment parameters set for a given session.
+#--
+drop table if exists treatments;
+create table treatments(
+  id		integer auto_increment primary key,
   first_task_deadline datetime not null,
   second_task_deadline datetime not null,
   third_task_deadline datetime not null,
@@ -36,12 +27,12 @@ create table sessions(
   time_limit time not null,
   penalty double not null,
   payoff integer not null
-) Engine=InnoDB;
+) ENGINE=InnoDB;
 
 drop table if exists task_schedules;
 create table task_schedules(
   id  integer auto_increment primary key,
-  subject_id integer not null,
+  user_id integer not null,
   task integer not null, # Task IDs {1, 2, 3}
   deadline datetime not null
 ) Engine=InnoDB;
@@ -49,7 +40,7 @@ create table task_schedules(
 drop table if exists task_logs;
 create table task_logs(
   id					integer auto_increment primary key,
-  subject_id		integer not null,
+  user_id		integer not null,
   task_id				integer not null,
   # Event: Issued = 1, Failure = 2, Display Task = 3, Complete Task = 4,
   event integer not null,
@@ -62,7 +53,7 @@ create table task_logs(
 drop table if exists incoming_survey_answers;
 create table incoming_survey_answers(
   id					integer auto_increment primary key,
-  subject_id integer not null,
+  user_id integer not null,
   major varchar(255) not null,
   gpa double not null,
   number_courses integer not null,
@@ -93,7 +84,7 @@ create table incoming_survey_answers(
 drop table if exists survey_datetime_intervals;
 create table survey_datetime_intervals(
   id integer auto_increment primary key,
-  subject_id integer not null,
+  user_id integer not null,
   type varchar(255) not null,
   start_datetime datetime not null,
   end_datetime datetime not null
