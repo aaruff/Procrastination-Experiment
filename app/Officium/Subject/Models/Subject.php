@@ -169,6 +169,6 @@ class Subject extends Model
      */
     public static function getSubject($id)
     {
-        return Subject::find(intval($id));
+        return User::find(intval($id))->subject;
     }
 }
