@@ -1,14 +1,15 @@
 <?php
 
-namespace Officium\Subject\Routers;
-use Officium\Framework\Routers\Router;
+namespace Officium\Subject\Maps;
+
+use Officium\User\Maps\ResourceMap;
 
 /**
  * Survey Resource Map
  * Class SurveyMap
  * @package Officium\Maps
  */
-class SurveyMap extends Router
+class SurveyMap extends ResourceMap
 {
     private static $templates = ['a' => 'academic.twig', 'ao' => 'academicObligations.twig', 'eo' => 'externalObligations.twig'];
     private static $surveyOrder = ['a', 'ao', 'eo'];
