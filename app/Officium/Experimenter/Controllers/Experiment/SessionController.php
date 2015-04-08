@@ -5,7 +5,7 @@ namespace Officium\Experimenter\Controllers\Experiment;
 use Officium\Experimenter\Maps\DashboardMap;
 use Officium\Experimenter\Maps\SessionMap;
 use Officium\Subject\Models\Subject;
-use Officium\Experimenter\Models\Treatments as ExperimentSession;
+use Officium\Experimenter\Models\Treatment as ExperimentSession;
 use Officium\Experimenter\Controllers\BaseController;
 
 class SessionController extends BaseController
@@ -21,7 +21,7 @@ class SessionController extends BaseController
     /**
      *
      */
-    public function create()
+    public function post()
     {
         $post = $this->request->post();
 
