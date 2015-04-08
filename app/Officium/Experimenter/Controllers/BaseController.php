@@ -13,19 +13,4 @@ class BaseController
         $this->request = $this->app->request;
         $this->response = $this->app->response;
     }
-
-    protected function login($experimenter)
-    {
-        $_SESSION['experimenter'] = $experimenter;
-    }
-
-    protected function isLoggedIn()
-    {
-        return isset($_SESSION['experimenter']);
-    }
-
-    protected function logout()
-    {
-        unset($_SESSION['experimenter']);
-    }
 }
