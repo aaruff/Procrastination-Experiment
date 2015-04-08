@@ -2,10 +2,10 @@
 
 namespace Officium\User\Controllers;
 
-use Officium\Experimenter\Routers\DashboardRouter;
-use Officium\User\Routers\LoginRouter;
+use Officium\Experimenter\Maps\DashboardMap;
+use Officium\User\Maps\LoginMap;
 use Officium\User\Models\User;
-use Officium\Subject\Routers\SurveyMap;
+use Officium\Subject\Maps\SurveyMap;
 
 /**
  * The Experimenter Login Controller
@@ -22,6 +22,7 @@ class LoginController
     public function __construct()
     {
         unset($_SESSION['user_id']);
+        unset($_SESSION['role']);
 
         $this->app = \Slim\Slim::getInstance();
         $this->request = $this->app->request;
@@ -33,7 +34,7 @@ class LoginController
      */
     public function get()
     {
-        $this->app->render(LoginRouter::getTemplate());
+        $this->app->render(LoginMap::toTemplate());
     }
 
     /**
@@ -47,7 +48,7 @@ class LoginController
         $errors = User::validate($post);
         if ( ! empty($errors)) {
             $this->app->flash('errors', $errors);
-            $this->response->redirect(LoginRouter::uri());
+            $this->response->redirect(LoginMap::toUri());
             return;
         }
 
@@ -58,7 +59,8 @@ class LoginController
         $_SESSION['role'] = $user->role;
 
         if ($user->role == User::$EXPERIMENTER) {
-            $this->response->redirect(DashboardRouter::uri());
+            $this->response->redirect(DashboardMap::toUri());
+            return;
         }
 
         $this->response->redirect(SurveyMap::toUri());
