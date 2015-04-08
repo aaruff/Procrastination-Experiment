@@ -1,9 +1,9 @@
 <?php
 namespace Officium\Controllers\Experimenter\Experiment;
 
-use Officium\Experimenter\Models\Session as ExperimentSession;
+use Officium\Experimenter\Models\Treatments;
 use Officium\Experimenter\Controllers\BaseController;
-use Officium\Experimenter\Controllers\LoginController as Login;
+use Officium\Experimenter\Routers\DashboardMap;
 
 class DashboardController extends BaseController
 {
@@ -14,7 +14,7 @@ class DashboardController extends BaseController
 
     public function get()
     {
-        $sessions = ExperimentSession::all();
-        $this->app->render('/pages/experimenter/experiment/dashboard.twig', ['sessions'=>$sessions]);
+        $sessions = Treatments::all();
+        $this->app->render(DashboardMap::toTemplate(), ['sessions'=>$sessions]);
     }
 }
