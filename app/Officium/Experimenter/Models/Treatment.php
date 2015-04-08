@@ -8,7 +8,7 @@ use Respect\Validation\Validator as v;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Treatments extends Model
+class Treatment extends Model
 {
     public $timestamps = false;
 
@@ -62,7 +62,7 @@ class Treatments extends Model
             return null;
         }
 
-        $session = Treatments::where('id', '=', $id)->first();
+        $session = Treatment::where('id', '=', $id)->first();
 
         return $session;
     }
