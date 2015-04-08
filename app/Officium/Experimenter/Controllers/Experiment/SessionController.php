@@ -3,7 +3,7 @@
 namespace Officium\Controllers\Experimenter\Experiment;
 
 use Officium\Subject\Models\Subject;
-use Officium\Experimenter\Models\Session as ExperimentSession;
+use Officium\Experimenter\Models\Treatments as ExperimentSession;
 use Officium\Experimenter\Controllers\BaseController;
 
 class SessionController extends BaseController
