@@ -3,6 +3,7 @@
 namespace Officium\User\Models;
 
 use Officium\Experimenter\Maps\DashboardMap;
+use Officium\Experimenter\Maps\SessionMap;
 use Officium\Subject\Models\Subject;
 use Officium\Subject\Models\GameState;
 use Officium\User\Maps\LoginMap;
@@ -101,6 +102,10 @@ class Auth
         if (DashboardMap::toUri() == $route) {
             return true;
         }
+        elseif (SessionMap::toUri() == $route) {
+            return true;
+        }
+
         return false;
     }
 
