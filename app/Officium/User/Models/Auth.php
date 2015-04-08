@@ -1,12 +1,12 @@
 <?php
 
-namespace Officium\Framework\Models;
+namespace Officium\User\Models;
 
+use Officium\Experimenter\Maps\DashboardMap;
 use Officium\Subject\Models\Subject;
 use Officium\Subject\Models\GameState;
-use Officium\User\Models\User;
-use Officium\User\Routers\LoginRouter;
-use Officium\Subject\Routers\SurveyMap;
+use Officium\User\Maps\LoginMap;
+use Officium\Subject\Maps\SurveyMap;
 
 /**
  * Class Auth
@@ -65,7 +65,7 @@ class Auth
      */
     private function isPublicRoute($route)
     {
-        if ($route == LoginRouter::uri()) {
+        if ($route == LoginMap::toUri()) {
             return true;
         }
 
@@ -98,6 +98,9 @@ class Auth
      */
     private function isExperimenterAllowedToVisit($route)
     {
+        if (DashboardMap::toUri() == $route) {
+            return true;
+        }
         return false;
     }
 
