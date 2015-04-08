@@ -4,7 +4,7 @@ namespace Officium\User\Middleware;
 
 use Officium\User\Maps\LoginMap;
 use \Slim\Middleware;
-use Officium\Framework\Models\Auth;
+use Officium\User\Models\Auth;
 
 class AuthMiddleware extends Middleware
 {
