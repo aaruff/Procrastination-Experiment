@@ -1,7 +1,9 @@
 <?php
 
-namespace Officium\Controllers\Experimenter\Experiment;
+namespace Officium\Experimenter\Controllers\Experiment;
 
+use Officium\Experimenter\Maps\DashboardMap;
+use Officium\Experimenter\Maps\SessionMap;
 use Officium\Subject\Models\Subject;
 use Officium\Experimenter\Models\Treatments as ExperimentSession;
 use Officium\Experimenter\Controllers\BaseController;
@@ -13,7 +15,7 @@ class SessionController extends BaseController
      */
     public function get()
     {
-        $this->app->render('/pages/experimenter/experiment/session/create.twig');
+        $this->app->render(SessionMap::toTemplate());
     }
 
     /**
@@ -26,7 +28,7 @@ class SessionController extends BaseController
         $errors = ExperimentSession::validate($post);
         if ( ! empty($errors)) {
             $this->app->flash('errors', $errors);
-            $this->response->redirect(SessionController::route());
+            $this->response->redirect(SessionMap::toUri());
             return;
         }
 
@@ -40,7 +42,7 @@ class SessionController extends BaseController
             $subject->session_id = $session->id;
             $subject->save();
         }
-        $this->app->redirect(DashboardController::route());
+        $this->app->redirect(DashboardMap::toUri());
     }
 
     /**
@@ -50,18 +52,10 @@ class SessionController extends BaseController
     {
         $session = ExperimentSession::validateId($id);
         if ( ! $session) {
-            $this->response->redirect(SessionController::route());
+            $this->response->redirect(SessionMap::toUri());
             return;
         }
 
         $this->app->render('/pages/experimenter/experiment/session/show.twig', ['session'=>$session, 'subjects'=>$session->subjects]);
-    }
-
-    /**
-     * @return string
-     */
-    public static function route()
-    {
-        return '/experiment/session';
     }
 }
