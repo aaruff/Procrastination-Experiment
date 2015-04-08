@@ -1,5 +1,8 @@
 use pro;
 
+#--
+# Users
+#--
 drop table if exists users;
 create table users(
   id		integer auto_increment primary key,
@@ -8,6 +11,9 @@ create table users(
   role integer not null # 1 => Subject, 2 => Experimenter
 ) Engine=InnoDB;
 
+#--
+# Subjects
+#--
 drop table if exists subjects;
 create table subjects(
   user_id		integer primary key,
@@ -29,16 +35,42 @@ create table treatments(
   payoff integer not null
 ) ENGINE=InnoDB;
 
-drop table if exists task_schedules;
-create table task_schedules(
-  id  integer auto_increment primary key,
-  user_id integer not null,
-  task integer not null, # Task IDs {1, 2, 3}
-  deadline datetime not null
+#--
+# A treatment may have one or more tasks
+#--
+drop table if exists treatment_tasks;
+create table treatment_tasks(
+  treatment_id integer primary key,
+  task_id integer not null
 ) Engine=InnoDB;
 
-drop table if exists task_logs;
-create table task_logs(
+#--
+# Each treatment may have a predefined task deadline
+#--
+drop table if exists predefined_task_deadlines;
+create table predefined_task_deadlines(
+  treatment_id integer not null,
+  task_id integer not null,
+  deadline datetime not null,
+  primary key(treatment_id, task_id)
+) Engine=InnoDB;
+
+#--
+# Each treatment may enable subject set deadline
+#--
+drop table if exists subject_deadlines;
+create table subject_deadlines(
+  user_id integer not null,
+  task_id integer not null, # Task IDs {1, 2, 3}
+  deadline datetime not null,
+  primary key(task_id, task_id)
+) Engine=InnoDB;
+
+#--
+# Records task submission events
+#--
+drop table if exists task_submission_logs;
+create table task_submission_logs(
   id					integer auto_increment primary key,
   user_id		integer not null,
   task_id				integer not null,
