@@ -3,7 +3,7 @@
 namespace Officium\Subject\Models;
 
 
-use Officium\Subject\Routers\SurveyRouter;
+use Officium\Subject\Routers\SurveyMap;
 
 /**
  * Class SurveyFactoryTest
@@ -27,7 +27,7 @@ class SurveyFactory
      */
     public static function make($id, $data)
     {
-        if (SurveyRouter::isSurveyId($id)) {
+        if (SurveyMap::isSurveyId($id)) {
             $surveyClass = 'Officium\\Subject\\Models\\' . self::$surveys[$id];
             return new $surveyClass($data);
         }
