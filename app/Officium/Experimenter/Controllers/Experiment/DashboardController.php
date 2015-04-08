@@ -1,9 +1,9 @@
 <?php
-namespace Officium\Controllers\Experimenter\Experiment;
+namespace Officium\Experimenter\Controllers\Experiment;
 
-use Officium\Experimenter\Models\Treatments;
 use Officium\Experimenter\Controllers\BaseController;
-use Officium\Experimenter\Routers\DashboardMap;
+use Officium\Experimenter\Models\Treatments;
+use Officium\Experimenter\Maps\DashboardMap;
 
 class DashboardController extends BaseController
 {
