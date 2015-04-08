@@ -10,14 +10,6 @@ class DashboardController extends BaseController
     public function  __construct()
     {
         parent::__construct();
-        if ( ! $this->isLoggedIn()) {
-            $this->response->redirect(Login::route());
-        }
-    }
-
-    public static function route()
-    {
-        return '/experiment/dashboard';
     }
 
     public function get()
