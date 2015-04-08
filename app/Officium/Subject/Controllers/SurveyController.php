@@ -3,7 +3,7 @@ namespace Officium\Subject\Controllers;
 
 use Officium\Subject\Models\Survey;
 use Officium\Subject\Models\SurveyFactory;
-use Officium\Subject\Routers\SurveyRouter;
+use Officium\Subject\Routers\SurveyMap;
 
 class SurveyController extends BaseController
 {
@@ -14,7 +14,7 @@ class SurveyController extends BaseController
     {
         var_dump($_SESSION);
         $surveyId = $this->getFromSession('survey_id');
-        $this->app->render(SurveyRouter::getTemplateRoute($surveyId));
+        $this->app->render(SurveyMap::toRoute($surveyId));
     }
 
     /**
@@ -37,12 +37,12 @@ class SurveyController extends BaseController
     {
         if ( $survey->validate()) {
             $this->app->flash('errors', $survey->getErrors());
-            $this->response->redirect(SurveyRouter::uri());
+            $this->response->redirect(SurveyMap::toUri());
             return;
         }
 
-        $this->setSession('survey_id', SurveyRouter::getNextSurveyId($id));
+        $this->setSession('survey_id', SurveyMap::getNextSurveyId($id));
         $this->setSession($id, $survey->getEntries());
-        $this->response->redirect(SurveyRouter::uri());
+        $this->response->redirect(SurveyMap::toUri());
     }
 }
