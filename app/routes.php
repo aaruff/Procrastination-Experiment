@@ -1,15 +1,15 @@
 <?php
-use Officium\Subject\Routers\LoginRouter;
-use \Officium\Subject\Routers\SurveyRouter;
+use \Officium\User\Maps\LoginMap;
+use \Officium\Subject\Maps\SurveyMap;
 //---------------------------------------------------
 // Subject Routes
 //---------------------------------------------------
-Route::get(LoginRouter::uri(), LoginRouter::controllerRoute());
-Route::post(LoginRouter::uri(), LoginRouter::controllerRoute('POST'));
+Route::get(LoginMap::toUri(), LoginMap::toController());
+Route::post(LoginMap::toUri(), LoginMap::toController('POST'));
 
 // Incoming Survey
-Route::get(SurveyRouter::uri(), SurveyRouter::controllerRoute());
-Route::post(SurveyRouter::uri(), SurveyRouter::controllerRoute('POST'));
+Route::get(SurveyMap::toUri(), SurveyMap::toController());
+Route::post(SurveyMap::toUri(), SurveyMap::toController('POST'));
 
 
 //---------------------------------------------------
