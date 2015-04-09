@@ -3,7 +3,7 @@
 namespace Officium\Subject\Models;
 
 
-use Officium\Subject\Routers\SurveyMap;
+use Officium\Subject\Maps\SurveyMap;
 
 /**
  * Class SurveyFactoryTest
