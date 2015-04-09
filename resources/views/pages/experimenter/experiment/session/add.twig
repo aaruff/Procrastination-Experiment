@@ -7,6 +7,7 @@
         </div>
         <div class="jumbotron">
             <form class="form-horizontal" action="{{  currentUrl()  }}/create" method="post">
+                <input type="hidden" name="type" value="task:3_timeLimit_penalty_adjustableDeadline"/>
                 <fieldset>
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Subjects</label>
@@ -19,7 +20,7 @@
                         <label class="col-xs-3 control-label">Subject Deadline</label>
                         <div class="checkbox col-xs-9">
                             <label>
-                                <input name="subject_deadline_enabled" type="checkbox"> Enabled
+                                <input name="adjustableDeadlines" type="checkbox"> Enabled
                             </label>
                         </div>
                     </div>
@@ -28,21 +29,21 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label" >Task 1 Deadline</label>
                         <div class="col-xs-9">
-                            <input type='text' class="form-control dt" type="datetime" name="first_task_deadline" value="{{ first_task_deadline }}"/>
+                            <input type='text' class="form-control dt" type="datetime" name="task3DateTime" value="{{ first_task_deadline }}"/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Task 2 Deadline</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control dt" placeholder="MM-DD-YYYY HH:MM AM-PM" name="second_task_deadline" value="{{  second_task_deadline  }}" />
+                            <input type="text" class="form-control dt" placeholder="MM-DD-YYYY HH:MM AM-PM" name="task2DateTime" value="{{  second_task_deadline  }}" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Task 3 Deadline</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control dt" placeholder="MM-DD-YYYY HH:MM AM-PM" name="third_task_deadline" value="{{  third_task_deadline  }}" />
+                            <input type="text" class="form-control dt" placeholder="MM-DD-YYYY HH:MM AM-PM" name="task3DateTime" value="{{  third_task_deadline  }}" />
                         </div>
                     </div>
 
@@ -56,7 +57,7 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Completion Time Limit</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control time" name="time_limit" placeholder="Minutes" value="{{  time_limit  }}" />
+                            <input type="text" class="form-control time" name="timeLimit" placeholder="Minutes" value="{{  time_limit  }}" />
                         </div>
                     </div>
 
@@ -64,7 +65,7 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Penalty Rate</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control"  name="penalty" value="{{  penalty  }}" />
+                            <input type="text" class="form-control"  name="penaltyRate" value="{{  penalty  }}" />
                         </div>
                     </div>
 
