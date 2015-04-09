@@ -1,5 +1,5 @@
 <?php
-namespace Officium\Subject\Models;
+namespace Officium\Experiment;
 
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator as Validator;
@@ -15,6 +15,7 @@ class Subject extends Model
      * @var int
      */
     public static $PLAYING = 1;
+    public static $SURVEY_STATE = 1;
 
     /**
      * @var bool database timestamp enabled
