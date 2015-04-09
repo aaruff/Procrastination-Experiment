@@ -2,6 +2,8 @@
 
 namespace Officium\Framework\Maps;
 
+use Officium\Framework\Controllers\SessionController;
+
 class SessionMap extends ResourceMap
 {
     /**
@@ -18,7 +20,7 @@ class SessionMap extends ResourceMap
      */
     public static function toController($method = '')
     {
-        $controller = '\Officium\Experimenter\Controllers\Experiment\SessionController';
+        $controller = get_class(new SessionController());
         if ($method == self::$POST) {
             return $controller . ':post';
         }

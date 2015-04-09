@@ -1,6 +1,7 @@
 <?php
 
 namespace Officium\Framework\Maps;
+use Officium\Framework\Controllers\SurveyController;
 
 /**
  * Survey Resource Map
@@ -67,10 +68,11 @@ class SurveyMap extends ResourceMap
 
     public static function toController($method = '')
     {
+        $controller = get_class(new SurveyController());
         if ($method == self::$POST) {
-            return '\Officium\Subject\Controllers\SurveyController:post';
+            return $controller . ':post';
         }
 
-        return '\Officium\Subject\Controllers\SurveyController:get';
+        return $controller . ':get';
     }
 }
