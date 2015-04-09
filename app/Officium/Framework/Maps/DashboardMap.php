@@ -2,7 +2,7 @@
 
 namespace Officium\Framework\Maps;
 
-use Officium\Experimenter\Controllers\Experiment\DashboardController;
+use Officium\Framework\Controllers\DashboardController;
 
 /**
  * Class DashboardRouter
