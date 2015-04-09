@@ -1,8 +1,7 @@
 <?php
 
-namespace Officium\Subject\Models;
+namespace Officium\Experiment\Survey;
 
-use Officium\User\Models\FormModel;
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator;
 
