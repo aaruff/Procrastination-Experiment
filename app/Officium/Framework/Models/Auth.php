@@ -1,13 +1,12 @@
 <?php
 
-namespace Officium\User\Models;
+namespace Officium\Framework\Models;
 
-use Officium\Experimenter\Maps\DashboardMap;
-use Officium\Experimenter\Maps\SessionMap;
-use Officium\Subject\Models\Subject;
-use Officium\Subject\Models\GameState;
-use Officium\User\Maps\LoginMap;
-use Officium\Subject\Maps\SurveyMap;
+use Officium\Framework\Maps\LoginMap;
+use Officium\Framework\Maps\SessionMap;
+use Officium\Framework\Maps\SurveyMap;
+use Officium\Framework\Maps\DashboardMap;
+use Officium\Experiment\Subject;
 
 /**
  * Class Auth
@@ -109,9 +108,8 @@ class Auth
         return false;
     }
 
-
     /**
-     * @param \Officium\Subject\Models\Subject $subject
+     * @param Subject $subject
      * @param $route
      * @return bool
      */
@@ -119,7 +117,7 @@ class Auth
     {
 
         switch($subject->state) {
-            case GameState::$SURVEY:
+            case Subject::$SURVEY_STATE:
                 return ($route === SurveyMap::toUri()) ? true : false;
             default:
                 false;

@@ -1,5 +1,5 @@
 <?php
-namespace Officium\User\Models;
+namespace Officium\Framework\Models;
 
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator as Validator;

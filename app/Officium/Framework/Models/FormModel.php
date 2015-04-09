@@ -1,6 +1,6 @@
 <?php
 
-namespace Officium\User\Models;
+namespace Officium\Framework\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
