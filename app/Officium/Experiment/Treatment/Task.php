@@ -1,6 +1,6 @@
 <?php
 
-namespace Officium\Subject\Models;
+namespace Officium\Experiment\Treatment;
 
 class Task {
 
