@@ -1,8 +1,8 @@
 <?php
 
-namespace Officium\Experimenter\Maps;
+namespace Officium\Framework\Maps;
 
-use Officium\User\Maps\ResourceMap;
+use Officium\Experimenter\Controllers\Experiment\DashboardController;
 
 /**
  * Class DashboardRouter
@@ -28,7 +28,7 @@ class DashboardMap extends ResourceMap
      */
     public static function toController($method = '')
     {
-        $controller = '\Officium\Experimenter\Controllers\Experiment\DashboardController';
+        $controller = get_class(new DashboardController());
         if ($method == self::$POST) {
             return $controller . ':post';
         }

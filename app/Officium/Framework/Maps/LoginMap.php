@@ -1,6 +1,8 @@
 <?php
 
-namespace Officium\User\Maps;
+namespace Officium\Framework\Maps;
+
+use Officium\Framework\Controllers\LoginController;
 
 /**
  * Class LoginMap
@@ -30,6 +32,7 @@ class LoginMap extends ResourceMap
      */
     public static function toController($method = '')
     {
+        $controller = get_class(new LoginController());
         if ($method == self::$POST) {
             return '\Officium\User\Controllers\LoginController:post';
         }
