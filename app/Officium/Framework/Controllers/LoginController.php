@@ -2,7 +2,7 @@
 
 namespace Officium\Framework\Controllers;
 
-use Officium\Subject\Maps\SurveyMap;
+use Officium\Framework\Maps\SurveyMap;
 use Officium\Framework\Maps\LoginMap;
 use Officium\Framework\Models\User;
 use Officium\Framework\Maps\DashboardMap;

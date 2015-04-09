@@ -2,11 +2,10 @@
 
 namespace Officium\Framework\Controllers;
 
-use Officium\Experimenter\Controllers\BaseController;
-use Officium\Experimenter\Maps\DashboardMap;
-use Officium\Experimenter\Maps\SessionMap;
-use Officium\Experimenter\Models\Treatment;
-use Officium\Subject\Models\Subject;
+use Officium\Framework\Maps\DashboardMap;
+use Officium\Framework\Maps\SessionMap;
+use Officium\Experiment\Treatment;
+use Officium\Experiment\Subject;
 
 class SessionController extends BaseController
 {

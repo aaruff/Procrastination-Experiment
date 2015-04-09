@@ -1,9 +1,9 @@
 <?php
 namespace Officium\Framework\Controllers;
 
-use Officium\Subject\Models\Survey;
-use Officium\Subject\Models\SurveyFactory;
-use Officium\Subject\Routers\SurveyMap;
+use Officium\Framework\Models\FormModel as Survey;
+use Officium\Experiment\Survey\SurveyFactory;
+use Officium\Framework\Maps\SurveyMap;
 
 class SurveyController extends BaseController
 {
@@ -33,7 +33,7 @@ class SurveyController extends BaseController
      * @param Survey $survey
      * @param $id
      */
-    private function postSurvey(Survey $survey, $id)
+    private function postSurvey(FormModel $survey, $id)
     {
         if ( $survey->validate()) {
             $this->app->flash('errors', $survey->getErrors());

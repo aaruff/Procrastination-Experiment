@@ -1,5 +1,5 @@
 <?php
-namespace Officium\Experimenter\Controllers\Experiment;
+namespace Officium\Framework\Controllers;
 
 class DashboardController extends BaseController
 {
