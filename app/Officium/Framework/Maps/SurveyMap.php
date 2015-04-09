@@ -1,8 +1,6 @@
 <?php
 
-namespace Officium\Subject\Maps;
-
-use Officium\User\Maps\ResourceMap;
+namespace Officium\Framework\Maps;
 
 /**
  * Survey Resource Map

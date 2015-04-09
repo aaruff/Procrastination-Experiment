@@ -1,9 +1,6 @@
 <?php
 
-namespace Officium\Experimenter\Maps;
-
-
-use Officium\User\Maps\ResourceMap;
+namespace Officium\Framework\Maps;
 
 class SessionMap extends ResourceMap
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Officium\User\Maps;
+namespace Officium\Framework\Maps;
 
 
 class ResourceMap
