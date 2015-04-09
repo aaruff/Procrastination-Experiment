@@ -1,8 +1,10 @@
 <?php
-use \Officium\User\Maps\LoginMap;
-use \Officium\Subject\Maps\SurveyMap;
-use \Officium\Experimenter\Maps\DashboardMap;
-use \Officium\Experimenter\Maps\SessionMap;
+
+use Officium\Framework\Maps\SurveyMap;
+use Officium\Framework\Maps\LoginMap;
+use Officium\Framework\Maps\DashboardMap;
+use Officium\Framework\Maps\SessionMap;
+
 //---------------------------------------------------
 // Subject Routes
 //---------------------------------------------------
