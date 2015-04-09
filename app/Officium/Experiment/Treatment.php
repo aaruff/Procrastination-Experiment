@@ -12,10 +12,11 @@ class Treatment extends Model
 {
     public $timestamps = false;
 
+    private static $treatmentTypes = ['task:1', 'task:3', 'task:3_timeLimit_penalty_adjustableDeadline'];
+
     protected $table = 'treatments';
 
-    protected $fillable = ['first_task_deadline', 'second_task_deadline',
-        'third_task_deadline', 'time_limit', 'payoff', 'penalty', 'subject_deadline_enabled'];
+    protected $fillable = ['type'];
 
     /**
      * @param $dateTime
@@ -76,9 +77,8 @@ class Treatment extends Model
     public static function validate($entries)
     {
         $errorMessages = [];
-        // handle checkbox
-        if ( ! isset($entries['subject_deadline_enabled'])) {
-            $entries['subject_deadline_enabled'] = '';
+        if (isset($entries['type']) && v::string()->notEmpty()->validate($entries['type']) && ! in_array($entries['type'], self::$treatmentTypes)) {
+           $errorMessages['general'] = 'Invalid form submission.';
         }
 
         // Validate input
