@@ -1,6 +1,6 @@
 <?php
 
-namespace Officium\Experimenter\Models\Task;
+namespace Experiment\Treatment\Task;
 
 
 class Deadline 
