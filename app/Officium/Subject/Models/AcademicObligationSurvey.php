@@ -2,10 +2,11 @@
 
 namespace Officium\Subject\Models;
 
+use Officium\User\Models\FormModel;
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator;
 
-class AcademicObligationSurvey extends Survey
+class AcademicObligationSurvey extends FormModel
 {
     private $keys = ['hours_course_work', 'minor_start_date', 'minor_start_time', 'minor_end_date', 'minor_end_time',
             'major_start_date', 'major_start_time', 'major_end_date', 'major_end_time',

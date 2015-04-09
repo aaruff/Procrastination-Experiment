@@ -2,10 +2,11 @@
 
 namespace Officium\Subject\Models;
 
+use Officium\User\Models\FormModel;
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator as Validator;
 
-class GeneralAcademicSurvey extends Survey
+class GeneralAcademicSurvey extends FormModel
 {
     private $MAJOR = 'major';
     private $GPA = 'gpa';
