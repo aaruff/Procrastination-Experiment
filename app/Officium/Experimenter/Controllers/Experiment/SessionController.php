@@ -5,7 +5,7 @@ namespace Officium\Experimenter\Controllers\Experiment;
 use Officium\Experimenter\Maps\DashboardMap;
 use Officium\Experimenter\Maps\SessionMap;
 use Officium\Subject\Models\Subject;
-use Officium\Experimenter\Models\Treatment as ExperimentSession;
+use Officium\Experimenter\Models\Treatment;
 use Officium\Experimenter\Controllers\BaseController;
 
 class SessionController extends BaseController
@@ -25,14 +25,14 @@ class SessionController extends BaseController
     {
         $post = $this->request->post();
 
-        $errors = ExperimentSession::validate($post);
+        $errors = Treatment::validate($post);
         if ( ! empty($errors)) {
             $this->app->flash('errors', $errors);
             $this->response->redirect(SessionMap::toUri());
             return;
         }
 
-        $session = ExperimentSession::create($post);
+        $session = Treatment::create($post['']);
         $size = intval($post['size']);
 
         for ($i = 0; $i < $size; ++$i) {
@@ -50,7 +50,7 @@ class SessionController extends BaseController
      */
     public function show($id='')
     {
-        $session = ExperimentSession::validateId($id);
+        $session = Treatment::validateId($id);
         if ( ! $session) {
             $this->response->redirect(SessionMap::toUri());
             return;
