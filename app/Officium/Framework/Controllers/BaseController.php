@@ -1,8 +1,5 @@
 <?php
-namespace Officium\Subject\Controllers;
-
-use Officium\Subject\Models\Subject;
-use Officium\Subject\Controllers\LoginController as Login;
+namespace Officium\Framework\Controllers;
 
 /**
  * Provides subclasses with convenience wrappers for the framework.

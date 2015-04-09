@@ -1,12 +1,12 @@
 <?php
 
-namespace Officium\Experimenter\Controllers\Experiment;
+namespace Officium\Framework\Controllers;
 
+use Officium\Experimenter\Controllers\BaseController;
 use Officium\Experimenter\Maps\DashboardMap;
 use Officium\Experimenter\Maps\SessionMap;
-use Officium\Subject\Models\Subject;
 use Officium\Experimenter\Models\Treatment;
-use Officium\Experimenter\Controllers\BaseController;
+use Officium\Subject\Models\Subject;
 
 class SessionController extends BaseController
 {

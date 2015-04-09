@@ -1,11 +1,11 @@
 <?php
 
-namespace Officium\User\Controllers;
+namespace Officium\Framework\Controllers;
 
-use Officium\Experimenter\Maps\DashboardMap;
-use Officium\User\Maps\LoginMap;
-use Officium\User\Models\User;
 use Officium\Subject\Maps\SurveyMap;
+use Officium\Framework\Maps\LoginMap;
+use Officium\Framework\Models\User;
+use Officium\Framework\Maps\DashboardMap;
 
 /**
  * The Experimenter Login Controller

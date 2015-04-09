@@ -1,5 +1,5 @@
 <?php
-namespace Officium\Subject\Controllers;
+namespace Officium\Framework\Controllers;
 
 use Officium\Subject\Models\Survey;
 use Officium\Subject\Models\SurveyFactory;
