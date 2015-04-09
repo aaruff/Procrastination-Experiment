@@ -34,10 +34,10 @@ class LoginMap extends ResourceMap
     {
         $controller = get_class(new LoginController());
         if ($method == self::$POST) {
-            return '\Officium\User\Controllers\LoginController:post';
+            return $controller. ':post';
         }
 
-        return '\Officium\User\Controllers\LoginController:get';
+        return $controller . ':get';
     }
 
 }
