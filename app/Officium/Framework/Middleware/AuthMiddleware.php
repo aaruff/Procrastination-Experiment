@@ -1,10 +1,9 @@
 <?php
-namespace Officium\User\Middleware;
+namespace Officium\Framework\Middleware;
 
-
-use Officium\User\Maps\LoginMap;
+use Officium\Framework\Models\Auth;
 use \Slim\Middleware;
-use Officium\User\Models\Auth;
+use Officium\Framework\Maps\LoginMap;
 
 class AuthMiddleware extends Middleware
 {
