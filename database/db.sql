@@ -17,16 +17,8 @@ create table users(
 drop table if exists subjects;
 create table subjects(
   user_id		integer primary key,
-  state integer not null # A subject only plays one game so placing state here will suffice
-) ENGINE=InnoDB;
-
-#--
-# Session: A set of treatment parameters are set for each session.
-#--
-drop table if exists sessions;
-create table sessions(
-  id		integer auto_increment primary key,
-  size integer not null
+  state integer not null, # A subject only plays one game so placing state here will suffice
+  treatment_id integer not null
 ) ENGINE=InnoDB;
 
 #--
@@ -45,7 +37,6 @@ drop table if exists tasks;
 create table tasks(
   id		integer auto_increment primary key,
   number integer not null,
-  user_id integer not null,
   treatment_id integer not null,
   payoff double not null
 ) Engine=InnoDB;
