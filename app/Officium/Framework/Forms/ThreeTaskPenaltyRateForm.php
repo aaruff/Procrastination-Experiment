@@ -23,11 +23,18 @@ class ThreeTaskPenaltyRateForm
     public static $PAYOFF_KEY = 'payoff';
     public static $TASK_TIME_LIMIT_KEY = 'timeLimit';
 
+    /**
+     * @var \Officium\Framework\Validators\Validator[]
+     */
     private $validators = [];
+
+    /**
+     * @var array
+     */
     private $keys = [];
 
     /**
-     *
+     * Setup validators and form keys
      */
     public function __construct()
     {
@@ -65,11 +72,19 @@ class ThreeTaskPenaltyRateForm
      * Validates the form entries.
      *
      * @param $entries
+     * @return array $errors
      */
     public function validate($entries)
     {
         $formFields = $this->getFormFields($entries);
 
-        // TODO: parse and validate entries using the corresponding input validators.
+        $errors = [];
+        foreach ($this->validators as $key => $validator) {
+            if ($validator->validate($formFields[$key])) {
+                $errors[$key] = $validator->getError();
+            }
+        }
+
+        return $errors;
     }
 }
