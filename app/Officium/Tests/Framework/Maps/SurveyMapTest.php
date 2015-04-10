@@ -1,8 +1,8 @@
 <?php
 
-namespace Officium\Tests\Routers;
+namespace Officium\Tests\Framwork\Maps;
 
-use Officium\Subject\Routers\SurveyMap;
+use Officium\Framework\Maps\SurveyMap;
 
 /**
  * Class SurveyRouterTest
