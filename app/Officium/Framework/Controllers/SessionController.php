@@ -9,8 +9,13 @@ use Officium\Experiment\Subject;
 
 class SessionController extends BaseController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
-     *
+     * Get request handler.
      */
     public function get()
     {
@@ -18,7 +23,7 @@ class SessionController extends BaseController
     }
 
     /**
-     *
+     * Post request handler.
      */
     public function post()
     {
