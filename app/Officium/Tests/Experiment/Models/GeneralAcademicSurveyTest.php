@@ -3,8 +3,7 @@
 
 namespace Officium\Tests\Subject\Models;
 
-
-use Officium\Subject\Models\GeneralAcademicSurvey;
+use Officium\Experiment\Survey\GeneralAcademicSurvey;
 
 class GeneralAcademicSurveyTest extends \PHPUnit_Framework_TestCase {
 
