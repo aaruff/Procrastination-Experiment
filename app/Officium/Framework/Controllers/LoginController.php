@@ -21,9 +21,6 @@ class LoginController
 
     public function __construct()
     {
-        unset($_SESSION['user_id']);
-        unset($_SESSION['role']);
-
         $this->app = \Slim\Slim::getInstance();
         $this->request = $this->app->request;
         $this->response = $this->app->response;
@@ -42,6 +39,9 @@ class LoginController
      */
     public function post()
     {
+        unset($_SESSION['user_id']);
+        unset($_SESSION['role']);
+
         $post = $this->request->post();
 
         // Error Handling
