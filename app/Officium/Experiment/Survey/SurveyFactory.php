@@ -2,9 +2,7 @@
 
 namespace Officium\Experiment\Survey;
 
-
-use Officium\Subject\Maps\SurveyMap;
-
+use Officium\Framework\Models\FormModel;
 /**
  * Class SurveyFactoryTest
  *
@@ -23,16 +21,18 @@ class SurveyFactory
      *
      * @param $id
      * @param $data
-     * @return Survey
+     * @return FormModel
      */
     public static function make($id, $data)
     {
-        if (SurveyMap::isSurveyId($id)) {
-            $surveyClass = 'Officium\\Subject\\Models\\' . self::$surveys[$id];
+        $survey = new GeneralAcademicSurvey([]);
+        $surveyNamespace = implode(array_slice(explode('\\', get_class($survey)), 0, -1), '\\') . '\\';
+        if (isset(self::$surveys[$id])) {
+            $surveyClass = $surveyNamespace . self::$surveys[$id];
             return new $surveyClass($data);
         }
 
-        $surveyClass = 'Officium\\Subject\\Models\\GeneralAcademicSurvey';
+        $surveyClass = get_class($survey);
         return new $surveyClass($data);
     }
 }
