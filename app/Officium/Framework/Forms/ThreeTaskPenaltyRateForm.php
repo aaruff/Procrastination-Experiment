@@ -26,6 +26,9 @@ class ThreeTaskPenaltyRateForm
     private $validators = [];
     private $keys = [];
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->validators[self::$SESSION_SIZE_KEY] = new SessionSizeValidator();
@@ -36,15 +39,37 @@ class ThreeTaskPenaltyRateForm
         $this->validators[self::$PAYOFF_KEY] = new PayoffValidator();
         $this->validators[self::$TASK_TIME_LIMIT_KEY] = new TimeLimitValidator();
         $this->validators[self::$PENALTY_RATE_KEY] = new PenaltyRateValidator();
+
+        $this->keys = [
+            self::$SESSION_SIZE_KEY, self::$ADJUSTABLE_SUBJECT_DEADLINE_KEY, self::$TASK_ONE_KEY, self::$TASK_TWO_KEY,
+            self::$TASK_THREE_KEY, self::$PAYOFF_KEY, self::$TASK_TIME_LIMIT_KEY, self::$PENALTY_RATE_KEY
+        ];
     }
 
-    private function parseEntries($entries)
+    /**
+     * Populates and returns the form fields with the entries submitted by the client.
+     * @param $entries
+     * @return array
+     */
+    private function getFormFields($entries)
     {
-        // TODO: Parse valid form entries and return them.
+        $fields = [];
+        foreach ($this->keys as $key) {
+            $fields[$key] = (isset($entries[$key])) ? trim($entries[$key]) : '';
+        }
+
+        return $fields;
     }
 
+    /**
+     * Validates the form entries.
+     *
+     * @param $entries
+     */
     public function validate($entries)
     {
+        $formFields = $this->getFormFields($entries);
+
         // TODO: parse and validate entries using the corresponding input validators.
     }
 }
