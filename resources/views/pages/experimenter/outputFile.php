@@ -10,7 +10,7 @@
         <div id="navigation"> 
             <ul>
                 <li><a href="viewSubjects.php"><img src="../resources/img/home.png"/>View Treatments</a></li>
-                <li><a href="experiment/session/create.twig"><img src="../resources/img/add_treatment.png"/>New Treatment</a></li>
+                <li><a href="experiment/session/add.twig"><img src="../resources/img/add_treatment.png"/>New Treatment</a></li>
             </ul> 
         </div>
         
