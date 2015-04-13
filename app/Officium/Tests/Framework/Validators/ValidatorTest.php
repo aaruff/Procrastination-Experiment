@@ -1,5 +1,5 @@
 <?php
-namespace Framework\Validation;
+namespace Officium\Tests\Framework\Validators;
 
 use Respect\Validation\Validator as v;
 
