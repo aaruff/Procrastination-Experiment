@@ -14,7 +14,6 @@ class Subject extends Model
     /**
      * @var int
      */
-    public static $PLAYING = 1;
     public static $SURVEY_STATE = 1;
 
     /**
@@ -154,6 +153,22 @@ class Subject extends Model
         }
 
         return $errorMessages;
+    }
+
+    public function createSubjects($count, $treatmentId)
+    {
+        for ($i = 0; $i < $count; ++$i) {
+            $user = new User();
+            $user->login = $user->generateSubjectLoginName();
+            $user->password = password_hash($treatmentId . $user->login, PASSWORD_DEFAULT);
+            $user->save();
+
+            $subject = new Subject();
+            $subject->user_id = $user->id;
+            $subject->state = Subject::$SURVEY_STATE;
+            $subject->treatment_id = $treatmentId;
+            $subject->save();
+        }
     }
 
     /**
