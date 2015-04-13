@@ -10,41 +10,60 @@ namespace Officium\Framework\Forms;
 abstract class Form
 {
     /**
-     * @var array
-     */
-    private $entries = [];
-    /**
-     * @var array
+     * @var string[]
      */
     private $errors = [];
 
-    public function __construct($entries)
-    {
-       $this->entries;
-    }
-
     /**
-     * @return array
+     * @var \Officium\Framework\Validators\Validator[]
      */
-    public function getFormEntries()
+    private $validators = [];
+
+    /**
+     * @param \Officium\Framework\Validators\Validator[] $validators
+     */
+    public function __construct($validators)
     {
-        return $this->entries;
+        $this->validators = $validators;
     }
 
     /**
-     * @return array
+     * Returns the form's keys
+     *
+     * @return string[]
+     */
+    public abstract function getFormKeys();
+
+    /**
+     * Returns the form's validators
+     *
+     * @return \Officium\Framework\Validators\Validator[]
+     */
+    protected abstract function getFormValidators();
+
+    /**
+     * @param string[] $entries
+     * @return bool
+     */
+    public function validate($entries)
+    {
+        $errors = [];
+        foreach ($this->validators as $key => $validator) {
+            if ( ! $validator->validate($entries[$key])) {
+                $errors[$key] = $validator->getError();
+            }
+        }
+
+        $this->errors;
+
+        return empty($errors);
+    }
+
+    /**
+     * @return string[]
      */
     public function getErrors()
     {
         return $this->errors;
-    }
-
-    /**
-     * @param array $errors
-     * @return array
-     */
-    protected function setErrors(array $errors)
-    {
-        return $errors;
     }
 }
