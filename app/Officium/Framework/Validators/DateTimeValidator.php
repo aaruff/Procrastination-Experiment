@@ -12,15 +12,30 @@ use Respect\Validation\Exceptions\NestedValidationExceptionInterface;
 class DateTimeValidator extends Validator
 {
     /**
+     * @var string
+     */
+    private $dateTimeFormat = 'm-d-Y g:i a';
+
+    /**
+     * @param $format string
+     */
+    public function DateTimeValidator($format = '')
+    {
+        if ( ! empty($format)) {
+            $this->dateTimeFormat = $format;
+        }
+    }
+
+    /**
      * Validates the task deadlines.
      *
-     * @param $deadlines
+     * @param $datetime string
      * @return bool
      */
-    public function validate($deadlines)
+    public function validate($datetime)
     {
         try {
-            v::arr()->notEmpty()->each(v::date('m-d-Y g:i a'))->assert($deadlines);
+            v::string()->notEmpty()->date($this->dateTimeFormat)->assert($datetime);
             return true;
         }
         catch(NestedValidationExceptionInterface $e) {
