@@ -2,15 +2,13 @@
 
 namespace Officium\Framework\Forms;
 
-
 use Officium\Framework\Validators\CheckboxValidator;
-use Officium\Framework\Validators\PayoffValidator;
+use Officium\Framework\Validators\IntegerValidator;
 use Officium\Framework\Validators\SessionSizeValidator;
-use Officium\Framework\Validators\PenaltyRateValidator;
+use Officium\Framework\Validators\FloatValidator;
 use Officium\Framework\Validators\DateTimeValidator;
-use Officium\Framework\Validators\TimeLimitValidator;
 
-class ThreeTaskPenaltyRateForm
+class ThreeTaskPenaltyRateForm extends Form
 {
     private $id = 'task:3_timeLimit_penalty_adjustableDeadline';
 
@@ -23,68 +21,39 @@ class ThreeTaskPenaltyRateForm
     public static $PAYOFF_KEY = 'payoff';
     public static $TASK_TIME_LIMIT_KEY = 'timeLimit';
 
-    /**
-     * @var \Officium\Framework\Validators\Validator[]
-     */
-    private $validators = [];
-
-    /**
-     * @var array
-     */
-    private $keys = [];
-
-    /**
-     * Setup validators and form keys
-     */
     public function __construct()
     {
-        $this->validators[self::$SESSION_SIZE_KEY] = new SessionSizeValidator();
-        $this->validators[self::$ADJUSTABLE_SUBJECT_DEADLINE_KEY] = new CheckboxValidator();
-        $this->validators[self::$TASK_ONE_KEY] = new DateTimeValidator();
-        $this->validators[self::$TASK_TWO_KEY] = new DateTimeValidator();
-        $this->validators[self::$TASK_THREE_KEY] = new DateTimeValidator();
-        $this->validators[self::$PAYOFF_KEY] = new PayoffValidator();
-        $this->validators[self::$TASK_TIME_LIMIT_KEY] = new TimeLimitValidator();
-        $this->validators[self::$PENALTY_RATE_KEY] = new PenaltyRateValidator();
-
-        $this->keys = [
-            self::$SESSION_SIZE_KEY, self::$ADJUSTABLE_SUBJECT_DEADLINE_KEY, self::$TASK_ONE_KEY, self::$TASK_TWO_KEY,
-            self::$TASK_THREE_KEY, self::$PAYOFF_KEY, self::$TASK_TIME_LIMIT_KEY, self::$PENALTY_RATE_KEY
-        ];
+        parent::__construct($this->getFormValidators());
     }
 
     /**
-     * Populates and returns the form fields with the entries submitted by the client.
-     * @param $entries
+     * Returns the form's validators.
+     *
+     * @return \Officium\Framework\Validators\Validator[]
+     */
+    public function getFormValidators()
+    {
+        $validators = [];
+        $validators[self::$SESSION_SIZE_KEY] = new IntegerValidator();
+        $validators[self::$ADJUSTABLE_SUBJECT_DEADLINE_KEY] = new CheckboxValidator();
+        $validators[self::$TASK_ONE_KEY] = new DateTimeValidator();
+        $validators[self::$TASK_TWO_KEY] = new DateTimeValidator();
+        $validators[self::$TASK_THREE_KEY] = new DateTimeValidator();
+        $validators[self::$PAYOFF_KEY] = new IntegerValidator();
+        $validators[self::$TASK_TIME_LIMIT_KEY] = new IntegerValidator();
+        $validators[self::$PENALTY_RATE_KEY] = new FloatValidator();
+
+        return $validators;
+    }
+
+    /**
+     * Returns the form keys
+     *
      * @return array
      */
-    private function getFormFields($entries)
+    public function getFormKeys()
     {
-        $fields = [];
-        foreach ($this->keys as $key) {
-            $fields[$key] = (isset($entries[$key])) ? trim($entries[$key]) : '';
-        }
-
-        return $fields;
+        return array_keys($this->getFormValidators());
     }
 
-    /**
-     * Validates the form entries.
-     *
-     * @param $entries
-     * @return array $errors
-     */
-    public function validate($entries)
-    {
-        $formFields = $this->getFormFields($entries);
-
-        $errors = [];
-        foreach ($this->validators as $key => $validator) {
-            if ($validator->validate($formFields[$key])) {
-                $errors[$key] = $validator->getError();
-            }
-        }
-
-        return $errors;
-    }
 }
