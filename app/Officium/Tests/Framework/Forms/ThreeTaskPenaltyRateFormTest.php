@@ -14,11 +14,11 @@ class ThreeTaskPenaltyRateFormTest extends \PHPUnit_Framework_TestCase
     {
         $post = [
             ThreeTaskPenaltyRateForm::$SESSION_SIZE_KEY => '1',
-            ThreeTaskPenaltyRateForm::$ADJUSTABLE_SUBJECT_DEADLINE_KEY => 'on',
+            ThreeTaskPenaltyRateForm::$ALTERNATE_TASK_DEADLINE_KEY => 'on',
             ThreeTaskPenaltyRateForm::$PENALTY_RATE_KEY => '0.5',
-            ThreeTaskPenaltyRateForm::$TASK_ONE_KEY => '12-01-2015 10:00 am',
-            ThreeTaskPenaltyRateForm::$TASK_TWO_KEY => '12-02-2015 10:00 am',
-            ThreeTaskPenaltyRateForm::$TASK_THREE_KEY => '12-03-2015 10:00 am',
+            ThreeTaskPenaltyRateForm::$TASK_ONE_DEADLINE_KEY => '12-01-2015 10:00 am',
+            ThreeTaskPenaltyRateForm::$TASK_TWO_DEADLINE_KEY => '12-02-2015 10:00 am',
+            ThreeTaskPenaltyRateForm::$TASK_THREE_DEADLINE_KEY => '12-03-2015 10:00 am',
             ThreeTaskPenaltyRateForm::$PAYOFF_KEY => '12',
             ThreeTaskPenaltyRateForm::$TASK_TIME_LIMIT_KEY => '60'
         ];
@@ -38,7 +38,7 @@ class ThreeTaskPenaltyRateFormTest extends \PHPUnit_Framework_TestCase
             ],
             [
             ThreeTaskPenaltyRateForm::$SESSION_SIZE_KEY => '1',
-            ThreeTaskPenaltyRateForm::$ADJUSTABLE_SUBJECT_DEADLINE_KEY => 'on',
+            ThreeTaskPenaltyRateForm::$ALTERNATE_TASK_DEADLINE_KEY => 'on',
             ThreeTaskPenaltyRateForm::$PENALTY_RATE_KEY => '0.5',
             ThreeTaskPenaltyRateForm::$PAYOFF_KEY => '12',
             ThreeTaskPenaltyRateForm::$TASK_TIME_LIMIT_KEY => '60'
