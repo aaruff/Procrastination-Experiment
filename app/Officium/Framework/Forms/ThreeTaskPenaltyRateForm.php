@@ -69,7 +69,9 @@ class ThreeTaskPenaltyRateForm extends Form
 
     public function getAdjustableTaskDeadlineOption()
     {
-
+        $entries = $this->getEntries();
+        // When it's not empty and has passed validation so the option must be set to true.
+        return ! empty($entries[self::$ADJUSTABLE_SUBJECT_DEADLINE_KEY]);
     }
 
 }
