@@ -13,7 +13,7 @@ class ThreeTaskPenaltyRateForm extends Form
     private $formType = 'task:3_timeLimit_penalty_adjustableDeadline';
 
     public static $SESSION_SIZE_KEY = 'size';
-    public static $ADJUSTABLE_SUBJECT_DEADLINE_KEY = 'adjustableDeadline';
+    public static $ALTERNATE_TASK_DEADLINE_KEY = 'adjustableDeadline';
     public static $PENALTY_RATE_KEY = 'penaltyRate';
     public static $TASK_ONE_DEADLINE_KEY = 'taskOne';
     public static $TASK_TWO_DEADLINE_KEY = 'taskTwo';
@@ -35,7 +35,7 @@ class ThreeTaskPenaltyRateForm extends Form
     {
         $validators = [];
         $validators[self::$SESSION_SIZE_KEY] = new IntegerValidator();
-        $validators[self::$ADJUSTABLE_SUBJECT_DEADLINE_KEY] = new CheckboxValidator();
+        $validators[self::$ALTERNATE_TASK_DEADLINE_KEY] = new CheckboxValidator();
         $validators[self::$TASK_ONE_DEADLINE_KEY] = new DateTimeValidator();
         $validators[self::$TASK_TWO_DEADLINE_KEY] = new DateTimeValidator();
         $validators[self::$TASK_THREE_DEADLINE_KEY] = new DateTimeValidator();
@@ -59,11 +59,11 @@ class ThreeTaskPenaltyRateForm extends Form
     /**
      * @return bool
      */
-    public function getAdjustableTaskDeadlineOption()
+    public function getAlternateTaskDeadlineOption()
     {
         $entries = $this->getEntries();
         // When it's not empty and has passed validation so the option must be set to true.
-        return ! empty($entries[self::$ADJUSTABLE_SUBJECT_DEADLINE_KEY]);
+        return ! empty($entries[self::$ALTERNATE_TASK_DEADLINE_KEY]);
     }
 
     /**
@@ -94,17 +94,12 @@ class ThreeTaskPenaltyRateForm extends Form
     /**
      * Returns the number of minutes allotted for the completion of each task, in minutes.
      *
-     * @return int[]
+     * @return int
      */
     public function getTaskTimeLimits()
     {
         $entries = $this->getEntries();
-        $timeLimits = [];
-        for ($i = 0; $i < 3; ++$i) {
-            $timeLimits[] = intval($entries[self::$TASK_TIME_LIMIT_KEY]);
-        }
-
-        return $timeLimits;
+        return intval($entries[self::$TASK_TIME_LIMIT_KEY]);
     }
 
     /**
