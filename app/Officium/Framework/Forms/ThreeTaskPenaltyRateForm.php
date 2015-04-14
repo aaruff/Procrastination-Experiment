@@ -56,6 +56,9 @@ class ThreeTaskPenaltyRateForm extends Form
         return intval($entries[self::$SESSION_SIZE_KEY]);
     }
 
+    /**
+     * @return bool
+     */
     public function getAdjustableTaskDeadlineOption()
     {
         $entries = $this->getEntries();
@@ -63,6 +66,11 @@ class ThreeTaskPenaltyRateForm extends Form
         return ! empty($entries[self::$ADJUSTABLE_SUBJECT_DEADLINE_KEY]);
     }
 
+    /**
+     * Returns the hard deadline (date and time) in that which each task should be completed by.
+     *
+     * @return string[]
+     */
     public function getTaskDeadlines()
     {
         $entries = $this->getEntries();
@@ -81,6 +89,22 @@ class ThreeTaskPenaltyRateForm extends Form
     {
         $entries = $this->getEntries();
         return floatval($entries[self::$PAYOFF_KEY]);
+    }
+
+    /**
+     * Returns the number of minutes allotted for the completion of each task, in minutes.
+     *
+     * @return int[]
+     */
+    public function getTaskTimeLimits()
+    {
+        $entries = $this->getEntries();
+        $timeLimits = [];
+        for ($i = 0; $i < 3; ++$i) {
+            $timeLimits[] = intval($entries[self::$TASK_TIME_LIMIT_KEY]);
+        }
+
+        return $timeLimits;
     }
 
 
