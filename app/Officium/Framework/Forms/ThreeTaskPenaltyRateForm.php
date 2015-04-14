@@ -4,13 +4,12 @@ namespace Officium\Framework\Forms;
 
 use Officium\Framework\Validators\CheckboxValidator;
 use Officium\Framework\Validators\IntegerValidator;
-use Officium\Framework\Validators\SessionSizeValidator;
 use Officium\Framework\Validators\FloatValidator;
 use Officium\Framework\Validators\DateTimeValidator;
 
 class ThreeTaskPenaltyRateForm extends Form
 {
-    private $formType = 'task:3_timeLimit_penalty_adjustableDeadline';
+    private static $formType = 'task:3_timeLimit_penalty_adjustableDeadline';
 
     public static $NUMBER_SUBJECTS_KEY = 'size';
     public static $ALTERNATE_TASK_DEADLINE_KEY = 'adjustableDeadline';
@@ -113,5 +112,9 @@ class ThreeTaskPenaltyRateForm extends Form
         return floatval($entries[self::$PENALTY_RATE_KEY]);
     }
 
+    public static function getFormType()
+    {
+        return self::$formType;
+    }
 
 }
