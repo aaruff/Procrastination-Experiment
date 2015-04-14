@@ -42,13 +42,6 @@ abstract class Form
     }
 
     /**
-     * Returns the form's keys
-     *
-     * @return string[]
-     */
-    public abstract function getFormKeys();
-
-    /**
      * Returns the form's validators
      *
      * @return \Officium\Framework\Validators\Validator[]
@@ -92,4 +85,15 @@ abstract class Form
     {
         return $this->type;
     }
+
+    /**
+     * Returns the form keys
+     *
+     * @return array
+     */
+    public function getFormKeys()
+    {
+        return array_keys($this->getFormValidators());
+    }
+
 }
