@@ -17,4 +17,16 @@ class TaskTimeLimit extends Model
      */
     protected $table = 'task_time_limits';
 
+    /**
+     * @param $taskId
+     * @param $minutes
+     */
+    public static function createTaskTimeLimit($taskId, $minutes)
+    {
+        $taskTimeLimit = new TaskTimeLimit();
+        $taskTimeLimit->task_id = $taskId;
+        $taskTimeLimit->minutes = $minutes;
+        $taskTimeLimit->save();
+    }
+
 }
