@@ -1,6 +1,7 @@
 <?php
 namespace Officium\Experiment;
 
+use Officium\Framework\Models\User;
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator as Validator;
 use Illuminate\Database\Eloquent\Model;
@@ -96,5 +97,25 @@ class Subject extends Model
     public static function getSubject($id)
     {
         return User::find(intval($id))->subject;
+    }
+
+    /**
+     * @param $numberSubjects
+     * @param $treatmentId
+     */
+    public static function createSubjects($numberSubjects, $treatmentId)
+    {
+        for ($i = 0; $i < $numberSubjects; ++$i) {
+            $user = new User();
+            $user->login = $user->generateLogin();
+            $user->password = password_hash($treatmentId . $user->login, PASSWORD_DEFAULT);
+            $user->save();
+
+            $subject = new Subject();
+            $subject->user_id = $user->id;
+            $subject->state = Subject::$SURVEY_STATE;
+            $subject->treatment_id = $treatmentId;
+            $subject->save();
+        }
     }
 }
