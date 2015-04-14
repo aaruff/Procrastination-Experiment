@@ -20,7 +20,7 @@
                         <label class="col-xs-3 control-label">Subject Deadline</label>
                         <div class="checkbox col-xs-9">
                             <label>
-                                <input name="adjustableDeadlines" type="checkbox"> Enabled
+                                <input name="deadlines" type="checkbox"> Enabled
                             </label>
                         </div>
                     </div>
@@ -29,21 +29,21 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label" >Task 1 Deadline</label>
                         <div class="col-xs-9">
-                            <input type='text' class="form-control dt" type="datetime" name="task3DateTime" value="{{ first_task_deadline }}"/>
+                            <input type='text' class="form-control dt" type="datetime" name="task[1]" value="{{ first_task_deadline }}"/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Task 2 Deadline</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control dt" placeholder="MM-DD-YYYY HH:MM AM-PM" name="task2DateTime" value="{{  second_task_deadline  }}" />
+                            <input type="text" class="form-control dt" placeholder="MM-DD-YYYY HH:MM AM-PM" name="task[2]" value="{{  second_task_deadline  }}" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Task 3 Deadline</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control dt" placeholder="MM-DD-YYYY HH:MM AM-PM" name="task3DateTime" value="{{  third_task_deadline  }}" />
+                            <input type="text" class="form-control dt" placeholder="MM-DD-YYYY HH:MM AM-PM" name="task[3]" value="{{  third_task_deadline  }}" />
                         </div>
                     </div>
 
@@ -61,11 +61,10 @@
                         </div>
                     </div>
 
-                    <h4>Post Deadline</h4>
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Penalty Rate</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control"  name="penaltyRate" value="{{  penalty  }}" />
+                            <input type="text" class="form-control"  name="rate" value="{{  penalty  }}" />
                         </div>
                     </div>
 
