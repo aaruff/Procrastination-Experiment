@@ -17,6 +17,27 @@ class Task extends Model
     protected $table = 'tasks';
 
     /**
+     * Creates a task and returns its ID.
+     *
+     * @param $type
+     * @param $number
+     * @param $treatmentId
+     * @param $payoff
+     * @return int
+     */
+    public static function createTask($type, $number, $treatmentId, $payoff)
+    {
+        $task = new Task();
+        $task->type = $type;
+        $task->number = $number;
+        $task->treatment_id = $treatmentId;
+        $task->payoff = $payoff;
+        $task->save();
+
+        return $task->id;
+    }
+
+    /**
      * Generates the problem image, saves it in the "img" directory,
      * and returns the phrases generated.
      * @param $subject_id
