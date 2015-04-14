@@ -2,7 +2,19 @@
 
 namespace Officium\Experiment\Treatment;
 
-class Task {
+use Illuminate\Database\Eloquent\Model;
+
+class Task extends Model
+{
+    /**
+     * @var bool database timestamp enabled
+     */
+    public $timestamps = false;
+
+    /**
+     * @var string database table name
+     */
+    protected $table = 'tasks';
 
     /**
      * Generates the problem image, saves it in the "img" directory,
