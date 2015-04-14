@@ -56,6 +56,22 @@ class ThreeTaskPenaltyRateForm extends Form
         return intval($entries[self::$SESSION_SIZE_KEY]);
     }
 
+    public function getAdjustableTaskDeadlineOption()
+    {
+        $entries = $this->getEntries();
+        // When it's not empty and has passed validation so the option must be set to true.
+        return ! empty($entries[self::$ADJUSTABLE_SUBJECT_DEADLINE_KEY]);
+    }
+
+    public function getTaskDeadlines()
+    {
+        $entries = $this->getEntries();
+        return [
+            $entries[self::$TASK_ONE_DEADLINE_KEY], $entries[self::$TASK_TWO_DEADLINE_KEY],
+            $entries[self::$TASK_THREE_DEADLINE_KEY]
+        ];
+    }
+
     /**
      * Returns the payoff for all tasks.
      *
@@ -67,11 +83,5 @@ class ThreeTaskPenaltyRateForm extends Form
         return floatval($entries[self::$PAYOFF_KEY]);
     }
 
-    public function getAdjustableTaskDeadlineOption()
-    {
-        $entries = $this->getEntries();
-        // When it's not empty and has passed validation so the option must be set to true.
-        return ! empty($entries[self::$ADJUSTABLE_SUBJECT_DEADLINE_KEY]);
-    }
 
 }
