@@ -3,7 +3,7 @@
 namespace Experiment\Treatment\Task;
 
 
-class Deadline 
+class TaskDeadlines
 {
 
 }
