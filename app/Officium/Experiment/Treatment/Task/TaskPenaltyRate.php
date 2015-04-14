@@ -1,9 +1,10 @@
 <?php
-
 namespace Experiment\Treatment\Task;
 
 
-class TaskPenaltyRate
+use Illuminate\Database\Eloquent\Model;
+
+class TaskPenaltyRate extends Model
 {
     /**
      * @var bool database timestamp enabled

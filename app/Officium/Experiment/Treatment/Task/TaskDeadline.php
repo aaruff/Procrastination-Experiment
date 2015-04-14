@@ -1,9 +1,10 @@
 <?php
-
 namespace Experiment\Treatment\Task;
 
 
-class TaskDeadlines
+use Illuminate\Database\Eloquent\Model;
+
+class TaskDeadline extends Model
 {
     /**
      * @var bool database timestamp enabled

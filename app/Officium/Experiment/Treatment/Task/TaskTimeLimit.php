@@ -3,7 +3,9 @@
 namespace Officium\Experiment\Treatment\Task;
 
 
-class TaskTimeLimit 
+use Illuminate\Database\Eloquent\Model;
+
+class TaskTimeLimit extends Model
 {
     /**
      * @var bool database timestamp enabled
