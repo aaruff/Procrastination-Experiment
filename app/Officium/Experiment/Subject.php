@@ -43,81 +43,6 @@ class Subject extends Model
     }
 
     /**
-     * Returns a uniquely random subject name.
-     *
-     * @return string
-     */
-    public function generateSubjectLoginName()
-    {
-        $login = $this->getLoginName();
-        do {
-            $subject = Subject::where('login', '=', $login)->first();
-        } while ($subject);
-
-        return $login;
-    }
-
-    /**
-     * Returns a randomly generated subject name.
-     *
-     * @param int $syllables
-     * @return string
-     */
-    private function getLoginName($syllables = 3)
-    {
-        /**
-         * TODO: Improve legacy scheme if time permits.
-         */
-        // 10 random suffixes
-        $suffix = array('dom', 'ity', 'ment', 'sion', 'ness',
-            'ence', 'er', 'ist', 'tion', 'or');
-
-        // 8 vowel sounds
-        $vowels = array('a', 'o', 'e', 'i', 'y', 'u', 'ou', 'oo');
-
-        // 20 random consonants
-        $consonants = array('w', 'r', 't', 'p', 's', 'd', 'f', 'g', 'h', 'j',
-            'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'q');
-
-        // get a random suffix
-        $login_suffix = $suffix[rand(0, (count($suffix)-1))];
-
-        // for each number of sylllables
-        for($i=0; $i<$syllables; $i++) {
-            $doubles = array('n', 'm', 't', 's');
-
-            // select a random consonant
-            $consonant = $consonants[rand(0, (count($consonants)-1))];
-
-            // If the constonant is in the doubles array double it with 1/3 probability
-            if (in_array($consonant, $doubles)&&($i!=0)) { // maybe double it
-                if (rand(0, 2) == 1) // 33% probability
-                    $consonant .= $consonant;
-            }
-
-            // append the consonant to the login
-            $login = '';
-            $login .= $consonant;
-
-            // selecting random vowel
-            $login .= $vowels[rand(0, (count($vowels)-1))];
-
-            if ($i == $syllables - 1){ // if suffix begin with vovel
-                if (in_array($login_suffix[0], $vowels)){ // add one more consonant
-                    $login .= $consonants[rand(0, (count($consonants)-1))];
-                }
-            }
-
-        }
-
-        // selecting random suffix
-        $login .= $login_suffix;
-
-        return $login;
-
-    }
-
-    /**
      * Validate the subject's credentials.
      *
      * @param $credentials
@@ -155,21 +80,6 @@ class Subject extends Model
         return $errorMessages;
     }
 
-    public function createSubjects($count, $treatmentId)
-    {
-        for ($i = 0; $i < $count; ++$i) {
-            $user = new User();
-            $user->login = $user->generateSubjectLoginName();
-            $user->password = password_hash($treatmentId . $user->login, PASSWORD_DEFAULT);
-            $user->save();
-
-            $subject = new Subject();
-            $subject->user_id = $user->id;
-            $subject->state = Subject::$SURVEY_STATE;
-            $subject->treatment_id = $treatmentId;
-            $subject->save();
-        }
-    }
 
     /**
      * @return bool
