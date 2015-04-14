@@ -10,7 +10,7 @@ use Officium\Framework\Validators\DateTimeValidator;
 
 class ThreeTaskPenaltyRateForm extends Form
 {
-    private $id = 'task:3_timeLimit_penalty_adjustableDeadline';
+    private $formType = 'task:3_timeLimit_penalty_adjustableDeadline';
 
     public static $SESSION_SIZE_KEY = 'size';
     public static $ADJUSTABLE_SUBJECT_DEADLINE_KEY = 'adjustableDeadline';
@@ -21,9 +21,9 @@ class ThreeTaskPenaltyRateForm extends Form
     public static $PAYOFF_KEY = 'payoff';
     public static $TASK_TIME_LIMIT_KEY = 'timeLimit';
 
-    public function __construct()
+    public function __construct($entries = [])
     {
-        parent::__construct($this->getFormValidators());
+        parent::__construct($this->formType, $entries, $this->getFormValidators());
     }
 
     /**
@@ -55,5 +55,4 @@ class ThreeTaskPenaltyRateForm extends Form
     {
         return array_keys($this->getFormValidators());
     }
-
 }
