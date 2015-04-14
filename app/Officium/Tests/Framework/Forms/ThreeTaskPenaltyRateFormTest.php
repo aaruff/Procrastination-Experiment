@@ -13,7 +13,7 @@ class ThreeTaskPenaltyRateFormTest extends \PHPUnit_Framework_TestCase
     public function Given_ValidEntriesProvided_When_Validated_Should_ReturnTrue()
     {
         $post = [
-            ThreeTaskPenaltyRateForm::$SESSION_SIZE_KEY => '1',
+            ThreeTaskPenaltyRateForm::$NUMBER_SUBJECTS_KEY => '1',
             ThreeTaskPenaltyRateForm::$ALTERNATE_TASK_DEADLINE_KEY => 'on',
             ThreeTaskPenaltyRateForm::$PENALTY_RATE_KEY => '0.5',
             ThreeTaskPenaltyRateForm::$TASK_ONE_DEADLINE_KEY => '12-01-2015 10:00 am',
@@ -34,10 +34,10 @@ class ThreeTaskPenaltyRateFormTest extends \PHPUnit_Framework_TestCase
     {
         $posts = [
             [
-            ThreeTaskPenaltyRateForm::$SESSION_SIZE_KEY => '1'
+            ThreeTaskPenaltyRateForm::$NUMBER_SUBJECTS_KEY => '1'
             ],
             [
-            ThreeTaskPenaltyRateForm::$SESSION_SIZE_KEY => '1',
+            ThreeTaskPenaltyRateForm::$NUMBER_SUBJECTS_KEY => '1',
             ThreeTaskPenaltyRateForm::$ALTERNATE_TASK_DEADLINE_KEY => 'on',
             ThreeTaskPenaltyRateForm::$PENALTY_RATE_KEY => '0.5',
             ThreeTaskPenaltyRateForm::$PAYOFF_KEY => '12',
