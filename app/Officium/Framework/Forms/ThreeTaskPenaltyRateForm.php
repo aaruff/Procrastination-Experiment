@@ -107,5 +107,16 @@ class ThreeTaskPenaltyRateForm extends Form
         return $timeLimits;
     }
 
+    /**
+     * Returns the penalty rate.
+     *
+     * @return float
+     */
+    public function getPenaltyRate()
+    {
+        $entries = $this->getEntries();
+        return floatval($entries[self::$PENALTY_RATE_KEY]);
+    }
+
 
 }
