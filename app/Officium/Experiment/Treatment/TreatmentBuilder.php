@@ -4,6 +4,7 @@ namespace Officium\Experiment\Treatment;
 
 use Experiment\Treatment\Task\TaskDeadline;
 use Experiment\Treatment\Task\TaskPenaltyRate;
+use Officium\Experiment\Subject;
 use Officium\Experiment\Treatment\Task\TaskTimeLimit;
 use Officium\Framework\Forms\Form;
 use Officium\Framework\Forms\ThreeTaskPenaltyRateForm;
@@ -14,39 +15,19 @@ class TreatmentBuilder
     {
         $treatmentForm = new ThreeTaskPenaltyRateForm($form->getEntries());
 
-        $treatment = new Treatment();
-        $treatment->type = $form->getType();
-        $treatment->save();
-
-        $alternateDeadlineTreatment = new AlternateDeadlineTreatment();
-        $alternateDeadlineTreatment->treatment_id = $treatment->id;
-        $alternateDeadlineTreatment->enabled = $treatmentForm->getAlternateTaskDeadlineOption();
-        $alternateDeadlineTreatment->save();
+        $treatmentId = self::createTreatment($treatmentForm->getType());
+        Subject::createSubjects($treatmentForm->getNumberSubjects(), $treatmentId);
+        AlternateDeadlineTreatment::createTreatment($treatmentForm->getAlternateDeadlineOption(), $treatmentId);
 
         $taskNumber = 1;
         $deadlines = $treatmentForm->getTaskDeadlines();
         foreach ($deadlines as $deadline) {
-            $task = new Task();
-            $task->type = $form->getType();
-            $task->number = $taskNumber++;
-            $task->treatment_id = $treatment->id;
-            $task->payoff = $treatmentForm->getPayoff();
-            $task->save();
+            $taskId = Task::createTask($form->getType(), $taskNumber, $treatmentId, $treatmentForm->getPayoff());
 
-            $taskDeadlines = new TaskDeadline();
-            $taskDeadlines->task_id = $task->id;
-            $taskDeadlines->date_time = $deadline;
-            $taskDeadlines->save();
-
-            $taskTimeLimit = new TaskTimeLimit();
-            $taskTimeLimit->task_id = $task->id;
-            $taskTimeLimit->minutes = $treatmentForm->getTaskTimeLimits();
-            $taskTimeLimit->save();
-
-            $penaltyRate = new TaskPenaltyRate();
-            $penaltyRate->task_id = $task->id;
-            $penaltyRate->rate = $treatmentForm->getPenaltyRate();
-            $penaltyRate->save();
+            TaskDeadline::createTaskDeadline($taskId, $deadline);
+            TaskTimeLimit::createTaskTimeLimit($taskId, $treatmentForm->getTaskTimeLimits());
+            TaskPenaltyRate::createPenaltyRate($taskId, $treatmentForm->getPenaltyRate());
+            ++$taskNumber;
         }
     }
 }
