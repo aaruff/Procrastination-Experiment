@@ -16,4 +16,16 @@ class TaskDeadline extends Model
      */
     protected $table = 'task_deadlines';
 
+    /**
+     * @param $taskId
+     * @param $deadline
+     */
+    public static function createTaskDeadline($taskId, $deadline)
+    {
+        $taskDeadlines = new TaskDeadline();
+        $taskDeadlines->task_id = $taskId;
+        $taskDeadlines->date_time = $deadline;
+        $taskDeadlines->save();
+    }
+
 }
