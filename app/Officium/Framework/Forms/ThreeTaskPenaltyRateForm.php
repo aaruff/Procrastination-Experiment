@@ -12,7 +12,7 @@ class ThreeTaskPenaltyRateForm extends Form
 {
     private $formType = 'task:3_timeLimit_penalty_adjustableDeadline';
 
-    public static $SESSION_SIZE_KEY = 'size';
+    public static $NUMBER_SUBJECTS_KEY = 'size';
     public static $ALTERNATE_TASK_DEADLINE_KEY = 'adjustableDeadline';
     public static $PENALTY_RATE_KEY = 'penaltyRate';
     public static $TASK_ONE_DEADLINE_KEY = 'taskOne';
@@ -34,7 +34,7 @@ class ThreeTaskPenaltyRateForm extends Form
     public function getFormValidators()
     {
         $validators = [];
-        $validators[self::$SESSION_SIZE_KEY] = new IntegerValidator();
+        $validators[self::$NUMBER_SUBJECTS_KEY] = new IntegerValidator();
         $validators[self::$ALTERNATE_TASK_DEADLINE_KEY] = new CheckboxValidator();
         $validators[self::$TASK_ONE_DEADLINE_KEY] = new DateTimeValidator();
         $validators[self::$TASK_TWO_DEADLINE_KEY] = new DateTimeValidator();
@@ -50,16 +50,16 @@ class ThreeTaskPenaltyRateForm extends Form
      * Returns the session size.
      * @return int
      */
-    public function getSessionSize()
+    public function getNumberSubjects()
     {
         $entries = $this->getEntries();
-        return intval($entries[self::$SESSION_SIZE_KEY]);
+        return intval($entries[self::$NUMBER_SUBJECTS_KEY]);
     }
 
     /**
      * @return bool
      */
-    public function getAlternateTaskDeadlineOption()
+    public function getAlternateDeadlineOption()
     {
         $entries = $this->getEntries();
         // When it's not empty and has passed validation so the option must be set to true.
