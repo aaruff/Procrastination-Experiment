@@ -30,6 +30,13 @@ create table treatments(
   type integer not null # 1 -> One Task
 ) ENGINE=InnoDB;
 
+drop table if exists alternate_deadlines_treatments;
+create table alternate_deadlines_treatments(
+  treatment_id integer not null,
+  enabled boolean not null
+) Engine=InnoDB;
+
+
 #--
 # Tasks: A treatment will assign one or more tasks to each subject.
 #--
@@ -69,10 +76,19 @@ create table task_deadlines(
 ) Engine=InnoDB;
 
 #--
+# Task Deadline Parameter: If enabled the task must be completed by the specified date time.
+#--
+drop table if exists task_deadlines;
+create table task_deadlines(
+  task_id integer not null,
+  date_time datetime not null
+) Engine=InnoDB;
+
+#--
 # Adjustable Deadline Parameter: If enabled this will contain the subject adjusted deadline for the task.
 #--
-drop table if exists task_adjustable_deadlines;
-create table task_adjustable_deadlines(
+drop table if exists task_alternate_deadlines;
+create table task_alternate_deadlines(
   task_id integer not null,
   date_time datetime not null
 ) Engine=InnoDB;
