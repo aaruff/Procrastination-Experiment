@@ -15,9 +15,9 @@ class ThreeTaskPenaltyRateForm extends Form
     public static $SESSION_SIZE_KEY = 'size';
     public static $ADJUSTABLE_SUBJECT_DEADLINE_KEY = 'adjustableDeadline';
     public static $PENALTY_RATE_KEY = 'penaltyRate';
-    public static $TASK_ONE_KEY = 'taskOne';
-    public static $TASK_TWO_KEY = 'taskTwo';
-    public static $TASK_THREE_KEY = 'taskThree';
+    public static $TASK_ONE_DEADLINE_KEY = 'taskOne';
+    public static $TASK_TWO_DEADLINE_KEY = 'taskTwo';
+    public static $TASK_THREE_DEADLINE_KEY = 'taskThree';
     public static $PAYOFF_KEY = 'payoff';
     public static $TASK_TIME_LIMIT_KEY = 'timeLimit';
 
@@ -36,9 +36,9 @@ class ThreeTaskPenaltyRateForm extends Form
         $validators = [];
         $validators[self::$SESSION_SIZE_KEY] = new IntegerValidator();
         $validators[self::$ADJUSTABLE_SUBJECT_DEADLINE_KEY] = new CheckboxValidator();
-        $validators[self::$TASK_ONE_KEY] = new DateTimeValidator();
-        $validators[self::$TASK_TWO_KEY] = new DateTimeValidator();
-        $validators[self::$TASK_THREE_KEY] = new DateTimeValidator();
+        $validators[self::$TASK_ONE_DEADLINE_KEY] = new DateTimeValidator();
+        $validators[self::$TASK_TWO_DEADLINE_KEY] = new DateTimeValidator();
+        $validators[self::$TASK_THREE_DEADLINE_KEY] = new DateTimeValidator();
         $validators[self::$PAYOFF_KEY] = new IntegerValidator();
         $validators[self::$TASK_TIME_LIMIT_KEY] = new IntegerValidator();
         $validators[self::$PENALTY_RATE_KEY] = new FloatValidator();
@@ -47,12 +47,29 @@ class ThreeTaskPenaltyRateForm extends Form
     }
 
     /**
-     * Returns the form keys
-     *
-     * @return array
+     * Returns the session size.
+     * @return int
      */
-    public function getFormKeys()
+    public function getSessionSize()
     {
-        return array_keys($this->getFormValidators());
+        $entries = $this->getEntries();
+        return intval($entries[self::$SESSION_SIZE_KEY]);
     }
+
+    /**
+     * Returns the payoff for all tasks.
+     *
+     * @return float
+     */
+    public function getPayoff()
+    {
+        $entries = $this->getEntries();
+        return floatval($entries[self::$PAYOFF_KEY]);
+    }
+
+    public function getAdjustableTaskDeadlineOption()
+    {
+
+    }
+
 }
