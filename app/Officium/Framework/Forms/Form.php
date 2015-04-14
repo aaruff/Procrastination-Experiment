@@ -37,7 +37,7 @@ abstract class Form
     public function __construct($type, $entries, $validators)
     {
         $this->type = $type;
-        $this->entries = $entries;
+        $this->entries = $this->filterEntries($entries, array_keys($validators));
         $this->validators = $validators;
     }
 
@@ -94,6 +94,33 @@ abstract class Form
     public function getFormKeys()
     {
         return array_keys($this->getFormValidators());
+    }
+
+    /**
+     * Returns the form entry errors
+     *
+     * @return \string[]
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    /**
+     * Filters out valid form entries form the raw entries param
+     *
+     * @param $rawEntries
+     * @param $keyFilters
+     * @return string[]
+     */
+    public function filterEntries($rawEntries, $keyFilters)
+    {
+        $filtered = [];
+        foreach ($keyFilters as $key) {
+            $filtered[$key] = (isset($rawEntries[$key])) ? trim($rawEntries[$key]) : '';
+        }
+
+        return $filtered;
     }
 
 }
