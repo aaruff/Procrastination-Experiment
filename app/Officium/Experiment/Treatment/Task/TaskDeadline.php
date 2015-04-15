@@ -1,5 +1,5 @@
 <?php
-namespace Experiment\Treatment\Task;
+namespace Officium\Experiment\Treatment\Task;
 
 
 use Illuminate\Database\Eloquent\Model;
