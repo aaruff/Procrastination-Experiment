@@ -23,8 +23,17 @@ class IntegerValidatorTest extends \PHPUnit_Framework_TestCase
     {
         $integerValidator = new IntegerValidator();
         $this->assertFalse($integerValidator->validate(-1));
-        $this->assertFalse($integerValidator->validate('-1'));
+        $this->assertFalse($integerValidator->validate('not a integer'));
         $this->assertFalse($integerValidator->validate('100000'));
     }
 
+    /**
+     * @test
+     */
+    public function Given_InvalidIntegerProvided_When_Validated_Should_ReturnErrorMessage()
+    {
+        $integerValidator = new IntegerValidator();
+        $integerValidator->validate('not an integer');
+        $this->assertTrue( ! empty($integerValidator->getErrors()));
+    }
 }

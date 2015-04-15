@@ -25,4 +25,14 @@ class CheckboxValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($checkboxValidator->validate('not valid'));
         $this->assertFalse($checkboxValidator->validate(''));
     }
+
+    /**
+     * @test
+     */
+    public function Given_InvalidDateProvided_When_Validated_Should_ReturnErrorMessage()
+    {
+        $checkboxValidator = new CheckboxValidator();
+        $checkboxValidator->validate('not valid');
+        $this->assertTrue( ! empty($checkboxValidator->getErrors()));
+    }
 }

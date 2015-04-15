@@ -25,4 +25,15 @@ class DateTimeValidatorTest extends \PHPUnit_Framework_TestCase {
         $dtValidator = new DateTimeValidator();
         $this->assertFalse($dtValidator->validate('99-05-2015 12:00 pm'));
     }
+
+    /**
+     * @test
+     */
+    public function Given_InvalidDateProvided_When_Validated_Should_ReturnErrorMessage()
+    {
+        $dtValidator = new DateTimeValidator();
+        $dtValidator->validate('99-05-2015 12:00 pm');
+        $this->assertTrue( ! empty($dtValidator->getErrors()));
+    }
+
 }
