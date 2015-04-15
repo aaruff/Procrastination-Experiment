@@ -25,6 +25,7 @@ class ThreeTaskPenaltyRateFormTest extends \PHPUnit_Framework_TestCase
         $form = new ThreeTaskPenaltyRateForm();
         $this->assertTrue($form->validate($post));
 
+        unset($post[ThreeTaskPenaltyRateForm::$ALTERNATE_TASK_DEADLINE_KEY]);
         $formTwo = new ThreeTaskPenaltyRateForm($post);
         $this->assertTrue($formTwo->validate());
     }
@@ -36,21 +37,74 @@ class ThreeTaskPenaltyRateFormTest extends \PHPUnit_Framework_TestCase
     {
         $posts = [
             [
-            ThreeTaskPenaltyRateForm::$NUMBER_SUBJECTS_KEY => '1'
+                ThreeTaskPenaltyRateForm::$NUMBER_SUBJECTS_KEY => '1',
             ],
             [
+                ThreeTaskPenaltyRateForm::$NUMBER_SUBJECTS_KEY => '1',
+                ThreeTaskPenaltyRateForm::$TASK_ONE_DEADLINE_KEY => '12-01-2015 10:00 am',
+            ],
+            [
+                ThreeTaskPenaltyRateForm::$NUMBER_SUBJECTS_KEY => '1',
+                ThreeTaskPenaltyRateForm::$TASK_ONE_DEADLINE_KEY => '12-01-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$TASK_TWO_DEADLINE_KEY => '12-02-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$TASK_THREE_DEADLINE_KEY => '12-03-2015 10:00 am',
+            ],
+            [
+                ThreeTaskPenaltyRateForm::$NUMBER_SUBJECTS_KEY => '1',
+                ThreeTaskPenaltyRateForm::$TASK_ONE_DEADLINE_KEY => '12-01-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$TASK_TWO_DEADLINE_KEY => '12-02-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$TASK_THREE_DEADLINE_KEY => '12-03-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$ALTERNATE_TASK_DEADLINE_KEY => 'on',
+            ],
+            [
+                ThreeTaskPenaltyRateForm::$NUMBER_SUBJECTS_KEY => '1',
+                ThreeTaskPenaltyRateForm::$TASK_ONE_DEADLINE_KEY => '12-01-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$TASK_TWO_DEADLINE_KEY => '12-02-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$TASK_THREE_DEADLINE_KEY => '12-03-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$ALTERNATE_TASK_DEADLINE_KEY => 'on',
+                ThreeTaskPenaltyRateForm::$PENALTY_RATE_KEY => '0.5',
+            ],
+            [
+                ThreeTaskPenaltyRateForm::$NUMBER_SUBJECTS_KEY => '1',
+                ThreeTaskPenaltyRateForm::$TASK_ONE_DEADLINE_KEY => '12-01-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$TASK_TWO_DEADLINE_KEY => '12-02-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$TASK_THREE_DEADLINE_KEY => '12-03-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$ALTERNATE_TASK_DEADLINE_KEY => 'on',
+                ThreeTaskPenaltyRateForm::$PENALTY_RATE_KEY => '0.5',
+                ThreeTaskPenaltyRateForm::$PAYOFF_KEY => '12',
+            ],
+            [
+                ThreeTaskPenaltyRateForm::$TASK_ONE_DEADLINE_KEY => '12-01-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$TASK_TWO_DEADLINE_KEY => '12-02-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$TASK_THREE_DEADLINE_KEY => '12-03-2015 10:00 am',
+                ThreeTaskPenaltyRateForm::$ALTERNATE_TASK_DEADLINE_KEY => 'on',
+                ThreeTaskPenaltyRateForm::$PAYOFF_KEY => '12',
+                ThreeTaskPenaltyRateForm::$TASK_TIME_LIMIT_KEY => '60'
+            ],
+        ];
+
+        $form = new ThreeTaskPenaltyRateForm();
+        foreach ($posts as $post) {
+            $this->assertFalse($form->validate($post));
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function Given_InvalidEntriesProvided_When_Validated_Should_ReturnErrors()
+    {
+        $post = [
             ThreeTaskPenaltyRateForm::$NUMBER_SUBJECTS_KEY => '1',
             ThreeTaskPenaltyRateForm::$ALTERNATE_TASK_DEADLINE_KEY => 'on',
             ThreeTaskPenaltyRateForm::$PENALTY_RATE_KEY => '0.5',
             ThreeTaskPenaltyRateForm::$PAYOFF_KEY => '12',
             ThreeTaskPenaltyRateForm::$TASK_TIME_LIMIT_KEY => '60'
-            ]
         ];
 
         $form = new ThreeTaskPenaltyRateForm();
-        foreach ($posts as $post) {
-            $this->assertFalse($form->validate($post, $form->getFormKeys()));
-        }
+        $form->validate($post);
+        $this->assertTrue( ! empty($form->getErrors()));
     }
 
     public function Given_TaskDeadlinesSet_When_GetterCalled_Should_ReturnDeadlinesArray()
