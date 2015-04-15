@@ -45,13 +45,4 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse(v::arr()->notEmpty()->each(v::date('m-d-Y g:i a'))->validate([]));
         $this->assertFalse(v::arr()->notEmpty()->each(v::date('m-d-Y g:i a'))->validate(null));
     }
-
-
-    /**
-     * @test
-     */
-    public function Given_CheckBoxEntryGiven_When_Tested_Should_ReturnTrue()
-    {
-        $this->assertTrue(v::when(v::notEmpty(), v::true())->validate("on"));
-    }
 }
