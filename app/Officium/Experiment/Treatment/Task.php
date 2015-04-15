@@ -19,16 +19,14 @@ class Task extends Model
     /**
      * Creates a task and returns its ID.
      *
-     * @param $type
      * @param $number
      * @param $treatmentId
      * @param $payoff
      * @return int
      */
-    public static function createTask($type, $number, $treatmentId, $payoff)
+    public static function createTask($number, $treatmentId, $payoff)
     {
         $task = new Task();
-        $task->type = $type;
         $task->number = $number;
         $task->treatment_id = $treatmentId;
         $task->payoff = $payoff;
