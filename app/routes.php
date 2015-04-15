@@ -22,5 +22,5 @@ Route::post(SurveyMap::toUri(), SurveyMap::toController('POST'));
 Route::get(DashboardMap::toUri(), DashboardMap::toController());
 Route::post(DashboardMap::toUri(), DashboardMap::toController('POST'));
 Route::get(SessionMap::toUri(), SessionMap::toController());
-Route::get(SessionMap::toUri(), SessionMap::toController('POST'));
+Route::post(SessionMap::toUri(), SessionMap::toController('POST'));
 //Route::get('/experiment/session/:id', 'Officium\Controllers\Experimenter\Experiment\SessionController:show');
