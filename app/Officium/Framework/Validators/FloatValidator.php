@@ -18,12 +18,14 @@ class FloatValidator extends Validator
 
     public function validate($floatVal)
     {
+        $this->clearErrors();
         try {
             v::float()->notEmpty()->between($this->min, $this->max, true)->assert($floatVal);
             return true;
         }
         catch(NestedValidationExceptionInterface $e) {
-            $this->setError($e->getFullMessage());
+            $this->setErrors($e->findMessages(['float'=>self::$FLOAT, 'notEmpty'=>self::$NOT_EMPTY,
+                'between'=>'This field must be between '.$this->min . ' and '. $this->max]));
         }
 
         return false;

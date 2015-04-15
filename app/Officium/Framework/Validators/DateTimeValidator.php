@@ -34,12 +34,14 @@ class DateTimeValidator extends Validator
      */
     public function validate($datetime)
     {
+        $this->clearErrors();
         try {
             v::string()->notEmpty()->date($this->dateTimeFormat)->assert($datetime);
             return true;
         }
         catch(NestedValidationExceptionInterface $e) {
-           $this->setError($e->getFullMessage());
+            $this->setErrors($e->findMessages(
+                ['date'=>self::$DATE_TIME, 'notEmpty'=>self::$NOT_EMPTY, 'string'=>self::$STRING]));
         }
 
         return false;

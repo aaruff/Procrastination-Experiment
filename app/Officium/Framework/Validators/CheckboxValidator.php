@@ -16,6 +16,7 @@ class CheckboxValidator extends Validator
 
     public function validate($item)
     {
+        $this->clearErrors();
         try {
             if ( ! $this->required) {
                 v::when(v::notEmpty(), v::true())->assert($item);
@@ -26,7 +27,7 @@ class CheckboxValidator extends Validator
             return true;
         }
         catch(NestedValidationExceptionInterface $e) {
-            $this->setError($e->getFullMessage());
+            $this->setErrors($e->findMessages(['notEmpty'=>self::$NOT_EMPTY, 'true'=>self::$TRUE]));
         }
 
         return false;
