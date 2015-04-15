@@ -6,6 +6,7 @@ use Officium\Framework\Maps\SurveyMap;
 use Officium\Framework\Maps\LoginMap;
 use Officium\Framework\Models\User;
 use Officium\Framework\Maps\DashboardMap;
+use \Slim\Slim;
 
 /**
  * The Experimenter Login Controller
@@ -15,23 +16,13 @@ use Officium\Framework\Maps\DashboardMap;
  */
 class LoginController
 {
-    private $app;
-    private $request;
-    private $response;
-
-    public function __construct()
-    {
-        $this->app = \Slim\Slim::getInstance();
-        $this->request = $this->app->request;
-        $this->response = $this->app->response;
-    }
-
     /**
      * Handles the login get request.
      */
     public function get()
     {
-        $this->app->render(LoginMap::toTemplate());
+        $app = Slim::getInstance();
+        $app->render(LoginMap::toTemplate());
     }
 
     /**
@@ -42,13 +33,15 @@ class LoginController
         unset($_SESSION['user_id']);
         unset($_SESSION['role']);
 
-        $post = $this->request->post();
+        $app = Slim::getInstance();
+
+        $post = $app->request->post();
 
         // Error Handling
         $errors = User::validate($post);
         if ( ! empty($errors)) {
-            $this->app->flash('errors', $errors);
-            $this->response->redirect(LoginMap::toUri());
+            $app->flash('errors', $errors);
+            $app->response->redirect(LoginMap::toUri());
             return;
         }
 
@@ -59,10 +52,10 @@ class LoginController
         $_SESSION['role'] = $user->role;
 
         if ($user->role == User::$EXPERIMENTER) {
-            $this->response->redirect(DashboardMap::toUri());
+            $app->response->redirect(DashboardMap::toUri());
             return;
         }
 
-        $this->response->redirect(SurveyMap::toUri());
+        $app->response->redirect(SurveyMap::toUri());
     }
 }
