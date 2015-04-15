@@ -10,6 +10,7 @@ define('BASE_DIR', __DIR__ . "/..");
 
 require BASE_DIR . '/vendor/autoload.php';
 
+date_default_timezone_set(getenv('TIME_ZONE'));
 /*---------------------------------------------------
  * Environment
  *--------------------------------------------------- */
@@ -52,6 +53,6 @@ require BASE_DIR . '/app/routes.php';
  *--------------------------------------------------- */
 $template = $app->view();
 $template->parserOptions = require BASE_DIR . '/config/twig.php';
-$template->parserExtensions = array(new \Slim\Views\TwigExtension());
+$template->parserExtensions = array(new \Slim\Views\TwigExtension(), new \Twig_Extension_Debug());
 
 $app->run();
