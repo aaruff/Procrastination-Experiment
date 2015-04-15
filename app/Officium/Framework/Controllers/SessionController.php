@@ -17,7 +17,7 @@ class SessionController
     public function get()
     {
         $app = Slim::getInstance();
-        $app->render(SessionMap::toTemplate());
+        $app->render(SessionMap::toTemplate(),['flash'=>$app->flashData(), 'form'=>new ThreeTaskPenaltyRateForm()]);
     }
 
     /**
@@ -27,7 +27,7 @@ class SessionController
     {
         $app = Slim::getInstance();
         $form = new ThreeTaskPenaltyRateForm($app->request->post());
-        if ($form->validate()) {
+        if ( ! $form->validate()) {
             $app->flash('errors', $form->getErrors());
             $app->response->redirect(SessionMap::toUri());
             return;
@@ -35,21 +35,5 @@ class SessionController
 
         TreatmentBuilder::make($form);
         $app->redirect(DashboardMap::toUri());
-    }
-
-    /**
-     * @param string $id
-     */
-    public function show($id='')
-    {
-        $app = Slim::getInstance();
-
-        $session = Treatment::validateId($id);
-        if ( ! $session) {
-            $app->response->redirect(SessionMap::toUri());
-            return;
-        }
-
-        $app->render('/pages/experimenter/experiment/session/show.twig', ['session'=>$session, 'subjects'=>$session->subjects]);
     }
 }
