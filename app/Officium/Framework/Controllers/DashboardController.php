@@ -3,17 +3,14 @@ namespace Officium\Framework\Controllers;
 
 use Officium\Experiment\Treatment;
 use Officium\Framework\Maps\DashboardMap;
+use \Slim\Slim;
 
-class DashboardController extends BaseController
+class DashboardController
 {
-    public function  __construct()
-    {
-        parent::__construct();
-    }
-
     public function get()
     {
         $sessions = Treatment::all();
-        $this->app->render(DashboardMap::toTemplate(), ['sessions'=>$sessions]);
+        $app = Slim::getInstance();
+        $app->render(DashboardMap::toTemplate(), ['sessions'=>$sessions]);
     }
 }
