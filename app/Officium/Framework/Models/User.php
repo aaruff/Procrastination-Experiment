@@ -4,6 +4,7 @@ namespace Officium\Framework\Models;
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator as Validator;
 use Illuminate\Database\Eloquent\Model as Model;
+use Officium\Experiment\Subject;
 
 class User extends Model
 {
@@ -71,7 +72,7 @@ class User extends Model
     {
         $login = $this->getLoginName();
         do {
-            $subject = Subject::where('login', '=', $login)->first();
+            $subject = User::where('login', '=', $login)->first();
         } while ($subject);
 
         return $login;
