@@ -2,10 +2,7 @@
 {% block body %}
 
 <div class="container">
-    <div class="page-header">
-        <h3>Login</h3>
-    </div>
-    <div class="jumbotron">
+    <div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
         {%  if errors %}
             <div class="alert alert-danger">
                 <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -16,29 +13,28 @@
                 </ul>
             </div>
         {% endif %}
-
-        <form class="form-horizontal" action="{{ currentUrl() }}" method="post">
-
-            <div class="form-group">
-                <label class="col-xs-3 control-label">Login</label>
-                <div class="col-xs-9">
-                    <input type="text" class="form-control dt" name="login" value="{{  login  }}" />
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="text-center">Login</h1>
+                </div>
+                <div class="modal-body">
+                    <form class="form col-md-12 center-block" action="{{ currentUrl() }}" method="post">
+                        <div class="form-group">
+                            <input type="text" class="form-control input-lg" placeholder="Login" name="login" value="{{  login  }}">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control input-lg" placeholder="Password" name="password">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-lg btn-block">Sign In</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
                 </div>
             </div>
-
-            <div class="form-group">
-                <label class="col-xs-3 control-label">Password</label>
-                <div class="col-xs-9">
-                    <input type="password" class="form-control dt" name="password" value="{{  password  }}" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-xs-offset-3 col-xs-8">
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 {% endblock %}
