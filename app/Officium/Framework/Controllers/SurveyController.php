@@ -4,8 +4,9 @@ namespace Officium\Framework\Controllers;
 use Officium\Framework\Models\FormModel as Survey;
 use Officium\Experiment\Survey\SurveyFactory;
 use Officium\Framework\Maps\SurveyMap;
+use \Slim\Slim;
 
-class SurveyController extends BaseController
+class SurveyController
 {
     /**
      * Handles get requests
@@ -13,8 +14,10 @@ class SurveyController extends BaseController
     public function get()
     {
         var_dump($_SESSION);
-        $surveyId = $this->getFromSession('survey_id');
-        $this->app->render(SurveyMap::toRoute($surveyId));
+        $surveyId = $_SESSION['survey_id'];
+
+        $app = Slim::getInstance();
+        $app->render(SurveyMap::toRoute($surveyId));
     }
 
     /**
@@ -22,8 +25,10 @@ class SurveyController extends BaseController
      */
     public function post()
     {
-        $surveyId = $this->getFromSession('survey_id');
-        $surveyEntries = $this->request->post();
+        $surveyId = $_SESSION['survey_id'];
+
+        $app = Slim::getInstance();
+        $surveyEntries = $app->request->post();
         $this->postSurvey(SurveyFactory::make($surveyId, $surveyEntries), $surveyId);
     }
 
@@ -33,16 +38,17 @@ class SurveyController extends BaseController
      * @param Survey $survey
      * @param $id
      */
-    private function postSurvey(FormModel $survey, $id)
+    private function postSurvey(Survey $survey, $id)
     {
+        $app = Slim::getInstance();
         if ( $survey->validate()) {
-            $this->app->flash('errors', $survey->getErrors());
-            $this->response->redirect(SurveyMap::toUri());
+            $app->flash('errors', $survey->getErrors());
+            $app->response->redirect(SurveyMap::toUri());
             return;
         }
 
-        $this->setSession('survey_id', SurveyMap::getNextSurveyId($id));
-        $this->setSession($id, $survey->getEntries());
-        $this->response->redirect(SurveyMap::toUri());
+        $_SESSION['survey_id'] = SurveyMap::getNextSurveyId($id);
+        $_SESSION[$id] = $survey->getEntries();
+        $app->response->redirect(SurveyMap::toUri());
     }
 }
