@@ -10,11 +10,11 @@ define('BASE_DIR', __DIR__ . "/..");
 
 require BASE_DIR . '/vendor/autoload.php';
 
-date_default_timezone_set(getenv('TIME_ZONE'));
 /*---------------------------------------------------
  * Environment
  *--------------------------------------------------- */
 Dotenv::load(BASE_DIR);
+date_default_timezone_set(getenv('TIME_ZONE'));
 
 /*---------------------------------------------------
  * Slim
