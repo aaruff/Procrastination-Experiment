@@ -22,7 +22,7 @@ class ThreeTaskPenaltyRateForm extends Form
 
     public function __construct($entries = [])
     {
-        parent::__construct($this->formType, $entries, $this->getFormValidators());
+        parent::__construct(self::$formType, $entries, $this->getFormValidators());
     }
 
     /**
