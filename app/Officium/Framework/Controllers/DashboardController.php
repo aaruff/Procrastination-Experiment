@@ -9,8 +9,8 @@ class DashboardController
 {
     public function get()
     {
-        $sessions = Treatment::all();
+        $treatments = Treatment::all();
         $app = Slim::getInstance();
-        $app->render(DashboardMap::toTemplate(), ['sessions'=>$sessions]);
+        $app->render(DashboardMap::toTemplate(), ['treatments'=>$treatments]);
     }
 }
