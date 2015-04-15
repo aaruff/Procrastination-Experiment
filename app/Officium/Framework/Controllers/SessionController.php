@@ -7,20 +7,17 @@ use Officium\Framework\Maps\DashboardMap;
 use Officium\Framework\Maps\SessionMap;
 use Officium\Experiment\Treatment;
 use Officium\Framework\Models\TreatmentBuilder;
+use \Slim\Slim;
 
-class SessionController extends BaseController
+class SessionController
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * Get request handler.
      */
     public function get()
     {
-        $this->app->render(SessionMap::toTemplate());
+        $app = Slim::getInstance();
+        $app->render(SessionMap::toTemplate());
     }
 
     /**
@@ -28,15 +25,16 @@ class SessionController extends BaseController
      */
     public function post()
     {
-        $form = new ThreeTaskPenaltyRateForm($this->request->post());
+        $app = Slim::getInstance();
+        $form = new ThreeTaskPenaltyRateForm($app->request->post());
         if ($form->validate()) {
-            $this->app->flash('errors', $form->getErrors());
-            $this->response->redirect(SessionMap::toUri());
+            $app->flash('errors', $form->getErrors());
+            $app->response->redirect(SessionMap::toUri());
             return;
         }
 
         TreatmentBuilder::make($form);
-        $this->app->redirect(DashboardMap::toUri());
+        $app->redirect(DashboardMap::toUri());
     }
 
     /**
@@ -44,12 +42,14 @@ class SessionController extends BaseController
      */
     public function show($id='')
     {
+        $app = Slim::getInstance();
+
         $session = Treatment::validateId($id);
         if ( ! $session) {
-            $this->response->redirect(SessionMap::toUri());
+            $app->response->redirect(SessionMap::toUri());
             return;
         }
 
-        $this->app->render('/pages/experimenter/experiment/session/show.twig', ['session'=>$session, 'subjects'=>$session->subjects]);
+        $app->render('/pages/experimenter/experiment/session/show.twig', ['session'=>$session, 'subjects'=>$session->subjects]);
     }
 }
