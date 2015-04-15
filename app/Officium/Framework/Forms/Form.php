@@ -55,7 +55,7 @@ abstract class Form
     public function validate($entries = [])
     {
         if ( ! empty($entries) ) {
-            $this->entries = $entries;
+            $this->entries = $this->filterEntries($entries, array_keys($this->validators));
         }
 
         $errors = [];
