@@ -112,6 +112,10 @@ class ThreeTaskPenaltyRateForm extends Form
         return floatval($entries[self::$PENALTY_RATE_KEY]);
     }
 
+    /**
+     * Returns the form Type
+     * @return string
+     */
     public static function getFormType()
     {
         return self::$formType;
