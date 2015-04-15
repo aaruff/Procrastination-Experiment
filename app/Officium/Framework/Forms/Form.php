@@ -49,23 +49,23 @@ abstract class Form
     protected abstract function getFormValidators();
 
     /**
-     * @param string[] $entries
+     * @param string[] $rawEntries
      * @return bool
      */
-    public function validate($entries = [])
+    public function validate($rawEntries = [])
     {
-        if ( ! empty($entries) ) {
-            $this->entries = $this->filterEntries($entries, array_keys($this->validators));
+        if ( ! empty($rawEntries) ) {
+            $this->entries = $this->filterEntries($rawEntries, array_keys($this->validators));
         }
 
         $errors = [];
         foreach ($this->validators as $key => $validator) {
             if ( ! $validator->validate($this->entries[$key])) {
-                $errors[$key] = $validator->getError();
+                $errors[$key] = $validator->getErrors();
             }
         }
 
-        $this->errors;
+        $this->errors = $errors;
 
         return empty($errors);
     }
