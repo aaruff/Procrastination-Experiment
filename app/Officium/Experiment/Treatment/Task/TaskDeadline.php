@@ -22,10 +22,10 @@ class TaskDeadline extends Model
      */
     public static function createTaskDeadline($taskId, $deadline)
     {
+        $dateTime = \DateTime::createFromFormat('m-d-Y g:i a', $deadline);
         $taskDeadlines = new TaskDeadline();
         $taskDeadlines->task_id = $taskId;
-        $taskDeadlines->date_time = $deadline;
+        $taskDeadlines->date_time = $dateTime->format('Y-m-d H:i:s');
         $taskDeadlines->save();
     }
-
 }
