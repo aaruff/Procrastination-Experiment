@@ -109,6 +109,7 @@ class Subject extends Model
             $user = new User();
             $user->login = $user->generateLogin();
             $user->password = password_hash($treatmentId . $user->login, PASSWORD_DEFAULT);
+            $user->role = User::$SUBJECT;
             $user->save();
 
             $subject = new Subject();
