@@ -14,7 +14,7 @@ class DateTimeValidator extends Validator
     /**
      * @var string
      */
-    private $dateTimeFormat = 'm-d-Y g:i a';
+    private $dateTimeFormat = 'm-d-Y h:i a';
 
     /**
      * @param $format string
