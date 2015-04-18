@@ -45,13 +45,12 @@ class LoginController
             return;
         }
 
-        $user = User::where('login', '=', $post['login'])
-            ->where('password', '=', sha1($post['password']))->first();
+        $user = User::getUser($post['login'], $post['password']);
 
         $_SESSION['user_id'] = $user->id;
         $_SESSION['role'] = $user->role;
 
-        if ($user->role == User::$EXPERIMENTER) {
+        if ($user->isExperimenter()) {
             $app->response->redirect(DashboardMap::toUri());
             return;
         }
