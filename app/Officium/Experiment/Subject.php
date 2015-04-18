@@ -92,7 +92,7 @@ class Subject extends Model
 
     /**
      * @param $id
-     * @return \Officium\Subject\Models\Subject
+     * @return \Officium\Experiment\Subject
      */
     public static function getSubject($id)
     {
