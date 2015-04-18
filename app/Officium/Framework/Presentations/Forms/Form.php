@@ -1,6 +1,6 @@
 <?php
 
-namespace Officium\Framework\Forms;
+namespace Officium\Framework\Presentations\Forms;
 
 
 /**
@@ -117,7 +117,9 @@ abstract class Form
     {
         $filtered = [];
         foreach ($keyFilters as $key) {
-            $filtered[$key] = (isset($rawEntries[$key])) ? trim($rawEntries[$key]) : '';
+            if (isset($rawEntries[$key])) {
+              $filtered[$key] = filter_var($rawEntries[$key], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH);
+            }
         }
 
         return $filtered;
