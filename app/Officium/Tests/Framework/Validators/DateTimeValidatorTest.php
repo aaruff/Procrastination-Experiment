@@ -6,7 +6,8 @@ namespace Framework\Validators;
 
 use Officium\Framework\Validators\DateTimeValidator;
 
-class DateTimeValidatorTest extends \PHPUnit_Framework_TestCase {
+class DateTimeValidatorTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @test
