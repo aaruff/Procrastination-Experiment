@@ -4,13 +4,12 @@ namespace Officium\Framework\Models;
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator as Validator;
 use Illuminate\Database\Eloquent\Model as Model;
-use Officium\Experiment\Subject;
 
 class User extends Model
 {
     public $timestamps = false;
     public static $SUBJECT = 1;
-    public static $EXPERIMENTER = 2;
+    private static $EXPERIMENTER = 2;
 
     protected $table = 'users';
 
@@ -21,6 +20,27 @@ class User extends Model
     public function subject()
     {
         return $this->hasOne('Officium\Subject\Models\Subject', 'user_id');
+    }
+
+    /**
+     * @param $login
+     * @param $pass
+     * @return \Officium\Framework\Models\User
+     */
+    public static function getUser($login, $pass)
+    {
+        return User::where('login', '=', $login)
+            ->where('password', '=', sha1($pass))->first();
+    }
+
+    /**
+     * Returns true if this user is an experiment.
+     * @return bool
+     */
+    public function isExperimenter()
+    {
+        $role = $this->role;
+        return $role == self::$EXPERIMENTER;
     }
 
     //--------------------------------------------------------------------
