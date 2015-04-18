@@ -2,7 +2,11 @@
 
 namespace Officium\Experiment\Treatment;
 
+use Experiment\Treatment\Task\TaskAlternateDeadlines;
 use Illuminate\Database\Eloquent\Model;
+use Officium\Experiment\Treatment\Task\TaskDeadline;
+use Officium\Experiment\Treatment\Task\TaskPenaltyRate;
+use Officium\Experiment\Treatment\Task\TaskTimeLimit;
 
 class Task extends Model
 {
@@ -15,6 +19,38 @@ class Task extends Model
      * @var string database table name
      */
     protected $table = 'tasks';
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function timeLimits()
+    {
+        return $this->hasMany(get_class(new TaskTimeLimit()), 'task_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function penaltyRates()
+    {
+        return $this->hasMany(get_class(new TaskPenaltyRate()), 'task_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function deadlines()
+    {
+        return $this->hasMany(get_class(new TaskDeadline()), 'task_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function alternateDeadlines()
+    {
+        return $this->hasMany(get_class(new TaskAlternateDeadlines()), 'task_id');
+    }
 
     /**
      * Creates a task and returns its ID.
