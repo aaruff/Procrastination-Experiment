@@ -27,10 +27,11 @@ create table subjects(
 drop table if exists treatments;
 create table treatments(
   id		integer auto_increment primary key,
-  type varchar(255) not null # 1 -> One Task
+  type varchar(255) not null, # 1 -> One Task
+  size integer not null
 ) ENGINE=InnoDB;
 
-drop table if exists alternate_deadlines_treatments;
+drop table if exists alternate_deadline_treatments;
 create table alternate_deadline_treatments(
   treatment_id integer not null,
   enabled boolean not null
