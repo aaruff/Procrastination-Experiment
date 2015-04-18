@@ -45,6 +45,10 @@ class Auth
             return true;
         }
 
+        if ( ! $this->isLoggedIn()) {
+            return false;
+        }
+
         if ($this->isSubject()) {
             $subject = User::find($this->session['user_id'])->subject;
             return $this->isSubjectAllowedToVisit($subject, $route);
@@ -89,7 +93,8 @@ class Auth
      */
     private function isExperimenter()
     {
-        return isset($this->session['role']) && $this->session['role'] == User::$EXPERIMENTER;
+        $user = User::find($this->session['user_id']);
+        return isset($user) && $user->isExperimenter();
     }
 
     /**
