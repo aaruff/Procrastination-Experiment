@@ -2,7 +2,7 @@
 namespace Framework\Forms;
 
 
-use Officium\Framework\Forms\ThreeTaskPenaltyRateForm;
+use Officium\Framework\Presentations\Forms\ThreeTaskPenaltyRateForm;
 
 class ThreeTaskPenaltyRateFormTest extends \PHPUnit_Framework_TestCase
 {
