@@ -1,16 +1,16 @@
 <?php
 
-namespace Officium\Framework\Forms;
+namespace Officium\Framework\Presentations\Forms;
 
+use Officium\Framework\Presentations\Forms\Form;
 use Officium\Framework\Validators\CheckboxValidator;
 use Officium\Framework\Validators\IntegerValidator;
 use Officium\Framework\Validators\FloatValidator;
 use Officium\Framework\Validators\DateTimeValidator;
+use Officium\Experiment\Treatment\Treatment;
 
 class ThreeTaskPenaltyRateForm extends Form
 {
-    private static $formType = 'task:3_timeLimit_penalty_adjustableDeadline';
-
     public static $NUMBER_SUBJECTS_KEY = 'size';
     public static $ALTERNATE_TASK_DEADLINE_KEY = 'adjustableDeadline';
     public static $PENALTY_RATE_KEY = 'penaltyRate';
@@ -22,7 +22,8 @@ class ThreeTaskPenaltyRateForm extends Form
 
     public function __construct($entries = [])
     {
-        parent::__construct(self::$formType, $entries, $this->getFormValidators());
+        $formType = Treatment::$THREE_TASK_TIME_LIMIT_PENALTY_ADJUSTABLE_DEADLINE;
+        parent::__construct($formType, $entries, $this->getFormValidators());
     }
 
     /**
@@ -118,7 +119,7 @@ class ThreeTaskPenaltyRateForm extends Form
      */
     public static function getFormType()
     {
-        return self::$formType;
+        return Treatment::$THREE_TASK_TIME_LIMIT_PENALTY_ADJUSTABLE_DEADLINE;
     }
 
 }
