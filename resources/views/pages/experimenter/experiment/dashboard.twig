@@ -9,25 +9,19 @@
         </div>
 
         <table class="table table-striped" id="subjects">
-            <thead>
-            <tr>
-                <th>Session ID</th><th>Subjects</th><th>Size</th>
-                <th>First Task Deadline</th><th>Second Task Deadline</th><th>Third Task Deadline</th>
-                <th>Time Limit</th><th>Penalty</th><th>Payoff</th>
-            </tr>
-            </thead>
             <tbody>
-             {%  for session in sessions %}
+            <tr><th>Treatment ID</th><th>Type</th><th>Size</th><th>Tasks</th><th></th></tr>
+             {%  for row in rowData %}
             <tr>
-                <td>{{ session.id }}</td>
-                <td><a href="{{ baseUrl }}/experiment/session/{{ session.id }}">Subjects</a></td>
-                <td>{{ session.size }}</td>
-                <td>{{ session.first_task_deadline }}</td>
-                <td>{{ session.second_task_deadline }}</td>
-                <td>{{ session.third_task_deadline }}</td>
-                <td>{{ session.time_limit }}</td>
-                <td>{{ session.penalty }}</td>
-                <td>{{ session.payoff }}</td>
+                <td>{{ row.treatment.id }}</td>
+                <td>{{ row.treatment.type }}</td>
+                <td>Size</td>
+                <td>
+                    {% for task in row.tasks %}
+                       <span class="wrap">Task: {{ task.number }}, Payoff: {{ task.payoff }}</span><br/>
+                    {% endfor %}
+                </td>
+                <td><a href="{{ baseUrl }}/experiment/treatment/{{ treatment.id }}">Manage</a></td>
             </tr>
             {%  endfor %}
             </tbody>
