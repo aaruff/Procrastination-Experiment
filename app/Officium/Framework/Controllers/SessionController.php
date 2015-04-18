@@ -2,7 +2,7 @@
 
 namespace Officium\Framework\Controllers;
 
-use Officium\Framework\Forms\ThreeTaskPenaltyRateForm;
+use Officium\Framework\Presentations\Forms\ThreeTaskPenaltyRateForm;
 use Officium\Framework\Maps\DashboardMap;
 use Officium\Framework\Maps\SessionMap;
 use Officium\Experiment\Treatment;
