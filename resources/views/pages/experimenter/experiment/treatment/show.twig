@@ -5,21 +5,20 @@
     <div class="container">
 
         <div class="page-header">
-            <h3>Session {{ session.id }}: Subjects</h3>
+            <h3>Treatment {{ treatment.id }}: Subjects</h3>
         </div>
 
         <table class="table table-striped" id="subjects">
             <thead>
             <tr>
-                <th>ID</th><th>Login</th><th>Status</th>
+                <th>Login</th><th>Status</th>
             </tr>
             </thead>
             <tbody>
-            {%  for subject in subjects %}
+            {%  for row in rowData %}
                 <tr>
-                    <td>{{ subject.id }}</td>
-                    <td>{{ subject.login }}</td>
-                    <td>{{ subject.status }}</td>
+                    <td>{{ row.user.login }}</td>
+                    <td>{{ row.subject.state }}</td>
                 </tr>
             {%  endfor %}
             </tbody>
