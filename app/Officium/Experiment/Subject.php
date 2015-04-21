@@ -30,6 +30,14 @@ class Subject extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    public function user()
+    {
+        return $this->belongsTo('Officium\Framework\Models\User', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function session()
     {
         return $this->belongsTo('Officium\Models\Session', 'sessions');
