@@ -10,7 +10,7 @@ class IntegerValidator extends Validator
     private $min;
     private $max;
 
-    public function __construct($min = 0, $max = 1000)
+    public function __construct($min = 0, $max = null)
     {
         $this->min = $min;
         $this->max = $max;
@@ -25,8 +25,14 @@ class IntegerValidator extends Validator
     {
         $this->clearErrors();
         try {
-            v::notEmpty()->int()->between($this->min, $this->max, true)->assert($entry);
-            return true;
+            if ($this->max == null) {
+                v::notEmpty()->int()->min($this->min, true)->assert($entry);
+                return true;
+            }
+            else {
+                v::notEmpty()->int()->between($this->min, $this->max, true)->assert($entry);
+                return true;
+            }
         }
         catch(NestedValidationExceptionInterface $e) {
             $this->setErrors($e->findMessages(
