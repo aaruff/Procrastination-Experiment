@@ -7,7 +7,7 @@ drop table if exists users;
 create table users(
   id		integer auto_increment primary key,
   login 	varchar(100) null,
-  password 	varchar(40) null,
+  password 	varchar(255) null,
   role integer not null # 1 => Subject, 2 => Experimenter
 ) Engine=InnoDB;
 
