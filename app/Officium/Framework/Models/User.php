@@ -19,18 +19,16 @@ class User extends Model
      */
     public function subject()
     {
-        return $this->hasOne('Officium\Subject\Models\Subject', 'user_id');
+        return $this->hasOne('Officium\Experiment\Subject', 'user_id');
     }
 
     /**
      * @param $login
-     * @param $pass
      * @return \Officium\Framework\Models\User
      */
-    public static function getUser($login, $pass)
+    public static function getUser($login)
     {
-        return User::where('login', '=', $login)
-            ->where('password', '=', sha1($pass))->first();
+        return User::where('login', '=', $login)->first();
     }
 
     /**
@@ -72,10 +70,9 @@ class User extends Model
 
         // Check if account exists
         if (empty($errorMessages)) {
-            $experimenter = User::where('login', '=', $credentials['login'])
-                ->where('password', '=', sha1($credentials['password']))->first();
+            $experimenter = User::where('login', '=', $credentials['login'])->first();
 
-            if ( ! $experimenter) {
+            if( ! password_verify($credentials['password'], $experimenter->password)) {
                 $errorMessages['login'] = 'Invalid Login or Password';
             }
         }
