@@ -120,6 +120,9 @@ abstract class Form
             if (isset($rawEntries[$key])) {
               $filtered[$key] = filter_var($rawEntries[$key], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH);
             }
+            else {
+                $filtered[$key] = '';
+            }
         }
 
         return $filtered;
