@@ -45,7 +45,7 @@ class LoginController
             return;
         }
 
-        $user = User::getUser($post['login'], $post['password']);
+        $user = User::getUser($post['login']);
 
         $_SESSION['user_id'] = $user->id;
         $_SESSION['role'] = $user->role;
