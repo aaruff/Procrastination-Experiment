@@ -1,7 +1,7 @@
 <?php
 namespace Officium\Framework\Models;
 
-use Officium\Framework\Presentations\Form;
+use Officium\Framework\Presentations\Forms\Form;
 use Officium\Framework\Presentations\Forms\ThreeTaskPenaltyRateForm;
 use Officium\Experiment\Treatment\ThreeTaskPenaltyRateTreatment;
 
