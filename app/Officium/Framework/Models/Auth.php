@@ -7,6 +7,7 @@ use Officium\Framework\Maps\SessionMap;
 use Officium\Framework\Maps\SurveyMap;
 use Officium\Framework\Maps\DashboardMap;
 use Officium\Experiment\Subject;
+use Officium\Framework\Maps\TreatmentMap;
 
 /**
  * Class Auth
@@ -107,6 +108,9 @@ class Auth
             return true;
         }
         elseif (SessionMap::toUri() == $route) {
+            return true;
+        }
+        elseif (TreatmentMap::isUri($route)) {
             return true;
         }
 
