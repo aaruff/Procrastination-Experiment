@@ -15,13 +15,13 @@
             <tr>
                 <td>{{ row.treatment.id }}</td>
                 <td>{{ row.treatment.type }}</td>
-                <td>Size</td>
+                <td>{{  row.treatment.size }}</td>
                 <td>
                     {% for task in row.tasks %}
                        <span class="wrap">Task: {{ task.number }}, Payoff: {{ task.payoff }}</span><br/>
                     {% endfor %}
                 </td>
-                <td><a href="{{ baseUrl }}/experiment/treatment/{{ treatment.id }}">Manage</a></td>
+                <td><a href="{{ baseUrl }}/experiment/treatment/{{ row.treatment.id }}">Manage</a></td>
             </tr>
             {%  endfor %}
             </tbody>
