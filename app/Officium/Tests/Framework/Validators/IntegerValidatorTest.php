@@ -14,6 +14,7 @@ class IntegerValidatorTest extends \PHPUnit_Framework_TestCase
         $integerValidator = new IntegerValidator();
         $this->assertTrue($integerValidator->validate(2));
         $this->assertTrue($integerValidator->validate('2'));
+        $this->assertTrue($integerValidator->validate('100000'));
     }
 
     /**
@@ -24,7 +25,6 @@ class IntegerValidatorTest extends \PHPUnit_Framework_TestCase
         $integerValidator = new IntegerValidator();
         $this->assertFalse($integerValidator->validate(-1));
         $this->assertFalse($integerValidator->validate('not a integer'));
-        $this->assertFalse($integerValidator->validate('100000'));
     }
 
     /**
