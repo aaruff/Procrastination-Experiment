@@ -4,6 +4,7 @@ namespace Officium\Framework\Controllers;
 use Officium\Framework\Models\FormModel as Survey;
 use Officium\Experiment\Survey\SurveyFactory;
 use Officium\Framework\Maps\SurveyMap;
+use Officium\Framework\Models\Session;
 use \Slim\Slim;
 
 class SurveyController
@@ -13,11 +14,8 @@ class SurveyController
      */
     public function get()
     {
-        var_dump($_SESSION);
-        $surveyId = $_SESSION['survey_id'];
-
         $app = Slim::getInstance();
-        $app->render(SurveyMap::toRoute($surveyId));
+        $app->render(SurveyMap::toRoute(Session::getSurveyId()));
     }
 
     /**
@@ -25,30 +23,29 @@ class SurveyController
      */
     public function post()
     {
-        $surveyId = $_SESSION['survey_id'];
 
         $app = Slim::getInstance();
         $surveyEntries = $app->request->post();
-        $this->postSurvey(SurveyFactory::make($surveyId, $surveyEntries), $surveyId);
+        $this->postSurvey(SurveyFactory::make(Session::getSurveyId(), $surveyEntries));
     }
 
     /**
-     * Handles validation of survey posts
-     *
      * @param Survey $survey
-     * @param $id
      */
-    private function postSurvey(Survey $survey, $id)
+    private function postSurvey(Survey $survey)
     {
         $app = Slim::getInstance();
+
         if ( $survey->validate()) {
             $app->flash('errors', $survey->getErrors());
             $app->response->redirect(SurveyMap::toUri());
             return;
         }
 
-        $_SESSION['survey_id'] = SurveyMap::getNextSurveyId($id);
-        $_SESSION[$id] = $survey->getEntries();
+        $nextSurveyId = SurveyMap::getNextSurveyId(Session::getSurveyId());
+        Session::setSurveyId($nextSurveyId);
+        Session::setSurveyEntries($nextSurveyId, $survey->getEntries());
+
         $app->response->redirect(SurveyMap::toUri());
     }
 }
