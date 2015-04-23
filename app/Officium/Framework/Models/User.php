@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model as Model;
 class User extends Model
 {
     public $timestamps = false;
-    public static $SUBJECT = 1;
+    private static $SUBJECT = 1;
     private static $EXPERIMENTER = 2;
 
     protected $table = 'users';
@@ -42,6 +42,26 @@ class User extends Model
     }
 
     //--------------------------------------------------------------------
+
+    /**
+     * Returns the subject role ID.
+     *
+     * @return int
+     */
+    public static function getSubjectRole()
+    {
+        return self::$SUBJECT;
+    }
+
+    /**
+     * Returns the experimenter role ID.
+     *
+     * @return int
+     */
+    public static function getExperimenterRole()
+    {
+        return self::$EXPERIMENTER;
+    }
 
     /**
      * Returns error messages if the validation failed.
