@@ -15,23 +15,12 @@ use Officium\Framework\Maps\TreatmentMap;
  */
 class Auth
 {
-    private $session;
-
-    public function __construct(array $session)
-    {
-        $this->session = $session;
-    }
-
     /**
      * @return bool
      */
     public function isLoggedIn()
     {
-        if (isset($this->session['user_id'])) {
-            return true;
-        }
-
-        return false;
+        return (Session::getUserId() == null) ? false : true;
     }
 
     /**
@@ -42,22 +31,25 @@ class Auth
      */
     public function isAllowedToVisit($route)
     {
+        // Public routes and allowed without authentication
         if ($this->isPublicRoute($route)) {
             return true;
         }
 
+        // All other routes require authentication
         if ( ! $this->isLoggedIn()) {
             return false;
         }
 
         if ($this->isSubject()) {
-            $subject = User::find($this->session['user_id'])->subject;
+            $subject = User::find(Session::getUserId())->subject;
             return $this->isSubjectAllowedToVisit($subject, $route);
         }
         elseif ($this->isExperimenter()) {
             return $this->isExperimenterAllowedToVisit($route);
         }
         else {
+            // Unauthenticated
             return false;
         }
     }
@@ -84,7 +76,7 @@ class Auth
      */
     private function isSubject()
     {
-        return isset($this->session['role']) && $this->session['role'] == User::$SUBJECT;
+        return Session::getRole() == User::getSubjectRole();
     }
 
     /**
@@ -94,8 +86,7 @@ class Auth
      */
     private function isExperimenter()
     {
-        $user = User::find($this->session['user_id']);
-        return isset($user) && $user->isExperimenter();
+        return Session::getRole() == User::getExperimenterRole();
     }
 
     /**
