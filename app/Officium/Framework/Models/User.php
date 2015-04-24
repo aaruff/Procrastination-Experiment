@@ -1,8 +1,6 @@
 <?php
 namespace Officium\Framework\Models;
 
-use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
-use Respect\Validation\Validator as Validator;
 use Illuminate\Database\Eloquent\Model as Model;
 
 class User extends Model
@@ -17,7 +15,7 @@ class User extends Model
      * @param $login
      * @return \Officium\Framework\Models\User
      */
-    public static function getUserByLogin($login)
+    public static function getByLogin($login)
     {
         return User::where('login', '=', $login)->first();
     }
