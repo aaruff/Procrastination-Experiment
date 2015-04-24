@@ -2,7 +2,8 @@
 
 namespace Officium\Framework\Controllers;
 
-use Officium\Framework\Presentations\Forms\ThreeTaskPenaltyRateForm;
+use Officium\Experiment\Session;
+use Officium\Framework\Presentations\Forms\SessionCreationForm;
 use Officium\Framework\Maps\DashboardMap;
 use Officium\Framework\Maps\SessionMap;
 use Officium\Experiment\Treatment;
@@ -17,7 +18,7 @@ class SessionController
     public function get()
     {
         $app = Slim::getInstance();
-        $app->render(SessionMap::toTemplate(),['flash'=>$app->flashData(), 'form'=>new ThreeTaskPenaltyRateForm()]);
+        $app->render(SessionMap::toTemplate(),['flash'=>$app->flashData(), 'form'=>new SessionCreationForm()]);
     }
 
     /**
@@ -26,12 +27,14 @@ class SessionController
     public function post()
     {
         $app = Slim::getInstance();
-        $form = new ThreeTaskPenaltyRateForm($app->request->post());
+        $form = new SessionCreationForm($app->request->post());
         if ( ! $form->validate()) {
             $app->flash('errors', $form->getErrors());
             $app->response->redirect(SessionMap::toUri());
             return;
         }
+
+        $session = Session::createFromEntries($form->getSessionEntries());
 
         TreatmentBuilder::make($form);
         $app->redirect(DashboardMap::toUri());
