@@ -37,6 +37,15 @@ class User extends Model
     }
 
     /**
+     * @param $password
+     * @return bool
+     */
+    public function isPassword($password)
+    {
+        return password_verify($password, $this->password);
+    }
+
+    /**
      * @return bool
      */
     public function isExperimenter()
