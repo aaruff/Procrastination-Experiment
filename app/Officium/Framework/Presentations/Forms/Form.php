@@ -10,6 +10,14 @@ namespace Officium\Framework\Presentations\Forms;
 abstract class Form
 {
     /**
+     * The key for the post validation validators
+     * @var string
+     */
+    public static $SEMANTIC_VALIDATORS = 'semantic_validators';
+
+    public static $SEMATIC_ERROR = 'sematic';
+
+    /**
      * @var string
      */
     private $type;
@@ -38,8 +46,17 @@ abstract class Form
     {
         $this->type = $type;
         $this->entries = $this->filterEntries($entries, array_keys($validators));
+
+        if ( ! isset($validators[self::$SEMANTIC_VALIDATORS])) {
+            $validators[self::$SEMANTIC_VALIDATORS] = [];
+        }
+
         $this->validators = $validators;
     }
+
+    /* ------------------------------------------------------------------------------------------
+     *                                     Abstract
+     * ------------------------------------------------------------------------------------------ */
 
     /**
      * Returns the form's validators
@@ -47,6 +64,10 @@ abstract class Form
      * @return \Officium\Framework\Validators\Validator[]
      */
     protected abstract function getFormValidators();
+
+    /* ------------------------------------------------------------------------------------------
+     *                                     Public
+     * ------------------------------------------------------------------------------------------ */
 
     /**
      * @param string[] $rawEntries
@@ -58,16 +79,11 @@ abstract class Form
             $this->entries = $this->filterEntries($rawEntries, array_keys($this->validators));
         }
 
-        $errors = [];
-        foreach ($this->validators as $key => $validator) {
-            if ( ! $validator->validate($this->entries[$key])) {
-                $errors[$key] = $validator->getErrors();
-            }
+        if ($this->doSyntacticValidation()) {
+            $this->doSematicValidation();
         }
 
-        $this->errors = $errors;
-
-        return empty($errors);
+        return empty($this->errors);
     }
 
     /**
@@ -106,6 +122,10 @@ abstract class Form
         return $this->errors;
     }
 
+    /* ------------------------------------------------------------------------------------------
+     *                                     Protected
+     * ------------------------------------------------------------------------------------------ */
+
     /**
      * Filters out valid form entries form the raw entries param
      *
@@ -113,7 +133,7 @@ abstract class Form
      * @param $keyFilters
      * @return string[]
      */
-    public function filterEntries($rawEntries, $keyFilters)
+    protected function filterEntries($rawEntries, $keyFilters)
     {
         $filtered = [];
         foreach ($keyFilters as $key) {
@@ -128,5 +148,54 @@ abstract class Form
         }
 
         return $filtered;
+    }
+
+    /* ------------------------------------------------------------------------------------------
+     *                                     Private
+     * ------------------------------------------------------------------------------------------ */
+
+    /**
+     * Validates the form for syntactic errors.
+     *
+     * @return bool
+     */
+    private function doSyntacticValidation()
+    {
+        $this->errors = [];
+        foreach ($this->validators as $key => $validator) {
+            if ($key !== self::$SEMANTIC_VALIDATORS && ! $validator->validate($this->entries[$key])) {
+                $this->errors[$key] = $validator->getErrors();
+            }
+        }
+
+        return empty($this->errors);
+    }
+
+    /**
+     * Validates the entries form for semantic errors.
+     *
+     * @return bool
+     */
+    private function doSematicValidation()
+    {
+        if (empty($this->validators[self::$SEMANTIC_VALIDATORS])) {
+            return true;
+        }
+
+        /* @var \Officium\Framework\Validators\Validator[] $postValidators */
+        $postValidators = $this->validators[self::$SEMANTIC_VALIDATORS];
+
+        $generalErrors = [];
+        foreach ($postValidators as $key => $validator) {
+            if ( ! $validator->validate($this->entries)) {
+                $generalErrors[$key] = $validator->getErrors();
+            }
+        }
+
+        if ( ! empty($generalErrors)) {
+            $this->errors[self::$SEMATIC_ERROR] = $generalErrors;
+        }
+
+        return empty($generalErrors);
     }
 }
