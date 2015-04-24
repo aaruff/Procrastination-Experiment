@@ -17,8 +17,8 @@ create table users(
 drop table if exists subjects;
 create table subjects(
   user_id		integer primary key,
-  state integer not null, # A subject only plays one game so placing state here will suffice
-  treatment_id integer not null
+  session_id integer not null,
+  state integer not null # A subject only plays one game so placing state here will suffice
 ) ENGINE=InnoDB;
 
 #--
@@ -27,16 +27,18 @@ create table subjects(
 drop table if exists treatments;
 create table treatments(
   id		integer auto_increment primary key,
-  type varchar(255) not null, # 1 -> One Task
-  size integer not null
+  type varchar(255) not null # 1 -> One Task
 ) ENGINE=InnoDB;
 
-drop table if exists alternate_deadline_treatments;
-create table alternate_deadline_treatments(
-  treatment_id integer not null,
-  enabled boolean not null
+#--
+# Sessions: A session can is created.
+#--
+drop table if exists sessions;
+create table sessions(
+  id integer AUTO_INCREMENT primary key,
+  size integer not null,
+  treatment_id integer not null
 ) Engine=InnoDB;
-
 
 #--
 # Tasks: A treatment will assign one or more tasks to each subject.
@@ -46,25 +48,9 @@ create table tasks(
   id		integer auto_increment primary key,
   number integer not null,
   treatment_id integer not null,
-  payoff double not null
-) Engine=InnoDB;
-
-#--
-# Task Time Limit Parameter: If enabled a subject will have to complete the task in time_limit minutes.
-#--
-drop table if exists task_time_limits;
-create table task_time_limits(
-  task_id integer not null,
-  minutes integer default 0 # minutes
-) Engine=InnoDB;
-
-#--
-# Task Late Penalty Parameter: If enabled a subject will payoff for the task will decrease at a rate of penalty_rate.
-#--
-drop table if exists task_penalty_rates;
-create table task_penalty_rates(
-  task_id integer not null,
-  rate double default 0.0
+  time_limit integer default 0,
+  payoff double not null,
+  penalty_rate double default 0.0
 ) Engine=InnoDB;
 
 #--
@@ -73,25 +59,8 @@ create table task_penalty_rates(
 drop table if exists task_deadlines;
 create table task_deadlines(
   task_id integer not null,
-  date_time datetime not null
-) Engine=InnoDB;
-
-#--
-# Task Deadline Parameter: If enabled the task must be completed by the specified date time.
-#--
-drop table if exists task_deadlines;
-create table task_deadlines(
-  task_id integer not null,
-  date_time datetime not null
-) Engine=InnoDB;
-
-#--
-# Adjustable Deadline Parameter: If enabled this will contain the subject adjusted deadline for the task.
-#--
-drop table if exists task_alternate_deadlines;
-create table task_alternate_deadlines(
-  task_id integer not null,
-  date_time datetime not null
+  required datetime not null,
+  alternate datetime
 ) Engine=InnoDB;
 
 #--
