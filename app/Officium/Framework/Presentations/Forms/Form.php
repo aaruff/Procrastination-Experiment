@@ -118,7 +118,9 @@ abstract class Form
         $filtered = [];
         foreach ($keyFilters as $key) {
             if (isset($rawEntries[$key])) {
-              $filtered[$key] = filter_var($rawEntries[$key], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH);
+                $stripCharacterRange = FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH;
+                $sanitizedEntry = filter_var(trim($rawEntries[$key]), FILTER_SANITIZE_STRING, $stripCharacterRange);
+              $filtered[$key] = htmlspecialchars($sanitizedEntry);
             }
             else {
                 $filtered[$key] = '';
@@ -127,5 +129,4 @@ abstract class Form
 
         return $filtered;
     }
-
 }
