@@ -2,7 +2,7 @@
 
 namespace Officium\Framework\Maps;
 
-use Officium\Framework\Controllers\TreatmentController;
+use Officium\Framework\Controllers\SessionController;
 
 class TreatmentMap extends ResourceMap
 {
@@ -26,7 +26,7 @@ class TreatmentMap extends ResourceMap
      */
     public static function toController($method = '')
     {
-        $controller = get_class(new TreatmentController());
+        $controller = get_class(new SessionController());
         if ($method == self::$POST) {
             return $controller . ':post';
         }
