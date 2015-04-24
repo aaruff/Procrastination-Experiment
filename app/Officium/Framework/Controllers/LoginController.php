@@ -4,8 +4,10 @@ namespace Officium\Framework\Controllers;
 
 use Officium\Framework\Maps\SurveyMap;
 use Officium\Framework\Maps\LoginMap;
+use Officium\Framework\Models\Session;
 use Officium\Framework\Models\User;
 use Officium\Framework\Maps\DashboardMap;
+use Officium\Framework\Presentations\Forms\LoginForm;
 use \Slim\Slim;
 
 /**
@@ -30,26 +32,19 @@ class LoginController
      */
     public function post()
     {
-        unset($_SESSION['user_id']);
-        unset($_SESSION['role']);
+        Session::logoutUser();
 
+        // Get Request
         $app = Slim::getInstance();
-
-        $post = $app->request->post();
-
-        // Error Handling
-        $errors = User::validate($post);
-        if ( ! empty($errors)) {
-            $app->flash('errors', $errors);
+        $form = new LoginForm($app->request->post());
+        if ( $form->validate()) {
+            $app->flash('errors', $form->getErrors());
             $app->response->redirect(LoginMap::toUri());
             return;
         }
 
-        $user = User::getUser($post['login']);
-
-        $_SESSION['user_id'] = $user->id;
-        $_SESSION['role'] = $user->role;
-
+        $user = User::getByLogin($form->getLogin());
+        Session::loginUser($user);
         if ($user->isExperimenter()) {
             $app->response->redirect(DashboardMap::toUri());
             return;
