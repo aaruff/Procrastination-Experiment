@@ -27,7 +27,7 @@ create table subjects(
 drop table if exists treatments;
 create table treatments(
   id		integer auto_increment primary key,
-  type varchar(255) not null # 1 -> One Task
+  session_id integer not null
 ) ENGINE=InnoDB;
 
 #--
@@ -36,8 +36,7 @@ create table treatments(
 drop table if exists sessions;
 create table sessions(
   id integer AUTO_INCREMENT primary key,
-  size integer not null,
-  treatment_id integer not null
+  size integer not null
 ) Engine=InnoDB;
 
 #--
