@@ -1,19 +1,13 @@
 <?php
 namespace Officium\Framework\Middleware;
 
-use Officium\Framework\Models\Auth;
+use Slim\Slim;
 use \Slim\Middleware;
+use Officium\Framework\Models\Auth;
 use Officium\Framework\Maps\LoginMap;
 
 class AuthMiddleware extends Middleware
 {
-    private $auth;
-
-    public function __construct()
-    {
-        $this->auth = new Auth($_SESSION);
-    }
-
     /**
      * Call
      *
@@ -22,11 +16,11 @@ class AuthMiddleware extends Middleware
      */
     public function call()
     {
-        // Get reference to application
-        $app = $this->app;
-
+        $app = Slim::getInstance();
         $uri = $app->request()->getResourceUri();
-        if ( ! $this->auth->isAllowedToVisit($uri)) {
+
+        $auth = new Auth();
+        if ( ! $auth->isAllowedToVisit($uri)) {
             $this->app->redirect(LoginMap::toUri());
             return;
         }
