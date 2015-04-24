@@ -2,9 +2,10 @@
 
 namespace Officium\Framework\Presentations\Forms;
 
-
+use Officium\Framework\Models\User;
 use Officium\Framework\Validators\AlphabeticalValidator;
 use Officium\Framework\Validators\AlphaNumericValidator;
+use Officium\Framework\Validators\UserValidator;
 
 /**
  * This class stores and validates the login form data.
@@ -31,6 +32,7 @@ class LoginForm extends Form
         $validators = [];
         $validators[self::$LOGIN] = new AlphabeticalValidator();
         $validators[self::$PASSWORD] = new AlphaNumericValidator();
+        $validators[self::$SEMANTIC_VALIDATORS] = [new UserValidator(new User())];
         return $validators;
     }
 
@@ -50,5 +52,21 @@ class LoginForm extends Form
     {
         $entries = $this->getEntries();
         return $entries[self::$PASSWORD];
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return User::getByLogin($this->getLogin());
+    }
+
+    /**
+     * @return array
+     */
+    public function getEntriesWithErrors()
+    {
+        return ['errors'=>$this->getErrors(), 'login'=>$this->getLogin()];
     }
 }
