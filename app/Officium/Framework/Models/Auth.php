@@ -41,11 +41,11 @@ class Auth
             return false;
         }
 
-        if ($this->isSubject()) {
+        if (Session::isSubject()) {
             $subject = User::find(Session::getUserId())->subject;
             return $this->isSubjectAllowedToVisit($subject, $route);
         }
-        elseif ($this->isExperimenter()) {
+        elseif (Session::isExperimenter()) {
             return $this->isExperimenterAllowedToVisit($route);
         }
         else {
@@ -67,26 +67,6 @@ class Auth
         }
 
         return false;
-    }
-
-    /**
-     * Returns true if the subject is logged in, otherwise false is returned.
-     *
-     * @return bool
-     */
-    private function isSubject()
-    {
-        return Session::getRole() == User::getSubjectRole();
-    }
-
-    /**
-     * Returns true if the experimenter is logged in, otherwise false is returned.
-     *
-     * @return bool
-     */
-    private function isExperimenter()
-    {
-        return Session::getRole() == User::getExperimenterRole();
     }
 
     /**
