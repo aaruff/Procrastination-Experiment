@@ -31,22 +31,6 @@ class Treatment extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function alternateDeadlineTreatment()
-    {
-        return $this->hasOne(get_class(new AlternateDeadlineTreatment()), 'treatment_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function tasks()
-    {
-        return $this->hasMany(get_class(new Task()), 'treatment_id');
-    }
-
-    /**
      * Creates a treatment and returns its ID.
      *
      * @param $type
@@ -60,5 +44,25 @@ class Treatment extends Model
         $treatment->save();
 
         return $treatment->id;
+    }
+
+    /* ------------------------------------------------------------------------------------------
+     *                                Eloquent Relations
+     * ------------------------------------------------------------------------------------------ */
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function alternateDeadlineTreatment()
+    {
+        return $this->hasOne(get_class(new AlternateDeadlineTreatment()), 'treatment_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tasks()
+    {
+        return $this->hasMany(get_class(new Task()), 'treatment_id');
     }
 }
