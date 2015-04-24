@@ -4,7 +4,6 @@ namespace Officium\Experiment\Treatment;
 
 use Officium\Experiment\Treatment\Task;
 use Illuminate\Database\Eloquent\Model;
-use Officium\Experiment\Subject;
 
 class Treatment extends Model
 {
@@ -29,14 +28,6 @@ class Treatment extends Model
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function subjects()
-    {
-        return $this->hasMany(get_class(new Subject()), 'treatment_id');
     }
 
     /**
