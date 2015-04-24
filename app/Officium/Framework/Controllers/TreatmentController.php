@@ -11,20 +11,18 @@ use Officium\Framework\Validators\TreatmentValidator;
 class TreatmentController 
 {
     /**
-     * @param string $id
+     * @param string $treatmentId
      */
-    public function get($id='')
+    public function get($treatmentId = '')
     {
         $app = Slim::getInstance();
 
-        if ( ! TreatmentValidator::isId($id) ) {
+        if ( ! TreatmentValidator::isId($treatmentId) ) {
             $app->redirect(LoginMap::toUri());
             return;
         }
 
-
-
-        $treatment = Treatment::find(intval($id));
+        $treatment = Treatment::find(intval($treatmentId));
         $rowData = [];
         foreach ($treatment->subjects as $subject) {
             $rowData[] = ['subject'=> $subject->toArray(), 'user'=> $subject->user->toArray()];
