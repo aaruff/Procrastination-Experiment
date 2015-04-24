@@ -2,8 +2,6 @@
 
 namespace Officium\Framework\Models;
 
-use Officium\Framework\Models\User;
-
 class Session
 {
     private static $SURVEY_ID = 'survey_id';
@@ -25,10 +23,13 @@ class Session
         return $user->subject;
     }
 
+    /**
+     * @param User $user
+     */
     public static function loginUser(User $user)
     {
-        $_SESSION[self::$USER_ID] = $user->id;
-        $_SESSION[self::$SURVEY_ID] = $user->role;
+        $_SESSION[self::$USER_ID] = $user->getId();
+        $_SESSION[self::$SURVEY_ID] = $user->getRole();
     }
 
     /**
