@@ -25,7 +25,15 @@ class User extends Model
      */
     public function getRole()
     {
-        return intval($this->role);
+        return $this->role;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
