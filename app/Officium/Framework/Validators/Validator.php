@@ -15,6 +15,9 @@ abstract class Validator
     protected static $STRING = 'This field must consist of only text.';
     protected static $FLOAT = 'This field must be a floating point number.';
     protected static $INTEGER = 'This field must be an integer.';
+    protected static $WHITE_SPACE = 'This field must not contain whitespace.';
+    protected static $ALPHA = 'This field must contain only letters.';
+    protected static $ALPHA_NUM = 'This field must contain only letters and numbers.';
 
     /**
      * @var string[]
