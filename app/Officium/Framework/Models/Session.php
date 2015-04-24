@@ -2,6 +2,7 @@
 
 namespace Officium\Framework\Models;
 
+use Officium\Framework\Models\User;
 
 class Session
 {
@@ -9,13 +10,25 @@ class Session
     private static $USER_ID = 'user_id';
     private static $ROLE = 'role';
 
-    /**
-     * @param $key
-     * @return null|string
-     */
-    private static function getItem($key)
+    public static function logoutUser()
     {
-        return (isset($_SESSION[$key])) ? $_SESSION[$key] : null;
+        unset($_SESSION[self::$USER_ID]);
+        unset($_SESSION[self::$ROLE]);
+    }
+
+    /**
+     * @return \Officium\Experiment\Subject
+     */
+    public static function getSubject()
+    {
+        $user = User::find(self::getUserId());
+        return $user->subject;
+    }
+
+    public static function loginUser(User $user)
+    {
+        $_SESSION[self::$USER_ID] = $user->id;
+        $_SESSION[self::$SURVEY_ID] = $user->role;
     }
 
     /**
@@ -26,16 +39,6 @@ class Session
     public static function getUserId()
     {
         return self::getSurveyId(self::$USER_ID);
-    }
-
-    /**
-     * Returns the user role if it found is session storage, otherwise null is returned.
-     *
-     * @return null|string
-     */
-    public static function getRole()
-    {
-        return self::getSurveyId(self::$ROLE);
     }
 
     /**
@@ -68,4 +71,48 @@ class Session
     {
         $_SESSION[$key] = $entries;
     }
+
+    /**
+     * Returns true if the subject is logged in via this session.
+     *
+     * @return bool
+     */
+    public static function isSubject()
+    {
+        return self::getRole() == User::getSubjectRoleNumber();
+    }
+
+    /**
+     * Returns true if the subject is logged in via this session.
+     *
+     * @return bool
+     */
+    public static function isExperimenter()
+    {
+        return self::getRole() == User::getExperimenterRoleNumber();
+    }
+
+    /* ------------------------------------------------------------------------------------------
+     *                                      Private functions
+     * ------------------------------------------------------------------------------------------ */
+
+    /**
+     * Returns the user role if it found is session storage, otherwise null is returned.
+     *
+     * @return null|string
+     */
+    private static function getRole()
+    {
+        return self::getSurveyId(self::$ROLE);
+    }
+
+    /**
+     * @param $key
+     * @return null|string
+     */
+    private static function getItem($key)
+    {
+        return (isset($_SESSION[$key])) ? $_SESSION[$key] : null;
+    }
+
 }
