@@ -1,6 +1,7 @@
 <?php
 namespace Officium\Experiment;
 
+use Officium\Experiment\Treatment\Treatment;
 use Officium\Framework\Models\User;
 use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
 use Respect\Validation\Validator as Validator;
@@ -26,30 +27,6 @@ class Subject extends Model
      * @var string database table name
      */
     protected $table = 'subjects';
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo('Officium\Framework\Models\User', 'user_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function session()
-    {
-        return $this->belongsTo('Officium\Models\Session', 'sessions');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function generalAcademicSurveyAnswers()
-    {
-        return $this->hasOne('Officium\Model\GeneralAcademicSurveyAnswer', 'general_academic_survey_answers');
-    }
 
     /**
      * Validate the subject's credentials.
@@ -89,7 +66,6 @@ class Subject extends Model
         return $errorMessages;
     }
 
-
     /**
      * @return bool
      */
@@ -127,4 +103,41 @@ class Subject extends Model
             $subject->save();
         }
     }
+
+    /**
+     * @return \Officium\Experiment\Treatment\Treatment
+     */
+    public function getTreatment()
+    {
+        $treatment_id = $this->treatment_id;
+        return Treatment::find($treatment_id);
+    }
+
+    /* ------------------------------------------------------------------------------------------
+     *                                Eloquent Relations
+     * ------------------------------------------------------------------------------------------ */
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('Officium\Framework\Models\User', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function session()
+    {
+        return $this->belongsTo('Officium\Models\Session', 'sessions');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function generalAcademicSurveyAnswers()
+    {
+        return $this->hasOne('Officium\Model\GeneralAcademicSurveyAnswer', 'general_academic_survey_answers');
+    }
+
 }
