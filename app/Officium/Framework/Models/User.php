@@ -13,26 +13,24 @@ class User extends Model
 
     protected $table = 'users';
 
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function subject()
-    {
-        return $this->hasOne('Officium\Experiment\Subject', 'user_id');
-    }
-
     /**
      * @param $login
      * @return \Officium\Framework\Models\User
      */
-    public static function getUser($login)
+    public static function getUserByLogin($login)
     {
         return User::where('login', '=', $login)->first();
     }
 
     /**
-     * Returns true if this user is an experiment.
+     * @return int
+     */
+    public function getRole()
+    {
+        return intval($this->role);
+    }
+
+    /**
      * @return bool
      */
     public function isExperimenter()
@@ -41,63 +39,21 @@ class User extends Model
         return $role == self::$EXPERIMENTER;
     }
 
-    //--------------------------------------------------------------------
 
     /**
-     * Returns the subject role ID.
-     *
      * @return int
      */
-    public static function getSubjectRole()
+    public static function getSubjectRoleNumber()
     {
         return self::$SUBJECT;
     }
 
     /**
-     * Returns the experimenter role ID.
-     *
      * @return int
      */
-    public static function getExperimenterRole()
+    public static function getExperimenterRoleNumber()
     {
         return self::$EXPERIMENTER;
-    }
-
-    /**
-     * Returns error messages if the validation failed.
-     *
-     * @param $credentials
-     * @return Validator
-     */
-    public static function validate($credentials)
-    {
-        $errorMessages = [];
-
-        // Validate input
-        try {
-            Validator::arr()
-                ->key('login', Validator::notEmpty()->length(3, 100)->alpha())
-                ->key('password', Validator::notEmpty()->alnum()->length(3, 40))
-                ->assert($credentials);
-        }
-        // Handle authentication errors
-        catch (ValidationException $e) {
-            $errorMessages = $e->findMessages([
-                'login' => 'Invalid Login',
-                'password' => 'Invalid Password'
-            ]);
-        }
-
-        // Check if account exists
-        if (empty($errorMessages)) {
-            $experimenter = User::where('login', '=', $credentials['login'])->first();
-
-            if( ! password_verify($credentials['password'], $experimenter->password)) {
-                $errorMessages['login'] = 'Invalid Login or Password';
-            }
-        }
-
-        return $errorMessages;
     }
 
      /**
@@ -114,6 +70,23 @@ class User extends Model
 
         return $login;
     }
+
+    /* ------------------------------------------------------------------------------------------
+     *                                Eloquent Relations
+     * ------------------------------------------------------------------------------------------ */
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function subject()
+    {
+        return $this->hasOne('Officium\Experiment\Subject', 'user_id');
+    }
+
+
+    /* ------------------------------------------------------------------------------------------
+     *                                     Private
+     * ------------------------------------------------------------------------------------------ */
 
     /**
      * Returns a randomly generated subject name.
