@@ -2,48 +2,38 @@
 
 namespace Officium\Experiment\Treatment;
 
-use Officium\Experiment\Treatment\Task;
 use Illuminate\Database\Eloquent\Model;
+use Officium\Experiment\Session;
 
 class Treatment extends Model
 {
-    /**
-     * @var bool database timestamp enabled
-     */
     public $timestamps = false;
-
-    /**
-     * @var string database table name
-     */
     protected $table = 'treatments';
+    protected $fillable = ['session_id'];
 
     /**
      * @var string
      */
     public static $THREE_TASK_TIME_LIMIT_PENALTY_ADJUSTABLE_DEADLINE = 'task:3_timeLimit_penalty_adjustableDeadline';
 
+    /* ------------------------------------------------------------------------------------------
+     *                                      Public
+     * ------------------------------------------------------------------------------------------ */
+
     /**
-     * @return string
+     * @param $sessionId
      */
-    public function getType()
+    public function setSessionId($sessionId)
     {
-        return $this->type;
+        $this->session_id = $sessionId;
     }
 
     /**
-     * Creates a treatment and returns its ID.
-     *
-     * @param $type
-     * @return mixed
+     * @return string
      */
-    public static function createTreatment($type, $size)
+    public function getId()
     {
-        $treatment = new Treatment();
-        $treatment->type = $type;
-        $treatment->size = $size;
-        $treatment->save();
-
-        return $treatment->id;
+        return $this->id;
     }
 
     /* ------------------------------------------------------------------------------------------
@@ -55,7 +45,7 @@ class Treatment extends Model
      */
     public function alternateDeadlineTreatment()
     {
-        return $this->hasOne(get_class(new AlternateDeadlineTreatment()), 'treatment_id');
+        return $this->hasOne(get_class(new TaskDeadline()), 'treatment_id');
     }
 
     /**
