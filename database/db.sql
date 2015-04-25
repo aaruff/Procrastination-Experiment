@@ -18,7 +18,7 @@ drop table if exists subjects;
 create table subjects(
   user_id		integer primary key,
   session_id integer not null,
-  state integer not null # A subject only plays one game so placing state here will suffice
+  state integer default 0 # A subject only plays one game so placing state here will suffice
 ) ENGINE=InnoDB;
 
 #--
@@ -47,19 +47,12 @@ create table tasks(
   id		integer auto_increment primary key,
   number integer not null,
   treatment_id integer not null,
+  primary_deadline datetime not null,
+  secondary_deadline datetime default null,
+  secondary_deadline_enabled boolean not null,
   time_limit integer default 0,
   payoff double not null,
   penalty_rate double default 0.0
-) Engine=InnoDB;
-
-#--
-# Task Deadline Parameter: If enabled the task must be completed by the specified date time.
-#--
-drop table if exists task_deadlines;
-create table task_deadlines(
-  task_id integer not null,
-  required datetime not null,
-  alternate datetime
 ) Engine=InnoDB;
 
 #--
