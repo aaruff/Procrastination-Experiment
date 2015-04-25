@@ -2,74 +2,77 @@
 
 namespace Officium\Experiment\Treatment;
 
-use Experiment\Treatment\Task\TaskAlternateDeadlines;
 use Illuminate\Database\Eloquent\Model;
-use Officium\Experiment\Treatment\Task\TaskDeadline;
-use Officium\Experiment\Treatment\Task\TaskPenaltyRate;
-use Officium\Experiment\Treatment\Task\TaskTimeLimit;
 
 class Task extends Model
 {
-    /**
-     * @var bool database timestamp enabled
-     */
     public $timestamps = false;
-
-    /**
-     * @var string database table name
-     */
     protected $table = 'tasks';
 
+    private static $DB_DATE_TIME_FORMAT = 'Y-m-d H:i s';
+
+    /* ------------------------------------------------------------------------------------------
+     *                                      Public
+     * ------------------------------------------------------------------------------------------ */
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @param \DateTime $deadline
      */
-    public function timeLimits()
+    public function setPrimaryDeadline(\DateTime $deadline)
     {
-        return $this->hasMany(get_class(new TaskTimeLimit()), 'task_id');
+        $this->primary_deadline = $deadline->format(self::$DB_DATE_TIME_FORMAT);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function penaltyRates()
-    {
-        return $this->hasMany(get_class(new TaskPenaltyRate()), 'task_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function deadlines()
-    {
-        return $this->hasMany(get_class(new TaskDeadline()), 'task_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function alternateDeadlines()
-    {
-        return $this->hasMany(get_class(new TaskAlternateDeadlines()), 'task_id');
-    }
-
-    /**
-     * Creates a task and returns its ID.
-     *
-     * @param $number
      * @param $treatmentId
-     * @param $payoff
+     */
+    public function setTreatmentId($treatmentId)
+    {
+        $this->treatment_id = $treatmentId;
+    }
+
+    /**
      * @return int
      */
-    public static function createTask($number, $treatmentId, $payoff)
+    public function getNumber()
     {
-        $task = new Task();
-        $task->number = $number;
-        $task->treatment_id = $treatmentId;
-        $task->payoff = $payoff;
-        $task->save();
-
-        return $task->id;
+        return $this->number;
     }
+
+    /**
+     * @param $enabled
+     */
+    public function setSecondaryDeadlineEnabled($enabled)
+    {
+        $this->secondary_deadline_enabled = $enabled;
+    }
+
+    /**
+     * @param $timeLimit
+     */
+    public function setTimeLimit($timeLimit)
+    {
+        $this->time_limit = $timeLimit;
+    }
+
+    /**
+     * @param $payoff
+     */
+    public function setPayoff($payoff)
+    {
+        $this->payoff = $payoff;
+    }
+
+    /**
+     * @param $penaltyRate
+     */
+    public function setPenaltyRate($penaltyRate)
+    {
+        $this->penalty_rate = $penaltyRate;
+    }
+
+    /* ------------------------------------------------------------------------------------------
+     *                                   Private
+     * ------------------------------------------------------------------------------------------ */
 
     /**
      * Generates the problem image, saves it in the "img" directory,
