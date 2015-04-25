@@ -6,11 +6,15 @@ use Illuminate\Database\Eloquent\Model as Model;
 class User extends Model
 {
     public $timestamps = false;
+    protected $table = 'users';
+
     private static $SUBJECT = 1;
     private static $EXPERIMENTER = 2;
 
-    protected $table = 'users';
 
+    /* ------------------------------------------------------------------------------------------
+     *                                      Public
+     * ------------------------------------------------------------------------------------------ */
     /**
      * @param $login
      * @return \Officium\Framework\Models\User
@@ -18,6 +22,30 @@ class User extends Model
     public static function getByLogin($login)
     {
         return User::where('login', '=', $login)->first();
+    }
+
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    public function setLogin()
+    {
+        $login = self::getLoginName();
+        $this->login = $login;
+    }
+
+    public function setPassword($session_id, $login)
+    {
+        $this->password = password_hash($session_id . $login , PASSWORD_DEFAULT);
+    }
+
+    /**
+     * @param $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
     }
 
     /**
@@ -71,21 +99,6 @@ class User extends Model
         return self::$EXPERIMENTER;
     }
 
-     /**
-     * Returns a uniquely random subject name.
-     *
-     * @return string
-     */
-    public function generateLogin()
-    {
-        $login = $this->getLoginName();
-        do {
-            $subject = User::where('login', '=', $login)->first();
-        } while ($subject);
-
-        return $login;
-    }
-
     /* ------------------------------------------------------------------------------------------
      *                                Eloquent Relations
      * ------------------------------------------------------------------------------------------ */
@@ -98,18 +111,16 @@ class User extends Model
         return $this->hasOne('Officium\Experiment\Subject', 'user_id');
     }
 
-
     /* ------------------------------------------------------------------------------------------
-     *                                     Private
+     *                                   Private
      * ------------------------------------------------------------------------------------------ */
-
     /**
      * Returns a randomly generated subject name.
      *
      * @param int $syllables
      * @return string
      */
-    private function getLoginName($syllables = 3)
+    private static function getLoginName($syllables = 3)
     {
         /**
          * TODO: Improve legacy scheme if time permits.
@@ -161,5 +172,5 @@ class User extends Model
 
         return $login;
 
-   }
+    }
 }
