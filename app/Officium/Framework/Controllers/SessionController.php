@@ -2,12 +2,9 @@
 
 namespace Officium\Framework\Controllers;
 
-use Officium\Experiment\Session;
-use Officium\Framework\Presentations\Forms\SessionCreationForm;
+use Officium\Framework\Presentations\Forms\SessionForm;
 use Officium\Framework\Maps\DashboardMap;
 use Officium\Framework\Maps\SessionMap;
-use Officium\Experiment\Treatment;
-use Officium\Framework\Models\TreatmentBuilder;
 use \Slim\Slim;
 
 class SessionController
@@ -18,7 +15,7 @@ class SessionController
     public function get()
     {
         $app = Slim::getInstance();
-        $app->render(SessionMap::toTemplate(),['flash'=>$app->flashData(), 'form'=>new SessionCreationForm()]);
+        $app->render(SessionMap::toTemplate(),['flash'=>$app->flashData(), 'form'=>new SessionForm()]);
     }
 
     /**
@@ -27,16 +24,17 @@ class SessionController
     public function post()
     {
         $app = Slim::getInstance();
-        $form = new SessionCreationForm($app->request->post());
-        if ( ! $form->validate()) {
-            $app->flash('errors', $form->getErrors());
-            $app->response->redirect(SessionMap::toUri());
-            return;
+
+        $sessionForm = new SessionForm($app->request->post());
+        if ($sessionForm->validate()) {
+            $sessionForm->createSession();
+            $responseUri = DashboardMap::toUri();
+        }
+        else {
+            $app->flash('errors', $sessionForm->getErrors());
+            $responseUri = SessionMap::toUri();
         }
 
-        $session = Session::createFromEntries($form->getSessionEntries());
-
-        TreatmentBuilder::make($form);
-        $app->redirect(DashboardMap::toUri());
+        $app->redirect($responseUri);
     }
 }
