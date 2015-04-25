@@ -1,10 +1,6 @@
 <?php
 namespace Officium\Experiment;
 
-use Officium\Experiment\Treatment\Treatment;
-use Officium\Framework\Models\User;
-use Respect\Validation\Exceptions\ValidationExceptionInterface as ValidationException;
-use Respect\Validation\Validator as Validator;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -13,104 +9,33 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Subject extends Model
 {
-    /**
-     * @var int
-     */
-    public static $SURVEY_STATE = 1;
-
-    /**
-     * @var bool database timestamp enabled
-     */
-    public $timestamps = false;
-
-    /**
-     * @var string database table name
-     */
+    protected $timestamps = false;
     protected $table = 'subjects';
 
+    private static $ROLE_ID = 2;
+
     /**
-     * Validate the subject's credentials.
-     *
-     * @param $credentials
-     * @return array
+     * @param $userId
      */
-    public static function validate($credentials)
+    public function setUserId($userId)
     {
-        $errorMessages = [];
-
-        // Validate input
-        try {
-            Validator::arr()
-                ->key('login', Validator::notEmpty()->length(3, 100)->alpha())
-                ->key('password', Validator::notEmpty()->alnum()->length(1, 255))
-                ->assert($credentials);
-        }
-            // Handle authentication errors
-        catch (ValidationException $e) {
-            $errorMessages = $e->findMessages([
-                'login' => 'Invalid Login',
-                'password' => 'Invalid Password'
-            ]);
-        }
-
-        // Check if account exists
-        if (empty($errorMessages)) {
-            $subject = Subject::where('login', '=', $credentials['login'])->first();
-
-            if ( ! $subject || ! password_verify($credentials['password'], $subject->password)) {
-                $errorMessages['login'] = 'Invalid Login or Password';
-            }
-
-        }
-
-        return $errorMessages;
+        $this->user_id = $userId;
     }
 
     /**
-     * @return bool
+     * @param $sessionId
      */
-    public function isPlaying()
+    public function setSessionId($sessionId)
     {
-        return $this->state == self::$PLAYING;
+        $this->session_id = $sessionId;
     }
 
     /**
-     * @param $id
-     * @return \Officium\Experiment\Subject
+     * @return int
      */
-    public static function getSubject($id)
+    public static function getRole()
     {
-        return User::find(intval($id))->subject;
-    }
-
-    /**
-     * @param $numberSubjects
-     * @param $treatmentId
-     */
-    public static function createSubjects($numberSubjects, $treatmentId)
-    {
-        for ($i = 0; $i < $numberSubjects; ++$i) {
-            $user = new User();
-            $user->login = $user->generateLogin();
-            $user->password = password_hash($treatmentId . $user->login, PASSWORD_DEFAULT);
-            $user->role = User::$SUBJECT;
-            $user->save();
-
-            $subject = new Subject();
-            $subject->user_id = $user->id;
-            $subject->state = Subject::$SURVEY_STATE;
-            $subject->treatment_id = $treatmentId;
-            $subject->save();
-        }
-    }
-
-    /**
-     * @return \Officium\Experiment\Treatment\Treatment
-     */
-    public function getTreatment()
-    {
-        $treatment_id = $this->treatment_id;
-        return Treatment::find($treatment_id);
+        return self::$ROLE_ID;
     }
 
     /* ------------------------------------------------------------------------------------------
@@ -139,5 +64,6 @@ class Subject extends Model
     {
         return $this->hasOne('Officium\Model\GeneralAcademicSurveyAnswer', 'general_academic_survey_answers');
     }
+
 
 }
