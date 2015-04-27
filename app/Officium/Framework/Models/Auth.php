@@ -42,7 +42,7 @@ class Auth
         }
 
         if (Session::isSubject()) {
-            $subject = User::find(Session::getUserId())->subject;
+            $subject = Subject::getByUserId(Session::getUserId());
             return $this->isSubjectAllowedToVisit($subject, $route);
         }
         elseif (Session::isExperimenter()) {
