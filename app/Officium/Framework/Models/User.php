@@ -2,6 +2,7 @@
 namespace Officium\Framework\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
+use Officium\Experiment\Subject;
 
 class User extends Model
 {
@@ -22,6 +23,18 @@ class User extends Model
     public static function getByLogin($login)
     {
         return User::where('login', '=', $login)->first();
+    }
+
+    /**
+     * Returns the user found with the ID specified.
+     *
+     * @param int $id
+     * @return User
+     */
+    public static function getById($id)
+    {
+
+        return User::find($id);
     }
 
     public function getLogin()
@@ -108,7 +121,7 @@ class User extends Model
      */
     public function subject()
     {
-        return $this->hasOne('Officium\Experiment\Subject', 'user_id');
+        return $this->hasOne(get_class(new Subject()));
     }
 
     /* ------------------------------------------------------------------------------------------
