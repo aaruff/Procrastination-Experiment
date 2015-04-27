@@ -15,7 +15,7 @@ class SessionController
     public function get()
     {
         $app = Slim::getInstance();
-        $app->render(SessionMap::toTemplate(),['flash'=>$app->flashData(), 'form'=>new SessionForm()]);
+        $app->render(SessionMap::toTemplate(),$app->flashData());
     }
 
     /**
@@ -31,7 +31,7 @@ class SessionController
             $responseUri = DashboardMap::toUri();
         }
         else {
-            $app->flash('errors', $sessionForm->getErrors());
+            $app->flash('flash', $sessionForm->getEntriesWithErrors());
             $responseUri = SessionMap::toUri();
         }
 
