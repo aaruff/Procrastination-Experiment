@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Subjects</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" name="size" value="{{  size }}"/>
+                            <input type="text" class="form-control" name="size" value="{{  flash.entries.size }}"/>
                             {%  if flash.errors.size %}
                                 <div class="alert alert-danger">
                                     <ul>
@@ -57,7 +57,7 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label" >Task 1 Deadline</label>
                         <div class="col-xs-9">
-                            <input type='text' class="form-control dt" type="datetime" name="taskOne" value="{{ first_task_deadline }}"/>
+                            <input type='text' class="form-control dt" type="datetime" name="taskOne" value="{{ flash.entries.taskOne }}"/>
                             {%  if flash.errors.taskOne %}
                                 <div class="alert alert-danger">
                                     <ul>
@@ -73,7 +73,7 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Task 2 Deadline</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control dt" placeholder="MM-DD-YYYY HH:MM AM-PM" name="taskTwo" value="{{  second_task_deadline  }}" />
+                            <input type="text" class="form-control dt" placeholder="MM-DD-YYYY HH:MM AM-PM" name="taskTwo" value="{{  flash.entries.taskTwo  }}" />
                             {%  if flash.errors.taskTwo %}
                                 <div class="alert alert-danger">
                                     <ul>
@@ -89,7 +89,7 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Task 3 Deadline</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control dt" placeholder="MM-DD-YYYY HH:MM AM-PM" name="taskThree" value="{{  third_task_deadline  }}" />
+                            <input type="text" class="form-control dt" placeholder="MM-DD-YYYY HH:MM AM-PM" name="taskThree" value="{{  flash.entries.taskThree  }}" />
                             {%  if flash.errors.taskThree %}
                                 <div class="alert alert-danger">
                                     <ul>
@@ -105,7 +105,7 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Payoff</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" placeholder="Tokens" name="payoff" value="{{  payoff  }}" />
+                            <input type="text" class="form-control" placeholder="Tokens" name="payoff" value="{{  flash.entries.payoff  }}" />
                             {%  if flash.errors.payoff %}
                                 <div class="alert alert-danger">
                                     <ul>
@@ -121,7 +121,7 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Completion Time Limit</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control time" name="timeLimit" placeholder="Minutes" value="{{  time_limit  }}" />
+                            <input type="text" class="form-control time" name="timeLimit" placeholder="Minutes" value="{{  flash.entries.timeLimit  }}" />
                             {%  if flash.errors.timeLimit %}
                                 <div class="alert alert-danger">
                                     <ul>
@@ -137,7 +137,7 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Penalty Rate</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control"  name="penaltyRate" value="{{  penalty  }}" />
+                            <input type="text" class="form-control"  name="penaltyRate" value="{{  flash.entries.penalty  }}" />
                             {%  if flash.errors.penaltyRate %}
                                 <div class="alert alert-danger">
                                     <ul>
