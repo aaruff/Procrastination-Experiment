@@ -29,7 +29,7 @@ class Session
     public static function loginUser(User $user)
     {
         $_SESSION[self::$USER_ID] = $user->getId();
-        $_SESSION[self::$SURVEY_ID] = $user->getRole();
+        $_SESSION[self::$ROLE] = $user->getRole();
     }
 
     /**
@@ -39,7 +39,7 @@ class Session
      */
     public static function getUserId()
     {
-        return self::getSurveyId(self::$USER_ID);
+        return $_SESSION[self::$USER_ID];
     }
 
     /**
