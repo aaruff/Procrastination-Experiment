@@ -1,16 +1,16 @@
 <?php
 namespace Officium\Framework\Controllers;
 
-use Officium\Experiment\Treatment;
 use Officium\Framework\Maps\DashboardMap;
+use Officium\Framework\Presentations\Tables\DashboardTable;
 use \Slim\Slim;
 
 class DashboardController
 {
     public function get()
     {
-        $treatments = Treatment::all();
         $app = Slim::getInstance();
-        $app->render(DashboardMap::toTemplate(), ['treatments'=>$treatments]);
+        $dashboardTable = new DashboardTable();
+        $app->render(DashboardMap::toTemplate(), $dashboardTable->getTableData());
     }
 }
