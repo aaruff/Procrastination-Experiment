@@ -49,10 +49,11 @@ create table tasks(
   treatment_id integer not null,
   primary_deadline datetime not null,
   secondary_deadline datetime default null,
-  secondary_deadline_enabled boolean not null,
+  secondary_deadline_enabled boolean default false,
   time_limit integer default 0,
   payoff double not null,
-  penalty_rate double default 0.0
+  penalty_rate double default 0.0,
+  penalty_rate_enabled boolean default false
 ) Engine=InnoDB;
 
 #--
