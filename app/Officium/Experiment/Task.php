@@ -9,12 +9,14 @@ class Task extends Model
     public $timestamps = false;
     protected $table = 'tasks';
 
-    private static $DB_DATE_TIME_FORMAT = 'Y-m-d H:i s';
+    private static $DB_DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /* ------------------------------------------------------------------------------------------
      *                                      Public
      * ------------------------------------------------------------------------------------------ */
     /**
+     * Sets the task deadline.
+     *
      * @param \DateTime $deadline
      */
     public function setPrimaryDeadline(\DateTime $deadline)
@@ -23,7 +25,9 @@ class Task extends Model
     }
 
     /**
-     * @param $treatmentId
+     * Sets the treatment ID.
+     *
+     * @param int $treatmentId
      */
     public function setTreatmentId($treatmentId)
     {
@@ -31,6 +35,17 @@ class Task extends Model
     }
 
     /**
+     * Sets the task number.
+     *
+     * @param int $number
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+    }
+
+    /**
+     * Returns the task number.
      * @return int
      */
     public function getNumber()
@@ -38,7 +53,10 @@ class Task extends Model
         return $this->number;
     }
 
+
     /**
+     * Sets the flag which indicates if subject enabled deadlines are enabled.
+     *
      * @param $enabled
      */
     public function setSecondaryDeadlineEnabled($enabled)
@@ -47,7 +65,19 @@ class Task extends Model
     }
 
     /**
-     * @param $timeLimit
+     * Set the flag which indicates if the penalty rate is used in this treatment.
+     *
+     * @param $enabled
+     */
+    public function setPenaltyRateEnabled($enabled)
+    {
+        $this->penalty_rate_enabled = $enabled;
+    }
+
+    /**
+     * Sets the time limit allotted to this task.
+     *
+     * @param int $timeLimit
      */
     public function setTimeLimit($timeLimit)
     {
@@ -55,6 +85,8 @@ class Task extends Model
     }
 
     /**
+     * Sets the task payoff.
+     *
      * @param $payoff
      */
     public function setPayoff($payoff)
@@ -63,6 +95,8 @@ class Task extends Model
     }
 
     /**
+     * Sets the penalty rate that reduces the payoff after the deadline has passed.
+     *
      * @param $penaltyRate
      */
     public function setPenaltyRate($penaltyRate)
