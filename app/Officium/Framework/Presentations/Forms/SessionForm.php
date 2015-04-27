@@ -34,6 +34,10 @@ class SessionForm extends Form
         parent::__construct($formType, $entries, $this->getFormValidators());
     }
 
+    /* ------------------------------------------------------------------------------------------
+     *                                      Public
+     * ------------------------------------------------------------------------------------------ */
+
     /**
      * Returns the form's validators.
      *
@@ -64,6 +68,14 @@ class SessionForm extends Form
     }
 
     /**
+     * @return array
+     */
+    public function getEntriesWithErrors()
+    {
+        return ['errors'=>$this->getErrors(), 'entries'=>$this->getEntries()];
+    }
+
+    /**
      * Returns the session size.
      * @return int
      */
@@ -83,18 +95,22 @@ class SessionForm extends Form
         return ! empty($entries[self::$ADJUSTABLE_DEADLINE]);
     }
 
+    /* ------------------------------------------------------------------------------------------
+     *                                   Private
+     * ------------------------------------------------------------------------------------------ */
+
     /**
      * Returns the hard deadline (date and time) in that which each task should be completed by.
      *
-     * @param int $number
+     * @param int $taskNumber
      * @return \DateTime
      */
-    private function getDeadline($number)
+    private function getDeadline($taskNumber)
     {
         $entries = $this->getEntries();
-        $deadlines =  [$entries[self::$TASK_ONE_DEADLINE], $entries[self::$TASK_TWO_DEADLINE],
+        $deadlines =  [1=>$entries[self::$TASK_ONE_DEADLINE], $entries[self::$TASK_TWO_DEADLINE],
             $entries[self::$TASK_THREE_DEADLINE]];
-        return \DateTime::createFromFormat(self::$DATE_TIME_FORMAT, $deadlines[$number]);
+        return \DateTime::createFromFormat(self::$DATE_TIME_FORMAT, $deadlines[$taskNumber]);
     }
 
     /**
@@ -183,7 +199,10 @@ class SessionForm extends Form
     {
         for ($i = 0; $i < self::$NUM_TASKS; ++$i) {
             $task = new Task();
+            $task->setNumber($i + 1);
             $task->setTreatmentId($treatment->getId());
+            // TODO: Add this as a hidden input field if and when more treatment types are added.
+            $task->setPenaltyRateEnabled(true);
             $task->setPrimaryDeadline($this->getDeadline($task->getNumber()));
             $task->setSecondaryDeadlineEnabled($this->getSecondaryDeadlineEnabled());
             $task->setTimeLimit($this->getTaskTimeLimit());
