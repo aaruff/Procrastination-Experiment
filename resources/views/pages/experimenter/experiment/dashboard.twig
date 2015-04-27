@@ -1,5 +1,32 @@
 {% extends 'pages/experimenter/experiment/master.twig' %}
 
+{% block js %}
+    <script>
+        $(function() {
+            $('.shownhide').click(function () {
+                if ($(this).attr('data-category') == 'task') {
+                    id = $(this).attr('data-row');
+                    if ($('#t' + id).hasClass('hidden')) {
+                        $('#t' + id).removeClass('hidden');
+                    }
+                    else {
+                        $('#t' + id).addClass('hidden');
+                    }
+                }
+                else if ($(this).attr('data-category') == 'subject') {
+                    id = $(this).attr('data-row');
+                    if ($('#s' + id).hasClass('hidden')) {
+                        $('#s' + id).removeClass('hidden');
+                    }
+                    else {
+                        $('#s' + id).addClass('hidden');
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block body %}
     {% include 'pages/experimenter/experiment/navbar.twig' %}
     <div class="container">
@@ -10,21 +37,82 @@
 
         <table class="table table-striped" id="subjects">
             <tbody>
-            <tr><th>Treatment ID</th><th>Type</th><th>Size</th><th>Tasks</th><th></th></tr>
-             {%  for row in rowData %}
             <tr>
-                <td>{{ row.treatment.id }}</td>
-                <td>{{ row.treatment.type }}</td>
-                <td>{{  row.treatment.size }}</td>
-                <td>
-                    {% for task in row.tasks %}
-                       <span class="wrap">Task: {{ task.number }}, Payoff: {{ task.payoff }}</span><br/>
-                    {% endfor %}
-                </td>
-                <td><a href="{{ baseUrl }}/experiment/treatment/{{ row.treatment.id }}">Manage</a></td>
+                <th>Session Number</th>
+                <th>Subjects</th>
+                <th>Task</th>
+                <th>Subject Details</th>
             </tr>
-            {%  endfor %}
+            {% for row in table %}
+                <tr>
+                    <td>{{ row.session.id }}</td>
+                    <td>{{ row.session.size }}</td>
+                    <td>
+                        <span class="shownhide btn btn-default" data-category="task" data-row="{{ row.session.id }}" >View Details</span>
+                        <table class="table  hidden" id="t{{ row.session.id }}">
+                            <tbody>
+                            <tr>
+                                <th>Number</th>
+                                <th>Task Deadlines</th>
+
+                                {% if row.tasks.0.secondary_deadline_enabled %}
+                                    <th>Subject Deadlines</th>
+                                {% endif %}
+
+                                {% if row.tasks.0.penalty_rate_enabled %}
+                                    <th>Penalty Rate</th>
+                                {% endif %}
+
+                                <th>Time Limit (Minutes)</th>
+                                <th>Payoff</th>
+                            </tr>
+
+                            {% for task in row.tasks %}
+                                <tr>
+                                    <td>
+                                        {{ task.number }}
+                                    </td>
+                                    <td>
+                                        {{ task.primary_deadline }}
+                                    </td>
+
+                                    {% if task.secondary_deadline_enabled %}
+                                        <td>{{ task.secondary_deadline }}</td>
+                                    {% endif %}
+
+                                    {% if task.penalty_rate_enabled %}
+                                        <td>{{ task.penalty_rate }}</td>
+                                    {% endif %}
+                                    <td> {{ task.time_limit }}</td>
+                                    <td> {{ task.payoff }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <span class="shownhide btn btn-default" data-category="subject" data-row="{{ row.session.id }}" >View Details</span>
+                        <table class="table  hidden" id="s{{ row.session.id }}">
+                            <thead>
+                            <tr>
+                                <th>ID</th><th>Login</th><th>State</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {%  for subject in row.subjects %}
+                                <tr>
+                                    <td>{{ subject.user_id }}</td>
+                                    <td>{{ subject.login }}</td>
+                                    <td>{{ subject.state }}</td>
+                                </tr>
+                            {%  endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
 {% endblock %}
+
