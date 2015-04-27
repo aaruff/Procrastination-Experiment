@@ -3,7 +3,6 @@
 namespace Officium\Experiment\Treatment;
 
 use Illuminate\Database\Eloquent\Model;
-use Officium\Experiment\Session;
 
 class Treatment extends Model
 {
@@ -39,14 +38,6 @@ class Treatment extends Model
     /* ------------------------------------------------------------------------------------------
      *                                Eloquent Relations
      * ------------------------------------------------------------------------------------------ */
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function alternateDeadlineTreatment()
-    {
-        return $this->hasOne(get_class(new TaskDeadline()), 'treatment_id');
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
