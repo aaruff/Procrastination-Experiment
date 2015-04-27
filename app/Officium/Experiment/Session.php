@@ -53,7 +53,7 @@ class Session extends Model
      */
     public function treatment()
     {
-        return $this->hasOne(get_class(new Treatment()), 'treatment_id');
+        return $this->hasOne(get_class(new Treatment()), 'session_id');
     }
 
     /**
@@ -61,7 +61,7 @@ class Session extends Model
      */
     public function subjects()
     {
-        return $this->hasMany(get_class(new Subject()), 'treatment_id');
+        return $this->hasMany(get_class(new Subject()), 'session_id');
     }
 
 }
