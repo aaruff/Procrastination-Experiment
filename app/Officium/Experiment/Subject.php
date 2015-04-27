@@ -2,6 +2,7 @@
 namespace Officium\Experiment;
 
 use Illuminate\Database\Eloquent\Model;
+use Officium\Framework\Models\User;
 
 /**
  * Class Subject
@@ -9,10 +10,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Subject extends Model
 {
-    protected $timestamps = false;
+    public $timestamps = false;
     protected $table = 'subjects';
 
-    private static $ROLE_ID = 2;
+    private static $ROLE_ID = 1;
 
     /**
      * @param $userId
@@ -38,6 +39,18 @@ class Subject extends Model
         return self::$ROLE_ID;
     }
 
+    /**
+     * Returns the subject with the specified user ID
+     *
+     * @param $userId
+     * @return Subject|null
+     */
+    public static function getByUserId($userId)
+    {
+        $user = User::getById($userId);
+        return $user->subject;
+    }
+
     /* ------------------------------------------------------------------------------------------
      *                                Eloquent Relations
      * ------------------------------------------------------------------------------------------ */
@@ -46,7 +59,7 @@ class Subject extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Officium\Framework\Models\User', 'user_id');
+        return $this->belongsTo(get_class(new User()), 'user_id');
     }
 
     /**
@@ -54,7 +67,7 @@ class Subject extends Model
      */
     public function session()
     {
-        return $this->belongsTo('Officium\Models\Session', 'sessions');
+        return $this->belongsTo(get_class(new Session()), 'sessions');
     }
 
     /**
