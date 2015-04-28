@@ -44,6 +44,22 @@ class Session extends Model
         return $this->id;
     }
 
+    /**
+     * @return Treatment|null
+     */
+    public function getTreatment()
+    {
+        return $this->treatment;
+    }
+
+    /**
+     * @return Subject[]|null
+     */
+    public function getSubjects()
+    {
+        return $this->subjects;
+    }
+
     /* ------------------------------------------------------------------------------------------
      *                                Eloquent Relations
      * ------------------------------------------------------------------------------------------ */
@@ -53,7 +69,7 @@ class Session extends Model
      */
     public function treatment()
     {
-        return $this->hasOne(get_class(new Treatment()), 'session_id');
+        return $this->hasOne(get_class(new Treatment()));
     }
 
     /**
@@ -61,7 +77,7 @@ class Session extends Model
      */
     public function subjects()
     {
-        return $this->hasMany(get_class(new Subject()), 'session_id');
+        return $this->hasMany(get_class(new Subject()));
     }
 
 }
