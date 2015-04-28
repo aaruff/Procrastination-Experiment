@@ -3,7 +3,6 @@
 namespace Officium\Framework\Maps;
 
 use Officium\Framework\Controllers\SurveyController;
-use Officium\Framework\Models\Session;
 
 /**
  * Survey Resource Map
@@ -30,6 +29,11 @@ class SurveyMap extends ResourceMap
         return '/survey';
     }
 
+    /**
+     * Returns the path to the controller handling the specified request method.
+     * @param string $method
+     * @return string
+     */
     public static function toController($method = '')
     {
         $controller = get_class(new SurveyController());
