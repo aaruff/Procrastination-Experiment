@@ -3,8 +3,10 @@ namespace Officium\Framework\Middleware;
 
 use Slim\Slim;
 use \Slim\Middleware;
-use Officium\Framework\Models\Auth;
 use Officium\Framework\Maps\LoginMap;
+use Officium\Framework\Models\Session;
+use Officium\Framework\Maps\GameStateMap;
+use Officium\Experiment\Subject;
 
 class AuthMiddleware extends Middleware
 {
@@ -19,9 +21,20 @@ class AuthMiddleware extends Middleware
         $app = Slim::getInstance();
         $uri = $app->request()->getResourceUri();
 
-        $auth = new Auth();
-        if ( ! $auth->isAllowedToVisit($uri)) {
+        if (LoginMap::isUri($uri) || Session::isExperimenter()) {
+            $this->next->call();
+            return;
+        }
+
+        if ( ! Session::isSubject()) {
             $this->app->redirect(LoginMap::toUri());
+            return;
+        }
+
+        $gameState = new GameStateMap(Subject::getByUserId(Session::getUserId()));
+        $stateUri = $gameState->toUri();
+        if ($uri != $stateUri) {
+            $this->app->redirect($gameState->toUri());
             return;
         }
 
