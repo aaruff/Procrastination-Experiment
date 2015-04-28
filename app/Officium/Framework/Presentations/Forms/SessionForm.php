@@ -35,7 +35,7 @@ class SessionForm extends Form
     }
 
     /* ------------------------------------------------------------------------------------------
-     *                                      Public
+     *                                      Protected
      * ------------------------------------------------------------------------------------------ */
 
     /**
@@ -43,7 +43,7 @@ class SessionForm extends Form
      *
      * @return \Officium\Framework\Validators\Validator[]
      */
-    public function getFormValidators()
+    protected function getFormValidators()
     {
         $validators = [];
         $validators[self::$SIZE] = new IntegerValidator();
@@ -58,7 +58,14 @@ class SessionForm extends Form
         return $validators;
     }
 
-    public function createSession() {
+    /* ------------------------------------------------------------------------------------------
+     *                                      Public
+     * ------------------------------------------------------------------------------------------ */
+
+    /**
+     * Stores the session using the session form data.
+     */
+    public function storeSession() {
         $session = new Session();
         $session->setSize($this->getSize());
         $session->save();
@@ -67,14 +74,9 @@ class SessionForm extends Form
         $this->createSessionTasks($this->createSessionTreatment($session));
     }
 
-    /**
-     * @return array
-     */
-    public function getEntriesWithErrors()
-    {
-        return ['errors'=>$this->getErrors(), 'entries'=>$this->getEntries()];
-    }
-
+    /* ------------------------------------------------------------------------------------------
+     *                                   Private
+     * ------------------------------------------------------------------------------------------ */
     /**
      * Returns the session size.
      * @return int
@@ -95,9 +97,6 @@ class SessionForm extends Form
         return ! empty($entries[self::$ADJUSTABLE_DEADLINE]);
     }
 
-    /* ------------------------------------------------------------------------------------------
-     *                                   Private
-     * ------------------------------------------------------------------------------------------ */
 
     /**
      * Returns the hard deadline (date and time) in that which each task should be completed by.
