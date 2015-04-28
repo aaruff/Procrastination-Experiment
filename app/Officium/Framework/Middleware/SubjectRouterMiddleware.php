@@ -2,10 +2,11 @@
 
 namespace Officium\Framework\Middleware;
 
+use Officium\Framework\Maps\LoginMap;
 use Slim\Slim;
 use Slim\Middleware;
-use Officium\Framework\Models\SubjectStateRouter;
 use Officium\Framework\Models\Session;
+use Officium\Framework\Models\User;
 
 class SubjectRouterMiddleware extends Middleware
 {
@@ -17,20 +18,21 @@ class SubjectRouterMiddleware extends Middleware
      */
     public function call()
     {
-        // Experimenters are excluded from state routing
-        if (Session::isExperimenter()) {
-            $this->next->call();
-        }
-
         $app = Slim::getInstance();
         $uri = $app->request()->getResourceUri();
 
-        $stateRoute = SubjectStateRouter::getStateUri();
-        if ( $uri != $stateRoute) {
-            $app->redirect($stateRoute);
-            return;
+        if (Session::isSubject()) {
+            $subject = Session::getSubject();
+            if ( $uri != GameStateMap::toUri(new GameState($subject->getState()))) {
+                $app->redirect($stateUri);
+                return;
+            }
         }
-
-        $this->next->call();
+        else if (Session::isExperimenter()) {
+            $this->next->call();
+        }
+        else {
+            $app->redirect(LoginMap::toUri());
+        }
     }
 }
