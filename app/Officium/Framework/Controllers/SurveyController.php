@@ -1,10 +1,10 @@
 <?php
 namespace Officium\Framework\Controllers;
 
-use Officium\Framework\Models\FormModel as Survey;
-use Officium\Experiment\Survey\SurveyFactory;
+use Officium\Experiment\SurveyState;
 use Officium\Framework\Maps\SurveyMap;
 use Officium\Framework\Models\Session;
+use Officium\Framework\Presentations\Forms\SurveyFormFactory;
 use \Slim\Slim;
 
 class SurveyController
@@ -15,7 +15,7 @@ class SurveyController
     public function get()
     {
         $app = Slim::getInstance();
-        $app->render(SurveyMap::toRoute(Session::getSurveyId()));
+        $app->render(SurveyMap::toTemplate(Session::getSurveyState()), $app->flashData());
     }
 
     /**
@@ -23,29 +23,23 @@ class SurveyController
      */
     public function post()
     {
-
-        $app = Slim::getInstance();
-        $surveyEntries = $app->request->post();
-        $this->postSurvey(SurveyFactory::make(Session::getSurveyId(), $surveyEntries));
-    }
-
-    /**
-     * @param Survey $survey
-     */
-    private function postSurvey(Survey $survey)
-    {
         $app = Slim::getInstance();
 
-        if ( $survey->validate()) {
-            $app->flash('errors', $survey->getErrors());
-            $app->response->redirect(SurveyMap::toUri());
-            return;
+        $surveyForm = SurveyFormFactory::make(Session::getSurveyState());
+        if ($surveyForm->validate($app->request->post())) {
+            $surveyForm->saveToSession();
+
+            if (SurveyState::isComplete(Session::getSurveyState())) {
+                var_dump(Session::getAllSurveyFormEntries());
+                return;
+            }
+
+            Session::setSurveyId(SurveyState::getNextSurveyId(Session::getSurveyState()));
+            $app->redirect(SurveyMap::toUri());
         }
-
-        $nextSurveyId = SurveyMap::getNextSurveyId(Session::getSurveyId());
-        Session::setSurveyId($nextSurveyId);
-        Session::setSurveyEntries($nextSurveyId, $survey->getEntries());
-
-        $app->response->redirect(SurveyMap::toUri());
+        else {
+            $app->flash('flash', $surveyForm->getEntriesWithErrors());
+            $app->redirect(SurveyMap::toUri());
+        }
     }
 }
