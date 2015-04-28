@@ -27,7 +27,7 @@ class SessionController
 
         $sessionForm = new SessionForm($app->request->post());
         if ($sessionForm->validate()) {
-            $sessionForm->createSession();
+            $sessionForm->storeSession();
             $responseUri = DashboardMap::toUri();
         }
         else {
