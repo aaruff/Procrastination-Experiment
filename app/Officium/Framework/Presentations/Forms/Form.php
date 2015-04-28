@@ -7,15 +7,22 @@ namespace Officium\Framework\Presentations\Forms;
  * Class Form
  * @package Officium\Framework\Forms
  */
-abstract class Form
+abstract class Form implements FormInterface
 {
     /**
      * The key for the post validation validators
      * @var string
      */
-    public static $SEMANTIC_VALIDATORS = 'semantic_validators';
+    protected static $SEMANTIC_VALIDATORS = 'semantic_validators';
 
-    public static $SEMATIC_ERROR = 'sematic';
+    /**
+     * The key used to perform sematic validation post syntactic validation.
+     *
+     * @var string
+     */
+    protected static $SEMATIC_ERROR = 'sematic';
+
+    protected static $FORM_TYPE_KEY = 'form_type';
 
     /**
      * @var string
@@ -73,7 +80,7 @@ abstract class Form
      * @param string[] $rawEntries
      * @return bool
      */
-    public function validate($rawEntries = [])
+    public function validate(array $rawEntries = [])
     {
         if ( ! empty($rawEntries) ) {
             $this->entries = $this->filterEntries($rawEntries, array_keys($this->validators));
@@ -107,7 +114,7 @@ abstract class Form
      *
      * @return array
      */
-    public function getFormKeys()
+    public function getKeys()
     {
         return array_keys($this->getFormValidators());
     }
@@ -121,6 +128,15 @@ abstract class Form
     {
         return $this->errors;
     }
+
+    /**
+     * @return array
+     */
+    public function getEntriesWithErrors()
+    {
+        return ['errors'=>$this->getErrors(), 'entries'=>$this->getEntries()];
+    }
+
 
     /* ------------------------------------------------------------------------------------------
      *                                     Protected
