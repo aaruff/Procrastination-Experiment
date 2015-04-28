@@ -4,7 +4,7 @@ namespace Officium\Framework\Models;
 
 class Session
 {
-    private static $SURVEY_ID = 'survey_id';
+    private static $SURVEY_ID = 'surveys';
     private static $USER_ID = 'user_id';
     private static $ROLE = 'role';
 
@@ -20,7 +20,7 @@ class Session
     public static function getSubject()
     {
         $user = User::find(self::getUserId());
-        return $user->subject;
+        return $user->getSubject();
     }
 
     /**
@@ -43,35 +43,34 @@ class Session
     }
 
     /**
-     * Returns survey ID if found in session storage, otherwise null is returned.
+     * Sets the survey ID.
      *
-     * @return null|string
+     * @param integer $surveyId
+     */
+    public static function setSurveyId($surveyId)
+    {
+        $_SESSION[self::$SURVEY_ID] = $surveyId;
+    }
+
+    /**
+     * Returns true if the user is logged in.
+     *
+     * @return bool
+     */
+    public static function isLoggedIn()
+    {
+        return isset($_SESSION[self::$USER_ID]);
+    }
+
+    /**
+     * Returns the survey ID
+     * @return integer
      */
     public static function getSurveyId()
     {
-        return self::getItem(self::$SURVEY_ID);
+        return (isset($_SESSION[self::$SURVEY_ID])) ? $_SESSION[self::$SURVEY_ID] : 0;
     }
 
-    /**
-     * Adds the survey ID to session storage.
-     *
-     * @param $id
-     */
-    public static function setSurveyId($id)
-    {
-        $_SESSION[self::$SURVEY_ID] = $id;
-    }
-
-    /**
-     * Adds the survey entries to session storage index by the key param.
-     *
-     * @param $key
-     * @param array $entries
-     */
-    public static function setSurveyEntries($key, array $entries)
-    {
-        $_SESSION[$key] = $entries;
-    }
 
     /**
      * Returns true if the subject is logged in via this session.
@@ -80,7 +79,7 @@ class Session
      */
     public static function isSubject()
     {
-        return self::getRole() == User::getSubjectRoleNumber();
+        return self::isLoggedIn() && self::getRole() == User::getSubjectRoleNumber();
     }
 
     /**
@@ -90,7 +89,7 @@ class Session
      */
     public static function isExperimenter()
     {
-        return self::getRole() == User::getExperimenterRoleNumber();
+        return self::isLoggedIn() && self::getRole() == User::getExperimenterRoleNumber();
     }
 
     /* ------------------------------------------------------------------------------------------
@@ -104,7 +103,7 @@ class Session
      */
     private static function getRole()
     {
-        return self::getSurveyId(self::$ROLE);
+        return $_SESSION[self::$ROLE];
     }
 
     /**
