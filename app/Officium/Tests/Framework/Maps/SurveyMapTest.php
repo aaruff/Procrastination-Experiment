@@ -15,7 +15,7 @@ class SurveyRouterTest extends \PHPUnit_Framework_TestCase {
      */
     public function When_SurveyKeyDoesNotExists_FirstSurveyTemplateRouteReturned()
     {
-        $this->assertEquals('/pages/subject/survey/academic.twig', SurveyMap::toRoute(null));
+        $this->assertEquals('/pages/subject/survey/academic.twig', SurveyMap::toTemplate(null));
     }
 
     /**
@@ -23,7 +23,7 @@ class SurveyRouterTest extends \PHPUnit_Framework_TestCase {
      */
     public function When_InvalidSurveyProvided_FirstSurveyTemplateRouteReturned()
     {
-        $this->assertEquals('/pages/subject/survey/academic.twig', SurveyMap::toRoute('wrong!'));
+        $this->assertEquals('/pages/subject/survey/academic.twig', SurveyMap::toTemplate('wrong!'));
     }
 
     /**
@@ -31,10 +31,10 @@ class SurveyRouterTest extends \PHPUnit_Framework_TestCase {
      */
     public function When_SurveyValidKeyProvided_CorrespondingSurveyTemplateRouteReturned()
     {
-        $this->assertEquals('/pages/subject/survey/academic.twig', SurveyMap::toRoute(null));
-        $this->assertEquals('/pages/subject/survey/academic.twig', SurveyMap::toRoute('a'));
-        $this->assertEquals('/pages/subject/survey/academicObligations.twig', SurveyMap::toRoute('ao'));
-        $this->assertEquals('/pages/subject/survey/externalObligations.twig', SurveyMap::toRoute('eo'));
+        $this->assertEquals('/pages/subject/survey/academic.twig', SurveyMap::toTemplate(null));
+        $this->assertEquals('/pages/subject/survey/academic.twig', SurveyMap::toTemplate('a'));
+        $this->assertEquals('/pages/subject/survey/academicObligations.twig', SurveyMap::toTemplate('ao'));
+        $this->assertEquals('/pages/subject/survey/externalObligations.twig', SurveyMap::toTemplate('eo'));
     }
 
     /**
