@@ -40,4 +40,15 @@ class LoginMap extends ResourceMap
         return $controller . ':get';
     }
 
+    /**
+     * Returns true if this uri is a login uri.
+     *
+     * @param $uri
+     * @return bool
+     */
+    public static function isUri($uri)
+    {
+        return self::toUri() == $uri;
+    }
+
 }
