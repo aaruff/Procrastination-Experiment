@@ -4,6 +4,7 @@
 <div class="container">
     <div class="jumbotron">
         <form action="{{ currentUrl() }}" method="post">
+            <input type="hidden" name="form_type" value="general_academic" />
             <div class="form-group">
                 <label>Your Major</label>
                 <input type="text" class="form-control" name="major"/>
@@ -27,6 +28,16 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-success">Next</button>
             </div>
+            {%  if flash.errors %}
+                <div class="alert alert-danger">
+                    <strong>Oops!</strong> I looks like there are a few errors in your submission. Please check your entries and try again.<br><br>
+                    <ul>
+                        {% for error in flash.errors.rate %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
         </form>
     </div>
 
