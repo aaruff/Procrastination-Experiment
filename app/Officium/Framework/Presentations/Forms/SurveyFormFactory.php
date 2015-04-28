@@ -7,7 +7,7 @@ class SurveyFormFactory
 {
     /**
      * @param $surveysCompleted
-     * @return SurveyFormInterface
+     * @return SurveyForm
      */
     public static function make($surveysCompleted) {
         $generalAcademic = new GeneralAcademicSurveyForm();
