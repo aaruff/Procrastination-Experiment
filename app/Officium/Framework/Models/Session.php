@@ -2,6 +2,8 @@
 
 namespace Officium\Framework\Models;
 
+use Officium\Experiment\SurveyState;
+
 class Session
 {
     private static $SURVEY_ID = 'surveys';
@@ -45,7 +47,7 @@ class Session
     /**
      * Sets the survey ID.
      *
-     * @param integer $surveyId
+     * @param int $surveyId
      */
     public static function setSurveyId($surveyId)
     {
@@ -59,16 +61,16 @@ class Session
      */
     public static function isLoggedIn()
     {
-        return isset($_SESSION[self::$USER_ID]);
+        return self::getItem(self::$USER_ID, 0) > 0;
     }
 
     /**
      * Returns the survey ID
-     * @return integer
+     * @return int
      */
-    public static function getSurveyId()
+    public static function getSurveyState()
     {
-        return (isset($_SESSION[self::$SURVEY_ID])) ? $_SESSION[self::$SURVEY_ID] : 0;
+        return self::getItem(self::$SURVEY_ID, SurveyState::GENERAL);
     }
 
 
@@ -79,7 +81,7 @@ class Session
      */
     public static function isSubject()
     {
-        return self::isLoggedIn() && self::getRole() == User::getSubjectRoleNumber();
+        return self::isLoggedIn() && self::getItem(self::$ROLE) == User::getSubjectRoleNumber();
     }
 
     /**
@@ -89,7 +91,25 @@ class Session
      */
     public static function isExperimenter()
     {
-        return self::isLoggedIn() && self::getRole() == User::getExperimenterRoleNumber();
+        return self::isLoggedIn() && self::getItem(self::$ROLE) == User::getExperimenterRoleNumber();
+    }
+
+    /**
+     * Stores the survey form entries.
+     * @param int $surveyId
+     * @param array $entries
+     */
+    public static function storeSurveyFormEntries($surveyId, array $entries)
+    {
+        $_SESSION[self::$SURVEY_ID][$surveyId] = $entries;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getAllSurveyFormEntries()
+    {
+        return self::getItem(self::$SURVEY_ID, []);
     }
 
     /* ------------------------------------------------------------------------------------------
@@ -97,22 +117,13 @@ class Session
      * ------------------------------------------------------------------------------------------ */
 
     /**
-     * Returns the user role if it found is session storage, otherwise null is returned.
-     *
-     * @return null|string
-     */
-    private static function getRole()
-    {
-        return $_SESSION[self::$ROLE];
-    }
-
-    /**
      * @param $key
-     * @return null|string
+     * @param $default
+     * @return mixed
      */
-    private static function getItem($key)
+    private static function getItem($key, $default = null)
     {
-        return (isset($_SESSION[$key])) ? $_SESSION[$key] : null;
+        return (isset($_SESSION[$key])) ? $_SESSION[$key] : $default;
     }
 
 }
