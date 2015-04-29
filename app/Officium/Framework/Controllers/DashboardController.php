@@ -2,7 +2,7 @@
 namespace Officium\Framework\Controllers;
 
 use Officium\Framework\Maps\DashboardMap;
-use Officium\Framework\Presentations\Tables\DashboardTable;
+use Officium\Framework\View\Tables\DashboardTable;
 use \Slim\Slim;
 
 class DashboardController
