@@ -1,58 +1,105 @@
-{% extends 'pages/user/master.twig' %}
-{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Login</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/resources/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/resources/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
 
 <div class="container">
-    <div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
-        {%  if errors %}
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                <ul>
-                    {% for error in flash.errors.sematic %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="text-center">Login</h1>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please Sign In</h3>
                 </div>
-                <div class="modal-body">
-                    <form class="form col-md-12 center-block" action="{{ currentUrl() }}" method="post">
-                        <div class="form-group">
-                            <input type="text" class="form-control input-lg" placeholder="Login" name="login" value="{{  flash.login  }}">
-                            {%  if flash.errors.login %}
+                <div class="panel-body">
+                    <form role="form" action="{{ currentUrl() }}" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="login" name="login" value="{{ flash.login }}" autofocus>
+                                {%  if flash.errors.login %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for error in flash.errors.login %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                {%  if flash.errors.password %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for error in flash.errors.password %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <!-- Change this to a button or input when using this as a form -->
+                            <button class="btn btn-lg btn-success btn-block">Login</button>
+                            {%  if errors %}
                                 <div class="alert alert-danger">
+                                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
                                     <ul>
-                                        {% for error in flash.errors.login %}
+                                        {% for error in flash.errors.sematic %}
                                             <li>{{ error }}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                             {% endif %}
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control input-lg" placeholder="Password" name="password">
-                            {%  if flash.errors.password %}
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        {% for error in flash.errors.password %}
-                                            <li>{{ error }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-primary btn-lg btn-block">Sign In</button>
-                        </div>
+                        </fieldset>
                     </form>
-                </div>
-                <div class="modal-footer">
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
+
+<!-- jQuery -->
+<script src="/resources/jquery/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/resources/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/resources/metisMenu/dist/metisMenu.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/sb-admin-2.js"></script>
+
+</body>
+
+</html>
