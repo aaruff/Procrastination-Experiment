@@ -2,17 +2,16 @@
 
 namespace Officium\Framework\Presentations\Forms;
 
+use Officium\Experiment\IncomingSurveyState;
 
 class SurveyFormFactory 
 {
     /**
-     * @param $surveysCompleted
      * @return SurveyForm
      */
-    public static function make($surveysCompleted) {
-        $generalAcademic = new GeneralAcademicSurveyForm();
-        if ( ! isset($surveysCompleted[$generalAcademic->getType()])) {
-            return $generalAcademic;
+    public static function make() {
+        if (IncomingSurveyState::isGeneralAcademicState()) {
+            return new GeneralAcademicSurveyForm();
         }
     }
 }
