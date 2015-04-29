@@ -1,118 +1,273 @@
-{% extends 'pages/experimenter/experiment/master.twig' %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block js %}
-    <script>
-        $(function() {
-            $('.shownhide').click(function () {
-                if ($(this).attr('data-category') == 'task') {
-                    id = $(this).attr('data-row');
-                    if ($('#t' + id).hasClass('hidden')) {
-                        $('#t' + id).removeClass('hidden');
-                    }
-                    else {
-                        $('#t' + id).addClass('hidden');
-                    }
-                }
-                else if ($(this).attr('data-category') == 'subject') {
-                    id = $(this).attr('data-row');
-                    if ($('#s' + id).hasClass('hidden')) {
-                        $('#s' + id).removeClass('hidden');
-                    }
-                    else {
-                        $('#s' + id).addClass('hidden');
-                    }
-                }
-            });
-        });
-    </script>
-{% endblock %}
+<head>
 
-{% block body %}
-    {% include 'pages/experimenter/experiment/navbar.twig' %}
-    <div class="container">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <div class="page-header">
-            <h3>Experiment Dashboard</h3>
+    <title>Experiment: Self-Imposed Deadlines and Other Commitment Devices</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/resources/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/resources/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="/resources/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="/resources/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">Experiment: Self-Imposed Deadlines and Other Commitment Devices</a>
         </div>
+        <!-- /.navbar-header -->
 
-        <table class="table table-striped" id="subjects">
-            <tbody>
-            <tr>
-                <th>Session Number</th>
-                <th>Subjects</th>
-                <th>Task</th>
-                <th>Subject Details</th>
-            </tr>
-            {% for row in table %}
-                <tr>
-                    <td>{{ row.session.id }}</td>
-                    <td>{{ row.session.size }}</td>
-                    <td>
-                        <span class="shownhide btn btn-default" data-category="task" data-row="{{ row.session.id }}" >View Details</span>
-                        <table class="table  hidden" id="t{{ row.session.id }}">
-                            <tbody>
-                            <tr>
-                                <th>Number</th>
-                                <th>Task Deadlines</th>
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li><a href="/login"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+            <!-- /.dropdown -->
+        </ul>
+        <!-- /.navbar-top-links -->
 
-                                {% if row.tasks.0.secondary_deadline_enabled %}
-                                    <th>Subject Deadlines</th>
-                                {% endif %}
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="sidebar-search">
+                        <div class="input-group custom-search-form">
+                            <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <!-- /input-group -->
+                    </li>
+                    <li>
+                        <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-edit fa-fw"></i> Schedule Session<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="flot.html">One Task</a>
+                            </li>
+                            <li>
+                                <a href="/experiment/session/add">Three Task with Penalty Rate</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-files-o fa-fw"></i> Session Data</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
 
-                                {% if row.tasks.0.penalty_rate_enabled %}
-                                    <th>Penalty Rate</th>
-                                {% endif %}
-
-                                <th>Time Limit (Minutes)</th>
-                                <th>Payoff</th>
-                            </tr>
-
-                            {% for task in row.tasks %}
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Experimenter Dashboard</h3>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                       Sessions
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="subjects">
+                                <tbody>
                                 <tr>
-                                    <td>
-                                        {{ task.number }}
-                                    </td>
-                                    <td>
-                                        {{ task.primary_deadline }}
-                                    </td>
-
-                                    {% if task.secondary_deadline_enabled %}
-                                        <td>{{ task.secondary_deadline }}</td>
-                                    {% endif %}
-
-                                    {% if task.penalty_rate_enabled %}
-                                        <td>{{ task.penalty_rate }}</td>
-                                    {% endif %}
-                                    <td> {{ task.time_limit }}</td>
-                                    <td> {{ task.payoff }}</td>
+                                    <th>Session Number</th>
+                                    <th>Subjects</th>
+                                    <th>Task</th>
+                                    <th>Subject Details</th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </td>
-                    <td>
-                        <span class="shownhide btn btn-default" data-category="subject" data-row="{{ row.session.id }}" >View Details</span>
-                        <table class="table  hidden" id="s{{ row.session.id }}">
-                            <thead>
-                            <tr>
-                                <th>ID</th><th>Login</th><th>State</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {%  for subject in row.subjects %}
-                                <tr>
-                                    <td>{{ subject.user_id }}</td>
-                                    <td>{{ subject.login }}</td>
-                                    <td>{{ subject.state }}</td>
-                                </tr>
-                            {%  endfor %}
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                                {% for row in table %}
+                                    <tr>
+                                        <td>{{ row.session.id }}</td>
+                                        <td>{{ row.session.size }}</td>
+                                        <td>
+                                            <span class="shownhide btn btn-default" data-category="task" data-row="{{ row.session.id }}" >View Details</span>
+                                            <table class="table  hidden" id="t{{ row.session.id }}">
+                                                <tbody>
+                                                <tr>
+                                                    <th>Number</th>
+                                                    <th>Task Deadlines</th>
+
+                                                    {% if row.tasks.0.secondary_deadline_enabled %}
+                                                        <th>Subject Deadlines</th>
+                                                    {% endif %}
+
+                                                    {% if row.tasks.0.penalty_rate_enabled %}
+                                                        <th>Penalty Rate</th>
+                                                    {% endif %}
+
+                                                    <th>Time Limit (Minutes)</th>
+                                                    <th>Payoff</th>
+                                                </tr>
+
+                                                {% for task in row.tasks %}
+                                                    <tr>
+                                                        <td>
+                                                            {{ task.number }}
+                                                        </td>
+                                                        <td>
+                                                            {{ task.primary_deadline }}
+                                                        </td>
+
+                                                        {% if task.secondary_deadline_enabled %}
+                                                            <td>{{ task.secondary_deadline }}</td>
+                                                        {% endif %}
+
+                                                        {% if task.penalty_rate_enabled %}
+                                                            <td>{{ task.penalty_rate }}</td>
+                                                        {% endif %}
+                                                        <td> {{ task.time_limit }}</td>
+                                                        <td> {{ task.payoff }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <span class="shownhide btn btn-default" data-category="subject" data-row="{{ row.session.id }}" >View Details</span>
+                                            <table class="table  hidden" id="s{{ row.session.id }}">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th><th>Login</th><th>State</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {%  for subject in row.subjects %}
+                                                    <tr>
+                                                        <td>{{ subject.user_id }}</td>
+                                                        <td>{{ subject.login }}</td>
+                                                        <td>{{ subject.state }}</td>
+                                                    </tr>
+                                                {%  endfor %}
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+        </div>
+        <!-- /.row -->
     </div>
-{% endblock %}
+    <!-- /#page-wrapper -->
 
+</div>
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<script src="/resources/jquery/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/resources/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/resources/metisMenu/dist/metisMenu.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script src="/resources/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="/resources/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/sb-admin-2.js"></script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+
+<script>
+    $(function() {
+        $('.shownhide').click(function () {
+            if ($(this).attr('data-category') == 'task') {
+                id = $(this).attr('data-row');
+                if ($('#t' + id).hasClass('hidden')) {
+                    $('#t' + id).removeClass('hidden');
+                }
+                else {
+                    $('#t' + id).addClass('hidden');
+                }
+            }
+            else if ($(this).attr('data-category') == 'subject') {
+                id = $(this).attr('data-row');
+                if ($('#s' + id).hasClass('hidden')) {
+                    $('#s' + id).removeClass('hidden');
+                }
+                else {
+                    $('#s' + id).addClass('hidden');
+                }
+            }
+        });
+    });
+</script>
+</body>
+
+</html>
