@@ -2,7 +2,7 @@
 
 namespace Officium\Framework\Models;
 
-use Officium\Experiment\SurveyState;
+use Officium\Experiment\IncomingSurveyState;
 
 class Session
 {
@@ -68,9 +68,9 @@ class Session
      * Returns the survey ID
      * @return int
      */
-    public static function getSurveyState()
+    public static function getSurveyId()
     {
-        return self::getItem(self::$SURVEY_ID, SurveyState::GENERAL);
+        return self::getItem(self::$SURVEY_ID, IncomingSurveyState::GENERAL);
     }
 
 
