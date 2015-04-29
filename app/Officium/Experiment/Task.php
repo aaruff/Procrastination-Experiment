@@ -1,6 +1,6 @@
 <?php
 
-namespace Officium\Experiment\Treatment;
+namespace Officium\Experiment;
 
 use Illuminate\Database\Eloquent\Model;
 
