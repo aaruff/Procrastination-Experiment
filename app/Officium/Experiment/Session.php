@@ -3,7 +3,6 @@
 namespace Officium\Experiment;
 
 use Illuminate\Database\Eloquent\Model;
-use Officium\Experiment\Treatment\Treatment;
 
 class Session extends Model
 {
