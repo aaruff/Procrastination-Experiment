@@ -1,5 +1,5 @@
 <?php
-namespace Officium\Framework\Presentations\Forms;
+namespace Officium\Framework\View\Forms;
 
 
 interface FormInterface {

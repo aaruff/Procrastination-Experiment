@@ -6,14 +6,16 @@ use Officium\Experiment\IncomingSurveyState;
 
 class Session
 {
-    private static $SURVEY_ID = 'surveys';
-    private static $USER_ID = 'user_id';
+    private static $SURVEY_ID = 'survey';
+    private static $SURVEY_ENTRIES_ID = 'survey_entries';
+    private static $USER_ID = 'user';
     private static $ROLE = 'role';
 
     public static function logoutUser()
     {
         unset($_SESSION[self::$USER_ID]);
         unset($_SESSION[self::$ROLE]);
+        unset($_SESSION[self::$SURVEY_ID]);
     }
 
     /**
@@ -23,6 +25,14 @@ class Session
     {
         $user = User::find(self::getUserId());
         return $user->getSubject();
+    }
+
+    /**
+     * @return int
+     */
+    public static function getSurveyId()
+    {
+        return self::getItem(self::$SURVEY_ID, IncomingSurveyState::GENERAL);
     }
 
     /**
@@ -65,16 +75,6 @@ class Session
     }
 
     /**
-     * Returns the survey ID
-     * @return int
-     */
-    public static function getSurveyId()
-    {
-        return self::getItem(self::$SURVEY_ID, IncomingSurveyState::GENERAL);
-    }
-
-
-    /**
      * Returns true if the subject is logged in via this session.
      *
      * @return bool
@@ -101,7 +101,7 @@ class Session
      */
     public static function storeSurveyFormEntries($surveyId, array $entries)
     {
-        $_SESSION[self::$SURVEY_ID][$surveyId] = $entries;
+        $_SESSION[self::$SURVEY_ENTRIES_ID][$surveyId] = $entries;
     }
 
     /**

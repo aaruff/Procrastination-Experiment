@@ -2,7 +2,7 @@
 
 namespace Officium\Framework\Controllers;
 
-use Officium\Framework\Presentations\Forms\SessionForm;
+use Officium\Framework\View\Forms\SessionForm;
 use Officium\Framework\Maps\DashboardMap;
 use Officium\Framework\Maps\SessionMap;
 use \Slim\Slim;

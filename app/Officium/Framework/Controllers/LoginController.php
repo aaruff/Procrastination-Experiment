@@ -6,7 +6,7 @@ use Officium\Framework\Maps\SurveyMap;
 use Officium\Framework\Maps\LoginMap;
 use Officium\Framework\Models\Session;
 use Officium\Framework\Maps\DashboardMap;
-use Officium\Framework\Presentations\Forms\LoginForm;
+use Officium\Framework\View\Forms\LoginForm;
 use \Slim\Slim;
 
 /**

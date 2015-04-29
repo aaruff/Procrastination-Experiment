@@ -1,6 +1,6 @@
 <?php
 
-namespace Officium\Framework\Presentations\Tables;
+namespace Officium\Framework\View\Tables;
 
 
 use Officium\Experiment\Session;

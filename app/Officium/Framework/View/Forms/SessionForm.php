@@ -1,16 +1,16 @@
 <?php
 
-namespace Officium\Framework\Presentations\Forms;
+namespace Officium\Framework\View\Forms;
 
 use Officium\Experiment\Subject;
 use Officium\Experiment\Session;
-use Officium\Experiment\Treatment\Task;
+use Officium\Experiment\Task;
 use Officium\Framework\Models\User;
 use Officium\Framework\Validators\CheckboxValidator;
 use Officium\Framework\Validators\IntegerValidator;
 use Officium\Framework\Validators\FloatValidator;
 use Officium\Framework\Validators\DateTimeValidator;
-use Officium\Experiment\Treatment\Treatment;
+use Officium\Experiment\Treatment;
 
 class SessionForm extends Form
 {

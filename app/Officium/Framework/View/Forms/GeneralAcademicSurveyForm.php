@@ -1,9 +1,8 @@
 <?php
 
-namespace Officium\Framework\Presentations\Forms;
+namespace Officium\Framework\View\Forms;
 
 
-use Officium\Experiment\IncomingSurveyState;
 use Officium\Framework\Models\SessionStorable;
 use Officium\Framework\Validators\AlphabeticalValidator;
 use Officium\Framework\Validators\FloatValidator;
