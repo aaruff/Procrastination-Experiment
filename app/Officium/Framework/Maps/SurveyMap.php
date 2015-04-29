@@ -3,6 +3,7 @@
 namespace Officium\Framework\Maps;
 
 use Officium\Framework\Controllers\SurveyController;
+use Officium\Framework\Models\Session;
 
 /**
  * Survey Resource Map
@@ -16,9 +17,9 @@ class SurveyMap extends ResourceMap
     /**
      * @return string template route
      */
-    public static function toTemplate($surveyId)
+    public static function toTemplate()
     {
-        return '/pages/subject/survey/' . self::$templates[$surveyId];
+        return '/pages/subject/survey/' . self::$templates[Session::getSurveyId()];
     }
 
     /**
