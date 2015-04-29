@@ -3,7 +3,7 @@
 namespace Officium\Framework\Presentations\Forms;
 
 
-use Officium\Experiment\SurveyState;
+use Officium\Experiment\IncomingSurveyState;
 use Officium\Framework\Models\SessionStorable;
 use Officium\Framework\Validators\AlphabeticalValidator;
 use Officium\Framework\Validators\FloatValidator;
@@ -55,11 +55,9 @@ class GeneralAcademicSurveyForm extends Form implements SessionStorable
             self::$NUMBER_COURSES=>$this->getNumberCourses(),
             self::$NUMBER_CLUBS=>$this->getNumberClubs()];
 
-        $surveyId = Session::getSurveyState();
+        $surveyId = Session::getSurveyId();
         Session::storeSurveyFormEntries($surveyId, $entries);
 
-        $nextSurveyId = SurveyState::getNextSurveyId($surveyId);
-        Session::setSurveyId($nextSurveyId);
     }
 
     /* ------------------------------------------------------------------------------------------
