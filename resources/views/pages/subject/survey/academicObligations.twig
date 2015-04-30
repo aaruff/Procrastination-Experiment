@@ -23,13 +23,13 @@
                         <label>Minor Assignments</label>
                     </div>
                     <div id="minor-group" class="form-group form-inline">
-                        <input type="text" class="form-control date start" placeholder="Start Date" name="minor_start_date[]" />
-                        <input type="text" class="form-control time start" placeholder="Start Time" name="minor_start_time[]" />
-                        <input type="text" class="form-control time end" placeholder="End Time" name="minor_end_time[]" />
-                        <input type="text" class="form-control date end" placeholder="End Date" name="minor_end_date[]" />
-                        <a class="form-control btn btn-info add_item" data-group="work" href="#"><i class="fa fa-plus"></i></a>
+                        <input type="text" class="form-control date start" placeholder="Start Date" name="minor_start_date[0]" />
+                        <input type="text" class="form-control time start" placeholder="Start Time" name="minor_start_time[0]" />
+                        <input type="text" class="form-control time end" placeholder="End Time" name="minor_end_time[0]" />
+                        <input type="text" class="form-control date end" placeholder="End Date" name="minor_end_date[0]" />
+                        <button class="form-control btn btn-info add-btn fa fa-plus" type="button" id="minor" href="#"></button>
                     </div>
-                    <div class="form-group dynamic-entry" id="minor_insert">
+                    <div id="minor_collection">
                     </div>
 
                     {# Major Assignments #}
@@ -37,13 +37,13 @@
                         <label>Major Assignments or Term Papers</label>
                     </div>
                     <div id="major-group" class="form-group form-inline">
-                        <input type="text" class="form-control date start" placeholder="Start Date" name="major_start_date[]" />
-                        <input type="text" class="form-control time start" placeholder="Start Time" name="major_start_time[]" />
-                        <input type="text" class="form-control time end" placeholder="End Time" name="major_end_time[]" />
-                        <input type="text" class="form-control date end" placeholder="End Date" name="major_end_date[]" />
-                        <a class="form-control btn btn-info add_item" data-group="work" href="#"><i class="fa fa-plus"></i></a>
+                        <input type="text" class="form-control date start" placeholder="Start Date" name="major_start_date[0]" />
+                        <input type="text" class="form-control time start" placeholder="Start Time" name="major_start_time[0]" />
+                        <input type="text" class="form-control time end" placeholder="End Time" name="major_end_time[0]" />
+                        <input type="text" class="form-control date end" placeholder="End Date" name="major_end_date[0]" />
+                        <button class="form-control btn btn-info add-btn fa fa-plus" type="button"  id="major" href="#"></button>
                     </div>
-                    <div class="form-group dynamic-entry" id="major_insert">
+                    <div id="major_collection">
                     </div>
 
                     {# Exams #}
@@ -51,13 +51,13 @@
                         <label>Exams</label>
                     </div>
                     <div id="exam-group" class="form-group form-inline">
-                        <input type="text" class="form-control date start" placeholder="Start Date" name="exam_start_date[]" />
-                        <input type="text" class="form-control time start" placeholder="Start Time" name="exam_start_time[]" />
-                        <input type="text" class="form-control time end" placeholder="End Time" name="exam_end_time[]" />
-                        <input type="text" class="form-control date end" placeholder="End Date" name="exam_end_date[]" />
-                        <a class="form-control btn btn-info add_item" data-group="work" href="#"><i class="fa fa-plus"></i></a>
+                        <input type="text" class="form-control date start" placeholder="Start Date" name="exam_start_date[0]" />
+                        <input type="text" class="form-control time start" placeholder="Start Time" name="exam_start_time[0]" />
+                        <input type="text" class="form-control time end" placeholder="End Time" name="exam_end_time[0]" />
+                        <input type="text" class="form-control date end" placeholder="End Date" name="exam_end_date[0]" />
+                        <button class="form-control btn btn-info add-btn fa fa-plus" type="button"  id="exam" href="#"></button>
                     </div>
-                    <div class="form-group dynamic-entry" id="major_insert">
+                    <div id="exam_collection">
                     </div>
                 </fieldset>
 
@@ -69,23 +69,49 @@
 
     </div>
     <script>
+        $(document).ready(function() {
+            var maxCollectionSize = 20;
+            var collectionCounters = {'minor':1, 'major':1, 'exam':1};
+
+            $('.add-btn').click( function(event) {
+                var collectionId = event.target.id;
+                var collectionSize = collectionCounters[collectionId];
+
+                if (collectionSize <= maxCollectionSize) {
+                    var collectionInputItem = '<div class="form-group form-inline">' +
+                            '<input type="text" class="form-control date start" placeholder="Start Date" name="' + collectionId + '_start_date['+ collectionSize + ']" />' +
+                            '<input type="text" class="form-control time start" placeholder="Start Time" name="' + collectionId + '_start_time['+ collectionSize + ']" />' +
+                            '<input type="text" class="form-control time end" placeholder="End Time" name="' + collectionId + '_end_time['+ collectionSize + ']" />' +
+                            '<input type="text" class="form-control date end" placeholder="End Date" name="' + collectionId + '_end_date['+ collectionSize + ']" />' +
+                            '<button class="form-control btn btn-danger add-btn fa fa-minus remove_item" type="button"  id="exam" href="#"></button>' +
+                            '</div>';
+
+                    $('#' + collectionId + '_collection').append(collectionInputItem);
+
+
+                    collectionCounters[collectionId] = collectionSize + 1;
+                }
+
+            });
+
+            $(document).on('click', 'button.remove_item', function() {
+                $(this).parent('div').remove();
+            });
+        });
+    </script>
+
+    <script>
         // initialize input widgets first
-        $('.time').timepicker({
+        $('#minor-group .time').timepicker({
             'showDuration': true,
             'timeFormat': 'g:i a'
         });
 
-        $('.date').datepicker({
+        $('#minor-group .date').datepicker({
             'format': 'm/d/yyyy',
             'autoclose': true
         });
 
-        // initialize workPair
-        var workGroupPair = document.getElementById('work-group');
-        var workPair = new Datepair(workGroupPair);
-
-        var familyGroupPair = document.getElementById('family-group');
-        var familyPair = new Datepair(familyGroupPair);
     </script>
 {% endblock %}
 
