@@ -2,6 +2,7 @@
 
 namespace Officium\Framework\Maps;
 
+use Officium\Experiment\IncomingSurveyState;
 use Officium\Framework\Controllers\SurveyController;
 use Officium\Framework\Models\Session;
 
@@ -12,14 +13,18 @@ use Officium\Framework\Models\Session;
  */
 class SurveyMap extends ResourceMap
 {
-    private static $templates = ['academic.twig', 'academicObligations.twig', 'externalObligations.twig'];
-
     /**
      * @return string template route
      */
     public static function toTemplate()
     {
-        return '/pages/subject/survey/' . self::$templates[Session::getSurveyId()];
+        $templates = [
+            IncomingSurveyState::GENERAL=>'academic.twig',
+            IncomingSurveyState::ACADEMIC_OBLIGATION=>'academicObligations.twig',
+            IncomingSurveyState::EXTERNAL_OBLIGATION=>'externalObligations.twig'
+        ];
+
+        return '/pages/subject/survey/' . $templates[Session::getSurveyId()];
     }
 
     /**
