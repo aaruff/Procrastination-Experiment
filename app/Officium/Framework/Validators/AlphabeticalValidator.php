@@ -9,14 +9,14 @@ class AlphabeticalValidator extends Validator
 {
     /**
      * Validates the entry provided.
-     * @param $entry
+     * @param $entries
      * @return boolean
      */
-    public function validate($entry)
+    public function validate($entries)
     {
         $this->clearErrors();
         try {
-            v::notEmpty()->noWhitespace()->alpha()->assert($entry);
+            v::notEmpty()->noWhitespace()->alpha()->assert($entries);
             return true;
         }
         catch(NestedValidationExceptionInterface $e) {
