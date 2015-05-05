@@ -26,10 +26,10 @@ abstract class Validator
 
     /**
      * Validates the entry provided.
-     * @param $entry
+     * @param $entries
      * @return boolean
      */
-    abstract public function validate($entry);
+    abstract public function validate($entries);
 
     /**
      * Sets the error message.
@@ -42,7 +42,7 @@ abstract class Validator
 
     /**
      * Returns the error message.
-     * @return mixed
+     * @return array
      */
     public function getErrors()
     {
