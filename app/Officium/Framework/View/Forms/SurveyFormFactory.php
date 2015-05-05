@@ -13,5 +13,8 @@ class SurveyFormFactory
         if (IncomingSurveyState::isGeneralAcademicState()) {
             return new GeneralAcademicSurveyForm();
         }
+        else if (IncomingSurveyState::isAcademicObligationState()) {
+            return new AcademicObligationForm();
+        }
     }
 }
