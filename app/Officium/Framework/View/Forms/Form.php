@@ -154,9 +154,12 @@ abstract class Form implements FormInterface
         $filtered = [];
         foreach ($keyFilters as $key) {
             if (isset($rawEntries[$key])) {
-                $stripCharacterRange = FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH;
-                $sanitizedEntry = filter_var(trim($rawEntries[$key]), FILTER_SANITIZE_STRING, $stripCharacterRange);
-              $filtered[$key] = htmlspecialchars($sanitizedEntry);
+                if (is_array($rawEntries[$key])) {
+                    $filtered[$key] = $this->sanitizeArray($rawEntries[$key]);
+                }
+                else {
+                    $filtered[$key] = $this->sanitizeString($rawEntries[$key]);
+                }
             }
             else {
                 $filtered[$key] = '';
@@ -169,6 +172,30 @@ abstract class Form implements FormInterface
     /* ------------------------------------------------------------------------------------------
      *                                     Private
      * ------------------------------------------------------------------------------------------ */
+
+    /**
+     * @param $entry
+     * @return string
+     */
+    private function sanitizeString($entry)
+    {
+        $stripCharacterRange = FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH;
+        return htmlspecialchars(filter_var(trim($entry), FILTER_SANITIZE_STRING, $stripCharacterRange));
+    }
+
+    /**
+     * @param array $entries
+     * @return array
+     */
+    private function sanitizeArray(array $entries)
+    {
+        $sanitized = [];
+        foreach ($entries as $entry) {
+            $sanitized[] = $this->sanitizeString($entry);
+        }
+
+        return $sanitized;
+    }
 
     /**
      * Validates the form for syntactic errors.
