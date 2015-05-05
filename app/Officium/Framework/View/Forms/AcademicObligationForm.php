@@ -2,27 +2,29 @@
 
 namespace Officium\Framework\View\Forms;
 
-
+use Officium\Experiment\IncomingSurveyState;
+use Officium\Framework\Validators\ArrayValidator;
+use Officium\Framework\Validators\DateTimeValidator;
+use Officium\Framework\Validators\IntegerValidator;
 use Officium\Framework\Models\SessionStorable;
 
 class AcademicObligationForm extends Form implements SessionStorable
 {
     private static $HOURS_COURSE_WORK = 'hours_course_work';
 
-    private static $MINOR_START_DATE = 'minor_state_date';
-    private static $MINOR_START_TIME = 'minor_state_time';
-    private static $MINOR_END_DATE = 'minor_end_date';
-    private static $MINOR_END_TIME = 'minor_end_time';
+    private static $NUM_MINOR = 'num_minor';
+    private static $MINOR_DATE_TIME = 'minor_date_time';
 
-    private static $MAJOR_START_DATE = 'major_state_date';
-    private static $MAJOR_START_TIME = 'major_state_time';
-    private static $MAJOR_END_DATE = 'major_end_date';
-    private static $MAJOR_END_TIME = 'major_end_time';
+    private static $NUM_MAJOR = 'num_major';
+    private static $MAJOR_DATE_TIME = 'major_date_time';
 
-    private static $EXAM_START_DATE = 'exam_state_date';
-    private static $EXAM_START_TIME = 'exam_state_time';
-    private static $EXAM_END_DATE = 'exam_end_date';
-    private static $EXAM_END_TIME = 'exam_end_time';
+    private static $NUM_EXAM = 'num_exam';
+    private static $EXAM_DATE_TIME = 'exam_date_time';
+
+    public function __construct($entries = [])
+    {
+        parent::__construct(IncomingSurveyState::ACADEMIC_OBLIGATION, $entries, $this->getFormValidators());
+    }
 
     /**
      * Returns the form's validators
@@ -31,7 +33,16 @@ class AcademicObligationForm extends Form implements SessionStorable
      */
     protected function getFormValidators()
     {
-        // TODO: Implement getFormValidators() method.
+        $validators = [];
+        $validators[self::$HOURS_COURSE_WORK] = new IntegerValidator();
+        $validators[self::$NUM_MINOR] = new IntegerValidator();
+        $validators[self::$NUM_MAJOR] = new IntegerValidator();
+        $validators[self::$NUM_EXAM] = new IntegerValidator();
+        $validators[self::$MINOR_DATE_TIME] = new ArrayValidator(new DateTimeValidator());
+        $validators[self::$MAJOR_DATE_TIME] = new ArrayValidator(new DateTimeValidator());
+        $validators[self::$EXAM_DATE_TIME] = new ArrayValidator(new DateTimeValidator());
+
+        return $validators;
     }
 
     /**
