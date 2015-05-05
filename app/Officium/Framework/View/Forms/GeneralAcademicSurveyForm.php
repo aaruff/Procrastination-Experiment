@@ -3,6 +3,7 @@
 namespace Officium\Framework\View\Forms;
 
 
+use Officium\Experiment\IncomingSurveyState;
 use Officium\Framework\Models\SessionStorable;
 use Officium\Framework\Validators\AlphabeticalValidator;
 use Officium\Framework\Validators\FloatValidator;
@@ -16,11 +17,9 @@ class GeneralAcademicSurveyForm extends Form implements SessionStorable
     private static $NUMBER_COURSES = 'number_courses';
     private static $NUMBER_CLUBS = 'number_clubs';
 
-    private static $FORM_TYPE = 'general_academic';
-
     public function __construct($entries = [])
     {
-        parent::__construct(self::$FORM_TYPE, $entries, $this->getFormValidators());
+        parent::__construct(IncomingSurveyState::GENERAL, $entries, $this->getFormValidators());
     }
 
     /* ------------------------------------------------------------------------------------------
