@@ -5,7 +5,7 @@
         <div class="jumbotron">
             <form action="{{ currentUrl() }}" method="post">
 
-                {# Hours of Course Work #}
+                {# Total Assignment Hours ---------------------------------------------------------------------------- #}
                 <div class="form-group">
                     <label>How many hours between [x] and [y] do you expect to spend on course work</label>
                     <input type="text" class="form-control" name="hours_course_work" value="{{ flash.entries.hours_course_work }}"/>
@@ -27,7 +27,8 @@
                         <label>Over the course of the next week how many of each of the following do you have:</label>
                     </div>
 
-                    {# Number of Minor Assignments #}
+                    {# Minor Assignments ----------------------------------------------------------------------------- #}
+                    {# Number #}
                     <div class="form-group">
                         <label for="ma">Number of Minor Assignments</label>
                         <input type="text" class="form-control" id="ma" name="num_minor" value="{{ flash.entries.num_minor }}" />
@@ -42,18 +43,23 @@
                         {% endif %}
                     </div>
 
-                    {# Static: Minor Assignment Date and Time #}
+                    {# Static: Date and Time #}
                     <div class="form-group">
-                        <label>Their Deadlines</label>
+                        <label>Minor Assignment Deadlines</label>
                         <div class="form-inline">
                             <div class="input-group date col-md-3">
                                 <input type="text" class="form-control minor_date_time" placeholder="mm/dd/yyyy hh:mm am/pm" name="minor_date_time[0]" value="{{ flash.entries.minor_date_time.0 }}" />
                             </div>
                             <button class="form-control btn btn-info add-btn fa fa-plus" type="button" id="minor"></button>
+                            {% if flash.errors.minor_date_time.0 %}
+                                {% for error in flash.errors.minor_date_time.0 %}
+                                    <span class="alert alert-danger">{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
 
-                    {# Dynamic: Minor Assignment Date and Time #}
+                    {# Dynamic: Date and Time #}
                     <div id="minor_collection">
                         {% if flash.entries.minor_date_time %}
                             {% for entry in flash.entries.minor_date_time %}
@@ -63,17 +69,24 @@
                                             <input type="text" class="form-control minor_date_time" placeholder="mm/dd/yyyy hh:mm am/pm" name="minor_date_time[{{ loop.index }}]" value = "{{ entry }}" />
                                         </div>
                                         <button class="form-control btn btn-danger fa fa-minus remove-item" type="button"></button>
+                                        {% if flash.errors.minor_date_time[loop.index] %}
+                                            {% for error in flash.errors.minor_date_time[loop.index] %}
+                                                <span class="alert alert-danger">{{ error }}</span>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
                     </div>
+                    {# ----------------------------------------------------------------------------------------------- #}
 
 
-                    {# Number of Major Assignments #}
+                    {# Major Assignments ----------------------------------------------------------------------------- #}
+                    {# Number #}
                     <div class="form-group">
                         <label for="nma">Number of Major Assignments or Term Papers</label>
-                        <input type="text" class="form-control" id="nma" name="num_major" />
+                        <input type="text" class="form-control" id="nma" name="num_major" value="{{ flash.entries.num_major }}" />
                         {% if flash.errors.num_major %}
                             <div class="alert alert-danger">
                                 <ul>
@@ -85,18 +98,23 @@
                         {% endif %}
                     </div>
 
-                    {# Static: Major Assignment Date and Time #}
+                    {# Static: Date and Time #}
                     <div id="major-group" class="form-group">
-                        <label for="mdt">Their Deadlines</label>
+                        <label for="mdt">Major Assignment Deadlines</label>
                         <div class="form-inline">
                             <div class="input-group date col-md-3">
-                                <input id="mdt" type="text" class="form-control major_date_time" placeholder="mm/dd/yyyy hh:mm am/pm" name="major_date_time[0]" />
+                                <input id="mdt" type="text" class="form-control major_date_time" placeholder="mm/dd/yyyy hh:mm am/pm" name="major_date_time[0]" value="{{ flash.entries.major_date_time.0 }}" />
                             </div>
                             <button class="form-control btn btn-info add-btn fa fa-plus" type="button" id="major"></button>
+                            {% if flash.errors.major_date_time.0 %}
+                                {% for error in flash.errors.major_date_time.0 %}
+                                    <span class="alert alert-danger">{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
 
-                    {# Dyanic: Major Assignment Date and Time #}
+                    {# Dyanic: Date and Time #}
                     <div id="major_collection">
                         {% if flash.entries.major_date_time %}
                             {% for entry in flash.entries.major_date_time %}
@@ -106,16 +124,23 @@
                                             <input type="text" class="form-control major_date_time" placeholder="mm/dd/yyyy hh:mm am/pm" name="major_date_time[{{ loop.index }}]" value = "{{ entry }}" />
                                         </div>
                                         <button class="form-control btn btn-danger fa fa-minus remove-item" type="button"></button>
+                                        {% if flash.errors.major_date_time[loop.index] %}
+                                            {% for error in flash.errors.major_date_time[loop.index] %}
+                                                <span class="alert alert-danger">{{ error }}</span>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
                     </div>
+                    {# ----------------------------------------------------------------------------------------------- #}
 
-                    {# Number of Exams #}
+                    {# Exams ----------------------------------------------------------------------------------------- #}
+                    {# Number #}
                     <div class="form-group">
                         <label for="ne">Exams</label>
-                        <input type="text" class="form-control" id="ne" name="num_exam" />
+                        <input type="text" class="form-control" id="ne" name="num_exam" value="{{ flash.entries.num_exam }}" />
                         {% if flash.errors.num_exam %}
                             <div class="alert alert-danger">
                                 <ul>
@@ -127,24 +152,31 @@
                         {% endif %}
                     </div>
 
-                    {# Static: Exam Date and Time #}
+                    {# Static: Date and Time #}
                     <div id="major-group" class="form-group">
-                        <label for="edt">Their Deadlines</label>
+                        <label for="edt">Exam Deadlines</label>
 
                         <div class="form-inline">
                             <div class="input-group date col-md-3">
-                                <input type="text" id="edt" class="form-control exam_date_time" placeholder="mm/dd/yyyy hh:mm am/pm" name="exam_date_time[0]" value="{{ flash.entries.minor_date_time.0 }}"/>
+                                <input type="text" id="edt" class="form-control exam_date_time" placeholder="Date and Time" name="exam_date_time[0]" value="{{ flash.entries.exam_date_time.0 }}"/>
                             </div>
                             <button class="form-control btn btn-info add-btn fa fa-plus" type="button" id="exam"></button>
+                            {% if flash.errors.exam_date_time.0 %}
+                                {% for error in flash.errors.exam_date_time.0 %}
+                                    <span class="alert alert-danger">{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
+
+                    {# Dynamic: Date and Time #}
                     <div id="exam_collection">
                         {% if flash.entries.exam_date_time %}
                             {% for entry in flash.entries.exam_date_time %}
                                 {% if loop.index > 1 and entry is not empty %}
                                     <div class="form-group form-inline">
                                         <div class="input-group date col-md-3">
-                                            <input type="text" class="form-control exam_date_time" placeholder="mm/dd/yyyy hh:mm am/pm" name="exam_date_time[{{ loop.index }}]" value = "{{ entry }}" />
+                                            <input type="text" class="form-control exam_date_time" placeholder="Date and Time" name="exam_date_time[{{ loop.index }}]" value = "{{ entry }}" />
                                         </div>
                                         <button class="form-control btn btn-danger fa fa-minus remove-item" type="button"></button>
                                     </div>
@@ -152,6 +184,7 @@
                             {% endfor %}
                         {% endif %}
                     </div>
+                    {# ----------------------------------------------------------------------------------------------- #}
                 </fieldset>
 
                 <div class="form-group">
@@ -173,7 +206,7 @@
                 if (collectionSize <= maxCollectionSize) {
                     var collectionInputItem = '<div class="form-group form-inline">' +
                             '<div class="input-group date col-md-3">' +
-                            '<input type="text" class="form-control ' + collectionId + '_date_time" placeholder="mm/dd/yyyy hh:mm am/pm" name="' + collectionId + '_date_time['+ collectionSize + ']" />' +
+                            '<input type="text" class="form-control ' + collectionId + '_date_time" placeholder="Date and Time" name="' + collectionId + '_date_time['+ collectionSize + ']" />' +
                             '</div>' +
                             '<button class="form-control btn btn-danger fa fa-minus remove-item" type="button"></button>' +
                             '</div>';
@@ -197,9 +230,9 @@
     </script>
 
     <script>
-        $('.minor_date_time').datetimepicker();
-        $('.major_date_time').datetimepicker();
-        $('.exam_date_time').datetimepicker();
+        $('.minor_date_time').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
+        $('.major_date_time').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
+        $('.exam_date_time').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
 
     </script>
 {% endblock %}
