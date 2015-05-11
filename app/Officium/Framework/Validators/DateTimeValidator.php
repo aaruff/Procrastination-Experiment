@@ -16,11 +16,16 @@ class DateTimeValidator extends Validator
      */
     private $dateTimeFormat = 'm-d-Y h:i a';
 
+    private $required;
+
     /**
      * @param $format string
+     * @param $required boolean
      */
-    public function DateTimeValidator($format = '')
+    public function DateTimeValidator($format = '', $required = true)
     {
+        $this->required = $required;
+
         if ( ! empty($format)) {
             $this->dateTimeFormat = $format;
         }
@@ -35,6 +40,10 @@ class DateTimeValidator extends Validator
     public function validate($datetime)
     {
         $this->clearErrors();
+        if ($this->required == false && empty($datetime)) {
+            return true;
+        }
+
         try {
             v::string()->notEmpty()->date($this->dateTimeFormat)->assert($datetime);
             return true;
