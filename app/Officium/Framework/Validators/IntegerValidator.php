@@ -10,7 +10,7 @@ class IntegerValidator extends Validator
     private $min;
     private $max;
 
-    public function __construct($min = 0, $max = null)
+    public function __construct($min = 1, $max = null)
     {
         $this->min = $min;
         $this->max = $max;
@@ -24,6 +24,10 @@ class IntegerValidator extends Validator
     public function validate($entry)
     {
         $this->clearErrors();
+        if ($this->min == 0 && $entry === '0') {
+            return true;
+        }
+
         try {
             if ($this->max == null) {
                 v::notEmpty()->int()->min($this->min, true)->assert($entry);
