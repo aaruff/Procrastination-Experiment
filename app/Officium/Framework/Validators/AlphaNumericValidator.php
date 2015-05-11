@@ -7,11 +7,11 @@ use Respect\Validation\Exceptions\NestedValidationExceptionInterface;
 
 class AlphaNumericValidator extends Validator
 {
-    public function validate($entries)
+    public function validate($entry)
     {
         $this->clearErrors();
         try {
-            v::notEmpty()->noWhitespace()->alnum()->assert($entries);
+            v::notEmpty()->noWhitespace()->alnum()->assert($entry);
             return true;
         }
         catch(NestedValidationExceptionInterface $e) {
