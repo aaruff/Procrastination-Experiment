@@ -55,7 +55,6 @@ class GeneralAcademicSurveyForm extends Form implements SessionStorable
 
         $surveyId = Session::getSurveyId();
         Session::storeSurveyFormEntries($surveyId, $entries);
-
     }
 
     /* ------------------------------------------------------------------------------------------
