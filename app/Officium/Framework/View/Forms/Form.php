@@ -52,7 +52,7 @@ abstract class Form implements FormInterface
     public function __construct($type, $entries, $validators)
     {
         $this->type = $type;
-        $this->entries = $this->filterEntries($entries, array_keys($validators));
+        $this->setEntries($entries, array_keys($validators));
 
         if ( ! isset($validators[self::$SEMANTIC_VALIDATORS])) {
             $validators[self::$SEMANTIC_VALIDATORS] = [];
@@ -143,6 +143,18 @@ abstract class Form implements FormInterface
      * ------------------------------------------------------------------------------------------ */
 
     /**
+     * Sets entries after filtering them
+     *
+     * @param $entries
+     * @param str[] $filterKeys Optional filter keys
+     */
+    protected function setEntries($entries, $filterKeys = [])
+    {
+        $filters = (empty($filterKeys)) ? array_keys($this->validators) : $filterKeys;
+        $this->entries = $this->filterEntries($entries, $filters);
+    }
+
+    /**
      * Filters out valid form entries form the raw entries param
      *
      * @param $rawEntries
@@ -167,6 +179,18 @@ abstract class Form implements FormInterface
         }
 
         return $filtered;
+    }
+
+    /**
+     * Returns the specified int entry qualified by the id parameter.
+     *
+     * @param $id
+     * @return int
+     */
+    protected function getIntEntry($id)
+    {
+        $entries = $this->getEntries();
+        return intval($entries[$id]);
     }
 
     /* ------------------------------------------------------------------------------------------
@@ -225,11 +249,11 @@ abstract class Form implements FormInterface
             return true;
         }
 
-        /* @var \Officium\Framework\Validators\Validator[] $postValidators */
-        $postValidators = $this->validators[self::$SEMANTIC_VALIDATORS];
+        /* @var \Officium\Framework\Validators\Validator[] $semanticValidators */
+        $semanticValidators = $this->validators[self::$SEMANTIC_VALIDATORS];
 
         $generalErrors = [];
-        foreach ($postValidators as $key => $validator) {
+        foreach ($semanticValidators as $key => $validator) {
             if ( ! $validator->validate($this->entries)) {
                 $generalErrors[$key] = $validator->getErrors();
             }
