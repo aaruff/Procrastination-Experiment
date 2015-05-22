@@ -2,8 +2,10 @@
 namespace Officium\Framework\Controllers;
 
 use Officium\Experiment\IncomingSurveyState;
+use Officium\Framework\Maps\GameStateMap;
 use Officium\Framework\Maps\SurveyMap;
 use Officium\Framework\Models\Session;
+use Officium\Framework\View\Forms\IncomingSurveyForm;
 use Officium\Framework\View\Forms\SurveyFormFactory;
 use \Slim\Slim;
 
@@ -36,8 +38,13 @@ class SurveyController
 
         IncomingSurveyState::moveToNextSurvey();
         if (IncomingSurveyState::isSurveyComplete()) {
-            var_dump(Session::getAllSurveyFormEntries());
-            return;
+            $surveyForm = new IncomingSurveyForm(Session::getAllSurveyEntries());
+            $incomingSurvey = $surveyForm->getIncomingSurveyModel();
+            $incomingSurvey->save();
+
+            $subject = Session::getSubject();
+            $subject->setState(GameStateMap::$DEADLINE_STATE);
+            $subject->save();
         }
 
         $app->redirect(SurveyMap::toUri());
