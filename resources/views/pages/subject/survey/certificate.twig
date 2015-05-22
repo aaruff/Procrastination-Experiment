@@ -1,12 +1,14 @@
-{% extends 'pages/subject/master.twig' %}
+{% extends 'pages/subject/survey/form.twig' %}
 
-{% block body %}
-    <div class="container">
-        <div class="jumbotron">
-
+{% block formbody %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Certificate
+        </div>
+        <div class="panel-body">
             <form action="{{ currentUrl() }}" method="post">
                 <div class="form-group">
-                    <label>Suppose that you win 10 certificates, each of which can be used (once) to receive a
+                    <p>Suppose that you win 10 certificates, each of which can be used (once) to receive a
                     dream restaurant night. On each such night, you and a companion will get the best table
                     and an unlimited budget for food and drink at a restaurant of your choosing.
                     There will be no cost to you: all payments including gratuities come as part of the prize.
@@ -15,47 +17,71 @@
                     However if they are not used up within this two year period, any that remain are valueless.
                     The questions below concern how many of the certificates you would ideally like to use in each year,
                     how tempted you would be to depart from this ideal, and what you expect you would do in practice:
-                    </label>
+                    </p>
                 </div>
 
                 <div class="form-group">
                     <label>
                         From your current perspective, how many of the ten certificates would you ideally like to use in year 1?
                     </label>
-                    <input type="text" class="form-control" name="certificates_year" placeholder="Certificate Count" value="" />
+                    <input type="text" class="form-control" name="cert_per_year" placeholder="Certificate Count" value="{{ flash.entries.cert_per_year }}" />
+                    {% if flash.errors.cert_per_year %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.cert_per_year %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 </div>
 
 
                 <div class="form-group">
-                    <label>
+                    <span>
                         Some people might be tempted to depart from their ideal allocation in the above question.
-                    </label>
-                    <label>1) I would have no temptation in either direction.</label>
-                    <label>2) I would be somewhat/strongly tempted to use more certificates in the first year than would be ideal.</label>
-                    <label>3) I would be strongly/somewhat tempted to keep more certificates for use in the second year than would be ideal.</label>
+                        <ol>
+                            <li>I would have no temptation in either direction.</li>
+                            <li>I would be somewhat/strongly tempted to use more certificates in the first year than would be ideal.</li>
+                            <li>I would be strongly/somewhat tempted to keep more certificates for use in the second year than would be ideal.</li>
+                        </ol>
+                    </span>
                 </div>
                 <div class="form-group">
                     <label>Which of the following best describes you:</label>
-                </div>
-                <div class="form-group">
                     <select name="temptation" class="form-control">
                         <option value="" >Selection Required</option>
-                        <option value="1">1</option>
-                        <option value="2" >2</option>
-                        <option value="3" >3</option>
+                        <option value="1" {% if flash.entries.temptation == 1 %} selected="selected" {% endif %}>1</option>
+                        <option value="2" {% if flash.entries.temptation == 2 %} selected="selected" {% endif %}>2</option>
+                        <option value="3" {% if flash.entries.temptation == 3 %} selected="selected" {% endif %}>3</option>
                     </select>
-
+                    {% if flash.errors.temptation %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.temptation %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
                     <label>
                         If you were to give in to your temptation,
                         how many certificates do you think you would use in year 1 as opposed to year 2?
-                    </label>
-                    <label>
                         If you answered Yes to Question 10(1), please enter the response given in Question 10.
                     </label>
-                    <input type="text" class="form-control" name="temptation_certificates_year" placeholder="Certificate Count" value="" />
+                    <input type="text" class="form-control" name="temp_cert_per_year" placeholder="Certificate Count" value="{{ flash.entries.temp_cert_per_year }}" />
+                    {% if flash.errors.temp_cert_per_year %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.temp_cert_per_year %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
@@ -63,13 +89,22 @@
                         Based on your most accurate forecast of how you think you would actually behave,
                         how many of the nights would you end up using in year 1?
                     </label>
-                    <input type="text" class="form-control" name="nights_per_year" placeholder="Certificate Count" value="" />
+                    <input type="text" class="form-control" name="nights_per_year" placeholder="Certificate Count" value="{{ flash.entries.nights_per_year }}" />
+                    {% if flash.errors.nights_per_year %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.nights_per_year %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Next</button>
                 </div>
             </form>
-        </div>
+        </div>{# panel body #}
     </div>
 {% endblock %}
