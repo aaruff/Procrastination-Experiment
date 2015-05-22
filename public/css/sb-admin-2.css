@@ -5,7 +5,7 @@
  */
 
 body {
-    background-color: #f8f8f8;
+    background-color: #ffffff;
 }
 
 #wrapper {
@@ -15,6 +15,13 @@ body {
 #page-wrapper {
     padding: 0 15px;
     min-height: 568px;
+    background-color: #e7e7e7;
+}
+
+#form-wrapper {
+    padding: 0 15px;
+    margin: 0;
+    border-left: 1px solid #e7e7e7;
     background-color: #fff;
 }
 
