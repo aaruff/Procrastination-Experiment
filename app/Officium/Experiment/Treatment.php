@@ -8,12 +8,11 @@ class Treatment extends Model
 {
     public $timestamps = false;
     protected $table = 'treatments';
-    protected $fillable = ['session_id'];
 
     /**
      * @var string
      */
-    public static $THREE_TASK_TIME_LIMIT_PENALTY_ADJUSTABLE_DEADLINE = 'task:3_timeLimit_penalty_adjustableDeadline';
+    public static $THREE_TASK_TIME_LIMIT_PENALTY_ADJUSTABLE_DEADLINE = 1;
 
     /* ------------------------------------------------------------------------------------------
      *                                      Public
@@ -25,6 +24,14 @@ class Treatment extends Model
     public function setSessionId($sessionId)
     {
         $this->session_id = $sessionId;
+    }
+
+    /**
+     * @param int $type
+     */
+    public function setTreatmentType($type)
+    {
+        $this->type = $type;
     }
 
     /**
