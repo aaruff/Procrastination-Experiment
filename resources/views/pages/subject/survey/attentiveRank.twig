@@ -1,0 +1,188 @@
+{% extends 'pages/subject/survey/form.twig' %}
+
+{% block formbody %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Rank Statements
+    </div>
+    <div class="panel-body">
+        <form action="{{ currentUrl() }}" method="post">
+            {# Employment #}
+            <fieldset>
+                <div class="form-group">
+                    <h4>On a scale from 1 to 5 with 1 being "Hardly at all" and 5 being "very much so", answer the following:</h4>
+                </div>
+
+                <div class="form-group">
+                    <label for="c">How conscientious are you?</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" name="con" id="c" value="1" {% if flash.entries.con == 1 %} checked="checked" {% endif %}/> <label>1</label>
+                    <input type="radio" name="con" id="c" value="2" {% if flash.entries.con == 2 %} checked="checked" {% endif %}/> <label>2</label>
+                    <input type="radio" name="con" id="c" value="3" {% if flash.entries.con == 3 %} checked="checked" {% endif %}/> <label>3</label>
+                    <input type="radio" name="con" id="c" value="4" {% if flash.entries.con == 4 %} checked="checked" {% endif %}/> <label>4</label>
+                    <input type="radio" name="con" id="c" value="5" {% if flash.entries.con == 5 %} checked="checked" {% endif %}/> <label>5</label>
+                    {% if flash.errors.con %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.con %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="a">How often are you late turning in assignments?</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" name="late" id="a" value="1" {% if flash.entries.late == 1 %} checked="checked" {% endif %}/> <label>1</label>
+                    <input type="radio" name="late" id="a" value="2" {% if flash.entries.late == 2 %} checked="checked" {% endif %}/> <label>2</label>
+                    <input type="radio" name="late" id="a" value="3" {% if flash.entries.late == 3 %} checked="checked" {% endif %}/> <label>3</label>
+                    <input type="radio" name="late" id="a" value="4" {% if flash.entries.late == 4 %} checked="checked" {% endif %}/> <label>4</label>
+                    <input type="radio" name="late" id="a" value="5" {% if flash.entries.late == 5 %} checked="checked" {% endif %}/> <label>5</label>
+                    </label>
+                    {% if flash.errors.late %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.late %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="t">How often are you on time for appointments?</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" name="tar" id="t" value="1" {% if flash.entries.tar == 1 %} checked="checked" {% endif %}/> <label>1</label>
+                    <input type="radio" name="tar" id="t" value="2" {% if flash.entries.tar == 2 %} checked="checked" {% endif %}/> <label>2</label>
+                    <input type="radio" name="tar" id="t" value="3" {% if flash.entries.tar == 3 %} checked="checked" {% endif %}/> <label>3</label>
+                    <input type="radio" name="tar" id="t" value="4" {% if flash.entries.tar == 4 %} checked="checked" {% endif %}/> <label>4</label>
+                    <input type="radio" name="tar" id="t" value="5" {% if flash.entries.tar == 5 %} checked="checked" {% endif %}/> <label>5</label>
+                    {% if flash.errors.tar %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.tar %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <h4>On a scale from 1 to 5 with 1 being "Strongly disagree" and 5 being "Strongly agree", rate how closely you identify with the following statements:</h4>
+                </div>
+
+                <div class="form-group">
+                    <label for="e">Unexpected things which require my time and attention always seem to occur.</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" name="dist" id="e" value="1" {% if flash.entries.dist == 1 %} checked="checked" {% endif %}/> <label>1</label>
+                    <input type="radio" name="dist" id="e" value="2" {% if flash.entries.dist == 2 %} checked="checked" {% endif %}/> <label>2</label>
+                    <input type="radio" name="dist" id="e" value="3" {% if flash.entries.dist == 3 %} checked="checked" {% endif %}/> <label>3</label>
+                    <input type="radio" name="dist" id="e" value="4" {% if flash.entries.dist == 4 %} checked="checked" {% endif %}/> <label>4</label>
+                    <input type="radio" name="dist" id="e" value="5" {% if flash.entries.dist == 5 %} checked="checked" {% endif %}/> <label>5</label>
+                    {% if flash.errors.dist %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.dist %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="d">Sometimes I am not as dependable or reliable as I should be.</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" name="dep" id="d" value="1" {% if flash.entries.dep == 1 %} checked="checked" {% endif %}/> <label>1</label>
+                    <input type="radio" name="dep" id="d" value="2" {% if flash.entries.dep == 2 %} checked="checked" {% endif %}/> <label>2</label>
+                    <input type="radio" name="dep" id="d" value="3" {% if flash.entries.dep == 3 %} checked="checked" {% endif %}/> <label>3</label>
+                    <input type="radio" name="dep" id="d" value="4" {% if flash.entries.dep == 4 %} checked="checked" {% endif %}/> <label>4</label>
+                    <input type="radio" name="dep" id="d" value="5" {% if flash.entries.dep == 5 %} checked="checked" {% endif %}/> <label>5</label>
+                    {% if flash.errors.dep %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.dep %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="f">I follow a schedule.</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" name="follow" id="f" value="1" {% if flash.entries.follow == 1 %} checked="checked" {% endif %}/> <label>1</label>
+                    <input type="radio" name="follow" id="f" value="2" {% if flash.entries.follow == 2 %} checked="checked" {% endif %}/> <label>2</label>
+                    <input type="radio" name="follow" id="f" value="3" {% if flash.entries.follow == 3 %} checked="checked" {% endif %}/> <label>3</label>
+                    <input type="radio" name="follow" id="f" value="4" {% if flash.entries.follow == 4 %} checked="checked" {% endif %}/> <label>4</label>
+                    <input type="radio" name="follow" id="f" value="5" {% if flash.entries.follow == 5 %} checked="checked" {% endif %}/> <label>5</label>
+                    {% if flash.errors.follow %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.follow %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="o">I never seem able to get organized.</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" name="org" id="o" value="1" {% if flash.entries.org == 1 %} checked="checked" {% endif %}/> <label>1</label>
+                    <input type="radio" name="org" id="o" value="2" {% if flash.entries.org == 2 %} checked="checked" {% endif %}/> <label>2</label>
+                    <input type="radio" name="org" id="o" value="3" {% if flash.entries.org == 3 %} checked="checked" {% endif %}/> <label>3</label>
+                    <input type="radio" name="org" id="o" value="4" {% if flash.entries.org == 4 %} checked="checked" {% endif %}/> <label>4</label>
+                    <input type="radio" name="org" id="o" value="5" {% if flash.entries.org == 5 %} checked="checked" {% endif %}/> <label>5</label>
+                    {% if flash.errors.org %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.org %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="at">I always pay attention to details.</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" name="att" id="at" value="1" {% if flash.entries.att == 1 %} checked="checked" {% endif %}/> <label>1</label>
+                    <input type="radio" name="att" id="at" value="2" {% if flash.entries.att == 2 %} checked="checked" {% endif %}/> <label>2</label>
+                    <input type="radio" name="att" id="at" value="3" {% if flash.entries.att == 3 %} checked="checked" {% endif %}/> <label>3</label>
+                    <input type="radio" name="att" id="at" value="4" {% if flash.entries.att == 4 %} checked="checked" {% endif %}/> <label>4</label>
+                    <input type="radio" name="att" id="at" value="5" {% if flash.entries.att == 5 %} checked="checked" {% endif %}/> <label>5</label>
+                    {% if flash.errors.att %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.att %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Next</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
