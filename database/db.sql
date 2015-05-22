@@ -27,6 +27,7 @@ create table subjects(
 drop table if exists treatments;
 create table treatments(
   id		integer auto_increment primary key,
+  type integer not null,
   session_id integer not null
 ) ENGINE=InnoDB;
 
@@ -72,8 +73,12 @@ create table task_submission_logs(
 #----------------------------------------
 # Incoming Survey Tables
 #----------------------------------------
-drop table if exists incoming_survey_answers;
-create table incoming_survey_answers(
+drop table if exists incoming_survey;
+create table incoming_survey(
+) ENGINE InnoDB;
+
+drop table if exists incoming_survey;
+create table incoming_survey(
   id					integer auto_increment primary key,
   user_id integer not null,
   major varchar(255) not null,
@@ -81,6 +86,9 @@ create table incoming_survey_answers(
   number_courses integer not null,
   number_clubs integer not null,
   hours_course_work integer not null,
+  num_major_assignments integer not null,
+  num_minor_assignments integer not null,
+  num_exams integer not null,
   employed boolean not null,
   hours_work integer default 0,
   hours_social_obligations integer default 0,
@@ -106,8 +114,8 @@ create table incoming_survey_answers(
 drop table if exists survey_datetime_intervals;
 create table survey_datetime_intervals(
   id integer auto_increment primary key,
-  user_id integer not null,
+  survey_id integer not null,
   type varchar(255) not null,
   start_datetime datetime not null,
-  end_datetime datetime not null
+  end_datetime datetime
 ) ENGINE=InnoDB;
