@@ -14,19 +14,19 @@ class ArrayValidator extends Validator
 
     /**
      * Validates the entry provided.
-     * @param $entries
+     * @param $entry
      * @return boolean
      */
-    public function validate($entries)
+    public function validate($entry)
     {
-        if ($this->required && ( ! is_array($entries) || count($entries) == 0 )) {
+        if ($this->required && ( ! is_array($entry) || count($entry) == 0 )) {
             $this->setErrors('This item is required.');
             return false;
         }
 
         $errors = [];
-        for ($i = 0; $i < count($entries); ++$i) {
-            if ( ! $this->validator->validate($entries[$i])) {
+        for ($i = 0; $i < count($entry); ++$i) {
+            if ( ! $this->validator->validate($entry[$i])) {
                 $errors[] = $this->validator->getErrors();
             }
         }
