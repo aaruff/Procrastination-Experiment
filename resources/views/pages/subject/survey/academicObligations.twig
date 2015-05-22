@@ -1,15 +1,41 @@
-{% extends 'pages/subject/master.twig' %}
+{% extends 'pages/subject/survey/form.twig' %}
 
-{% block body %}
-    <div class="container">
-        <div class="jumbotron">
-            <form action="{{ currentUrl() }}" method="post">
+{% block formbody %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Academic Obligations
+    </div>
+    <div class="panel-body">
+        <form action="{{ currentUrl() }}" method="post">
 
-                {# Total Assignment Hours ---------------------------------------------------------------------------- #}
+            {# Total Assignment Hours ---------------------------------------------------------------------------- #}
+            <div class="form-group">
+                <label>How many hours between [x] and [y] do you expect to spend on course work</label>
+                <input type="text" class="form-control" name="hours_course_work" value="{{ flash.entries.hours_course_work }}"/>
+                {% if flash.errors.hours_course_work %}
+                    <div class="alert alert-danger">
+                        <ul>
+                            {% for error in flash.errors.hours_course_work %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+
+            <fieldset>
+                <legend>Assignments and Exams</legend>
+
                 <div class="form-group">
-                    <label>How many hours between [x] and [y] do you expect to spend on course work</label>
-                    <input type="text" class="form-control" name="hours_course_work" value="{{ flash.entries.hours_course_work }}"/>
-                    {% if flash.errors.hours_course_work %}
+                    <label>Over the course of the next week how many of each of the following do you have:</label>
+                </div>
+
+                {# Minor Assignments ----------------------------------------------------------------------------- #}
+                {# Number #}
+                <div class="form-group">
+                    <label for="ma">Number of Minor Assignments</label>
+                    <input type="text" class="form-control" id="ma" name="num_minor" value="{{ flash.entries.num_minor }}" />
+                    {% if flash.errors.num_minor %}
                         <div class="alert alert-danger">
                             <ul>
                                 {% for error in flash.errors.hours_course_work %}
@@ -20,220 +46,197 @@
                     {% endif %}
                 </div>
 
-                <fieldset>
-                    <legend>Assignments and Exams</legend>
-
-                    <div class="form-group">
-                        <label>Over the course of the next week how many of each of the following do you have:</label>
-                    </div>
-
-                    {# Minor Assignments ----------------------------------------------------------------------------- #}
-                    {# Number #}
-                    <div class="form-group">
-                        <label for="ma">Number of Minor Assignments</label>
-                        <input type="text" class="form-control" id="ma" name="num_minor" value="{{ flash.entries.num_minor }}" />
-                        {% if flash.errors.num_minor %}
-                            <div class="alert alert-danger">
-                                <ul>
-                                    {% for error in flash.errors.hours_course_work %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    {# Static: Date and Time #}
-                    <div class="form-group">
-                        <label>Minor Assignment Deadlines</label>
-                        <div class="form-inline">
-                            <div class="input-group date col-md-3">
-                                <input type="text" class="form-control minor_date_time" placeholder="mm/dd/yyyy hh:mm am/pm" name="minor_date_time[0]" value="{{ flash.entries.minor_date_time.0 }}" />
-                            </div>
-                            <button class="form-control btn btn-info add-btn fa fa-plus" type="button" id="minor"></button>
-                            {% if flash.errors.minor_date_time.0 %}
-                                {% for error in flash.errors.minor_date_time.0 %}
-                                    <span class="alert alert-danger">{{ error }}</span>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    {# Dynamic: Date and Time #}
-                    <div id="minor_collection">
-                        {% if flash.entries.minor_date_time %}
-                            {% for entry in flash.entries.minor_date_time %}
-                                {% if loop.index > 1 and entry is not empty %}
-                                    <div class="form-group form-inline">
-                                        <div class="input-group date col-md-3">
-                                            <input type="text" class="form-control minor_date_time" placeholder="mm/dd/yyyy hh:mm am/pm" name="minor_date_time[{{ loop.index }}]" value = "{{ entry }}" />
-                                        </div>
-                                        <button class="form-control btn btn-danger fa fa-minus remove-item" type="button"></button>
-                                        {% if flash.errors.minor_date_time[loop.index] %}
-                                            {% for error in flash.errors.minor_date_time[loop.index] %}
-                                                <span class="alert alert-danger">{{ error }}</span>
-                                            {% endfor %}
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                    {# ----------------------------------------------------------------------------------------------- #}
-
-
-                    {# Major Assignments ----------------------------------------------------------------------------- #}
-                    {# Number #}
-                    <div class="form-group">
-                        <label for="nma">Number of Major Assignments or Term Papers</label>
-                        <input type="text" class="form-control" id="nma" name="num_major" value="{{ flash.entries.num_major }}" />
-                        {% if flash.errors.num_major %}
-                            <div class="alert alert-danger">
-                                <ul>
-                                    {% for error in flash.errors.num_major %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    {# Static: Date and Time #}
-                    <div id="major-group" class="form-group">
-                        <label for="mdt">Major Assignment Deadlines</label>
-                        <div class="form-inline">
-                            <div class="input-group date col-md-3">
-                                <input id="mdt" type="text" class="form-control major_date_time" placeholder="mm/dd/yyyy hh:mm am/pm" name="major_date_time[0]" value="{{ flash.entries.major_date_time.0 }}" />
-                            </div>
-                            <button class="form-control btn btn-info add-btn fa fa-plus" type="button" id="major"></button>
-                            {% if flash.errors.major_date_time.0 %}
-                                {% for error in flash.errors.major_date_time.0 %}
-                                    <span class="alert alert-danger">{{ error }}</span>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    {# Dyanic: Date and Time #}
-                    <div id="major_collection">
-                        {% if flash.entries.major_date_time %}
-                            {% for entry in flash.entries.major_date_time %}
-                                {% if loop.index > 1 and entry is not empty %}
-                                    <div class="form-group form-inline">
-                                        <div class="input-group date col-md-3">
-                                            <input type="text" class="form-control major_date_time" placeholder="mm/dd/yyyy hh:mm am/pm" name="major_date_time[{{ loop.index }}]" value = "{{ entry }}" />
-                                        </div>
-                                        <button class="form-control btn btn-danger fa fa-minus remove-item" type="button"></button>
-                                        {% if flash.errors.major_date_time[loop.index] %}
-                                            {% for error in flash.errors.major_date_time[loop.index] %}
-                                                <span class="alert alert-danger">{{ error }}</span>
-                                            {% endfor %}
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                    {# ----------------------------------------------------------------------------------------------- #}
-
-                    {# Exams ----------------------------------------------------------------------------------------- #}
-                    {# Number #}
-                    <div class="form-group">
-                        <label for="ne">Exams</label>
-                        <input type="text" class="form-control" id="ne" name="num_exam" value="{{ flash.entries.num_exam }}" />
-                        {% if flash.errors.num_exam %}
-                            <div class="alert alert-danger">
-                                <ul>
-                                    {% for error in flash.errors.num_exam %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    {# Static: Date and Time #}
-                    <div id="major-group" class="form-group">
-                        <label for="edt">Exam Deadlines</label>
-
-                        <div class="form-inline">
-                            <div class="input-group date col-md-3">
-                                <input type="text" id="edt" class="form-control exam_date_time" placeholder="Date and Time" name="exam_date_time[0]" value="{{ flash.entries.exam_date_time.0 }}"/>
-                            </div>
-                            <button class="form-control btn btn-info add-btn fa fa-plus" type="button" id="exam"></button>
-                            {% if flash.errors.exam_date_time.0 %}
-                                {% for error in flash.errors.exam_date_time.0 %}
-                                    <span class="alert alert-danger">{{ error }}</span>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    {# Dynamic: Date and Time #}
-                    <div id="exam_collection">
-                        {% if flash.entries.exam_date_time %}
-                            {% for entry in flash.entries.exam_date_time %}
-                                {% if loop.index > 1 and entry is not empty %}
-                                    <div class="form-group form-inline">
-                                        <div class="input-group date col-md-3">
-                                            <input type="text" class="form-control exam_date_time" placeholder="Date and Time" name="exam_date_time[{{ loop.index }}]" value = "{{ entry }}" />
-                                        </div>
-                                        <button class="form-control btn btn-danger fa fa-minus remove-item" type="button"></button>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                    {# ----------------------------------------------------------------------------------------------- #}
-                </fieldset>
-
+                {# Static: Date and Time #}
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">Next</button>
+                    <label>Minor Assignment Deadlines</label>
+                    <div class="form-inline">
+                        <div class="input-group date col-md-3">
+                            <input type="text" class="form-control minor_deadline" placeholder="Date and Time" name="minor_deadline[0]" value="{{ flash.entries.minor_deadline.0 }}" />
+                        </div>
+                        <button class="form-control btn btn-info add-btn fa fa-plus" type="button" id="minor"></button>
+                        {% if flash.errors.minor_deadline.0 %}
+                            {% for error in flash.errors.minor_deadline.0 %}
+                                <span class="alert alert-danger">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
-            </form>
-        </div>
 
+                {# Dynamic: Date and Time #}
+                <div id="minor_collection">
+                    {% if flash.entries.minor_deadline %}
+                        {% for entry in flash.entries.minor_deadline %}
+                            {% if loop.index > 1 and entry is not empty %}
+                                <div class="form-group form-inline">
+                                    <div class="input-group date col-md-3">
+                                        <input type="text" class="form-control minor_deadline" placeholder="Date and Time" name="minor_deadline[{{ loop.index }}]" value = "{{ entry }}" />
+                                    </div>
+                                    <button class="form-control btn btn-danger fa fa-minus remove-item" type="button"></button>
+                                    {% if flash.errors.minor_deadline[loop.index] %}
+                                        {% for error in flash.errors.minor_deadline[loop.index] %}
+                                            <span class="alert alert-danger">{{ error }}</span>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {# ----------------------------------------------------------------------------------------------- #}
+
+
+                {# Major Assignments ----------------------------------------------------------------------------- #}
+                {# Number #}
+                <div class="form-group">
+                    <label for="nma">Number of Major Assignments or Term Papers</label>
+                    <input type="text" class="form-control" id="nma" name="num_major" value="{{ flash.entries.num_major }}" />
+                    {% if flash.errors.num_major %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.num_major %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {# Static: Date and Time #}
+                <div id="major-group" class="form-group">
+                    <label for="mdt">Major Assignment Deadlines</label>
+                    <div class="form-inline">
+                        <div class="input-group date col-md-3">
+                            <input id="mdt" type="text" class="form-control major_deadline" placeholder="Date and Time" name="major_deadline[0]" value="{{ flash.entries.major_deadline.0 }}" />
+                        </div>
+                        <button class="form-control btn btn-info add-btn fa fa-plus" type="button" id="major"></button>
+                        {% if flash.errors.major_deadline.0 %}
+                            {% for error in flash.errors.major_deadline.0 %}
+                                <span class="alert alert-danger">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                {# Dyanic: Date and Time #}
+                <div id="major_collection">
+                    {% if flash.entries.major_deadline %}
+                        {% for entry in flash.entries.major_deadline %}
+                            {% if loop.index > 1 and entry is not empty %}
+                                <div class="form-group form-inline">
+                                    <div class="input-group date col-md-3">
+                                        <input type="text" class="form-control major_deadline" placeholder="Date and Time" name="major_deadline[{{ loop.index }}]" value = "{{ entry }}" />
+                                    </div>
+                                    <button class="form-control btn btn-danger fa fa-minus remove-item" type="button"></button>
+                                    {% if flash.errors.major_deadline[loop.index] %}
+                                        {% for error in flash.errors.major_deadline[loop.index] %}
+                                            <span class="alert alert-danger">{{ error }}</span>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {# ----------------------------------------------------------------------------------------------- #}
+
+                {# Exams ----------------------------------------------------------------------------------------- #}
+                {# Number #}
+                <div class="form-group">
+                    <label for="ne">Exams</label>
+                    <input type="text" class="form-control" id="ne" name="num_exam" value="{{ flash.entries.num_exam }}" />
+                    {% if flash.errors.num_exam %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.num_exam %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {# Static: Date and Time #}
+                <div id="major-group" class="form-group">
+                    <label for="edt">Exam Deadlines</label>
+
+                    <div class="form-inline">
+                        <div class="input-group date col-md-3">
+                            <input type="text" id="edt" class="form-control exam_deadline" placeholder="Date and Time" name="exam_deadline[0]" value="{{ flash.entries.exam_deadline.0 }}"/>
+                        </div>
+                        <button class="form-control btn btn-info add-btn fa fa-plus" type="button" id="exam"></button>
+                        {% if flash.errors.exam_deadline.0 %}
+                            {% for error in flash.errors.exam_deadline.0 %}
+                                <span class="alert alert-danger">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                {# Dynamic: Date and Time #}
+                <div id="exam_collection">
+                    {% if flash.entries.exam_deadline %}
+                        {% for entry in flash.entries.exam_deadline %}
+                            {% if loop.index > 1 and entry is not empty %}
+                                <div class="form-group form-inline">
+                                    <div class="input-group date col-md-3">
+                                        <input type="text" class="form-control exam_deadline" placeholder="Date and Time" name="exam_deadline[{{ loop.index }}]" value = "{{ entry }}" />
+                                    </div>
+                                    <button class="form-control btn btn-danger fa fa-minus remove-item" type="button"></button>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {# ----------------------------------------------------------------------------------------------- #}
+            </fieldset>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Next</button>
+            </div>
+        </form>
     </div>
-    <script>
-        $(document).ready(function() {
-            var maxCollectionSize = 20;
-            var collectionCounters = {'minor':1, 'major':1, 'exam':1};
-
-            $('.add-btn').click( function(event) {
-                var collectionId = event.target.id;
-                var collectionSize = collectionCounters[collectionId];
-
-                if (collectionSize <= maxCollectionSize) {
-                    var collectionInputItem = '<div class="form-group form-inline">' +
-                            '<div class="input-group date col-md-3">' +
-                            '<input type="text" class="form-control ' + collectionId + '_date_time" placeholder="Date and Time" name="' + collectionId + '_date_time['+ collectionSize + ']" />' +
-                            '</div>' +
-                            '<button class="form-control btn btn-danger fa fa-minus remove-item" type="button"></button>' +
-                            '</div>';
-
-                    $('#' + collectionId + '_collection').append(collectionInputItem);
-
-
-                    collectionCounters[collectionId] = collectionSize + 1;
-                }
-
-                $('.minor_date_time').datetimepicker();
-                $('.major_date_time').datetimepicker();
-                $('.exam_date_time').datetimepicker();
-
-            });
-
-            $(document).on('click', 'button.remove-item', function() {
-                $(this).parent('div').remove();
-            });
-        });
-    </script>
-
-    <script>
-        $('.minor_date_time').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
-        $('.major_date_time').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
-        $('.exam_date_time').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
-
-    </script>
+</div>
 {% endblock %}
 
+{% block js %}
+<script>
+    $(document).ready(function() {
+        var maxCollectionSize = 20;
+        var collectionCounters = {'minor':1, 'major':1, 'exam':1};
+
+        $('.add-btn').click( function(event) {
+            var collectionId = event.target.id;
+            var collectionSize = collectionCounters[collectionId];
+
+            if (collectionSize <= maxCollectionSize) {
+                var collectionInputItem = '<div class="form-group form-inline">' +
+                        '<div class="input-group date col-md-3">' +
+                        '<input type="text" class="form-control ' + collectionId + '_date_time" placeholder="Date and Time" name="' + collectionId + '_date_time['+ collectionSize + ']" />' +
+                        '</div>' +
+                        '<button class="form-control btn btn-danger fa fa-minus remove-item" type="button"></button>' +
+                        '</div>';
+
+                $('#' + collectionId + '_collection').append(collectionInputItem);
+
+
+                collectionCounters[collectionId] = collectionSize + 1;
+            }
+
+            $('.minor_deadline').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
+            $('.major_deadline').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
+            $('.exam_deadline').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
+
+        });
+
+        $(document).on('click', 'button.remove-item', function() {
+            $(this).parent('div').remove();
+        });
+    });
+</script>
+
+<script>
+    $('.minor_deadline').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
+    $('.major_deadline').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
+    $('.exam_deadline').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
+</script>
+{% endblock %}
