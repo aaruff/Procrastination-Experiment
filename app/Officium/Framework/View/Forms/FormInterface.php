@@ -10,7 +10,7 @@ interface FormInterface {
      * @param array $entries
      * @return boolean
      */
-    public function validate(array $entries);
+    public function validate(array $entries = []);
 
     /**
      * Returns form entries.
