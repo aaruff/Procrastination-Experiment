@@ -105,11 +105,21 @@ class Session
     }
 
     /**
+     * @param int $surveyId
      * @return array
      */
-    public static function getAllSurveyFormEntries()
+    public static function getSurveyFormEntries($surveyId)
     {
-        return self::getItem(self::$SURVEY_ID, []);
+        return $_SESSION[self::$SURVEY_ENTRIES_ID][$surveyId];
+    }
+
+    /**
+     * Survey form entries
+     * @return array
+     */
+    public static function getAllSurveyEntries()
+    {
+        return $_SESSION[self::$SURVEY_ENTRIES_ID];
     }
 
     /* ------------------------------------------------------------------------------------------
