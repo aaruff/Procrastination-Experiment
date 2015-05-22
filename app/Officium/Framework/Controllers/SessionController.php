@@ -2,7 +2,7 @@
 
 namespace Officium\Framework\Controllers;
 
-use Officium\Framework\View\Forms\SessionForm;
+use Officium\Framework\View\Forms\ThreeTaskPenaltyTreatmentForm;
 use Officium\Framework\Maps\DashboardMap;
 use Officium\Framework\Maps\SessionMap;
 use \Slim\Slim;
@@ -25,7 +25,7 @@ class SessionController
     {
         $app = Slim::getInstance();
 
-        $sessionForm = new SessionForm($app->request->post());
+        $sessionForm = new ThreeTaskPenaltyTreatmentForm($app->request->post());
         if ($sessionForm->validate()) {
             $sessionForm->storeSession();
             $responseUri = DashboardMap::toUri();
