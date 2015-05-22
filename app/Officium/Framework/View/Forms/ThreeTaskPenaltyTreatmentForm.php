@@ -12,7 +12,7 @@ use Officium\Framework\Validators\FloatValidator;
 use Officium\Framework\Validators\DateTimeValidator;
 use Officium\Experiment\Treatment;
 
-class SessionForm extends Form
+class ThreeTaskPenaltyTreatmentForm extends Form
 {
     private static $DATE_TIME_FORMAT = 'm-d-Y g:i a';
 
@@ -153,6 +153,7 @@ class SessionForm extends Form
     {
         $treatment = new Treatment();
         $treatment->setSessionId($session->getId());
+        $treatment->setTreatmentType(self::$FORM_TYPE_KEY);
         $treatment->save();
         return $treatment;
     }
