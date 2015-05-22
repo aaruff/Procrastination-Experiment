@@ -1,8 +1,11 @@
-{% extends 'pages/subject/master.twig' %}
+{% extends 'pages/subject/survey/form.twig' %}
 
-{% block body %}
-<div class="container">
-    <div class="jumbotron">
+{% block formbody %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        General
+    </div>
+    <div class="panel-body">
         <form action="{{ currentUrl() }}" method="post">
             <input type="hidden" name="form_type" value="general_academic" />
             <div class="form-group">
