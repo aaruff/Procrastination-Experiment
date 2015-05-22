@@ -21,7 +21,9 @@ class SurveyMap extends ResourceMap
         $templates = [
             IncomingSurveyState::GENERAL=>'academic.twig',
             IncomingSurveyState::ACADEMIC_OBLIGATION=>'academicObligations.twig',
-            IncomingSurveyState::EXTERNAL_OBLIGATION=>'externalObligations.twig'
+            IncomingSurveyState::EXTERNAL_OBLIGATION=>'externalObligations.twig',
+            IncomingSurveyState::ATTENTIVE_RANK=>'attentiveRank.twig',
+            IncomingSurveyState::CERTIFICATE=>'certificate.twig'
         ];
 
         return '/pages/subject/survey/' . $templates[Session::getSurveyId()];
