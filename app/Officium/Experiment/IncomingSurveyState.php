@@ -9,6 +9,8 @@ abstract class IncomingSurveyState
     const GENERAL = 0;
     const ACADEMIC_OBLIGATION = 1;
     const EXTERNAL_OBLIGATION = 2;
+    const ATTENTIVE_RANK = 3;
+    const CERTIFICATE = 4;
     const COMPLETED = -1;
 
     /**
@@ -30,6 +32,14 @@ abstract class IncomingSurveyState
     /**
      * @return bool
      */
+    public static function isAttentiveRankState()
+    {
+        return Session::getSurveyId() == self::ATTENTIVE_RANK;
+    }
+
+    /**
+     * @return bool
+     */
     public static function isExternalObligationState()
     {
         return Session::getSurveyId() == self::EXTERNAL_OBLIGATION;
@@ -38,24 +48,17 @@ abstract class IncomingSurveyState
     /**
      * @return bool
      */
-    public static function isSurveyComplete()
+    public static function isCertificateState()
     {
-        return Session::getSurveyId() > self::EXTERNAL_OBLIGATION;
+        return Session::getSurveyId() == self::CERTIFICATE;
     }
 
     /**
-     * Returns the next state ID.
-     *
-     * @param $id
-     * @return int
+     * @return bool
      */
-    public static function getNextSurveyId($id)
+    public static function isSurveyComplete()
     {
-        if ($id >= 0 && $id < self::EXTERNAL_OBLIGATION) {
-            return $id + 1;
-        }
-
-        return self::COMPLETED;
+        return Session::getSurveyId() == self::COMPLETED;
     }
 
     /**
@@ -64,6 +67,19 @@ abstract class IncomingSurveyState
     public static function moveToNextSurvey()
     {
         $surveyId = Session::getSurveyId();
-        Session::setSurveyId($surveyId + 1);
+        if ($surveyId >= 0 && $surveyId < self::CERTIFICATE) {
+            Session::setSurveyId($surveyId + 1);
+        }
+        else {
+            Session::setSurveyId(self::COMPLETED);
+        }
+    }
+
+    /**
+     * Resets state
+     */
+    public static function reset()
+    {
+        Session::setSurveyId(self::GENERAL);
     }
 }
