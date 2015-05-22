@@ -67,6 +67,14 @@ class Subject extends Model
         return $this->state;
     }
 
+    /**
+     * @param int $state
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+
     /* ------------------------------------------------------------------------------------------
      *                                Eloquent Relations
      * ------------------------------------------------------------------------------------------ */
