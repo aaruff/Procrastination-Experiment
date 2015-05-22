@@ -1,14 +1,15 @@
 <?php
 
-namespace Officium\Framework\View\Forms;
+namespace Officium\Framework\View\Forms\IncomingSurveys;
 
-
+use Officium\Experiment\IncomingSurvey;
 use Officium\Experiment\IncomingSurveyState;
 use Officium\Framework\Models\SessionStorable;
 use Officium\Framework\Validators\AlphabeticalValidator;
 use Officium\Framework\Validators\FloatValidator;
 use Officium\Framework\Validators\IntegerValidator;
 use Officium\Framework\Models\Session;
+use Officium\Framework\View\Forms\Form;
 
 class GeneralAcademicSurveyForm extends Form implements SessionStorable
 {
@@ -34,10 +35,10 @@ class GeneralAcademicSurveyForm extends Form implements SessionStorable
     protected function getFormValidators()
     {
         $validators = [];
-        $validators[self::$MAJOR] = new AlphabeticalValidator();
+        $validators[self::$MAJOR] = new AlphabeticalValidator(0, 200);
         $validators[self::$GPA] = new FloatValidator(0, 4);
-        $validators[self::$NUMBER_COURSES] = new IntegerValidator();
-        $validators[self::$NUMBER_CLUBS] = new IntegerValidator();
+        $validators[self::$NUMBER_COURSES] = new IntegerValidator(0, 200);
+        $validators[self::$NUMBER_CLUBS] = new IntegerValidator(0, 200);
         return $validators;
     }
 
@@ -45,6 +46,9 @@ class GeneralAcademicSurveyForm extends Form implements SessionStorable
      *                                      Public
      * ------------------------------------------------------------------------------------------ */
 
+    /**
+     * Save form entries to session storage.
+     */
     public function saveToSession()
     {
         $entries = [
@@ -55,6 +59,30 @@ class GeneralAcademicSurveyForm extends Form implements SessionStorable
 
         $surveyId = Session::getSurveyId();
         Session::storeSurveyFormEntries($surveyId, $entries);
+    }
+
+    /**
+     * Retrieve form entries from session storage.
+     */
+    public function setFromSession()
+    {
+        $this->setEntries(Session::getSurveyFormEntries(IncomingSurveyState::GENERAL));
+    }
+
+    /**
+     * Sets and returns the IncomingSurvey with this forms entries.
+     *
+     * @param IncomingSurvey $survey
+     * @return IncomingSurvey
+     */
+    public function setIncomingSurveyFromEntries(IncomingSurvey $survey)
+    {
+        $survey->setMajor($this->getMajor());
+        $survey->setGPA($this->getGPA());
+        $survey->setNumberCourses($this->getNumberCourses());
+        $survey->setNumberClubs($this->getNumberClubs());
+
+        return $survey;
     }
 
     /* ------------------------------------------------------------------------------------------
