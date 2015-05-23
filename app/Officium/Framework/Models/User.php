@@ -6,12 +6,22 @@ use Officium\Experiment\Subject;
 
 class User extends Model
 {
-    public $timestamps = false;
     protected $table = 'users';
 
     private static $SUBJECT = 1;
     private static $EXPERIMENTER = 2;
 
+    /* ------------------------------------------------------------------------------------------
+     *                                Eloquent Relations
+     * ------------------------------------------------------------------------------------------ */
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function subject()
+    {
+        return $this->hasOne(get_class(new Subject()), 'user_id');
+    }
 
     /* ------------------------------------------------------------------------------------------
      *                                      Public
@@ -95,6 +105,14 @@ class User extends Model
         return $role == self::$EXPERIMENTER;
     }
 
+    /**
+     * @return \Officium\Experiment\Subject
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
 
     /**
      * @return int
@@ -110,18 +128,6 @@ class User extends Model
     public static function getExperimenterRoleNumber()
     {
         return self::$EXPERIMENTER;
-    }
-
-    /* ------------------------------------------------------------------------------------------
-     *                                Eloquent Relations
-     * ------------------------------------------------------------------------------------------ */
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function subject()
-    {
-        return $this->hasOne(get_class(new Subject()));
     }
 
     /* ------------------------------------------------------------------------------------------
