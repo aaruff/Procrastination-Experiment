@@ -11,7 +11,7 @@
             {# Employment (yes,no) ---------------------------------------------------------------------------- #}
             <div class="form-group">
                 <label>Are you presently employed?</label>
-                <select name="employed" class="form-control">
+                <select name="employed" id="workin" class="form-control">
                     <option value="">Select One</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
@@ -28,7 +28,7 @@
             </div>
 
             {# Work Obligations ---------------------------------------------------------------------------- #}
-            <fieldset>
+            <fieldset id="getinpaid">
                 <legend>Work</legend>
                 {# Work Hours #}
                 <div class="form-group">
@@ -287,6 +287,16 @@
 
         $(document).on('click', 'button.remove-item', function() {
             $(this).parent('div').remove();
+        });
+
+        $("#workin").change(function(){
+            console.log($("#workin :selected").text());
+            if($("#workin :selected").text() == "No") {
+                $("#getinpaid").fadeOut();
+            }
+            else if($("#workin :selected").text() == "Yes") {
+               $("#getinpaid").fadeIn();
+            }
         });
     });
 </script>
