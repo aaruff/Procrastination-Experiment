@@ -5,6 +5,7 @@ namespace Officium\Framework\View\Forms;
 use Officium\Experiment\Subject;
 use Officium\Experiment\Session;
 use Officium\Experiment\Task;
+use Officium\Framework\Models\Saveable;
 use Officium\Framework\Models\User;
 use Officium\Framework\Validators\CheckboxValidator;
 use Officium\Framework\Validators\IntegerValidator;
@@ -12,7 +13,7 @@ use Officium\Framework\Validators\FloatValidator;
 use Officium\Framework\Validators\DateTimeValidator;
 use Officium\Experiment\Treatment;
 
-class ThreeTaskPenaltyTreatmentForm extends Form
+class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
 {
     private static $DATE_TIME_FORMAT = 'm-d-Y g:i a';
 
@@ -64,10 +65,12 @@ class ThreeTaskPenaltyTreatmentForm extends Form
 
     /**
      * Stores the session using the session form data.
+     * @param \Officium\Framework\Models\User $user
      */
-    public function storeSession() {
+    public function save(User $user) {
         $session = new Session();
-        $session->setSize($this->getSize());
+        $session->setSize($this->getIntEntry(self::$SIZE));
+        $session->setUserId($user->getId());
         $session->save();
 
         $this->createSessionSubjects($this->createSessionUsers($session), $session);
@@ -78,16 +81,6 @@ class ThreeTaskPenaltyTreatmentForm extends Form
      *                                   Private
      * ------------------------------------------------------------------------------------------ */
     /**
-     * Returns the session size.
-     * @return int
-     */
-    private function getSize()
-    {
-        $entries = $this->getEntries();
-        return intval($entries[self::$SIZE]);
-    }
-
-    /**
      * @return bool
      */
     private function getSecondaryDeadlineEnabled()
@@ -96,7 +89,6 @@ class ThreeTaskPenaltyTreatmentForm extends Form
         // When it's not empty and has passed validation so the option must be set to true.
         return ! empty($entries[self::$ADJUSTABLE_DEADLINE]);
     }
-
 
     /**
      * Returns the hard deadline (date and time) in that which each task should be completed by.
@@ -113,39 +105,6 @@ class ThreeTaskPenaltyTreatmentForm extends Form
     }
 
     /**
-     * Returns the payoff for all tasks.
-     *
-     * @return float
-     */
-    private function getPayoff()
-    {
-        $entries = $this->getEntries();
-        return floatval($entries[self::$PAYOFF]);
-    }
-
-    /**
-     * Returns the number of minutes allotted for the completion of each task, in minutes.
-     *
-     * @return int
-     */
-    private function getTaskTimeLimit()
-    {
-        $entries = $this->getEntries();
-        return intval($entries[self::$TASK_TIME_LIMIT]);
-    }
-
-    /**
-     * Returns the penalty rate.
-     *
-     * @return float
-     */
-    private function getPenaltyRate()
-    {
-        $entries = $this->getEntries();
-        return floatval($entries[self::$PENALTY_RATE]);
-    }
-
-    /**
      * @param Session $session
      * @return Treatment
      */
@@ -154,6 +113,7 @@ class ThreeTaskPenaltyTreatmentForm extends Form
         $treatment = new Treatment();
         $treatment->setSessionId($session->getId());
         $treatment->setTreatmentType(self::$FORM_TYPE_KEY);
+        $treatment->setTreatmentType(Treatment::$THREE_TASK_TIME_LIMIT_PENALTY_ADJUSTABLE_DEADLINE);
         $treatment->save();
         return $treatment;
     }
@@ -165,7 +125,7 @@ class ThreeTaskPenaltyTreatmentForm extends Form
     private function createSessionUsers(Session $session)
     {
         $users = [];
-        $size = $this->getSize();
+        $size = $this->getIntEntry(self::$SIZE);
         for ($i = 0; $i < $size; ++$i) {
             $user = new User();
             $user->setLogin();
@@ -201,13 +161,12 @@ class ThreeTaskPenaltyTreatmentForm extends Form
             $task = new Task();
             $task->setNumber($i + 1);
             $task->setTreatmentId($treatment->getId());
-            // TODO: Add this as a hidden input field if and when more treatment types are added.
             $task->setPenaltyRateEnabled(true);
             $task->setPrimaryDeadline($this->getDeadline($task->getNumber()));
             $task->setSecondaryDeadlineEnabled($this->getSecondaryDeadlineEnabled());
-            $task->setTimeLimit($this->getTaskTimeLimit());
-            $task->setPayoff($this->getPayoff());
-            $task->setPenaltyRate($this->getPenaltyRate());
+            $task->setTimeLimit($this->getIntEntry(self::$TASK_TIME_LIMIT));
+            $task->setPayoff($this->getFloatEntry(self::$PAYOFF));
+            $task->setPenaltyRate($this->getFloatEntry(self::$PENALTY_RATE));
             $task->save();
         }
     }
