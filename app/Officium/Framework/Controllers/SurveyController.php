@@ -2,7 +2,7 @@
 namespace Officium\Framework\Controllers;
 
 use Officium\Experiment\IncomingSurveyState;
-use Officium\Framework\Maps\GameStateMap;
+use Officium\Framework\Maps\ThreeTaskPenaltyStateMap;
 use Officium\Framework\Maps\SurveyMap;
 use Officium\Framework\Models\Session;
 use Officium\Framework\View\Forms\IncomingSurveyForm;
@@ -34,7 +34,7 @@ class SurveyController
             return;
         }
 
-        $surveyForm->saveToSession();
+        $surveyForm->save();
 
         IncomingSurveyState::moveToNextSurvey();
         if (IncomingSurveyState::isSurveyComplete()) {
@@ -43,7 +43,7 @@ class SurveyController
             $incomingSurvey->save();
 
             $subject = Session::getSubject();
-            $subject->setState(GameStateMap::$DEADLINE_STATE);
+            $subject->setState(ThreeTaskPenaltyStateMap::$DEADLINE_STATE);
             $subject->save();
         }
 
