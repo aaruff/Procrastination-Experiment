@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Treatment extends Model
 {
-    public $timestamps = false;
     protected $table = 'treatments';
 
     /**
@@ -40,6 +39,14 @@ class Treatment extends Model
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /* ------------------------------------------------------------------------------------------
