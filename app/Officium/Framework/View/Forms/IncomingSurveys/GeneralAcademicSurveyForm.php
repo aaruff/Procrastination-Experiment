@@ -2,16 +2,15 @@
 
 namespace Officium\Framework\View\Forms\IncomingSurveys;
 
-use Officium\Experiment\IncomingSurvey;
-use Officium\Experiment\IncomingSurveyState;
-use Officium\Framework\Models\SessionStorable;
+use Officium\Experiment\GeneralAcademicSurvey;
+use Officium\Framework\Models\User;
+use Officium\Framework\Models\Saveable;
 use Officium\Framework\Validators\AlphabeticalValidator;
 use Officium\Framework\Validators\FloatValidator;
 use Officium\Framework\Validators\IntegerValidator;
-use Officium\Framework\Models\Session;
 use Officium\Framework\View\Forms\Form;
 
-class GeneralAcademicSurveyForm extends Form implements SessionStorable
+class GeneralAcademicSurveyForm extends Form implements Saveable
 {
     private static $MAJOR = 'major';
     private static $GPA = 'gpa';
@@ -20,7 +19,7 @@ class GeneralAcademicSurveyForm extends Form implements SessionStorable
 
     public function __construct($entries = [])
     {
-        parent::__construct(IncomingSurveyState::GENERAL, $entries, $this->getFormValidators());
+        parent::__construct(get_class($this), $entries, $this->getFormValidators());
     }
 
     /* ------------------------------------------------------------------------------------------
@@ -48,80 +47,16 @@ class GeneralAcademicSurveyForm extends Form implements SessionStorable
 
     /**
      * Save form entries to session storage.
+     * @param User $user
      */
-    public function saveToSession()
+    public function save(User $user)
     {
-        $entries = [
-            self::$MAJOR=>$this->getMajor(),
-            self::$GPA=>$this->getGPA(),
-            self::$NUMBER_COURSES=>$this->getNumberCourses(),
-            self::$NUMBER_CLUBS=>$this->getNumberClubs()];
-
-        $surveyId = Session::getSurveyId();
-        Session::storeSurveyFormEntries($surveyId, $entries);
-    }
-
-    /**
-     * Retrieve form entries from session storage.
-     */
-    public function setFromSession()
-    {
-        $this->setEntries(Session::getSurveyFormEntries(IncomingSurveyState::GENERAL));
-    }
-
-    /**
-     * Sets and returns the IncomingSurvey with this forms entries.
-     *
-     * @param IncomingSurvey $survey
-     * @return IncomingSurvey
-     */
-    public function setIncomingSurveyFromEntries(IncomingSurvey $survey)
-    {
-        $survey->setMajor($this->getMajor());
-        $survey->setGPA($this->getGPA());
-        $survey->setNumberCourses($this->getNumberCourses());
-        $survey->setNumberClubs($this->getNumberClubs());
-
-        return $survey;
-    }
-
-    /* ------------------------------------------------------------------------------------------
-     *                                      Private
-     * ------------------------------------------------------------------------------------------ */
-
-    /**
-     * @return string
-     */
-    private function getMajor()
-    {
-        $entries = $this->getEntries();
-        return $entries[self::$MAJOR];
-    }
-
-    /**
-     * @return float
-     */
-    private function getGPA()
-    {
-        $entries = $this->getEntries();
-        return floatval($entries[self::$GPA]);
-    }
-
-    /**
-     * @return int
-     */
-    private function getNumberCourses()
-    {
-        $entries = $this->getEntries();
-        return intval($entries[self::$NUMBER_COURSES]);
-    }
-
-    /**
-     * @return int
-     */
-    private function getNumberClubs()
-    {
-        $entries = $this->getEntries();
-        return intval($entries[self::$NUMBER_CLUBS]);
+        $survey = new GeneralAcademicSurvey();
+        $survey->setMajor($this->getStringEntry(self::$MAJOR));
+        $survey->setGPA($this->getFloatEntry(self::$GPA));
+        $survey->setNumberCourses($this->getIntEntry(self::$NUMBER_COURSES));
+        $survey->setNumberClubs($this->getIntEntry(self::$NUMBER_CLUBS));
+        $survey->setSubjectId($user->getSubject()->getId());
+        $survey->save();
     }
 }
