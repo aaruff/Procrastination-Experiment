@@ -2,15 +2,13 @@
 
 namespace Officium\Framework\View\Forms\IncomingSurveys;
 
-use Officium\Experiment\IncomingSurveyState;
-use Officium\Framework\Models\Session;
-use Officium\Framework\Models\SessionStorable;
+use Officium\Experiment\CertificateSurvey;
+use Officium\Framework\Models\Saveable;
 use Officium\Framework\Validators\IntegerValidator;
-use Officium\Experiment\IncomingSurvey;
 
 use Officium\Framework\View\Forms\Form;
 
-class CertificateSurveyForm extends Form implements SessionStorable
+class CertificateSurveyForm extends Form implements Saveable
 {
     private static $CERTIFICATE_PER_YEAR = 'cert_per_year';
     private static $TEMPTATION = 'temptation';
@@ -26,7 +24,7 @@ class CertificateSurveyForm extends Form implements SessionStorable
      */
     public function __construct($entries = [])
     {
-        parent::__construct(IncomingSurveyState::CERTIFICATE, $entries, $this->getFormValidators());
+        parent::__construct(get_class($this), $entries, $this->getFormValidators());
     }
 
     /**
@@ -34,33 +32,16 @@ class CertificateSurveyForm extends Form implements SessionStorable
      *
      * @return void
      */
-    public function saveToSession()
+    public function save()
     {
-        $entries = [
-            self::$CERTIFICATE_PER_YEAR=>$this->getIntEntry(self::$CERTIFICATE_PER_YEAR),
-            self::$TEMPTATION=>$this->getIntEntry(self::$TEMPTATION),
-            self::$TEMPTATION_CERTIFICATE_PER_YEAR=>$this->getIntEntry(self::$TEMPTATION_CERTIFICATE_PER_YEAR),
-            self::$NIGHTS_PER_YEAR=>$this->getIntEntry(self::$NIGHTS_PER_YEAR),
-        ];
+        $survey = new CertificateSurvey();
+        $survey->setCertificatesYear($this->getIntEntry(self::$CERTIFICATE_PER_YEAR));
+        $survey->setTemptation($this->getIntEntry(self::$TEMPTATION));
+        $survey->setTemptationCertificatesYear($this->getIntEntry(self::$TEMPTATION_CERTIFICATE_PER_YEAR));
+        $survey->setNightsPerYear($this->getIntEntry(self::$NIGHTS_PER_YEAR));
 
-        $surveyId = Session::getSurveyId();
-        Session::storeSurveyFormEntries($surveyId, $entries);
+        $survey->save();
     }
-
-    /**
-     * @param IncomingSurvey $incomingSurvey
-     * @return IncomingSurvey
-     */
-    public function setIncomingSurveyFromEntries(IncomingSurvey $incomingSurvey)
-    {
-        $incomingSurvey->setCertificatesYear($this->getIntEntry(self::$CERTIFICATE_PER_YEAR));
-        $incomingSurvey->setTemptation($this->getIntEntry(self::$TEMPTATION));
-        $incomingSurvey->setTemptationCertificatesYear($this->getIntEntry(self::$TEMPTATION_CERTIFICATE_PER_YEAR));
-        $incomingSurvey->setNightsPerYear($this->getIntEntry(self::$NIGHTS_PER_YEAR));
-
-        return $incomingSurvey;
-    }
-
 
     /* ------------------------------------------------------------------------------------------
      *                                      Protected
