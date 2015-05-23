@@ -6,9 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Session extends Model
 {
-    public $timestamps = false;
     protected $table = 'sessions';
     protected $fillable = ['size'];
+
+    /* ------------------------------------------------------------------------------------------
+     *                                Eloquent Relations
+     * ------------------------------------------------------------------------------------------ */
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function treatment()
+    {
+        return $this->hasOne(get_class(new Treatment()));
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subjects()
+    {
+        return $this->hasMany(get_class(new Subject()));
+    }
+
+    /* ------------------------------------------------------------------------------------------
+     *                                      Public
+     * ------------------------------------------------------------------------------------------ */
 
     /**
      * @param array $attributes
@@ -25,6 +48,14 @@ class Session extends Model
     public function setSize($size)
     {
         $this->size = $size;
+    }
+
+    /**
+     * @param int $userId
+     */
+    public function setUserId($userId)
+    {
+        $this->user_id = $userId;
     }
 
     /**
@@ -58,25 +89,4 @@ class Session extends Model
     {
         return $this->subjects;
     }
-
-    /* ------------------------------------------------------------------------------------------
-     *                                Eloquent Relations
-     * ------------------------------------------------------------------------------------------ */
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function treatment()
-    {
-        return $this->hasOne(get_class(new Treatment()));
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function subjects()
-    {
-        return $this->hasMany(get_class(new Subject()));
-    }
-
 }
