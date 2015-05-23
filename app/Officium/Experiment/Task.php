@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    public $timestamps = false;
     protected $table = 'tasks';
 
     private static $DB_DATE_TIME_FORMAT = 'Y-m-d H:i:s';
