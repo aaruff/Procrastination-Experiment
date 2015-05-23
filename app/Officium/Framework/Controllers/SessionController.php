@@ -6,6 +6,7 @@ use Officium\Framework\View\Forms\ThreeTaskPenaltyTreatmentForm;
 use Officium\Framework\Maps\DashboardMap;
 use Officium\Framework\Maps\SessionMap;
 use \Slim\Slim;
+use Officium\Framework\Models\Session;
 
 class SessionController
 {
@@ -27,7 +28,7 @@ class SessionController
 
         $sessionForm = new ThreeTaskPenaltyTreatmentForm($app->request->post());
         if ($sessionForm->validate()) {
-            $sessionForm->storeSession();
+            $sessionForm->save(Session::getUser());
             $responseUri = DashboardMap::toUri();
         }
         else {
