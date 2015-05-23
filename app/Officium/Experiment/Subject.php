@@ -10,10 +10,47 @@ use Officium\Framework\Models\User;
  */
 class Subject extends Model
 {
-    public $timestamps = false;
     protected $table = 'subjects';
 
     private static $ROLE_ID = 1;
+
+    /* ------------------------------------------------------------------------------------------
+     *                                Eloquent Relations
+     * ------------------------------------------------------------------------------------------ */
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(get_class(new User()), 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function session()
+    {
+        return $this->hasOne(get_class(new Session()), 'id', 'session_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function generalAcademicSurvey()
+    {
+        return $this->hasOne(get_class(new GeneralAcademicSurvey()));
+    }
+
+    /* ------------------------------------------------------------------------------------------
+     *                                      Public
+     * ------------------------------------------------------------------------------------------ */
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @param $userId
@@ -67,40 +104,9 @@ class Subject extends Model
         return $this->state;
     }
 
-    /**
-     * @param int $state
-     */
-    public function setState($state)
+    public function setNextState()
     {
-        $this->state = $state;
+        $state = StateFactory::makeState($this);
+        $this->state = $state->getNextState();
     }
-
-    /* ------------------------------------------------------------------------------------------
-     *                                Eloquent Relations
-     * ------------------------------------------------------------------------------------------ */
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(get_class(new User()), 'user_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function session()
-    {
-        return $this->belongsTo(get_class(new Session()), 'sessions');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function generalAcademicSurveyAnswers()
-    {
-        return $this->hasOne('Officium\Model\GeneralAcademicSurveyAnswer', 'general_academic_survey_answers');
-    }
-
-
 }
