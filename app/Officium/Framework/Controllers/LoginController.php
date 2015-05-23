@@ -2,6 +2,7 @@
 
 namespace Officium\Framework\Controllers;
 
+use Officium\Framework\Maps\GeneralAcademicMap;
 use Officium\Framework\Maps\SurveyMap;
 use Officium\Framework\Maps\LoginMap;
 use Officium\Framework\Models\Session;
@@ -45,7 +46,7 @@ class LoginController
         $user = $form->getUser();
         Session::loginUser($user);
 
-        $app->response->redirect(($user->isExperimenter()) ? DashboardMap::toUri() : SurveyMap::toUri());
+        $app->response->redirect(($user->isExperimenter()) ? DashboardMap::toUri() : GeneralAcademicMap::toUri());
     }
 
 }
