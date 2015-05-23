@@ -1,11 +1,11 @@
 <?php
 namespace Officium\Framework\Middleware;
 
+use Officium\Experiment\StateMapFactory;
 use Slim\Slim;
 use \Slim\Middleware;
 use Officium\Framework\Maps\LoginMap;
 use Officium\Framework\Models\Session;
-use Officium\Framework\Maps\GameStateMap;
 use Officium\Experiment\Subject;
 
 class AuthMiddleware extends Middleware
@@ -31,10 +31,11 @@ class AuthMiddleware extends Middleware
             return;
         }
 
-        $gameState = new GameStateMap(Subject::getByUserId(Session::getUserId()));
-        $stateUri = $gameState->toUri();
+        /* @var \Officium\Framework\Maps\ThreeTaskPenaltyStateMap $stateMap */
+        $stateMap = StateMapFactory::getStateMap(Subject::getByUserId(Session::getUserId()));
+        $stateUri = $stateMap->toUri();
         if ($uri != $stateUri) {
-            $this->app->redirect($gameState->toUri());
+            $this->app->redirect($stateUri);
             return;
         }
 
