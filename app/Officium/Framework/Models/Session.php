@@ -2,12 +2,9 @@
 
 namespace Officium\Framework\Models;
 
-use Officium\Experiment\IncomingSurveyState;
-
 class Session
 {
     private static $SURVEY_ID = 'survey';
-    private static $SURVEY_ENTRIES_ID = 'survey_entries';
     private static $USER_ID = 'user';
     private static $ROLE = 'role';
 
@@ -23,16 +20,17 @@ class Session
      */
     public static function getSubject()
     {
+        /* @var \Officium\Framework\Models\User $user */
         $user = User::find(self::getUserId());
-        return $user->getSubject();
+        return $user->subject;
     }
 
     /**
-     * @return int
+     * @return \Officium\Framework\Models\User
      */
-    public static function getSurveyId()
+    public static function getUser()
     {
-        return self::getItem(self::$SURVEY_ID, IncomingSurveyState::GENERAL);
+        return User::find(self::getUserId());
     }
 
     /**
@@ -92,34 +90,6 @@ class Session
     public static function isExperimenter()
     {
         return self::isLoggedIn() && self::getItem(self::$ROLE) == User::getExperimenterRoleNumber();
-    }
-
-    /**
-     * Stores the survey form entries.
-     * @param int $surveyId
-     * @param array $entries
-     */
-    public static function storeSurveyFormEntries($surveyId, array $entries)
-    {
-        $_SESSION[self::$SURVEY_ENTRIES_ID][$surveyId] = $entries;
-    }
-
-    /**
-     * @param int $surveyId
-     * @return array
-     */
-    public static function getSurveyFormEntries($surveyId)
-    {
-        return $_SESSION[self::$SURVEY_ENTRIES_ID][$surveyId];
-    }
-
-    /**
-     * Survey form entries
-     * @return array
-     */
-    public static function getAllSurveyEntries()
-    {
-        return $_SESSION[self::$SURVEY_ENTRIES_ID];
     }
 
     /* ------------------------------------------------------------------------------------------
