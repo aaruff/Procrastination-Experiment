@@ -2,13 +2,14 @@
 
 namespace Officium\Framework\Models;
 
-
-interface SessionStorable {
+interface Saveable {
 
     /**
      * Stores properties to the session.
      *
+     * @param User $user
+     *
      * @return void
      */
-    public function saveToSession();
+    public function save(User $user);
 }
