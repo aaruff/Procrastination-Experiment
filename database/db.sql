@@ -45,7 +45,9 @@ drop table if exists sessions;
 create table sessions(
   id integer AUTO_INCREMENT primary key,
   size integer not null,
-  user_id integer not null
+  user_id integer not null,
+  updated_at timestamp not null,
+  created_at timestamp not null
 ) Engine=InnoDB;
 
 #--
