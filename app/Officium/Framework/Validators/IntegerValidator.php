@@ -9,11 +9,18 @@ class IntegerValidator extends Validator
 {
     private $min;
     private $max;
+    private $required;
 
-    public function __construct($min = 1, $max = null)
+    /**
+     * @param int $min Minimal integer value (inclusive)
+     * @param null $max Maximum integer value (inclusive)
+     * @param bool $required Entry required
+     */
+    public function __construct($min = 1, $max = null, $required = true)
     {
         $this->min = $min;
         $this->max = $max;
+        $this->required = $required;
     }
 
     /**
@@ -25,6 +32,11 @@ class IntegerValidator extends Validator
     {
         $this->clearErrors();
         if ($this->min == 0 && $entry === '0') {
+            return true;
+        }
+
+        // Handle cases where the entry is not required
+        if ($this->required == false && empty($entry)) {
             return true;
         }
 
