@@ -4,7 +4,7 @@ namespace Officium\Framework\Controllers;
 
 use Slim\Slim;
 use Officium\Framework\Maps\ExternalObligationMap as Map;
-use Officium\Framework\View\Forms\IncomingSurveys\ExternalObligationSurveyForm as Form;
+use Officium\Framework\View\Forms\IncomingSurveys\ExternalObligationForm as Form;
 use Officium\Framework\Models\Session;
 
 class ExternalObligationController 
