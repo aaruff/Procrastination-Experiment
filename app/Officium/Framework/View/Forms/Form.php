@@ -2,6 +2,7 @@
 
 namespace Officium\Framework\View\Forms;
 
+use Officium\Framework\Validators\Validator;
 
 /**
  * Class Form
@@ -87,7 +88,9 @@ abstract class Form implements FormInterface
         }
 
         if ($this->doSyntacticValidation()) {
-            $this->doSematicValidation();
+            if ( ! empty($this->validators[self::$SEMANTIC_VALIDATORS])) {
+                $this->doSematicValidation();
+            }
         }
 
         return empty($this->errors);
@@ -182,7 +185,7 @@ abstract class Form implements FormInterface
     }
 
     /**
-     * Returns the specified int entry qualified by the id parameter.
+     * Returns the specified int entry qualified by its id.
      *
      * @param $id
      * @return int
@@ -191,6 +194,28 @@ abstract class Form implements FormInterface
     {
         $entries = $this->getEntries();
         return intval($entries[$id]);
+    }
+
+    /**
+     * Returns the specified float entry qualified by its id.
+     * @param $id
+     * @return float
+     */
+    public function getFloatEntry($id)
+    {
+        $entries = $this->getEntries();
+        return floatval($entries[$id]);
+    }
+
+    /**
+     * Returns the specified float entry qualified by its id.
+     * @param $id
+     * @return string
+     */
+    public function getStringEntry($id)
+    {
+        $entries = $this->getEntries();
+        return (empty($entries[$id])) ? '' : $entries[$id];
     }
 
     /* ------------------------------------------------------------------------------------------
@@ -230,7 +255,8 @@ abstract class Form implements FormInterface
     {
         $this->errors = [];
         foreach ($this->validators as $key => $validator) {
-            if ($key !== self::$SEMANTIC_VALIDATORS && ! $validator->validate($this->entries[$key])) {
+            $entry = ($validator->getEntryType() == Validator::$SINGLE_ENTRY) ? $this->entries[$key] : $this->entries;
+            if ($key !== self::$SEMANTIC_VALIDATORS && ! $validator->validate($entry)) {
                 $this->errors[$key] = $validator->getErrors();
             }
         }
@@ -245,16 +271,13 @@ abstract class Form implements FormInterface
      */
     private function doSematicValidation()
     {
-        if (empty($this->validators[self::$SEMANTIC_VALIDATORS])) {
-            return true;
-        }
-
         /* @var \Officium\Framework\Validators\Validator[] $semanticValidators */
         $semanticValidators = $this->validators[self::$SEMANTIC_VALIDATORS];
 
         $generalErrors = [];
         foreach ($semanticValidators as $key => $validator) {
-            if ( ! $validator->validate($this->entries)) {
+            $entry = ($validator->getEntryType() == Validator::$SINGLE_ENTRY) ? $this->entries[$key] : $this->entries;
+            if ( ! $validator->validate($entry)) {
                 $generalErrors[$key] = $validator->getErrors();
             }
         }
