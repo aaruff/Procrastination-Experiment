@@ -197,6 +197,17 @@ abstract class Form implements FormInterface
     }
 
     /**
+     * Returns the boolean value indexed by the given id.
+     * @param $id
+     * @return mixed
+     */
+    public function getBooleanEntry($id)
+    {
+        $entries = $this->getEntries();
+        return filter_var($entries[$id], FILTER_VALIDATE_BOOLEAN);
+    }
+
+    /**
      * Returns the specified float entry qualified by its id.
      * @param $id
      * @return float
