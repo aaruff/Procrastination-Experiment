@@ -7,12 +7,13 @@ use Officium\Framework\Models\Saveable;
 use Officium\Framework\Validators\ArrayValidator;
 use Officium\Framework\Validators\IntegerValidator;
 use Officium\Framework\Validators\DateTimeValidator;
-use Officium\Framework\Validators\SelectValidator;
+use Officium\Framework\Validators\BooleanValidator;
 use Officium\Framework\View\Forms\Form;
 use Officium\Framework\Models\User;
 use Officium\Experiment\ExternalObligationDeadline as Deadline;
+use Officium\Framework\Validators\ConditionalValidator;
 
-class ExternalObligationSurveyForm extends Form implements Saveable
+class ExternalObligationForm extends Form implements Saveable
 {
     private static $DATE_TIME_FORMAT = 'm-d-Y g:i a';
 
@@ -59,18 +60,23 @@ class ExternalObligationSurveyForm extends Form implements Saveable
     protected function getFormValidators()
     {
         $validators = [];
-        $validators[self::$EMPLOYED] = new SelectValidator();
+        $validators[self::$EMPLOYED] = new BooleanValidator();
         $validators[self::$HOURS_WORK] = new IntegerValidator(0, 200);
         $validators[self::$HOURS_SOCIAL] = new IntegerValidator(0, 200);
         $validators[self::$HOURS_FAMILY] = new IntegerValidator(0, 200);
-        $validators[Deadline::$WORK_START_DATE_TIME] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
-        $validators[Deadline::$WORK_END_DATE_TIME] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
+
+        $intValidator = new IntegerValidator(0, 200);
+        $predicates = [[self::$HOURS_WORK, $intValidator]];
+        $workStartDateTimeValidator = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
+        $workEndDateTimeValidator = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
+        $workStartValidator = new ConditionalValidator($predicates, Deadline::$WORK_START_DATE_TIME, $workStartDateTimeValidator);
+        $workEndValidator = new ConditionalValidator($predicates, Deadline::$WORK_START_DATE_TIME, $workEndDateTimeValidator);
+        $validators[Deadline::$WORK_START_DATE_TIME] = $workStartValidator;
+        $validators[Deadline::$WORK_END_DATE_TIME] = $workEndValidator;
         $validators[Deadline::$SOCIAL_START_DATE_TIME] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
         $validators[Deadline::$SOCIAL_END_DATE_TIME] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
         $validators[Deadline::$FAMILY_START_DATE_TIME] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
         $validators[Deadline::$FAMILY_END_DATE_TIME] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
-        $validators[self::$SEMANTIC_VALIDATORS] = [new UserValidator(new User())];
-        //TODO: Add range validation
         return $validators;
     }
 
