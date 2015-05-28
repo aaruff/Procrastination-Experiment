@@ -3,7 +3,7 @@
 namespace Officium\Framework\Validators;
 
 
-class RequiredConditionalValidator extends Validator
+class ConditionalValidator extends Validator
 {
     private $predicates;
     private $consequentValidator;
@@ -36,7 +36,7 @@ class RequiredConditionalValidator extends Validator
             return false;
         }
 
-        $validationPassed  = true;
+        $predicateOutcome  = true;
         foreach ($this->predicates as $keyValPair) {
             $predicateKey = $keyValPair[0];
             /* @var \Officium\Framework\Validators\Validator $predicateValidator */
@@ -44,20 +44,17 @@ class RequiredConditionalValidator extends Validator
 
             $entry = ($predicateValidator->getEntryType() == Validator::$SINGLE_ENTRY) ? $entries[$predicateKey] : $entries;
             if ( ! $predicateValidator->validate($entry)) {
-                $validationPassed = false;
+                $predicateOutcome = false;
             }
         }
 
-        if ( ! $validationPassed) {
-            return false;
-        }
-
+        $consequentOutcome = true;
         if ( ! $this->consequentValidator->validate($entries[$this->consequentKey])) {
             $this->setErrors($this->consequentValidator->getErrors());
-            return false;
+            $consequentOutcome = false;
         }
 
-        return true;
+        return ($predicateOutcome == true && $consequentOutcome == false) ? false : true;
     }
 
     public function getEntryType()
