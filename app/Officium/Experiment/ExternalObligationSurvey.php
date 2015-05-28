@@ -32,6 +32,11 @@ class ExternalObligationSurvey extends Model
      *                                      Public
      * ------------------------------------------------------------------------------------------ */
 
+    public function setSubjectId($subjectId)
+    {
+        $this->subject_id = $subjectId;
+    }
+
     /**
      * @param boolean $employed
      */
