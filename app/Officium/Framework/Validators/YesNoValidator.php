@@ -1,9 +1,8 @@
 <?php
 
-namespace Framework\Validators;
+namespace Officium\Framework\Validators;
 
 use Respect\Validation\Validator as v;
-use Officium\Framework\Validators\Validator;
 use Respect\Validation\Exceptions\NestedValidationExceptionInterface;
 
 class YesNoValidator extends Validator
@@ -29,8 +28,8 @@ class YesNoValidator extends Validator
     public function validate($entry)
     {
         $this->clearErrors();
-        if ( ! $this->entryRequired && empty($entry)) {
-            return true;
+        if ( $this->entryRequired && empty($entry)) {
+            return false;
         }
 
         try {
@@ -44,7 +43,7 @@ class YesNoValidator extends Validator
             if ( ! $this->mustBeYes) {
                 $messages[] = 'no';
             }
-            $this->setErrors($e->findMessages([$messages]));
+            $this->setErrors($e->findMessages($messages));
         }
 
         return false;
