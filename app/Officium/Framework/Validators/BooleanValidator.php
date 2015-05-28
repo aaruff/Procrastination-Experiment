@@ -28,12 +28,17 @@ class BooleanValidator extends Validator
     public function validate($entry)
     {
         $this->clearErrors();
+
+        if (is_bool($entry) && ! $this->mustBeTrue) {
+            return true;
+        }
+
         if ( ! $this->entryRequired && empty($entry)) {
             return true;
         }
 
         try {
-            $val = ($this->mustBeTrue) ? v::notEmpty()->true() : v::notEmpty()->oneOf(v::true(), v::false());
+            $val = ($this->mustBeTrue) ? v::true() : v::oneOf(v::true(), v::false());
             $val->assert($entry);
 
             return true;
