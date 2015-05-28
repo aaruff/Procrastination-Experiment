@@ -28,6 +28,8 @@ class UserValidator extends Validator
      */
     public function validate($credentials)
     {
+        $this->clearErrors();
+
         if ( ! isset($credentials[self::$LOGIN]) || ! isset($credentials[self::$PASSWORD])) {
             $this->setErrors([self::$LOGIN => 'Invalid Login/Password credentials.']);
             return false;
@@ -52,5 +54,10 @@ class UserValidator extends Validator
 
         $this->setErrors([self::$LOGIN => 'Invalid Login/Password credentials.']);
         return false;
+    }
+
+    public function getEntryType()
+    {
+        return Validator::$ALL_ENTRIES;
     }
 }
