@@ -19,6 +19,8 @@ class ArrayValidator extends Validator
      */
     public function validate($entry)
     {
+        $this->clearErrors();
+
         if ($this->required && ( ! is_array($entry) || count($entry) == 0 )) {
             $this->setErrors('This item is required.');
             return false;
