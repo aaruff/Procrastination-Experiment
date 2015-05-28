@@ -1,0 +1,73 @@
+{% extends 'pages/subject/survey/form.twig' %}
+
+{% block formbody %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            General
+        </div>
+        <div class="panel-body">
+            <p>The experiment ends on <b>{{ deadline }}</b>. However, you may impose
+                an earlier deadline for the task if you wish. If so, please do so now.
+                Keep in mind that the deadline will be strictly enforced. For example,
+                if you impose a deadline for tomorrow at 9:00PM and you do not complete
+                the task by that time, then you will not be able to work on the task and
+                will receive no payment.</p>
+
+            <form action="{{ currentUrl() }}" method="post">
+                <div class="form-group">
+                    <label>First Deadlines</label>
+                    <div class="form-inline">
+                        <div class="input-group date col-md-3">
+                            <input type="text" class="form-control first_deadline" placeholder="Date and Time" name="first_deadline" value="{{ flash.entries.first_deadline }}" />
+                        </div>
+                        {% if flash.errors.first_deadline %}
+                            {% for error in flash.errors.first_deadline %}
+                                <span class="alert alert-danger">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Second Deadlines</label>
+                    <div class="form-inline">
+                        <div class="input-group date col-md-3">
+                            <input type="text" class="form-control second_deadline" placeholder="Date and Time" name="second_deadline" value="{{ flash.entries.second_deadline }}" />
+                        </div>
+                        {% if flash.errors.second_deadline %}
+                            {% for error in flash.errors.second_deadline %}
+                                <span class="alert alert-danger">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Third Deadlines</label>
+                    <div class="form-inline">
+                        <div class="input-group date col-md-3">
+                            <input type="text" class="form-control third_deadline" placeholder="Date and Time" name="third_deadline" value="{{ flash.entries.third_deadline }}" />
+                        </div>
+                        {% if flash.errors.third_deadline %}
+                            {% for error in flash.errors.third_deadline %}
+                                <span class="alert alert-danger">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Next</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('.first_deadline').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
+        $('.second_deadline').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
+        $('.third_deadline').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
+    </script>
+{% endblock %}
