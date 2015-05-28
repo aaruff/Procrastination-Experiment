@@ -32,10 +32,12 @@ class CertificateController
             return;
         }
 
-        $form->save();
+        $form->save(Session::getUser());
 
         $subject = Session::getSubject();
         $subject->setNextState();
         $subject->save();
+
+        $app->redirect(Map::toUri());
     }
 }
