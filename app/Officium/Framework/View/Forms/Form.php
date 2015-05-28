@@ -10,6 +10,8 @@ use Officium\Framework\Validators\Validator;
  */
 abstract class Form implements FormInterface
 {
+    protected static $DATE_TIME_FORMAT = 'm-d-Y g:i a';
+
     /**
      * The key for the post validation validators
      * @var string
@@ -201,7 +203,7 @@ abstract class Form implements FormInterface
      * @param $id
      * @return mixed
      */
-    public function getBooleanEntry($id)
+    protected function getBooleanEntry($id)
     {
         $entries = $this->getEntries();
         return filter_var($entries[$id], FILTER_VALIDATE_BOOLEAN);
@@ -212,7 +214,7 @@ abstract class Form implements FormInterface
      * @param $id
      * @return float
      */
-    public function getFloatEntry($id)
+    protected function getFloatEntry($id)
     {
         $entries = $this->getEntries();
         return floatval($entries[$id]);
@@ -223,10 +225,22 @@ abstract class Form implements FormInterface
      * @param $id
      * @return string
      */
-    public function getStringEntry($id)
+    protected function getStringEntry($id)
     {
         $entries = $this->getEntries();
         return (empty($entries[$id])) ? '' : $entries[$id];
+    }
+
+    /**
+     * Returns the specified float entry qualified by its id.
+     * @param $id
+     * @return \DateTime
+     */
+    protected function getDateTime($id)
+    {
+        $entries = $this->getEntries();
+        $dateTime =  (empty($entries[$id])) ? '' : $entries[$id];
+        return \DateTime::createFromFormat(self::$DATE_TIME_FORMAT, $dateTime);
     }
 
     /* ------------------------------------------------------------------------------------------
