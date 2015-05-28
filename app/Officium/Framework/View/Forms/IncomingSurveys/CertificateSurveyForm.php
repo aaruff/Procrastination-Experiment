@@ -5,6 +5,7 @@ namespace Officium\Framework\View\Forms\IncomingSurveys;
 use Officium\Experiment\CertificateSurvey;
 use Officium\Framework\Models\Saveable;
 use Officium\Framework\Validators\IntegerValidator;
+use Officium\Framework\Models\User;
 
 use Officium\Framework\View\Forms\Form;
 
@@ -27,19 +28,14 @@ class CertificateSurveyForm extends Form implements Saveable
         parent::__construct(get_class($this), $entries, $this->getFormValidators());
     }
 
-    /**
-     * Stores properties to the session.
-     *
-     * @return void
-     */
-    public function save()
+    public function save(User $user)
     {
         $survey = new CertificateSurvey();
         $survey->setCertificatesYear($this->getIntEntry(self::$CERTIFICATE_PER_YEAR));
         $survey->setTemptation($this->getIntEntry(self::$TEMPTATION));
         $survey->setTemptationCertificatesYear($this->getIntEntry(self::$TEMPTATION_CERTIFICATE_PER_YEAR));
         $survey->setNightsPerYear($this->getIntEntry(self::$NIGHTS_PER_YEAR));
-
+        $survey->setSubjectId($user->getSubject()->getId());
         $survey->save();
     }
 
