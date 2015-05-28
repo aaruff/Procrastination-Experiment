@@ -24,6 +24,10 @@ class AttentiveRankSurvey extends Model
     /* ------------------------------------------------------------------------------------------
      *                                      Public
      * ------------------------------------------------------------------------------------------ */
+    public function setSubjectId($subjectId)
+    {
+        $this->subject_id = $subjectId;
+    }
 
     /**
      * @param int $rank
@@ -78,7 +82,7 @@ class AttentiveRankSurvey extends Model
      */
     public function setAbilityOrganize($rank)
     {
-        $this->rank_ability_organize = $rank;
+        $this->ability_organize = $rank;
     }
 
     /**
