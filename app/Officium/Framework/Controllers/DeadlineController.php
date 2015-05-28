@@ -2,9 +2,10 @@
 
 namespace Officium\Framework\Controllers;
 
-use Officium\Framework\View\Forms\DeadlineForm;
+use Officium\Framework\Models\Session;
+use Officium\Framework\View\Forms\IncomingSurveys\SubjectDeadlineForm as Form;
 use Slim\Slim;
-use Officium\Framework\Maps\DeadlineMap;
+use Officium\Framework\Maps\DeadlineMap as Map;
 
 class DeadlineController
 {
@@ -14,7 +15,7 @@ class DeadlineController
     public function get()
     {
         $app = Slim::getInstance();
-        $app->render(DeadlineMap::toTemplate(), $app->flashData());
+        $app->render(Map::toTemplate(), $app->flashData());
     }
 
     /**
@@ -24,16 +25,20 @@ class DeadlineController
     {
         $app = Slim::getInstance();
 
-        $form = new DeadlineForm();
-
+        $form = new Form();
         if ( ! $form->validate($app->request->post())) {
             $app->flash('flash', $form->getEntriesWithErrors());
-            $app->redirect(DeadlineMap::toUri());
+            $app->redirect(Map::toUri());
             return;
         }
 
-        $form->save();
+        $form->save(Session::getUser());
+
+        $subject = Session::getSubject();
+        $subject->setNextState();
+        $subject->save();
+
         // Update state and move on
-        $app->redirect(SurveyMap::toUri());
+        $app->redirect(Map::toUri());
     }
 }
