@@ -4,7 +4,7 @@ namespace Officium\Framework\Controllers;
 
 use Officium\Framework\Maps\GeneralAcademicMap as Map;
 use Officium\Framework\Models\Session;
-use Officium\Framework\View\Forms\IncomingSurveys\GeneralAcademicSurveyForm as Form;
+use Officium\Framework\View\Forms\IncomingSurveys\GeneralAcademicForm as Form;
 use Slim\Slim;
 
 class GeneralAcademicController
@@ -32,9 +32,9 @@ class GeneralAcademicController
             return;
         }
 
-        $subject = Session::getSubject();
         $form->save(Session::getUser());
 
+        $subject = Session::getSubject();
         $subject->setNextState();
         $subject->save();
 
