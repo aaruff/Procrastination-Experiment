@@ -3,7 +3,7 @@
 namespace Officium\Framework\Controllers;
 
 use Slim\Slim;
-use Officium\Framework\View\Forms\IncomingSurveys\CertificateSurveyForm as Form;
+use Officium\Framework\View\Forms\IncomingSurveys\CertificateForm as Form;
 use Officium\Framework\Maps\CertificateMap as Map;
 use Officium\Framework\Models\Session;
 
