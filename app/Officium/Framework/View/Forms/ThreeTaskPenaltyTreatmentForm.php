@@ -15,7 +15,7 @@ use Officium\Experiment\Treatment;
 
 class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
 {
-    private static $DATE_TIME_FORMAT = 'm-d-Y g:i a';
+    protected static $DATE_TIME_FORMAT = 'm-d-Y g:i a';
 
     private static $SIZE = 'size';
     private static $ADJUSTABLE_DEADLINE = 'adjustableDeadline';
