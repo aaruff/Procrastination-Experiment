@@ -11,13 +11,18 @@ use Officium\Framework\Maps\ResourceMap as Map;
 use Officium\Framework\Maps\ExternalObligationMap;
 use Officium\Framework\Maps\AttentiveRankMap;
 use Officium\Framework\Maps\CertificateMap;
+use Officium\Framework\Maps\DeadlineMap;
+use Officium\Framework\Maps\RankTaskCompletionMap;
 
 //---------------------------------------------------
-// Subject Routes
+// User Routes
 //---------------------------------------------------
 Route::get(LoginMap::toUri(), LoginMap::toController());
 Route::post(LoginMap::toUri(), LoginMap::toController(LoginMap::$POST));
 
+//---------------------------------------------------
+// Subject Routes
+//---------------------------------------------------
 //---------------------
 // Incoming Surveys
 //---------------------
@@ -42,11 +47,27 @@ Route::post(CertificateMap::toUri(), CertificateMap::toController(Map::$POST));
 Route::get(AttentiveRankMap::toUri(), AttentiveRankMap::toController());
 Route::post(AttentiveRankMap::toUri(), AttentiveRankMap::toController(Map::$POST));
 
+// - Subject Task Deadlines
+Route::get(DeadlineMap::toUri(), DeadlineMap::toController());
+Route::post(DeadlineMap::toUri(), DeadlineMap::toController(Map::$POST));
+
+// - Rank Task Completion
+Route::get(RankTaskCompletionMap::toUri(), RankTaskCompletionMap::toController());
+Route::post(RankTaskCompletionMap::toUri(), RankTaskCompletionMap::toController(Map::$POST));
+
+//---------------------
+// Experiment
+//---------------------
+
+
 //---------------------------------------------------
 // Experimenter Routes
 //---------------------------------------------------
+// - Experimenter Dashboard
 Route::get(DashboardMap::toUri(), DashboardMap::toController());
 Route::post(DashboardMap::toUri(), DashboardMap::toController(Map::$POST));
+
 Route::get(SessionMap::toUri(), SessionMap::toController());
 Route::post(SessionMap::toUri(), SessionMap::toController(Map::$POST));
+
 Route::get(TreatmentMap::toUri(TreatmentMap::$ID), TreatmentMap::toController());
