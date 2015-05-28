@@ -3,16 +3,10 @@
 namespace Officium\Framework\Maps;
 
 use Officium\Experiment\Subject;
+use Officium\Experiment\ThreeTaskPenaltyGameState;
 
 class ThreeTaskPenaltyStateMap implements StateMap
 {
-    const GENERAL = 0;
-    const ACADEMIC_OBLIGATION = 1;
-    const EXTERNAL_OBLIGATION = 2;
-    const ATTENTIVE_RANK = 3;
-    const CERTIFICATE = 4;
-    const DEADLINE = 5;
-
     /**
      * @var \Officium\Experiment\Subject
      */
@@ -26,18 +20,20 @@ class ThreeTaskPenaltyStateMap implements StateMap
     public function toUri()
     {
         switch($this->subject->getState()) {
-            case self::GENERAL:
+            case ThreeTaskPenaltyGameState::GENERAL:
                 return GeneralAcademicMap::toUri();
-            case self::ACADEMIC_OBLIGATION:
+            case ThreeTaskPenaltyGameState::ACADEMIC_OBLIGATION:
                 return AcademicObligationMap::toUri();
-            case self::EXTERNAL_OBLIGATION:
+            case ThreeTaskPenaltyGameState::EXTERNAL_OBLIGATION:
                 return ExternalObligationMap::toUri();
-            case self::ATTENTIVE_RANK:
+            case ThreeTaskPenaltyGameState::ATTENTIVE_RANK:
                 return AttentiveRankMap::toUri();
-            case self::CERTIFICATE:
+            case ThreeTaskPenaltyGameState::CERTIFICATE:
                 return CertificateMap::toUri();
-            case self::DEADLINE:
-                return '';
+            case ThreeTaskPenaltyGameState::DEADLINE:
+                return DeadlineMap::toUri();
+            case ThreeTaskPenaltyGameState::RANK_TASK_COMPLETION:
+                return RankTaskCompletionMap::toUri();
             default:
                 return LoginMap::toUri();
         }
