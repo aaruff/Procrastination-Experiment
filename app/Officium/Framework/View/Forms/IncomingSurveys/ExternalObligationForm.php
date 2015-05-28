@@ -11,11 +11,11 @@ use Officium\Framework\Validators\YesNoValidator;
 use Officium\Framework\View\Forms\Form;
 use Officium\Framework\Models\User;
 use Officium\Experiment\ExternalObligationDeadline as Deadline;
-use Officium\Framework\Validators\RequiredConditionalValidator;
+use Officium\Framework\Validators\ConditionalValidator;
 
 class ExternalObligationForm extends Form implements Saveable
 {
-    private static $DATE_TIME_FORMAT = 'm-d-Y g:i a';
+    protected static $DATE_TIME_FORMAT = 'm-d-Y g:i a';
 
     private static $EMPLOYED = 'employed';
     private static $HOURS_WORK = 'hours_work';
@@ -63,12 +63,12 @@ class ExternalObligationForm extends Form implements Saveable
     {
         $validators = [];
         $validators[self::$EMPLOYED] = new YesNoValidator();
-        $validators[self::$HOURS_WORK] = new IntegerValidator(0, 200);
+        $validators[self::$HOURS_WORK] = new ConditionalValidator([[self::$EMPLOYED, new YesNoValidator(true, true)]], self::$HOURS_WORK, new IntegerValidator(0, 200));
         $validators[self::$HOURS_SOCIAL] = new IntegerValidator(0, 200);
         $validators[self::$HOURS_FAMILY] = new IntegerValidator(0, 200);
 
-        $workStartValidator = new RequiredConditionalValidator([[self::$HOURS_WORK, new IntegerValidator(0, 200)]], Deadline::$WORK_START_DATE_TIME, new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false)));
-        $workEndValidator = new RequiredConditionalValidator([[self::$HOURS_WORK, new IntegerValidator(0, 200)]], Deadline::$WORK_START_DATE_TIME, new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false)));
+        $workStartValidator = new ConditionalValidator([[self::$EMPLOYED, new YesNoValidator(true, true)]], Deadline::$WORK_START_DATE_TIME, new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false)));
+        $workEndValidator = new ConditionalValidator([[self::$EMPLOYED, new YesNoValidator(true, true)]], Deadline::$WORK_START_DATE_TIME, new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false)));
         $validators[Deadline::$WORK_START_DATE_TIME] = $workStartValidator;
         $validators[Deadline::$WORK_END_DATE_TIME] = $workEndValidator;
         $validators[Deadline::$SOCIAL_START_DATE_TIME] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
@@ -93,8 +93,10 @@ class ExternalObligationForm extends Form implements Saveable
 
         $dateTimes = [];
         foreach ($deadlines as $deadline) {
-            $dateTimes = [];
             foreach ($entries[$deadline['start']] as $id=>$start) {
+                if (empty($start)) {
+                    continue;
+                }
                 $surveyDateTime = new Deadline();
                 $surveyDateTime->setStartDateTime(\DateTime::createFromFormat(self::$DATE_TIME_FORMAT, $start));
                 $surveyDateTime->setType($start);
