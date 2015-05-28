@@ -266,8 +266,12 @@ abstract class Form implements FormInterface
     {
         $this->errors = [];
         foreach ($this->validators as $key => $validator) {
+            if ($key == self::$SEMANTIC_VALIDATORS) {
+                continue;
+            }
+
             $entry = ($validator->getEntryType() == Validator::$SINGLE_ENTRY) ? $this->entries[$key] : $this->entries;
-            if ($key !== self::$SEMANTIC_VALIDATORS && ! $validator->validate($entry)) {
+            if (! $validator->validate($entry)) {
                 $this->errors[$key] = $validator->getErrors();
             }
         }
