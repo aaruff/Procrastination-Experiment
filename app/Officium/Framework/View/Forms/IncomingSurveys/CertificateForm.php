@@ -9,7 +9,7 @@ use Officium\Framework\Models\User;
 
 use Officium\Framework\View\Forms\Form;
 
-class CertificateSurveyForm extends Form implements Saveable
+class CertificateForm extends Form implements Saveable
 {
     private static $CERTIFICATE_PER_YEAR = 'cert_per_year';
     private static $TEMPTATION = 'temptation';
