@@ -10,6 +10,7 @@ use Officium\Framework\Maps\AcademicObligationMap;
 use Officium\Framework\Maps\ResourceMap as Map;
 use Officium\Framework\Maps\ExternalObligationMap;
 use Officium\Framework\Maps\AttentiveRankMap;
+use Officium\Framework\Maps\CertificateMap;
 
 //---------------------------------------------------
 // Subject Routes
@@ -32,6 +33,10 @@ Route::post(AcademicObligationMap::toUri(), AcademicObligationMap::toController(
 // - External Obligations
 Route::get(ExternalObligationMap::toUri(), ExternalObligationMap::toController());
 Route::post(ExternalObligationMap::toUri(), ExternalObligationMap::toController(Map::$POST));
+
+// - Certificate
+Route::get(CertificateMap::toUri(), CertificateMap::toController());
+Route::post(CertificateMap::toUri(), CertificateMap::toController(Map::$POST));
 
 // - Attentive Rankings
 Route::get(AttentiveRankMap::toUri(), AttentiveRankMap::toController());
