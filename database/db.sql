@@ -173,15 +173,25 @@ create table certificate_surveys(
   created_at timestamp not null
 ) ENGINE InnoDB;
 
-
-#----------------------------------------
-# Survey Date Time Intervals
-#----------------------------------------
-drop table if exists survey_datetime_intervals;
-create table survey_datetime_intervals(
+drop table if exists subject_task_deadlines;
+create table subject_task_deadlines(
   id integer auto_increment primary key,
-  survey_id integer not null,
-  type varchar(255) not null,
-  start_datetime datetime not null,
-  end_datetime datetime
+  subject_id integer not null,
+  task_id integer not null,
+  deadline datetime not null,
+  updated_at timestamp not null,
+  created_at timestamp not null
 ) ENGINE=InnoDB;
+
+drop table if exists task_completion_rank_surveys;
+create table task_completion_rank_surveys(
+  id					integer auto_increment primary key,
+  subject_id integer not null,
+  none integer not null,
+  one_task integer not null,
+  two_tasks integer not null,
+  all_tasks integer not null,
+  updated_at timestamp not null,
+  created_at timestamp not null
+) ENGINE InnoDB;
+
