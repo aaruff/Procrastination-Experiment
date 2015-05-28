@@ -6,6 +6,7 @@ use Officium\Experiment\AttentiveRankSurvey;
 use Officium\Framework\Models\Saveable;
 use Officium\Framework\Validators\IntegerValidator;
 use Officium\Framework\View\Forms\Form;
+use Officium\Framework\Models\User;
 
 class AttentiveRankSurveyForm extends Form implements Saveable
 {
@@ -26,10 +27,7 @@ class AttentiveRankSurveyForm extends Form implements Saveable
         parent::__construct(get_class($this), $entries, $this->getFormValidators());
     }
 
-    /**
-     * Stores properties to the session.
-     */
-    public function save()
+    public function save(User $user)
     {
         $survey = new AttentiveRankSurvey();
         $survey->setConscientiousness($this->getIntEntry(self::$CONSCIENTIOUSNESS));
@@ -40,6 +38,7 @@ class AttentiveRankSurveyForm extends Form implements Saveable
         $survey->setAbilityFollowSchedule($this->getIntEntry(self::$ABILITY_FOLLOW_SCHEDULE));
         $survey->setAbilityOrganize($this->getIntEntry(self::$ABILITY_TO_ORGANIZE));
         $survey->setAbilityPayAttention($this->getIntEntry(self::$ABILITY_PAY_ATTENTION));
+        $survey->setSubjectId($user->getSubject()->getId());
 
         $survey->save();
     }
