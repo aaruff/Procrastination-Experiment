@@ -1,0 +1,73 @@
+{% extends 'pages/subject/survey/form.twig' %}
+
+{% block formbody %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Rank Statements
+        </div>
+        <div class="panel-body">
+            <form action="{{ currentUrl() }}" method="post">
+                <div class="form-group">
+                    <h4>On a scale from 1 to 100, how likely do you think each of the following events are?</h4>
+                </div>
+
+                <div class="form-group">
+                    <label for="ob">I will complete no tasks.</label>
+                    <input type="text" class="form-control" id="ob" name="n" value="{{ flash.entries.n }}" />
+                    {% if flash.errors.n %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.n %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="ob">I will complete exactly one task.</label>
+                    <input type="text" class="form-control" id="ob" name="o" value="{{ flash.entries.o }}" />
+                    {% if flash.errors.o %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.o %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="ob">I will complete exactly two tasks.</label>
+                    <input type="text" class="form-control" id="ob" name="t" value="{{ flash.entries.t }}" />
+                    {% if flash.errors.t %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.t %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="ob">I will complete all three tasks.</label>
+                    <input type="text" class="form-control" id="ob" name="a" value="{{ flash.entries.a }}" />
+                    {% if flash.errors.a %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.errors.a %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
