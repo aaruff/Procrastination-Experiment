@@ -10,16 +10,35 @@ use Officium\Framework\Validators\FloatValidator;
 use Officium\Framework\Validators\IntegerValidator;
 use Officium\Framework\View\Forms\Form;
 
-class GeneralAcademicSurveyForm extends Form implements Saveable
+class GeneralAcademicForm extends Form implements Saveable
 {
     private static $MAJOR = 'major';
     private static $GPA = 'gpa';
     private static $NUMBER_COURSES = 'number_courses';
     private static $NUMBER_CLUBS = 'number_clubs';
 
+    /* ------------------------------------------------------------------------------------------
+     *                                      Public
+     * ------------------------------------------------------------------------------------------ */
+
     public function __construct($entries = [])
     {
         parent::__construct(get_class($this), $entries, $this->getFormValidators());
+    }
+
+    /**
+     * Save form entries to session storage.
+     * @param User $user
+     */
+    public function save(User $user)
+    {
+        $survey = new GeneralAcademicSurvey();
+        $survey->setMajor($this->getStringEntry(self::$MAJOR));
+        $survey->setGPA($this->getFloatEntry(self::$GPA));
+        $survey->setNumberCourses($this->getIntEntry(self::$NUMBER_COURSES));
+        $survey->setNumberClubs($this->getIntEntry(self::$NUMBER_CLUBS));
+        $survey->setSubjectId($user->getSubject()->getId());
+        $survey->save();
     }
 
     /* ------------------------------------------------------------------------------------------
@@ -41,22 +60,4 @@ class GeneralAcademicSurveyForm extends Form implements Saveable
         return $validators;
     }
 
-    /* ------------------------------------------------------------------------------------------
-     *                                      Public
-     * ------------------------------------------------------------------------------------------ */
-
-    /**
-     * Save form entries to session storage.
-     * @param User $user
-     */
-    public function save(User $user)
-    {
-        $survey = new GeneralAcademicSurvey();
-        $survey->setMajor($this->getStringEntry(self::$MAJOR));
-        $survey->setGPA($this->getFloatEntry(self::$GPA));
-        $survey->setNumberCourses($this->getIntEntry(self::$NUMBER_COURSES));
-        $survey->setNumberClubs($this->getIntEntry(self::$NUMBER_CLUBS));
-        $survey->setSubjectId($user->getSubject()->getId());
-        $survey->save();
-    }
 }
