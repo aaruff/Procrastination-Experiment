@@ -24,6 +24,10 @@ class CertificateSurvey extends Model
     /* ------------------------------------------------------------------------------------------
      *                                      Public
      * ------------------------------------------------------------------------------------------ */
+    public function setSubjectId($subjectId)
+    {
+        $this->subject_id = $subjectId;
+    }
 
     /**
      * @param int $certificates
