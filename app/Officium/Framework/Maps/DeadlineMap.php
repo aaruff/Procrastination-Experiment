@@ -12,7 +12,7 @@ class DeadlineMap extends ResourceMap
      */
     public static function toTemplate()
     {
-        return '/pages/subject/survey/subjectDeadline.twig';
+        return '/pages/subject/survey/subjectDeadlines.twig';
     }
 
     /**
@@ -20,7 +20,7 @@ class DeadlineMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/deadline';
+        return '/dl';
     }
 
     /**
