@@ -140,7 +140,6 @@ create table external_obligation_deadlines(
   type VARCHAR(255) not null,
   start_deadline datetime not null,
   end_deadline datetime not null,
-  end datetime,
   updated_at timestamp not null,
   created_at timestamp not null
 ) ENGINE=InnoDB;
