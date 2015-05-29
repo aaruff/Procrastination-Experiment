@@ -87,6 +87,10 @@ class AcademicObligationForm extends Form implements Saveable
 
         $dateTimes = [];
         foreach ($deadlineTypes as $type) {
+            if ( ! (isset($entries[$type]) && is_array($entries[$type] && ! empty($entries[$type])))) {
+                continue;
+            }
+
             foreach ($entries[$type] as $dateTime) {
                 $surveyDateTime = new Deadline();
                 $surveyDateTime->setDeadline(\DateTime::createFromFormat(self::$DATE_TIME_FORMAT, $dateTime));
