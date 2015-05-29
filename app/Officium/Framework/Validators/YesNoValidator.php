@@ -29,6 +29,7 @@ class YesNoValidator extends Validator
     {
         $this->clearErrors();
         if ( $this->entryRequired && empty($entry)) {
+            $this->setErrors(['This field is required.']);
             return false;
         }
 
