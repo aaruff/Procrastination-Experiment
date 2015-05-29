@@ -93,10 +93,11 @@ class ExternalObligationForm extends Form implements Saveable
 
         $dateTimes = [];
         foreach ($deadlines as $deadline) {
+            if ( ! (isset($entries[$deadline['start']]) && is_array($entries[$deadline['start']] && ! empty($entries[$deadline['start']])))) {
+                continue;
+            }
+
             foreach ($entries[$deadline['start']] as $id=>$start) {
-                if (empty($start)) {
-                    continue;
-                }
                 $surveyDateTime = new Deadline();
                 $surveyDateTime->setStartDateTime(\DateTime::createFromFormat(self::$DATE_TIME_FORMAT, $start));
                 $surveyDateTime->setType($start);
