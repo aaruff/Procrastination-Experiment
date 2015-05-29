@@ -21,7 +21,7 @@ class DateIntervalValidator extends Validator
      * @param $format string
      * @param $required boolean
      */
-    public function DateTimeIntervalValidator(array $entryKeys, $format = '', $required = true)
+    public function __construct(array $entryKeys, $format = '', $required = true)
     {
         $this->entryKeys = $entryKeys;
         $this->required = $required;
