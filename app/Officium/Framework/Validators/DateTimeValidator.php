@@ -22,7 +22,7 @@ class DateTimeValidator extends Validator
      * @param $format string
      * @param $required boolean
      */
-    public function DateTimeValidator($format = '', $required = true)
+    public function __construct($format = '', $required = true)
     {
         $this->required = $required;
 
@@ -40,7 +40,7 @@ class DateTimeValidator extends Validator
     public function validate($datetime)
     {
         $this->clearErrors();
-        if ($this->required == false && empty($datetime)) {
+        if ($this->required === false && empty($datetime)) {
             return true;
         }
 
