@@ -33,6 +33,7 @@ class ConditionalValidator extends Validator
         $this->clearErrors();
         // This validator requires array entries
         if ( ! is_array($entries)) {
+            $this->setErrors('This field is required.');
             return false;
         }
 
