@@ -10,7 +10,7 @@ use Officium\Framework\Validators\Validator;
  */
 abstract class Form implements FormInterface
 {
-    protected static $DATE_TIME_FORMAT = 'm-d-Y g:i a';
+    protected static $DATE_TIME_FORMAT = 'm-d-Y h:i a';
 
     /**
      * The key for the post validation validators
