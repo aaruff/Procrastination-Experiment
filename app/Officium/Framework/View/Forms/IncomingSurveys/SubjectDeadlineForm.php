@@ -70,7 +70,6 @@ class SubjectDeadlineForm extends Form implements Saveable
      */
     private function getDeadline($id) {
         $subjectDeadline = new SubjectDeadlineSurvey();
-        // TODO: fix issue
         $subjectDeadline->setDeadline($this->getDateTime($id));
         $subjectDeadline->setTaskId($this->getTaskId($id));
         return $subjectDeadline;
