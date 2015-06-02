@@ -35,6 +35,6 @@ class ThreeTaskPenaltyGameState implements State
     public function getNextState()
     {
         $stateId = $this->subject->getState();
-        return ($stateId >= self::GENERAL and $stateId < self::TASK) ? ++$stateId : self::GAME_OVER;
+        return ($stateId >= self::GENERAL and $stateId < self::OUTGOING_SURVEY) ? ++$stateId : self::GAME_OVER;
     }
 }
