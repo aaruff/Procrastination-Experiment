@@ -34,6 +34,8 @@ class ThreeTaskPenaltyStateMap implements StateMap
                 return DeadlineMap::toUri();
             case ThreeTaskPenaltyGameState::RANK_TASK_COMPLETION:
                 return RankTaskCompletionMap::toUri();
+            case ThreeTaskPenaltyGameState::TASK:
+
             default:
                 return LoginMap::toUri();
         }
