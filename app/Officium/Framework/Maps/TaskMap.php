@@ -12,7 +12,7 @@ class TaskMap extends ResourceMap
      */
     public static function toTemplate()
     {
-        return '/pages/subject/survey/task.twig';
+        return '/pages/subject/task.twig';
     }
 
     /**
