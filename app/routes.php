@@ -13,6 +13,7 @@ use Officium\Framework\Maps\AttentiveRankMap;
 use Officium\Framework\Maps\CertificateMap;
 use Officium\Framework\Maps\DeadlineMap;
 use Officium\Framework\Maps\RankTaskCompletionMap;
+use Officium\Framework\Maps\TaskMap;
 
 //---------------------------------------------------
 // User Routes
@@ -58,6 +59,9 @@ Route::post(RankTaskCompletionMap::toUri(), RankTaskCompletionMap::toController(
 //---------------------
 // Experiment
 //---------------------
+// - Task
+Route::get(TaskMap::toUri(), TaskMap::toController());
+Route::post(TaskMap::toUri(), TaskMap::toController(Map::$POST));
 
 
 //---------------------------------------------------
