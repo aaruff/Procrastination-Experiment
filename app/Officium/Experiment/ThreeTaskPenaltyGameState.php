@@ -12,6 +12,8 @@ class ThreeTaskPenaltyGameState implements State
     const CERTIFICATE = 4;
     const DEADLINE = 5;
     const RANK_TASK_COMPLETION = 6;
+    const TASK = 7;
+    const OUTGOING_SURVEY = 8;
     const GAME_OVER = -1;
 
     /**
@@ -33,6 +35,6 @@ class ThreeTaskPenaltyGameState implements State
     public function getNextState()
     {
         $stateId = $this->subject->getState();
-        return ($stateId >= self::GENERAL and $stateId < self::RANK_TASK_COMPLETION) ? ++$stateId : self::GAME_OVER;
+        return ($stateId >= self::GENERAL and $stateId < self::TASK) ? ++$stateId : self::GAME_OVER;
     }
 }
