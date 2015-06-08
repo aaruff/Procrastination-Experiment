@@ -33,9 +33,9 @@ class AuthMiddleware extends Middleware
 
         /* @var \Officium\Framework\Maps\ThreeTaskPenaltyStateMap $stateMap */
         $stateMap = StateMapFactory::getStateMap(Subject::getByUserId(Session::getUserId()));
-        $stateUri = $stateMap->toUri();
-        if ($uri != $stateUri) {
-            $this->app->redirect($stateUri);
+        $uriList = $stateMap->toUriList();
+        if ( ! in_array($uri, $uriList)) {
+            $this->app->redirect($uriList[0]);
             return;
         }
 
