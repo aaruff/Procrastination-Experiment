@@ -17,27 +17,27 @@ class ThreeTaskPenaltyStateMap implements StateMap
         $this->subject = $subject;
     }
 
-    public function toUri()
+    public function toUriList()
     {
         switch($this->subject->getState()) {
             case ThreeTaskPenaltyGameState::GENERAL:
-                return GeneralAcademicMap::toUri();
+                return [GeneralAcademicMap::toUri()];
             case ThreeTaskPenaltyGameState::ACADEMIC_OBLIGATION:
-                return AcademicObligationMap::toUri();
+                return [AcademicObligationMap::toUri()];
             case ThreeTaskPenaltyGameState::EXTERNAL_OBLIGATION:
-                return ExternalObligationMap::toUri();
+                return [ExternalObligationMap::toUri()];
             case ThreeTaskPenaltyGameState::ATTENTIVE_RANK:
-                return AttentiveRankMap::toUri();
+                return [AttentiveRankMap::toUri()];
             case ThreeTaskPenaltyGameState::CERTIFICATE:
-                return CertificateMap::toUri();
+                return [CertificateMap::toUri()];
             case ThreeTaskPenaltyGameState::DEADLINE:
-                return DeadlineMap::toUri();
+                return [DeadlineMap::toUri()];
             case ThreeTaskPenaltyGameState::RANK_TASK_COMPLETION:
-                return RankTaskCompletionMap::toUri();
+                return [RankTaskCompletionMap::toUri()];
             case ThreeTaskPenaltyGameState::TASK:
-                return TaskMap::toUri();
+                return [TaskMap::toUri()];
             default:
-                return LoginMap::toUri();
+                return [LoginMap::toUri()];
         }
     }
 }
