@@ -58,6 +58,7 @@ create table tasks(
   id		integer auto_increment primary key,
   number integer not null,
   treatment_id integer not null,
+  start datetime not null,
   primary_deadline datetime not null,
   secondary_deadline datetime default null,
   secondary_deadline_enabled boolean default false,
@@ -74,15 +75,19 @@ create table tasks(
 #
 # Event Types -- Issued = 1, Failure = 2, Display Task = 3, Complete Task = 4,
 #--
-drop table if exists task_submission_logs;
-create table task_submission_logs(
+drop table if exists task_logs;
+create table task_logs(
   id	integer auto_increment primary key,
+  problem_id integer not null,
+  subject_id integer not null,
   task_id	integer not null,
   event integer not null,
   date_time datetime not null,
+  browser varchar(255) not null,
   updated_at timestamp not null,
   created_at timestamp not null
 ) ENGINE=InnoDB;
+
 
 #----------------------------------------
 # Incoming Survey Tables
