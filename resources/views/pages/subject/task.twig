@@ -1,72 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head> 
-	<meta charset="utf-8" />
-	<title>First Questionnaire</title> 
-	<link href='../resources/css/task.css' rel='stylesheet' type='text/css' /> 
-</head> 
-<body> 
-	<div id="content"> 
-        <div id="heading">
-        	<!-- task_number  --> 
-           <label class="heading">Task</label>
-           <label>
-                <p>In order to complete this task you must solve the problem given to you by entering the words below in alphabetical order, 
-                with the following restrictions:</p>
-           </label>
-            <label>
-            <ul>
-                <li class="star">You must complete this task by (Eastern).</li>
-                <li class="star">You must solve this problem by (Eastern), or you will be issued a new one.</li>
-                <li class="warn">If you close or refresh your browser, or log in again at a later time, you will be issued a new problem. </li>
-            </ul>
-            </label>
-        </div> 
-        <div class="float_center">
-        <form action="" method="post">
-            <div class="submit_button">
-                <label>Select the SUBMIT button to submit the solution to you problem:</label>
-                <input type="submit" name="button" value="Submit Task Solution" class="button"/>
+{% extends 'pages/subject/problem_master.twig' %}
+
+{% block body %}
+<div id="heading">
+    <p>In order to complete this task you must solve the problem given to you by entering the words below in alphabetical order,
+    with the following restrictions:</p>
+    <ul>
+        <li class="star">You must complete this task by (Eastern).</li>
+        <li class="star">You must solve this problem by (Eastern), or you will be issued a new one.</li>
+        <li class="warn">If you close or refresh your browser, or log in again at a later time, you will be issued a new problem. </li>
+    </ul>
+</div>
+<div class="float_center">
+    <form action="" method="post">
+        <div class="submit_button">
+              <label>Select the SUBMIT button to submit the solution to you problem:</label>
+              <input type="submit" name="button" value="Submit Task Solution" class="button"/>
               <div class="error">
                 <label class="error"></label>
               </div>
-            </div>
-            <div class="left_column"> 
-                <!-- PHRASES (1-50)-->
-                {% for i in 0..50 %}
-                <div class="phrase">
-                    <label>{{ i }}</label>
-                    <input type="text" class="textfield" maxlength="20" name="{{ i }}" placeholder="" value="{{ i }}" />
-                </div>
-                {% endfor %}
-            </div>
-            <div class="left_column"> 
-                <!-- PHRASES (1-50)-->
-                {% for i in 51..100 %}
-                <div class="phrase">
-                    <label>{{ i }}</label>
-                    <input type="text" class="textfield" maxlength="20" name="{{ i }}" placeholder="" value="{{ i }}" />
-                </div>
-                {% endfor %}
-            </div>
-            
-            <!-- PHRASES 101-150)-->
-            <div class="right_column">
-                {% for i in 101..150 %}
-                <div class="phrase">
-                    <label>{{ i }}</label>
-                    <input type="text" class="textfield" maxlength="20" name="{{ i }}" placeholder="" value="{{ i }}" />
-                </div>
-                {% endfor %}
-            </div>
-
-            <div class="center_column">
-                <img src ="" \>
-            </div>
-
-            </form>
         </div>
-    <div class="footer"></div>
-    </div>
-</body> 
-</html> 
+        <div class="col-md-2">
+            <!-- PHRASES (1-50)-->
+            {% for i in 0..50 %}
+            <div class="phrase">
+                <label>{{ i+1 }}</label>
+                <input type="text" class="textfield" maxlength="20" name="{{ i }}" placeholder="" value="{{ flash.phrase[i] }}" />
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-5">
+            <img src ="{{ "../img/#{flash.problem_url}" }}" \>
+        </div>
+        <div class="col-md-2">
+            <!-- PHRASES (1-50)-->
+            {% for i in 51..100 %}
+            <div class="phrase">
+                <label>{{ i+1 }}</label>
+                <input type="text" class="textfield" maxlength="20" name="{{ i }}" placeholder="" value="{{ flash.phrase[i] }}" />
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- PHRASES 101-150)-->
+        <div class="col-md-2">
+            {% for i in 101..149 %}
+            <div class="phrase">
+                <label>{{ i+1 }}</label>
+                <input type="text" class="textfield" maxlength="20" name="{{ i }}" placeholder="" value="{{ flash.phrase[i] }}" />
+            </div>
+            {% endfor %}
+        </div>
+
+
+    </form>
+</div>
+{% endblock %}
