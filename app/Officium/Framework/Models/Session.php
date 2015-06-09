@@ -7,8 +7,6 @@ class Session
     private static $SURVEY_ID = 'survey';
     private static $USER_ID = 'user';
     private static $ROLE = 'role';
-    private static $PHRASES = 'phrases';
-    private static $PROBLEM_IMAGE_LOCATION = 'problem_location';
 
     public static function logoutUser()
     {
@@ -51,7 +49,7 @@ class Session
      */
     public static function getUserId()
     {
-        return $_SESSION[self::$USER_ID];
+        return self::getItem(self::$USER_ID, 0);
     }
 
     /**
@@ -71,7 +69,7 @@ class Session
      */
     public static function isLoggedIn()
     {
-        return self::getItem(self::$USER_ID, 0) > 0;
+        return self::getUserId() > 0 && ! empty(self::getUser());
     }
 
     /**
