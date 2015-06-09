@@ -14,6 +14,7 @@ use Officium\Framework\Maps\CertificateMap;
 use Officium\Framework\Maps\DeadlineMap;
 use Officium\Framework\Maps\RankTaskCompletionMap;
 use Officium\Framework\Maps\TaskMap;
+use Officium\Framework\Maps\LandingPageMap;
 
 //---------------------------------------------------
 // User Routes
@@ -59,6 +60,9 @@ Route::post(RankTaskCompletionMap::toUri(), RankTaskCompletionMap::toController(
 //---------------------
 // Experiment
 //---------------------
+// - Landing Page
+Route::get(LandingPageMap::toUri(), LandingPageMap::toController());
+
 // - Task
 Route::get(TaskMap::toUri(), TaskMap::toController());
 Route::post(TaskMap::toUri(), TaskMap::toController(Map::$POST));
