@@ -3,7 +3,7 @@
 namespace Officium\Framework\View\Forms\IncomingSurveys;
 
 use Officium\Framework\View\Forms\Form;
-use Officium\Experiment\SubjectDeadlineSurvey;
+use Officium\Experiment\SubjectDeadline;
 use Officium\Framework\Models\Saveable;
 use Officium\Framework\Models\User;
 use Officium\Framework\Validators\DateTimeValidator;
@@ -66,10 +66,10 @@ class SubjectDeadlineForm extends Form implements Saveable
 
     /**
      * @param $id
-     * @return SubjectDeadlineSurvey
+     * @return SubjectDeadline
      */
     private function getDeadline($id) {
-        $subjectDeadline = new SubjectDeadlineSurvey();
+        $subjectDeadline = new SubjectDeadline();
         $subjectDeadline->setDeadline($this->getDateTime($id));
         $subjectDeadline->setTaskId($this->getTaskId($id));
         return $subjectDeadline;
