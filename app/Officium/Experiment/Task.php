@@ -103,17 +103,13 @@ class Task extends Model
         $this->penalty_rate = $penaltyRate;
     }
 
-    /* ------------------------------------------------------------------------------------------
-     *                                   Private
-     * ------------------------------------------------------------------------------------------ */
-
     /**
      * Generates the problem image, saves it in the "img" directory,
      * and returns the phrases generated.
      * @param $subject_id
      * @return array
      */
-    private function generate_problem_image($subject_id){
+    public function generate_problem_image($subject_id){
         $im = imagecreate(650, 1100);
         $green = imagecolorallocate($im, 250, 250, 250);
         $black = imagecolorallocate($im, 0, 0, 0);
@@ -170,6 +166,11 @@ class Task extends Model
         chmod(IMAGE_DIR.$subject_id.".png",0644);
         return $phrases;
     }
+
+    /* ------------------------------------------------------------------------------------------
+     *                                   Private
+     * ------------------------------------------------------------------------------------------ */
+
     /**
      *
      * @param $syllables
