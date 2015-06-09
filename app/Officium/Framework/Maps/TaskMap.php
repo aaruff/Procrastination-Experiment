@@ -20,7 +20,7 @@ class TaskMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/survey/task';
+        return '/task';
     }
 
     /**
