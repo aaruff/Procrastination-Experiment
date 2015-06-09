@@ -46,6 +46,8 @@ create table sessions(
   id integer AUTO_INCREMENT primary key,
   size integer not null,
   user_id integer not null,
+  start datetime not null,
+  end datetime not null,
   updated_at timestamp not null,
   created_at timestamp not null
 ) Engine=InnoDB;
@@ -60,7 +62,6 @@ create table tasks(
   treatment_id integer not null,
   start datetime not null,
   primary_deadline datetime not null,
-  secondary_deadline datetime default null,
   secondary_deadline_enabled boolean default false,
   time_limit integer default 0,
   payoff double not null,
@@ -69,6 +70,17 @@ create table tasks(
   updated_at timestamp not null,
   created_at timestamp not null
 ) Engine=InnoDB;
+
+drop table if exists subject_deadlines;
+create table subject_deadlines(
+  id integer auto_increment primary key,
+  subject_id integer not null,
+  task_id integer not null,
+  deadline datetime not null,
+  updated_at timestamp not null,
+  created_at timestamp not null
+) ENGINE=InnoDB;
+
 
 #--
 # Task Log: Stores task submission events
@@ -176,16 +188,6 @@ create table certificate_surveys(
   updated_at timestamp not null,
   created_at timestamp not null
 ) ENGINE InnoDB;
-
-drop table if exists subject_task_deadlines;
-create table subject_task_deadlines(
-  id integer auto_increment primary key,
-  subject_id integer not null,
-  task_id integer not null,
-  deadline datetime not null,
-  updated_at timestamp not null,
-  created_at timestamp not null
-) ENGINE=InnoDB;
 
 drop table if exists task_completion_rank_surveys;
 create table task_completion_rank_surveys(
