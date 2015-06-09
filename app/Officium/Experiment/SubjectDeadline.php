@@ -4,11 +4,11 @@ namespace Officium\Experiment;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SubjectDeadlineSurvey extends Model
+class SubjectDeadline extends Model
 {
     private static $DB_DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
-    protected $table = 'subject_task_deadlines';
+    protected $table = 'subject_deadlines';
 
     /* ------------------------------------------------------------------------------------------
      *                                Eloquent Relations
@@ -41,11 +41,10 @@ class SubjectDeadlineSurvey extends Model
     }
 
     /**
-     * @param \DateTime $dateTime
+     * @param \DateTime $subjectDeadline
      */
-    public function setDeadline(\DateTime $dateTime)
+    public function setDeadline(\DateTime $subjectDeadline)
     {
-        $this->deadline = $dateTime->format(self::$DB_DATE_TIME_FORMAT);
+        $this->subject_deadline = $subjectDeadline->format(self::$DB_DATE_TIME_FORMAT);
     }
-
 }
