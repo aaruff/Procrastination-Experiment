@@ -8,6 +8,8 @@ class Session extends Model
 {
     protected $table = 'sessions';
 
+    private static $DB_DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
     /* ------------------------------------------------------------------------------------------
      *                                Eloquent Relations
      * ------------------------------------------------------------------------------------------ */
@@ -50,6 +52,22 @@ class Session extends Model
     }
 
     /**
+     * @param \DateTime $start
+     */
+    public function setStartDateTime(\DateTime $start)
+    {
+        $this->start = $start->format(self::$DB_DATE_TIME_FORMAT);
+    }
+
+    /**
+     * @param \DateTime $end
+     */
+    public function setEndDateTime(\DateTime $end)
+    {
+        $this->end = $end->format(self::$DB_DATE_TIME_FORMAT);
+    }
+
+    /**
      * @param int $userId
      */
     public function setUserId($userId)
@@ -88,4 +106,21 @@ class Session extends Model
     {
         return $this->subjects;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStartDateTime()
+    {
+        return \DateTime::createFromFormat(self::$DB_DATE_TIME_FORMAT, $this->start);
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEndDateTime()
+    {
+        return \DateTime::createFromFormat(self::$DB_DATE_TIME_FORMAT, $this->end);
+    }
+
 }
