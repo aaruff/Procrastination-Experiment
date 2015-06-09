@@ -19,6 +19,8 @@ class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
 
     private static $SIZE = 'size';
     private static $ADJUSTABLE_DEADLINE = 'adjustableDeadline';
+    private static $START = 'start';
+    private static $END = 'end';
     private static $PENALTY_RATE = 'penaltyRate';
     private static $TASK_ONE_DEADLINE = 'taskOne';
     private static $TASK_TWO_DEADLINE = 'taskTwo';
@@ -48,6 +50,8 @@ class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
     {
         $validators = [];
         $validators[self::$SIZE] = new IntegerValidator();
+        $validators[self::$START] = new DateTimeValidator();
+        $validators[self::$END] = new DateTimeValidator();
         $validators[self::$ADJUSTABLE_DEADLINE] = new CheckboxValidator();
         $validators[self::$TASK_ONE_DEADLINE] = new DateTimeValidator();
         $validators[self::$TASK_TWO_DEADLINE] = new DateTimeValidator();
@@ -71,6 +75,8 @@ class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
         $session = new Session();
         $session->setSize($this->getIntEntry(self::$SIZE));
         $session->setUserId($user->getId());
+        $session->setStartDateTime($this->getStartDateTime());
+        $session->setEndDateTime($this->getEndDateTime());
         $session->save();
 
         $this->createSessionSubjects($this->createSessionUsers($session), $session);
@@ -88,6 +94,18 @@ class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
         $entries = $this->getEntries();
         // When it's not empty and has passed validation so the option must be set to true.
         return ! empty($entries[self::$ADJUSTABLE_DEADLINE]);
+    }
+
+    private function getStartDateTime()
+    {
+        $entries = $this->getEntries();
+        return \DateTime::createFromFormat(self::$DATE_TIME_FORMAT, $entries[self::$START]);
+    }
+
+    private function getEndDateTime()
+    {
+        $entries = $this->getEntries();
+        return \DateTime::createFromFormat(self::$DATE_TIME_FORMAT, $entries[self::$END]);
     }
 
     /**
