@@ -41,6 +41,14 @@ class Subject extends Model
         return $this->hasOne(get_class(new GeneralAcademicSurvey()));
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function getDeadlines()
+    {
+        return $this->hasMany(get_class(new SubjectDeadline()));
+    }
+
     /* ------------------------------------------------------------------------------------------
      *                                      Public
      * ------------------------------------------------------------------------------------------ */
