@@ -32,7 +32,7 @@
                 <legend>Work</legend>
                 {# Work Hours #}
                 <div class="form-group">
-                    <label for="ob">From begin date to end date, how much time (in hours) do you expect to allocate your job?</label>
+                    <label for="ob">From <em>[begin date]</em> to <em>[end date]</em>, how much time (in hours) do you expect to allocate your job?</label>
                     <input type="text" class="form-control" id="ob" name="hours_work" value="{{ flash.entries.hours_work }}" />
                     {% if flash.errors.hours_work %}
                         <div class="alert alert-danger">
@@ -119,7 +119,7 @@
 
                 {# --- Social Schedule: Static #}
                 <div id="major-group" class="form-group">
-                    <label for="mdt">Enter the time commitments for social obligations over this timer period</label>
+                    <label for="mdt">Enter the time commitments for social obligations over this time period</label>
                     <div class="form-inline row">
                         <div class="form-group">
                             <div class="date input-group">
@@ -191,7 +191,7 @@
 
                 {# --- Family Schedule: Static #}
                 <div id="major-group" class="form-group">
-                    <label for="mdt">Enter the time commitments for family obligations over this timer period</label>
+                    <label for="mdt">Enter the time commitments for family obligations over this time period</label>
                     <div class="form-inline row">
                         <div class="form-group">
                             <div class="date input-group">
