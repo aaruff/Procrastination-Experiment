@@ -60,4 +60,12 @@ class Treatment extends Model
     {
         return $this->hasMany(get_class(new Task()), 'treatment_id');
     }
+
+    /**
+     * @return \Officium\Experiment\Task[]
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
+    }
 }
