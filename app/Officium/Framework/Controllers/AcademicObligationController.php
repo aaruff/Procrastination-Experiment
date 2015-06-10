@@ -16,6 +16,9 @@ class AcademicObligationController
     public function get()
     {
         $app = Slim::getInstance();
+
+        $form = new Form();
+        $app->flash('parameters', $form->getFormParameters(Session::getUser()));
         $app->render(Map::toTemplate(), $app->flashData());
     }
 
