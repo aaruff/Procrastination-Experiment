@@ -10,7 +10,7 @@
 
             {# Total Assignment Hours ---------------------------------------------------------------------------- #}
             <div class="form-group">
-                <label>How many hours between [x] and [y] do you expect to spend on course work</label>
+                <label>How many hours between {{ flash.parameters.start }} and {{ flash.parameters.end }} do you expect to spend on course work</label>
                 <input type="text" class="form-control" name="hours_course_work" value="{{ flash.entries.hours_course_work }}"/>
                 {% if flash.errors.hours_course_work %}
                     <div class="alert alert-danger">
@@ -27,7 +27,7 @@
                 <legend>Assignments and Exams</legend>
 
                 <div class="form-group">
-                    <label>Over the course of the next week how many of each of the following do you have:</label>
+                    <label>From <em>{{ flash.parameters.start }}</em> to <em>{{ flash.parameters.end }}</em>, how many of each of the following do you have:</label>
                 </div>
 
                 {# Minor Assignments ----------------------------------------------------------------------------- #}
