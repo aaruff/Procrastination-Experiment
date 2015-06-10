@@ -41,10 +41,15 @@ class SubjectDeadline extends Model
     }
 
     /**
-     * @param \DateTime $subjectDeadline
+     * @param \DateTime $deadline
      */
-    public function setDeadline(\DateTime $subjectDeadline)
+    public function setDeadline(\DateTime $deadline)
     {
-        $this->subject_deadline = $subjectDeadline->format(self::$DB_DATE_TIME_FORMAT);
+        $this->deadline = $deadline->format(self::$DB_DATE_TIME_FORMAT);
+    }
+
+    public function getDeadline()
+    {
+        return \DateTime::createFromFormat(self::$DB_DATE_TIME_FORMAT, $this->deadline);
     }
 }
