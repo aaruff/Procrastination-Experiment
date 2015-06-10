@@ -52,7 +52,6 @@ class Task extends Model
         return $this->number;
     }
 
-
     /**
      * Sets the flag which indicates if subject enabled deadlines are enabled.
      *
@@ -94,6 +93,14 @@ class Task extends Model
     }
 
     /**
+     * @return int
+     */
+    public function getPayoff()
+    {
+        return $this->payoff;
+    }
+
+    /**
      * Sets the penalty rate that reduces the payoff after the deadline has passed.
      *
      * @param $penaltyRate
@@ -101,6 +108,14 @@ class Task extends Model
     public function setPenaltyRate($penaltyRate)
     {
         $this->penalty_rate = $penaltyRate;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPenaltyRate()
+    {
+        return $this->penalty_rate;
     }
 
     /**
