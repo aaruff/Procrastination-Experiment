@@ -44,7 +44,7 @@ class Subject extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function getDeadlines()
+    public function deadlines()
     {
         return $this->hasMany(get_class(new SubjectDeadline()));
     }
@@ -110,6 +110,14 @@ class Subject extends Model
     public function getState()
     {
         return $this->state;
+    }
+
+    /**
+     * @return \Officium\Experiment\SubjectDeadline[]
+     */
+    public function getDeadlines()
+    {
+        return $this->deadlines;
     }
 
     public function setNextState()
