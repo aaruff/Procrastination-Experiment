@@ -14,6 +14,7 @@ use Officium\Framework\Models\User;
 class AcademicObligationForm extends Form implements Saveable
 {
     protected static $DATE_TIME_FORMAT = 'm-d-Y g:i a';
+    protected static $DISPLAY_DATE_TIME_FORMAT = 'n/j/y g:i a';
 
     private static $HOURS_COURSE_WORK = 'hours_course_work';
 
@@ -47,6 +48,18 @@ class AcademicObligationForm extends Form implements Saveable
         $survey->save();
 
         $survey->academicObligationDeadlines()->saveMany($this->getAllDeadlines());
+    }
+
+    public function getFormParameters(User $user)
+    {
+        $subject = $user->getSubject();
+        $session = $subject->getSession();
+
+        return [
+            'start'=>$session->getStartDateTime()->format(self::$DISPLAY_DATE_TIME_FORMAT),
+            'end'=>$session->getEndDateTime()->format(self::$DISPLAY_DATE_TIME_FORMAT)
+        ];
+
     }
 
     /* ------------------------------------------------------------------------------------------
