@@ -44,9 +44,9 @@ class Subject extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function deadlines()
+    public function subjectTasks()
     {
-        return $this->hasMany(get_class(new SubjectDeadline()));
+        return $this->hasMany(get_class(new SubjectTask()));
     }
 
     /* ------------------------------------------------------------------------------------------
@@ -113,11 +113,38 @@ class Subject extends Model
     }
 
     /**
-     * @return \Officium\Experiment\SubjectDeadline[]
+     * @param $taskNumber
+     *
+     * @return \Officium\Experiment\SubjectTask
      */
-    public function getDeadlines()
+    public function getDeadline($taskNumber)
     {
-        return $this->deadlines;
+        return SubjectTask::where('subject_id', '=', $this->id)->where('task_id', '=', $taskNumber)->first();
+    }
+
+    /**
+     * @return \Officium\Experiment\SubjectTask[]
+     */
+    public function getSubjectTasks()
+    {
+        return $this->subjectTasks;
+    }
+
+    /**
+     * @param $taskNumber
+     * @return null|SubjectTask
+     */
+    public function getSubjectTask($taskNumber)
+    {
+        $tasks = $this->getSubjectTasks();
+        foreach ($tasks as $task) {
+            if ($task->getTaskNumber() == $taskNumber) {
+                return $task;
+            }
+        }
+
+        //Todo: add logging and exception
+        return null;
     }
 
     public function setNextState()
