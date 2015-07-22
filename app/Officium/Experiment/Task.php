@@ -24,6 +24,23 @@ class Task extends Model
     }
 
     /**
+     * Time to zero payoff in hours and minutes represented as a floating point number.
+     * @return float
+     */
+    public function timeToZeroPayoff()
+    {
+        return $this->getPayoff()/$this->getPenaltyRate();
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDeadline()
+    {
+        return \DateTime::createFromFormat(self::$DB_DATE_TIME_FORMAT, $this->primary_deadline);
+    }
+
+    /**
      * Sets the treatment ID.
      *
      * @param int $treatmentId
@@ -63,6 +80,14 @@ class Task extends Model
     }
 
     /**
+     * @return bool
+     */
+    public function isSubjectDeadlineEnabled()
+    {
+        return $this->secondary_deadline_enabled == true;
+    }
+
+    /**
      * Set the flag which indicates if the penalty rate is used in this treatment.
      *
      * @param $enabled
@@ -70,6 +95,15 @@ class Task extends Model
     public function setPenaltyRateEnabled($enabled)
     {
         $this->penalty_rate_enabled = $enabled;
+    }
+
+    /**
+     * Hours to complete task
+     * @return int
+     */
+    public function getTimeLimit()
+    {
+        return $this->time_limit;
     }
 
     /**
@@ -93,7 +127,8 @@ class Task extends Model
     }
 
     /**
-     * @return int
+
+     * @return float
      */
     public function getPayoff()
     {
