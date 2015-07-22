@@ -15,6 +15,7 @@ use Officium\Framework\Maps\DeadlineMap;
 use Officium\Framework\Maps\RankTaskCompletionMap;
 use Officium\Framework\Maps\TaskMap;
 use Officium\Framework\Maps\LandingPageMap;
+use Officium\Framework\Maps\OutgoingQuestionnaireMap;
 
 //---------------------------------------------------
 // User Routes
@@ -64,8 +65,8 @@ Route::post(RankTaskCompletionMap::toUri(), RankTaskCompletionMap::toController(
 Route::get(LandingPageMap::toUri(), LandingPageMap::toController());
 
 // - Task
-Route::get(TaskMap::toUri(), TaskMap::toController());
-Route::post(TaskMap::toUri(), TaskMap::toController(Map::$POST));
+Route::get(TaskMap::toUri(), TaskMap::toController())->conditions(TaskMap::$CONDITIONS);
+Route::post(TaskMap::toUri(), TaskMap::toController(Map::$POST))->conditions(TaskMap::$CONDITIONS);
 
 
 //---------------------------------------------------
@@ -79,3 +80,6 @@ Route::get(SessionMap::toUri(), SessionMap::toController());
 Route::post(SessionMap::toUri(), SessionMap::toController(Map::$POST));
 
 Route::get(TreatmentMap::toUri(TreatmentMap::$ID), TreatmentMap::toController());
+
+Route::get(OutgoingQuestionnaireMap::toUri(), OutgoingQuestionnaireMap::toController());
+Route::post(OutgoingQuestionnaireMap::toUri(), OutgoingQuestionnaireMap::toController(Map::$POST));
