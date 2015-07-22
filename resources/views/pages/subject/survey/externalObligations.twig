@@ -32,7 +32,7 @@
                 <legend>Work</legend>
                 {# Work Hours #}
                 <div class="form-group">
-                    <label for="ob">From <em>[begin date]</em> to <em>[end date]</em>, how much time (in hours) do you expect to allocate your job?</label>
+                    <label for="ob">From {{ parameters.start }} to {{ parameters.end }}, how much time (in hours) do you expect to allocate your job?</label>
                     <input type="text" class="form-control" id="ob" name="hours_work" value="{{ flash.entries.hours_work }}" />
                     {% if flash.errors.hours_work %}
                         <div class="alert alert-danger">
@@ -104,7 +104,7 @@
                 <legend>Social</legend>
                 {# Hours of Social Obligations #}
                 <div class="form-group">
-                    <label for="sob">From begin date to end date, how much time (in hours) do you expect to your social obligations or recreational activities?</label>
+                    <label for="sob">From {{ parameters.start }} to {{ parameters.end }}, how much time (in hours) do you expect to your social obligations or recreational activities?</label>
                     <input type="text" class="form-control" id="sob" name="hours_social" value="{{ flash.entries.hours_social }}" />
                     {% if flash.errors.hours_social %}
                         <div class="alert alert-danger">
@@ -176,7 +176,7 @@
                 <legend>Family</legend>
                 {# Hours of Family Obligations #}
                 <div class="form-group">
-                    <label for="fob">From begin date to end date, how much time (in hours) do you expect to your social obligations or recreational activities?</label>
+                    <label for="fob">From {{ parameters.start }} to {{ parameters.end }}, how much time (in hours) do you expect to your social obligations or recreational activities?</label>
                     <input type="text" class="form-control" id="fob" name="hours_family" value="{{ flash.entries.hours_family }}" />
                     {% if flash.errors.hours_family %}
                         <div class="alert alert-danger">
@@ -302,11 +302,11 @@
 </script>
 
 <script>
-    $('.work_start_date_time').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
-    $('.work_end_date_time').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
-    $('.social_start_date_time').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
-    $('.social_end_date_time').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
-    $('.family_start_date_time').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
-    $('.family_end_date_time').datetimepicker({format: 'MM-DD-YYYY hh:mm a'});
+    $('.work_start_date_time').datetimepicker({format: 'MM-DD-YYYY h:mm a'});
+    $('.work_end_date_time').datetimepicker({format: 'MM-DD-YYYY h:mm a'});
+    $('.social_start_date_time').datetimepicker({format: 'MM-DD-YYYY h:mm a'});
+    $('.social_end_date_time').datetimepicker({format: 'MM-DD-YYYY h:mm a'});
+    $('.family_start_date_time').datetimepicker({format: 'MM-DD-YYYY h:mm a'});
+    $('.family_end_date_time').datetimepicker({format: 'MM-DD-YYYY h:mm a'});
 </script>
 {% endblock %}
