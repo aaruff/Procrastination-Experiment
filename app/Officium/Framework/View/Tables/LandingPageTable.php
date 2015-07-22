@@ -4,34 +4,32 @@ namespace Officium\Framework\View\Tables;
 
 use Officium\Experiment\Subject;
 use Officium\Framework\Maps\TaskMap;
+use Officium\Experiment\SubjectGame;
 
 class LandingPageTable 
 {
-    private static $DATE_TIME_FORMAT = 'm/d/Y g:i a';
-
     public function getData(Subject $subject)
     {
-        $tasks = $subject->getSession()->getTreatment()->getTasks();
-        $deadlines = $subject->getDeadlines();
+        $game = new SubjectGame($subject);
+        $numTasks = $game->getNumTasks();
 
-        $formData = [];
-        $timeNow = new \DateTime('now');
-        foreach ($tasks as $i=>$task) {
-            $row['url'] = TaskMap::toUri();
-            $row['number'] = $task->getNumber();
+        $rows['rate'] = $game->getPenaltyRatePerHour(1);
+        $rows['state']['fixed'] = $game::FIXED_PAYOFF;
+        $rows['state']['penalty'] = $game::PENALIZED_PAYOFF;
+        $rows['state']['zero'] = $game::NO_PAYOFF;
+        $rows['state']['complete'] = $game::COMPLETED;
+        for ($i = 1; $i <= $numTasks; ++$i) {
+            $row['access'] = $game->isTaskAccessible($i);
+            $row['state'] = $game->getTaskState($i);
+            $row['url'] = TaskMap::toUri($i);
+            $row['number'] = $i;
+            $row['deadline'] = $game->getDeadline($i);
+            $row['countdown'] = $game->getTimeRemaining($i);
+            $row['pay'] = $game->getTaskPayoff($i);
 
-            $deadline = $deadlines[$i]->getDeadline();
-            $row['deadline'] = $deadline->format(self::$DATE_TIME_FORMAT);
-
-            $row['deadline_countdown'] = ($timeNow < $deadline) ? $timeNow->diff($deadline)->format('%R%a days') : '';
-
-
-            $row['deadline_zero'] = '';
-
-            $row['current_payoff'] = $task->getPayoff();
+            $rows['rows'][] = $row;
         }
 
-        return $formData;
+        return $rows;
     }
-
 }
