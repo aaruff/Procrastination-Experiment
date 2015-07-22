@@ -1,6 +1,20 @@
 {% extends 'pages/subject/problem_master.twig' %}
 
 {% block body %}
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">{{ flash.header }}</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{ flash.body }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <h4>Tasks</h4>
@@ -8,21 +22,49 @@
     <div class="panel-body">
         <table class="table table-striped table-bordered table-hover" id="subjects">
             <tr>
-                <th>Task</th><th>Deadline</th><th>Time Remaining</th>
-                <th>Current Payment for Task</th><th>Current Payoff</th><th></th>
+                <th>Task</th><th>Deadline</th><th>Time Remaining</th><th>Payoff</th><th></th>
             </tr>
-            {% for row in flash.table %}
-                <tr>
+            {% for row in rows %}
+                <tr class="{{ row.state == state.complete or row.state == state.zero ? 'text-muted' : '' }}">
                     <td>{{ row.number }}</td>
-                    <td>{{ row.deadline }}</td>
-                    <td>{{ row.deadline_countdown }}</td>
-                    <td>{{  row.deadline_zero }}</td>
-                    <td>{{ row.current_payoff }}</td>
-                    <td><a class="btn btn-default" href="{{ row.url }}">Begin</a> </td>
+                    <td>
+                    {% if row.state == state.fixed or row.state == state.penalty %}
+                        {{ row.deadline }}
+                    {% endif %}
+                    </td>
+                    <td>
+                    {% if row.state == state.fixed or row.state == state.penalty %}
+                        {{ row.countdown }}
+                    {% endif %}
+                    </td>
+                    <td>{{ row.pay }}</td>
+                    <td>
+                        {% if row.state == state.fixed %}
+                            <a class="btn btn-primary" href="{{ row.url }}">Work on Task {{ row.number }}</a>
+                        {% elseif row.state == state.penalty %}
+                            <a class="btn btn-default" href="{{ row.url }}">Work on Task {{ row.number }}</a>
+                        {% elseif row.state == state.expired %}
+                            <span>This task has expired.</span>
+                        {% elseif row.state == state.complete %}
+                            <span>This task has been completed.</span>
+                        {% else %}
+                            <span>This task is no longer available.</span>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </table>
-        <p>Note: The penalty rate is $1 per hour until the payoff is $0.</p>
+        <p>Note: The penalty rate is ${{ rate }} per hour until the payoff is $0.</p>
     </div>
 </div>
+{% endblock %}
+
+{% block js %}
+    {% if flash.dialog %}
+        <script type="text/javascript">
+            $(window).load(function(){
+                $('#myModal').modal('show');
+            });
+        </script>
+    {%  endif %}
 {% endblock %}
