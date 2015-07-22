@@ -7,6 +7,7 @@ use Officium\Framework\Controllers\TaskController;
 
 class TaskMap extends ResourceMap
 {
+    public static $CONDITIONS = ['id'=>'[1-3]'];
     /**
      * @return string template route
      */
@@ -16,11 +17,27 @@ class TaskMap extends ResourceMap
     }
 
     /**
+     * @param string $id
      * @return string
      */
-    public static function toUri()
+    public static function toUri($id = ':id')
     {
-        return '/task';
+        return "/task/$id";
+    }
+
+    /**
+     * @param $uri
+     * @return bool
+     */
+    public static function isUri($uri)
+    {
+        return $uri === self::toUri('1') || $uri === self::toUri('2') || $uri === self::toUri('3');
+    }
+
+    public static function getTaskNumber($uri)
+    {
+        $parts = explode('/', $uri);
+        return intval($parts[2]);
     }
 
     /**
