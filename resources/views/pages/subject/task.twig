@@ -2,19 +2,27 @@
 
 {% block body %}
 <div id="heading">
+    <p>As {{ flash.parameters.ctime }} the payoff for completing task {{ parameters.tasknumber }} is ${{ parameters.taskpayoff }}.
+    As of {{ parameters.ctime }} the payoff for completing the currently available task(s) are:</p>
+    <ul>
+        {% for t in parameters.other_tasks %}
+            <li>Task {{ t.number }}: ${{ t.payoff }}</li>
+        {% endfor %}
+    </ul>
     <p>In order to complete this task you must solve the problem given to you by entering the words below in alphabetical order,
     with the following restrictions:</p>
     <ul>
-        <li class="star">You must complete this task by (Eastern).</li>
-        <li class="star">You must solve this problem by (Eastern), or you will be issued a new one.</li>
+        <li class="star">You must complete this task by {{ parameters.task_deadline }} (Eastern).</li>
+        <li class="star">You must solve this problem by {{ parameters.problem_deadline }} (Eastern), or you will be issued a new one.</li>
         <li class="warn">If you close or refresh your browser, or log in again at a later time, you will be issued a new problem. </li>
     </ul>
 </div>
 <div class="float_center">
     <form action="" method="post">
+        <input type="hidden" name="task_number" value="{{ parameters.task_number }}"/>
         <div class="submit_button">
               <label>Select the SUBMIT button to submit the solution to you problem:</label>
-              <input type="submit" name="button" value="Submit Task Solution" class="button"/>
+              <input type="submit" name="button" value="Submit Task Solution" class="btn btn-success"/>
               <div class="error">
                 <label class="error"></label>
               </div>
@@ -22,21 +30,21 @@
         <div class="col-md-2">
             <!-- PHRASES (1-50)-->
             {% for i in 0..50 %}
-            <div class="phrase">
+            <div class="phrases">
                 <label>{{ i+1 }}</label>
-                <input type="text" class="textfield" maxlength="20" name="{{ i }}" placeholder="" value="{{ flash.phrase[i] }}" />
+                <input type="text" class="textfield" maxlength="20" name="solution[{{ i }}]" placeholder="" value="{{ parameters.phrases[i] }}" />
             </div>
             {% endfor %}
         </div>
         <div class="col-md-5">
-            <img src ="{{ "../img/#{flash.problem_url}" }}" \>
+            <img src ="{{ "../img/#{parameters.problem_url}" }}" \>
         </div>
         <div class="col-md-2">
             <!-- PHRASES (1-50)-->
             {% for i in 51..100 %}
-            <div class="phrase">
+            <div class="phrases">
                 <label>{{ i+1 }}</label>
-                <input type="text" class="textfield" maxlength="20" name="{{ i }}" placeholder="" value="{{ flash.phrase[i] }}" />
+                <input type="text" class="textfield" maxlength="20" name="solution[{{ i }}]" placeholder="" value="{{ parameters.phrases[i] }}" />
             </div>
             {% endfor %}
         </div>
@@ -44,9 +52,9 @@
         <!-- PHRASES 101-150)-->
         <div class="col-md-2">
             {% for i in 101..149 %}
-            <div class="phrase">
+            <div class="phrases">
                 <label>{{ i+1 }}</label>
-                <input type="text" class="textfield" maxlength="20" name="{{ i }}" placeholder="" value="{{ flash.phrase[i] }}" />
+                <input type="text" class="textfield" maxlength="20" name="solution[{{ i }}]" placeholder="" value="{{ parameters.phrases[i] }}" />
             </div>
             {% endfor %}
         </div>
