@@ -146,9 +146,7 @@
                                                     <th>Number</th>
                                                     <th>Task Deadlines</th>
 
-                                                    {% if row.tasks.0.secondary_deadline_enabled %}
-                                                        <th>Subject Deadlines</th>
-                                                    {% endif %}
+                                                    <th>Subject Deadlines</th>
 
                                                     {% if row.tasks.0.penalty_rate_enabled %}
                                                         <th>Penalty Rate</th>
@@ -167,9 +165,7 @@
                                                             {{ task.primary_deadline }}
                                                         </td>
 
-                                                        {% if task.secondary_deadline_enabled %}
-                                                            <td>{{ task.secondary_deadline }}</td>
-                                                        {% endif %}
+                                                        <td>{{ task.secondary_deadline_enabled ? 'yes' : 'no' }}</td>
 
                                                         {% if task.penalty_rate_enabled %}
                                                             <td>{{ task.penalty_rate }}</td>
