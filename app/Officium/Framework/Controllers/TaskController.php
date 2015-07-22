@@ -2,51 +2,75 @@
 
 namespace Officium\Framework\Controllers;
 
+use Officium\Experiment\SubjectGame;
+use Officium\Framework\Maps\LandingPageMap;
+use Officium\Framework\Maps\OutgoingQuestionnaireMap;
 use Officium\Framework\Maps\TaskMap as Map;
 use Officium\Framework\View\Forms\TaskForm as Form;
 use Officium\Framework\Models\Session;
-use Officium\Experiment\Problem;
 use Slim\Slim;
-
+use Officium\Experiment\Problem;
+use Officium\Experiment\EventLog;
 
 class TaskController 
 {
     /**
-     * Handles get requests
+     * @param $taskNumber
      */
-    public function get()
+    public function get($taskNumber)
     {
         $app = Slim::getInstance();
+        $subject = Session::getSubject();
 
-        $problem = new Problem(Session::getSubject()->getId());
+        EventLog::logEvent($subject, EventLog::NEW_PROBLEM_ISSUED, $taskNumber);
 
-        $app->flash('problem_url', $problem->getImageFileName());
-        $app->flash('phrase', $problem->getPhrases());
-        $app->render(Map::toTemplate(), $app->flashData());
+        $game = new SubjectGame($subject);
+        if ($game->isOver()) {
+            $subject = Session::getSubject();
+            $subject->setNextState();
+            $subject->save();
+            $app->redirect(OutgoingQuestionnaireMap::toUri());
+            return;
+        }
+
+        $problem = new Problem($subject->getId());
+
+        Session::setProblemTaskNumber($taskNumber);
+        Session::setProblemSolution($problem->getPhrases());
+        Session::setProblemUrl($problem->getImageFileName());
+
+        $form = new Form($subject);
+        $app->render(Map::toTemplate(), ['parameters'=>$form->getFormParameters(Session::getSubject())]);
     }
 
     /**
-     * Handles post requests
+     * @param $taskNumber
      */
-    public function post()
+    public function post($taskNumber)
     {
         $app = Slim::getInstance();
-
+        $subject = Session::getSubject();
 
         $form = new Form();
         if ( ! $form->validate($app->request->post())) {
+            EventLog::logEvent($subject, EventLog::INCORRECT_SUBMISSION, $taskNumber);
+
             $app->flash('flash', $form->getEntriesWithErrors());
-            $app->redirect(Map::toUri());
+            $app->redirect(Map::toUri($taskNumber));
             return;
         }
 
         $form->save(Session::getUser());
 
-        $subject = Session::getSubject();
-        $subject->setNextState();
-        $subject->save();
+        EventLog::logEvent($subject, EventLog::CORRECT_SUBMISSION, $taskNumber);
 
-        $app->redirect(Map::toUri());
+        $game = new SubjectGame($subject);
+        if ($game->isOver()) {
+            $app->redirect(OutgoingQuestionnaireMap::toUri());
+        }
+        else {
+            $app->redirect(LandingPageMap::toUri());
+        }
     }
 
 }
