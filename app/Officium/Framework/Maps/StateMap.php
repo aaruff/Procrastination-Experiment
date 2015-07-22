@@ -6,7 +6,13 @@ interface StateMap
 {
     /**
      * Returns the URI for the current state.
+     * @param string $uri
      * @return string
      */
-    public function toUriList();
+    public function isStateValidUri($uri);
+
+    /**
+     * @return string
+     */
+    public function getStateUri();
 }
