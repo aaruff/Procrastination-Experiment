@@ -7,6 +7,10 @@ class Session
     private static $SURVEY_ID = 'survey';
     private static $USER_ID = 'user';
     private static $ROLE = 'role';
+    private static $PROBLEM = 'problem';
+    private STATIC $TASK_NUMBER = 'task_number';
+    private static $SOLUTION = 'solution';
+    private static $PROBLEM_URL = 'url';
 
     public static function logoutUser()
     {
@@ -53,6 +57,26 @@ class Session
     }
 
     /**
+     * Return the task's problem solution.
+     *
+     * @return String[]
+     */
+    public static function getProblemSolution()
+    {
+        return $_SESSION[self::$PROBLEM][self::$SOLUTION];
+    }
+
+    public static function getProblemTaskNumber()
+    {
+        return $_SESSION[self::$PROBLEM][self::$TASK_NUMBER];
+    }
+
+    public static function getProblemUrl()
+    {
+        return $_SESSION[self::$PROBLEM][self::$PROBLEM_URL];
+    }
+
+    /**
      * Sets the survey ID.
      *
      * @param int $surveyId
@@ -60,6 +84,29 @@ class Session
     public static function setSurveyId($surveyId)
     {
         $_SESSION[self::$SURVEY_ID] = $surveyId;
+    }
+
+    /**
+     * Save the tasks problem solution.
+     * @param array $solution
+     */
+    public static function setProblemSolution(array $solution)
+    {
+        $_SESSION[self::$PROBLEM][self::$SOLUTION] = $solution;
+    }
+
+    /**
+     * Saves the current problem task number.
+     * @param $taskNumber
+     */
+    public static function setProblemTaskNumber($taskNumber)
+    {
+        $_SESSION[self::$PROBLEM][self::$TASK_NUMBER] = $taskNumber;
+    }
+
+    public static function setProblemUrl($url)
+    {
+        $_SESSION[self::$PROBLEM][self::$PROBLEM_URL] = $url;
     }
 
     /**
