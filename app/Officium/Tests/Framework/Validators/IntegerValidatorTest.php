@@ -20,6 +20,16 @@ class IntegerValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function SameMinMaxValue_Should_ReturnTrue_Oterwise_False()
+    {
+        $integerValidator = new IntegerValidator(1,1);
+        $this->assertTrue($integerValidator->validate(1));
+        $this->assertFalse($integerValidator->validate(2));
+    }
+
+    /**
+     * @test
+     */
     public function Given_InvalidIntegerProvided_When_Validated_Should_ReturnTrue()
     {
         $integerValidator = new IntegerValidator();

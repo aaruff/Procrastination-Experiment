@@ -26,6 +26,9 @@ class AlphabeticalValidatorTest extends \PHPUnit_Framework_TestCase
         $alphaValidator = new AlphabeticalValidator();
         $this->assertFalse($alphaValidator->validate(''));
         $this->assertFalse($alphaValidator->validate('1'));
+        $this->assertFalse($alphaValidator->validate('a1'));
+        $this->assertFalse($alphaValidator->validate('1a'));
+        $this->assertFalse($alphaValidator->validate('a a'));
         $this->assertFalse($alphaValidator->validate(2));
         $this->assertFalse($alphaValidator->validate('!#?'));
     }
