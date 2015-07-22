@@ -25,13 +25,6 @@ abstract class Form implements FormInterface
      */
     protected static $SEMATIC_ERROR = 'sematic';
 
-    protected static $FORM_TYPE_KEY = 'form_type';
-
-    /**
-     * @var string
-     */
-    private $type;
-
     /**
      * @var string[]
      */
@@ -42,28 +35,6 @@ abstract class Form implements FormInterface
      */
     private $entries = [];
 
-    /**
-     * @var \Officium\Framework\Validators\Validator[]
-     */
-    private $validators = [];
-
-    /**
-     * @param string
-     * @param string[]
-     * @param \Officium\Framework\Validators\Validator[] $validators
-     */
-    public function __construct($type, $entries, $validators)
-    {
-        $this->type = $type;
-        $this->setEntries($entries, array_keys($validators));
-
-        if ( ! isset($validators[self::$SEMANTIC_VALIDATORS])) {
-            $validators[self::$SEMANTIC_VALIDATORS] = [];
-        }
-
-        $this->validators = $validators;
-    }
-
     /* ------------------------------------------------------------------------------------------
      *                                     Abstract
      * ------------------------------------------------------------------------------------------ */
@@ -73,24 +44,25 @@ abstract class Form implements FormInterface
      *
      * @return \Officium\Framework\Validators\Validator[]
      */
-    protected abstract function getFormValidators();
+    protected abstract function getValidators();
 
     /* ------------------------------------------------------------------------------------------
      *                                     Public
      * ------------------------------------------------------------------------------------------ */
 
     /**
-     * @param string[] $rawEntries
+     * @param string[] $unfiltered
      * @return bool
      */
-    public function validate(array $rawEntries = [])
+    public function validate(array $unfiltered = [])
     {
-        if ( ! empty($rawEntries) ) {
-            $this->entries = $this->filterEntries($rawEntries, array_keys($this->validators));
+        $validators = $this->getValidators();
+        if ( ! empty($unfiltered) ) {
+            $this->entries = $this->filterEntries($unfiltered, array_keys($validators));
         }
 
         if ($this->doSyntacticValidation()) {
-            if ( ! empty($this->validators[self::$SEMANTIC_VALIDATORS])) {
+            if ( ! empty($validators[self::$SEMANTIC_VALIDATORS])) {
                 $this->doSematicValidation();
             }
         }
@@ -121,7 +93,7 @@ abstract class Form implements FormInterface
      */
     public function getKeys()
     {
-        return array_keys($this->getFormValidators());
+        return array_keys($this->getValidators());
     }
 
     /**
@@ -146,18 +118,6 @@ abstract class Form implements FormInterface
     /* ------------------------------------------------------------------------------------------
      *                                     Protected
      * ------------------------------------------------------------------------------------------ */
-
-    /**
-     * Sets entries after filtering them
-     *
-     * @param $entries
-     * @param str[] $filterKeys Optional filter keys
-     */
-    protected function setEntries($entries, $filterKeys = [])
-    {
-        $filters = (empty($filterKeys)) ? array_keys($this->validators) : $filterKeys;
-        $this->entries = $this->filterEntries($entries, $filters);
-    }
 
     /**
      * Filters out valid form entries form the raw entries param
@@ -279,7 +239,9 @@ abstract class Form implements FormInterface
     private function doSyntacticValidation()
     {
         $this->errors = [];
-        foreach ($this->validators as $key => $validator) {
+
+        $validators = $this->getValidators();
+        foreach ($validators as $key => $validator) {
             if ($key == self::$SEMANTIC_VALIDATORS) {
                 continue;
             }
@@ -300,8 +262,9 @@ abstract class Form implements FormInterface
      */
     private function doSematicValidation()
     {
+        $validators = $this->getValidators();
         /* @var \Officium\Framework\Validators\Validator[] $semanticValidators */
-        $semanticValidators = $this->validators[self::$SEMANTIC_VALIDATORS];
+        $semanticValidators = $validators[self::$SEMANTIC_VALIDATORS];
 
         $generalErrors = [];
         foreach ($semanticValidators as $key => $validator) {
