@@ -8,7 +8,8 @@ use Respect\Validation\Exceptions\NestedValidationExceptionInterface;
 class AlphabeticalValidator extends Validator
 {
     /**
-     * Validates the entry provided.
+     * Returns true if the entry only contains alphabetical characters with no white space, otherwise false is returned.
+     *
      * @param $entry
      * @return boolean
      */
