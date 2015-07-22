@@ -31,12 +31,6 @@ class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
     private static $NUM_TASKS = 3;
 
 
-    public function __construct($entries = [])
-    {
-        $formType = Treatment::$THREE_TASK_TIME_LIMIT_PENALTY_ADJUSTABLE_DEADLINE;
-        parent::__construct($formType, $entries, $this->getFormValidators());
-    }
-
     /* ------------------------------------------------------------------------------------------
      *                                      Protected
      * ------------------------------------------------------------------------------------------ */
@@ -46,7 +40,7 @@ class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
      *
      * @return \Officium\Framework\Validators\Validator[]
      */
-    protected function getFormValidators()
+    protected function getValidators()
     {
         $validators = [];
         $validators[self::$SIZE] = new IntegerValidator();
@@ -93,7 +87,7 @@ class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
     {
         $entries = $this->getEntries();
         // When it's not empty and has passed validation so the option must be set to true.
-        return ! empty($entries[self::$ADJUSTABLE_DEADLINE]);
+        return (isset($entries[self::$ADJUSTABLE_DEADLINE]) && $entries[self::$ADJUSTABLE_DEADLINE] == 'yes');
     }
 
     private function getStartDateTime()
@@ -130,7 +124,6 @@ class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
     {
         $treatment = new Treatment();
         $treatment->setSessionId($session->getId());
-        $treatment->setTreatmentType(self::$FORM_TYPE_KEY);
         $treatment->setTreatmentType(Treatment::$THREE_TASK_TIME_LIMIT_PENALTY_ADJUSTABLE_DEADLINE);
         $treatment->save();
         return $treatment;
