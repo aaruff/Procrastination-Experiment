@@ -1,0 +1,149 @@
+{% extends 'pages/subject/survey/form.twig' %}
+
+{% block formbody %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+           Outgoing Questionnaire
+        </div>
+        <div class="panel-body">
+            <form action="{{ currentUrl() }}" method="post">
+                <p>
+                Looking back over the duration of the experiment, please list any unexpected events that
+                occurred and provide an estimate of how much time was required to attend to them.</p>
+
+                <!--  QUESTION 19 -->
+                <div class="question">
+                    <label>1) At the beginning of the experiment, you reported that you anticipated having completed
+                        {{ minor_assignments }} minor assignments. Looking back, did you have more or less than anticipated?
+                        <select name="19" class="form-control">
+                            <option value="" >Selection Required</option>
+                            <option value="1" {% if flash.entries.minor == 1 %} selected="selected" {% endif %}>same</option>
+                            <option value="2" {% if flash.entries.minor == 2 %} selected="selected" {% endif %}>more</option>
+                            <option value="3" {% if flash.entries.minor == 3 %} selected="selected" {% endif %}>less</option>
+                        </select>
+                    </label>
+                    <div class="sub_question">
+                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
+                        <input type="text" name="hours_on_minor" placeholder="Hours Total" value="{{ hours_on_minor }}" />
+                    </div>
+                </div>
+
+                <!--  QUESTION 20 -->
+                <div class="question">
+                    <label>2) At the beginning of the experiment, you reported that you anticipated having completed
+                        {{ major_assigments }} major assignments / term papers. Looking back, did you have more or less than anticipated?</label>
+                    <select name="20" class="form-control">
+                        <option value="" >Selection Required</option>
+                        <option value="1" {% if flash.entries.major == 1 %} selected="selected" {% endif %}>same</option>
+                        <option value="2" {% if flash.entries.major == 2 %} selected="selected" {% endif %}>more</option>
+                        <option value="3" {% if flash.entries.major == 3 %} selected="selected" {% endif %}>less</option>
+                    </select>
+                    <div class="sub_question">
+                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
+                        <input type="text" name="hours_on_major" placeholder="Hours Total" value="{{ hours_on_major }}" />
+                    </div>
+                </div>
+
+                <!--  QUESTION 21 -->
+                <div class="question">
+                    <label>3) At the beginning of the experiment, you reported that you anticipated having completed
+                        {{ exams }} exams. Looking back, did you have more or less than anticipated?</label>
+                    <select name="21" class="form-control">
+                        <option value="" >Selection Required</option>
+                        <option value="1" {% if flash.entries.exams == 1 %} selected="selected" {% endif %}>same</option>
+                        <option value="2" {% if flash.entries.exams == 2 %} selected="selected" {% endif %}>more</option>
+                        <option value="3" {% if flash.entries.exams == 3 %} selected="selected" {% endif %}>less</option>
+                    </select>
+                    <div class="sub_question">
+                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
+                        <input type="text" name="hours_on_exams" placeholder="Hours Total" value="{{ hours_on_exams }}" />
+                    </div>
+                </div>
+
+
+                <!--  QUESTION 22 -->
+                <div class="question">
+                    <label>4) At the beginning of the experiment, you reported that you anticipated spending
+                        {{ coursework }} hours on course work. Looking back, did you have more or less than anticipated?</label>
+                    <select name="22" class="form-control">
+                        <option value="" >Selection Required</option>
+                        <option value="1" {% if flash.entries.coursework == 1 %} selected="selected" {% endif %}>same</option>
+                        <option value="2" {% if flash.entries.coursework == 2 %} selected="selected" {% endif %}>more</option>
+                        <option value="3" {% if flash.entries.coursework == 3 %} selected="selected" {% endif %}>less</option>
+                    </select>
+                    <div class="sub_question">
+                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
+                        <input type="text" name="hours_on_coursework" placeholder="Hours Total" value="{{ hours_on_coursework }}" />
+                    </div>
+                </div>
+
+                <!--  QUESTION 23 -->
+                <div class="question">
+                    <label>5) At the beginning of the experiment, you reported that you anticipated spending
+                        {{ work }} hours on your job. Looking back, did you have more or less than anticipated?</label>
+                    <select name="23" class="form-control">
+                        <option value="" >Selection Required</option>
+                        <option value="1" {% if flash.entries.work == 1 %} selected="selected" {% endif %}>same</option>
+                        <option value="2" {% if flash.entries.work == 2 %} selected="selected" {% endif %}>more</option>
+                        <option value="3" {% if flash.entries.work == 3 %} selected="selected" {% endif %}>less</option>
+                    </select>
+                    <div class="sub_question">
+                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
+                        <input type="text" name="hours_on_work" placeholder="Hours Total" value="{{ hours_on_work }}" />
+                    </div>
+                </div>
+
+                <!--  QUESTION 24 -->
+                <div class="question">
+                    <label>6) At the beginning of the experiment, you reported that you anticipated spending
+                        {{ social_obligations }} hours on social / recreational activities. Looking back, did you have more or less than anticipated?</label>
+                    <select name="24" class="form-control">
+                        <option value="" >Selection Required</option>
+                        <option value="1" {% if flash.entries.social_obligations == 1 %} selected="selected" {% endif %}>same</option>
+                        <option value="2" {% if flash.entries.social_obligations == 2 %} selected="selected" {% endif %}>more</option>
+                        <option value="3" {% if flash.entries.social_obligations == 3 %} selected="selected" {% endif %}>less</option>
+                    </select>
+                    <div class="sub_question">
+                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
+                        <input type="text" name="hours_on_social_obligations" placeholder="Hours Total" value="{{ hours_on_social_obligations }}" />
+                    </div>
+                </div>
+
+                <!--  QUESTION 25 -->
+                <div class="question">
+                    <label>7) At the beginning of the experiment, you reported that you anticipated spending
+                        {{ family }} hours on family obligations. Looking back, did you have more or less than anticipated?</label>
+                    <select name="25" class="form-control">
+                        <option value="" >Selection Required</option>
+                        <option value="1" {% if flash.entries.family_obligations == 1 %} selected="selected" {% endif %}>same</option>
+                        <option value="2" {% if flash.entries.family_obligations == 2 %} selected="selected" {% endif %}>more</option>
+                        <option value="3" {% if flash.entries.family_obligations == 3 %} selected="selected" {% endif %}>less</option>
+                    </select>
+                    <div class="sub_question">
+                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
+                        <input type="text" name="hours_on_family_obligations" placeholder="Hours Total" value="{{ hours_on_family_obligations }}" />
+                    </div>
+                </div>
+
+                <!--  QUESTION 26 -->
+                <div class="question">
+                    <label>8) How much time did you spend on all three tasks (in hours)?
+                        <input type="text" class="textfield" name="question_26" placeholder="Hours Total" value="{{ hours_on_tasks }}" />
+                    </label>
+                </div>
+
+                <!--  QUESTION 28 -->
+                <div class="question">
+                    <label class="question">
+                        10) Please describe the process you used in order to carry out the tasks.
+                    </label>
+                    <textarea placeholder="Describe your strategy" cols="40" rows="2" name="question_28"></textarea>
+                </div>
+
+                <input type="submit" name="submit" value="Submit Survey" class="button"/>
+            </form>
+        </div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

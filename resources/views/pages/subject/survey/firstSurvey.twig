@@ -1,0 +1,327 @@
+        <!--  QUESTION 5 -->
+        <div class="question">
+             <label class="question">
+                <span class="question_number">5.</span> Are you presently employed(either unemployed, paid, or unpaid)?
+             </label>
+            <select id="question_5" name='question_5'>
+                <option value=''>Selection Required</option>
+                <option value='unemployed'>unemployed</option>
+                <option value='paid'>paid</option>
+                <option value='unpaid'>unpaid</option>
+            </select>
+        </div>
+
+        <!--  QUESTION 6 -->
+        <div class="question">
+            <label class="question">
+                <span class="question_number">6.</span> How many social/academic/sports clubs do you belong to?
+            </label>
+            <input type="text" class="textfield" name="question_6" placeholder="Activity Count" value="" />
+        </div>
+
+        <!-- QUESTION 7 -->
+        <div class="question">
+            <label class="question">
+                <span class="question_number">7.</span> Over the course of the next week how much time (in hours) do you expect to allocate to:
+            </label>
+
+            <div class="sub_question" id="question_7_1">
+                <label class="question">
+                    1) your course work?
+                </label>
+                <input type="text" class="textfield" name="question_7_sub_1" placeholder="Hours" value="" />
+            </div>
+
+            <div class="sub_question" id="question_7_2">
+                <label class="question">
+                    2) your job?
+                </label>
+                <input type="text" class="textfield" id="q7_2" name="question_7_sub_2" placeholder="Hours" value="" />
+
+                <div class="sub_field">
+                    <label>
+                        Enter your workschedule over the next week:
+                    </label>
+
+                    <div id="q_7-2_1">
+                            <label class="start_date_time">Start Date and Time:</label>
+                            <input type="text" class="datetimetextfield textfield" name="question_7_sub_2_start_date_1" value="{{  question_7_sub_2_start_date_1}}" placeholder="mm/dd/yyyy hh:mm am/pm" />
+
+                            <label class="end_date_time">End Date and Time:</label>
+                            <input type="text" class="datetimetextfield textfield" name="question_7_sub_2_end_date_1" value="{{  question_7_sub_2_end_date_1}}" placeholder="mm/dd/yyyy hh:mm am/pm" />
+                    </div>
+
+                    <div id="dynamic_entries_7-2">
+                        <div id="q_7-2_{{  i}}" class="inserted_date date_time">
+
+                            <div class="schedule">
+                                    <label class="start_date_time">Start Date and Time:</label>
+                                    <input type="text" class="datetimetextfield textfield" name="" placeholder="mm/dd/yyyy hh:mm am/pm">
+
+                                    <label class="end_date_time">End Date and Time:</label>
+                                    <input type="text" class="datetimetextfield textfield" name="" placeholder="mm/dd/yyyy hh:mm am/pm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub_question">
+                <label class="question">
+                    3) social obligations and recreational activities?
+                </label>
+                <input type="text" class="textfield" name="question_7_sub_3" placeholder="Hours" value="" />
+                <label class="error"></label>
+
+                <div class="sub_field">
+                    <label>
+                        Enter the date and time (over the next week) for which you plan to participate in social and recreational activities:
+                    </label>
+
+                    <div id="q_7-3_1">
+                        <label class="start_date_time">Start Date and Time:</label>
+                        <input type="text" class="datetimetextfield textfield" name="question_7_sub_3_start_date_1" value="{{  question_7_sub_3_start_date_1}}" placeholder="mm/dd/yyyy hh:mm am/pm" />
+
+                        <label class="end_date_time">End Date and Time:</label>
+                        <input type="text" class="datetimetextfield textfield" name="question_7_sub_3_end_date_1" value="{{  question_7_sub_3_end_date_1}}" placeholder="mm/dd/yyyy hh:mm am/pm" />
+
+                    </div>
+
+                    <div id="dynamic_entries_7-3">
+                        <div id="q_7-3_{{  i}}" class="inserted_date">
+
+                            <div class="schedule">
+                                <label class="start_date_time">Start Date and Time:</label>
+                                <input type="text" class="datetimetextfield textfield" name="" placeholder="mm/dd/yyyy hh:mm am/pm">
+
+                                <label class="end_date_time">End Date and Time:</label>
+                                <input type="text" class="datetimetextfield textfield" name="" placeholder="mm/dd/yyyy hh:mm am/pm">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub_question">
+                <label class="question">
+                    4) family obligations?
+                </label>
+                <input type="text" class="textfield" name="question_7_sub_4" placeholder="Hours" value="" />
+                <label class="error"></label>
+
+                <div class="sub_field">
+                    <label>
+                        Enter the date and time (over the next week) you plan to spend on family obligations:
+                    </label>
+
+                    <div id="q_7-4_1">
+
+                        <label class="start_date_time">Start Date and Time:</label>
+                        <input type="text" class="datetimetextfield textfield" name="question_7_sub_4_start_date_1" value="{{  question_7_sub_4_start_date_1}}" placeholder="mm/dd/yyyy hh:mm am/pm" />
+
+
+                        <label class="end_date_time">End Date and Time:</label>
+                        <input type="text" class="datetimetextfield textfield" name="question_7_sub_4_end_date_1" value="{{  question_7_sub_4_end_date_1}}" placeholder="mm/dd/yyyy hh:mm am/pm" />
+                        <div id="dynamic_entries_7-4">
+                            <div id="q_7-4_{{  i}}" class="inserted_date">
+
+                                <div class="schedule">
+                                    <label>Start Date and Time:</label>
+                                    <input type="text" class="datetimetextfield textfield" name="" placeholder="mm/dd/yyyy hh:mm am/pm">
+
+                                    <label>End Date and Time:</label>
+                                    <input type="text" class="datetimetextfield textfield" name="" placeholder="mm/dd/yyyy hh:mm am/pm">
+
+                                    <label class="error"></label>
+                                    <label class="error"></label>
+                                </div>
+
+                            </div>
+                        </div><!-- dynamic_entries_7-4 -->
+                    </div> <!-- q_7-4_1 -->
+                </div> <!-- sub_field -->
+            </div>
+        </div>
+
+        <!-- QUESTION 8 -->
+        <div class="question">
+            <label>
+                <span class="question_number">8.</span> On a scale of 1 to 5 (with 1 being "hardly at all" and 5 being "very much so"), answer the following questions:
+            </label>
+            <div class="sub_question">
+                <div class="radio">
+                    <label>
+                        1) How conscientious are you?
+                    </label>
+                    <input type="radio" name="question_8_sub_1" value="1"  />1
+                    <input type="radio" name="question_8_sub_1" value="2"  />2
+                    <input type="radio" name="question_8_sub_1" value="3"  />3
+                    <input type="radio" name="question_8_sub_1" value="4"  />4
+                    <input type="radio" name="question_8_sub_1" value="5"  />5
+                    <label class="error"></label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        2) How often are you late turning in assignments?
+                    </label>
+                    <input type="radio" name="question_8_sub_2" value="1"  />1
+                    <input type="radio" name="question_8_sub_2" value="2"  />2
+                    <input type="radio" name="question_8_sub_2" value="3"  />3
+                    <input type="radio" name="question_8_sub_2" value="4"  />4
+                    <input type="radio" name="question_8_sub_2" value="5"  />5
+                    <label class="error"></label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        3) How often are you on time for appointments
+                    </label>
+                    <input type="radio" name="question_8_sub_3" value="1"  />1
+                    <input type="radio" name="question_8_sub_3" value="2"  />2
+                    <input type="radio" name="question_8_sub_3" value="3"  />3
+                    <input type="radio" name="question_8_sub_3" value="4"  />4
+                    <input type="radio" name="question_8_sub_3" value="5"  />5
+                    <label class="error"></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUESTION 9 -->
+        <div class="question">
+            <label class="question">
+                <span class="question_number">9.</span> On a scale from 1 to 5(with 1 being "strongly disagree" and 5 being "strongly agree")
+                rate how closely you identify with the following statements:
+            </label>
+            <div class="sub_question">
+                <div class="radio">
+                    <label>
+                        1) Unexpected things which require my time and attention always seem to occur.
+                    </label>
+                    <input type="radio" name="question_9_sub_1" value="1" >1
+                    <input type="radio" name="question_9_sub_1" value="2" >2
+                    <input type="radio" name="question_9_sub_1" value="3" >3
+                    <input type="radio" name="question_9_sub_1" value="4" >4
+                    <input type="radio" name="question_9_sub_1" value="5" >5
+                    <label class="error"></label>
+                </div>
+                <div class="radio">
+                    <label>
+                        2) Sometimes I am not as dependable or reliable as I should be.
+                    </label>
+                    <input type="radio" name="question_9_sub_2" value="1" />1
+                    <input type="radio" name="question_9_sub_2" value="2" />2
+                    <input type="radio" name="question_9_sub_2" value="3" />3
+                    <input type="radio" name="question_9_sub_2" value="4" />4
+                    <input type="radio" name="question_9_sub_2" value="5" />5
+                    <label class="error"></label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        3) I follow a schedule.
+                    </label>
+                    <input type="radio" name="question_9_sub_3" value="1" />1
+                    <input type="radio" name="question_9_sub_3" value="2" />2
+                    <input type="radio" name="question_9_sub_3" value="3" />3
+                    <input type="radio" name="question_9_sub_3" value="4" />4
+                    <input type="radio" name="question_9_sub_3" value="5" />5
+                    <label class="error"></label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        4) I never seem able to get organized.
+                    </label>
+                    <input type="radio" name="question_9_sub_4" value="1" />1
+                    <input type="radio" name="question_9_sub_4" value="2" />2
+                    <input type="radio" name="question_9_sub_4" value="3" />3
+                    <input type="radio" name="question_9_sub_4" value="4" />4
+                    <input type="radio" name="question_9_sub_4" value="5" />5
+                    <label class="error"></label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        5) I always pay attention to details.
+                    </label>
+                    <input type="radio" name="question_9_sub_5" value="1" />1
+                    <input type="radio" name="question_9_sub_5" value="2" />2
+                    <input type="radio" name="question_9_sub_5" value="3" />3
+                    <input type="radio" name="question_9_sub_5" value="4" />4
+                    <input type="radio" name="question_9_sub_5" value="5" />5
+                    <label class="error"></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUESTION 10 -->
+        <div class="question">
+            <label>
+                <span class="large_question"><span class="question_number">10.</span> Suppose that you win 10 certificates, each of which can be used (once) to receive a
+                dream restaurant night. On each such night, you and a companion will get the best table
+                and an unlimited budget for food and drink at a restaurant of your choosing.
+                There will be no cost to you: all payments including gratuities come as part of the prize.
+                The certificates are available for immediate use, starting tonight, and there is an absolute
+                guarantee that they will be honored by any restaurant you select if they are used within a two year window.
+                However if they are not used up within this two year period, any that remain are valueless.
+                The questions below concern how many of the certificates you would ideally like to use in each year,
+                how tempted you would be to depart from this ideal, and what you expect you would do in practice:</span>
+            </label>
+            <div class="sub_question">
+                <label class="question">
+                    From your current perspective, how many of the ten certificates would you ideally like to use in year 1?
+                </label>
+            <input type="text" class="textfield" name="question_10" placeholder="Certificate Count" value="" />
+            <label class="error"></label>
+            </div>
+        </div>
+
+
+        <!-- QUESTION 11 -->
+        <div class="question">
+            <label class="question">
+                <span class="question_number">11.</span> Continue with the scenario of Question 10. Some people might be tempted to depart from their ideal allocation in Question 10.
+            </label>
+            <div class="sub_question">
+                <div class="radio">1) I would have no temptation in either direction.</div>
+                <div class="radio">2) I would be somewhat/strongly tempted to use more certificates in the first year than would be ideal.</div>
+                <div class="radio">3) I would be strongly/somewhat tempted to keep more certificates for use in the second year than would be ideal.</div>
+            </div>
+            <div class="sub_field">
+                <label class="question">Which of the following best describes you:</label>
+                <select name="question_11">
+                    <option value="" >Selection Required</option>
+                    <option value="1">1</option>
+                    <option value="2" >2</option>
+                    <option value="3" >3</option>
+                </select><label class="error"></label>
+            </div>
+        </div>
+
+        <!-- QUESTION 12 -->
+        <div class="question">
+            <label class="question">
+                <span class="question_number">12.</span> Continue with the scenario of Question 10. If you were to give in to your temptation,
+                how many certificates do you think you would use in year 1 as opposed to year 2?
+            </label>
+            <div class="sub_field">
+                <label class="question">
+                    If you answered Yes to Question 10(1), please enter the response given in Question 10.
+                </label>
+                <input type="text" class="textfield" name="question_12" placeholder="Certificate Count" value="" />
+                <label class="error"></label>
+            </div>
+        </div>
+
+        <!-- QUESTION 13 -->
+        <div class="question">
+            <label class="question">
+                    <span class="question_number">13.</span> Continue with the scenario of Question 10. Based on your most accurate forecast of how you think you would actually behave,
+                    how many of the nights would you end up using in year 1?
+            </label>
+            <input type="text" class="textfield" name="question_13" placeholder="Certificate Count" value="" />
+            <label class="error"></label>
+        </div>
+            <input type="submit" name="submit" value="Submit Survey" class="submit_button"/>
