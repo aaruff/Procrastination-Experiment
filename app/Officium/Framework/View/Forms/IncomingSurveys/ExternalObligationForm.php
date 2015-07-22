@@ -16,6 +16,7 @@ use Officium\Framework\Validators\ConditionalValidator;
 class ExternalObligationForm extends Form implements Saveable
 {
     protected static $DATE_TIME_FORMAT = 'm-d-Y g:i a';
+    protected static $DISPLAY_DATE_TIME_FORMAT = 'n/j/y g:i a';
 
     private static $EMPLOYED = 'employed';
     private static $HOURS_WORK = 'hours_work';
@@ -25,11 +26,6 @@ class ExternalObligationForm extends Form implements Saveable
     /* ------------------------------------------------------------------------------------------
      *                                      Public
      * ------------------------------------------------------------------------------------------ */
-
-    public function __construct($entries = [])
-    {
-        parent::__construct(get_class($this), $entries, $this->getFormValidators());
-    }
 
     /**
      * Stores properties to the session.
@@ -49,6 +45,23 @@ class ExternalObligationForm extends Form implements Saveable
         $survey->externalObligationDeadlines()->saveMany($this->getAllDeadlines());
     }
 
+    /**
+     * Returns the session start and end date time.
+     * @param User $user
+     * @return array
+     */
+    public function getFormParameters(User $user)
+    {
+        $subject = $user->getSubject();
+        $session = $subject->getSession();
+
+        return [
+            'start'=>$session->getStartDateTime()->format(self::$DISPLAY_DATE_TIME_FORMAT),
+            'end'=>$session->getEndDateTime()->format(self::$DISPLAY_DATE_TIME_FORMAT)
+        ];
+
+    }
+
 
     /* ------------------------------------------------------------------------------------------
      *                                      Protected
@@ -59,7 +72,7 @@ class ExternalObligationForm extends Form implements Saveable
      *
      * @return \Officium\Framework\Validators\Validator[]
      */
-    protected function getFormValidators()
+    protected function getValidators()
     {
         $validators = [];
         $validators[self::$EMPLOYED] = new YesNoValidator();

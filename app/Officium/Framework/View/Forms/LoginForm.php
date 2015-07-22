@@ -17,17 +17,12 @@ class LoginForm extends Form
     public static $LOGIN = 'login';
     public static $PASSWORD = 'password';
 
-    public function __construct($entries = [])
-    {
-        parent::__construct('Login', $entries, $this->getFormValidators());
-    }
-
     /**
      * Returns the form's validators
      *
      * @return \Officium\Framework\Validators\Validator[]
      */
-    protected function getFormValidators()
+    protected function getValidators()
     {
         $validators = [];
         $validators[self::$LOGIN] = new AlphabeticalValidator();

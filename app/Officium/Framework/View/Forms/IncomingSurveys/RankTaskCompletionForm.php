@@ -19,11 +19,6 @@ class RankTaskCompletionForm extends Form implements Saveable
      *                                      Public
      * ------------------------------------------------------------------------------------------ */
 
-    public function __construct($entries = [])
-    {
-        parent::__construct(get_class($this), $entries, $this->getFormValidators());
-    }
-
     /**
      * Stores properties to the session.
      *
@@ -51,7 +46,7 @@ class RankTaskCompletionForm extends Form implements Saveable
      *
      * @return \Officium\Framework\Validators\Validator[]
      */
-    protected function getFormValidators()
+    protected function getValidators()
     {
         $validators = [];
         $validators[self::$NO_TASK] = new IntegerValidator(0, 100);

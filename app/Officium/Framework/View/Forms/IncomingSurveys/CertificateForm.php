@@ -20,14 +20,6 @@ class CertificateForm extends Form implements Saveable
      *                                      Public
      * ------------------------------------------------------------------------------------------ */
 
-    /**
-     * @param array $entries
-     */
-    public function __construct($entries = [])
-    {
-        parent::__construct(get_class($this), $entries, $this->getFormValidators());
-    }
-
     public function save(User $user)
     {
         $survey = new CertificateSurvey();
@@ -48,7 +40,7 @@ class CertificateForm extends Form implements Saveable
      *
      * @return \Officium\Framework\Validators\Validator[]
      */
-    protected function getFormValidators()
+    protected function getValidators()
     {
         $validators = [];
         $validators[self::$CERTIFICATE_PER_YEAR] = new IntegerValidator(0, 200);
