@@ -26,8 +26,8 @@ class SessionController
     {
         $app = Slim::getInstance();
 
-        $sessionForm = new ThreeTaskPenaltyTreatmentForm($app->request->post());
-        if ($sessionForm->validate()) {
+        $sessionForm = new ThreeTaskPenaltyTreatmentForm();
+        if ($sessionForm->validate($app->request->post())) {
             $sessionForm->save(Session::getUser());
             $responseUri = DashboardMap::toUri();
         }

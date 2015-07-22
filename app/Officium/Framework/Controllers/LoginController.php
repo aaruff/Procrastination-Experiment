@@ -35,9 +35,9 @@ class LoginController
         Session::logoutUser();
 
         $app = Slim::getInstance();
-        $form = new LoginForm($app->request->post());
+        $form = new LoginForm();
 
-        if ( ! $form->validate()) {
+        if ( ! $form->validate($app->request->post())) {
             $app->flash('flash', $form->getEntriesWithErrors());
             $app->response->redirect(LoginMap::toUri());
             return;
