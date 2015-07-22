@@ -24,6 +24,15 @@ class CertificateMap extends ResourceMap
     }
 
     /**
+     * @param $uri
+     * @return bool
+     */
+    public static function isUri($uri)
+    {
+        return $uri === self::toUri();
+    }
+
+    /**
      * Returns the path to the controller handling the specified request method.
      * @param string $method
      * @return string

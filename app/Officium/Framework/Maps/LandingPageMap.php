@@ -26,6 +26,15 @@ class LandingPageMap extends ResourceMap
     }
 
     /**
+     * @param $uri
+     * @return bool
+     */
+    public static function isUri($uri)
+    {
+        return $uri === self::toUri();
+    }
+
+    /**
      * @return string
      */
     public static function toTemplate()
