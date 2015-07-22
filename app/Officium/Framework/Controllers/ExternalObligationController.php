@@ -15,7 +15,9 @@ class ExternalObligationController
     public function get()
     {
         $app = Slim::getInstance();
-        $app->render(Map::toTemplate(), $app->flashData());
+
+        $form = new Form();
+        $app->render(Map::toTemplate(), ['parameters'=>$form->getFormParameters(Session::getUser())]);
     }
 
     /**
