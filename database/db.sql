@@ -71,12 +71,15 @@ create table tasks(
   created_at timestamp not null
 ) Engine=InnoDB;
 
-drop table if exists subject_deadlines;
-create table subject_deadlines(
+drop table if exists subject_tasks;
+create table subject_tasks(
   id integer auto_increment primary key,
   subject_id integer not null,
   task_id integer not null,
   deadline datetime not null,
+  completed boolean default false,
+  completed_datetime datetime default null,
+  payoff double default 0.0,
   updated_at timestamp not null,
   created_at timestamp not null
 ) ENGINE=InnoDB;
@@ -87,15 +90,13 @@ create table subject_deadlines(
 #
 # Event Types -- Issued = 1, Failure = 2, Display Task = 3, Complete Task = 4,
 #--
-drop table if exists task_logs;
-create table task_logs(
+drop table if exists event_logs;
+create table event_logs(
   id	integer auto_increment primary key,
-  problem_id integer not null,
   subject_id integer not null,
   task_id	integer not null,
   event integer not null,
   date_time datetime not null,
-  browser varchar(255) not null,
   updated_at timestamp not null,
   created_at timestamp not null
 ) ENGINE=InnoDB;
