@@ -11,6 +11,7 @@ class Session
     private STATIC $TASK_NUMBER = 'task_number';
     private static $SOLUTION = 'solution';
     private static $PROBLEM_URL = 'url';
+    private static $HOLD = 'hold';
 
     public static function logoutUser()
     {
@@ -104,9 +105,25 @@ class Session
         $_SESSION[self::$PROBLEM][self::$TASK_NUMBER] = $taskNumber;
     }
 
+    /**
+     * @param $url
+     */
     public static function setProblemUrl($url)
     {
         $_SESSION[self::$PROBLEM][self::$PROBLEM_URL] = $url;
+    }
+
+    /**
+     * @param boolean $hold
+     */
+    public static function setHold($hold)
+    {
+        $_SESSION[self::$HOLD] = $hold;
+    }
+
+    public static function getHold()
+    {
+        return $_SESSION[self::$HOLD];
     }
 
     /**
