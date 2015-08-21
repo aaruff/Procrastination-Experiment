@@ -35,13 +35,13 @@ class TaskController
 
 
         if ( ! Session::getHold()) {
-            Session::setHold(false);
             $problem = new Problem($subject->getId());
             Session::setProblemTaskNumber($taskNumber);
             Session::setProblemSolution($problem->getPhrases());
             Session::setProblemUrl($problem->getImageFileName());
         }
 
+        Session::setHold(false);
         $form = new Form($subject);
         $app->render(Map::toTemplate(), ['parameters'=>$form->getFormParameters(Session::getSubject())]);
     }
