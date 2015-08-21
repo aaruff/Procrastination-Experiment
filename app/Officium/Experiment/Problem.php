@@ -101,6 +101,8 @@ class Problem
         //imagepng($im);
         imagedestroy($im);
         chmod(getenv('IMAGE_DIR') . $this->fileName, 0644);
+
+        sort($this->phrases, SORT_STRING);
     }
 
     /**
