@@ -35,6 +35,7 @@ class TaskController
 
 
         if ( ! Session::getHold()) {
+            Session::setHold(false);
             $problem = new Problem($subject->getId());
             Session::setProblemTaskNumber($taskNumber);
             Session::setProblemSolution($problem->getPhrases());
