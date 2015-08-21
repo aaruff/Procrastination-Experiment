@@ -33,11 +33,13 @@ class TaskController
             return;
         }
 
-        $problem = new Problem($subject->getId());
 
-        Session::setProblemTaskNumber($taskNumber);
-        Session::setProblemSolution($problem->getPhrases());
-        Session::setProblemUrl($problem->getImageFileName());
+        if ( ! Session::getHold()) {
+            $problem = new Problem($subject->getId());
+            Session::setProblemTaskNumber($taskNumber);
+            Session::setProblemSolution($problem->getPhrases());
+            Session::setProblemUrl($problem->getImageFileName());
+        }
 
         $form = new Form($subject);
         $app->render(Map::toTemplate(), ['parameters'=>$form->getFormParameters(Session::getSubject())]);
@@ -54,6 +56,8 @@ class TaskController
         $form = new Form();
         if ( ! $form->validate($app->request->post())) {
             EventLog::logEvent($subject, EventLog::INCORRECT_SUBMISSION, $taskNumber);
+
+            Session::setHold(true);
 
             $app->flash('flash', $form->getEntriesWithErrors());
             $app->redirect(Map::toUri($taskNumber));
