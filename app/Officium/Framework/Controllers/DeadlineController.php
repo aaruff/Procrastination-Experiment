@@ -16,7 +16,8 @@ class DeadlineController
     {
         $app = Slim::getInstance();
         $form = new Form();
-        $app->render(Map::toTemplate(), ['parameters'=>$form->getFormParameters(Session::getUser())]);
+        $app->flashNow('parameters', $form->getFormParameters(Session::getUser()));
+        $app->render(Map::toTemplate(), $app->flashData());
     }
 
     /**
