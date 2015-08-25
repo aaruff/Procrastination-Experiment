@@ -2,11 +2,13 @@
 
 namespace Officium\Framework\View\Forms\IncomingSurveys;
 
+use Officium\Framework\Validators\TaskDeadlineValidator;
 use Officium\Framework\View\Forms\Form;
 use Officium\Experiment\SubjectTask;
 use Officium\Framework\Models\Saveable;
 use Officium\Framework\Models\User;
 use Officium\Framework\Validators\DateTimeValidator;
+use Officium\Framework\Models\Session;
 
 class SubjectDeadlineForm extends Form implements Saveable
 {
@@ -48,11 +50,16 @@ class SubjectDeadlineForm extends Form implements Saveable
         $subject = $user->getSubject();
         $session = $subject->getSession();
 
+        /* @var $tasks \Officium\Experiment\Task[]*/
+        $tasks = $subject->getSession()->getTreatment()->getTasks();
+
         return [
             'start'=>$session->getStartDateTime()->format(self::$DISPLAY_DATE_TIME_FORMAT),
-            'end'=>$session->getEndDateTime()->format(self::$DISPLAY_DATE_TIME_FORMAT)
+            'end'=>$session->getEndDateTime()->format(self::$DISPLAY_DATE_TIME_FORMAT),
+            self::$FIRST_TASK_DEADLINE=>$tasks[0]->getDeadline()->format('m/d/Y g:i a'),
+            self::$SECOND_TASK_DEADLINE=>$tasks[1]->getDeadline()->format('m/d/Y g:i a'),
+            self::$THIRD_TASK_DEADLINE=>$tasks[2]->getDeadline()->format('m/d/Y g:i a')
         ];
-
     }
 
 
@@ -71,6 +78,16 @@ class SubjectDeadlineForm extends Form implements Saveable
         $validators[self::$FIRST_TASK_DEADLINE] = new DateTimeValidator(parent::$DATE_TIME_FORMAT);
         $validators[self::$SECOND_TASK_DEADLINE] = new DateTimeValidator(parent::$DATE_TIME_FORMAT);
         $validators[self::$THIRD_TASK_DEADLINE] = new DateTimeValidator(parent::$DATE_TIME_FORMAT);
+
+        $subject = Session::getUser()->getSubject();
+        $deadlines = [self::$FIRST_TASK_DEADLINE, self::$SECOND_TASK_DEADLINE, self::$THIRD_TASK_DEADLINE];
+
+        $validators[self::$SEMANTIC_VALIDATORS] = [
+            self::$FIRST_TASK_DEADLINE => new TaskDeadlineValidator($subject, self::$FIRST_TASK_DEADLINE, 1),
+            self::$SECOND_TASK_DEADLINE => new TaskDeadlineValidator($subject, self::$SECOND_TASK_DEADLINE, 2),
+            self::$THIRD_TASK_DEADLINE => new TaskDeadlineValidator($subject, self::$THIRD_TASK_DEADLINE, 3)
+        ];
+
 
         return $validators;
     }
