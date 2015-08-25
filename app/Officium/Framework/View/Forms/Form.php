@@ -23,7 +23,7 @@ abstract class Form implements FormInterface
      *
      * @var string
      */
-    protected static $SEMATIC_ERROR = 'sematic';
+    protected static $SEMATIC_ERROR = 'semantic';
 
     /**
      * @var string[]
@@ -263,11 +263,14 @@ abstract class Form implements FormInterface
     private function doSematicValidation()
     {
         $validators = $this->getValidators();
+
         /* @var \Officium\Framework\Validators\Validator[] $semanticValidators */
         $semanticValidators = $validators[self::$SEMANTIC_VALIDATORS];
 
         $generalErrors = [];
         foreach ($semanticValidators as $key => $validator) {
+            // When the validator entry type is SINGLE_ENTRY, the validate function is called with the specified entry,
+            // otherwise the validate function is called with an array containing all of the entries.
             $entry = ($validator->getEntryType() == Validator::$SINGLE_ENTRY) ? $this->entries[$key] : $this->entries;
             if ( ! $validator->validate($entry)) {
                 $generalErrors[$key] = $validator->getErrors();
