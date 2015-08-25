@@ -6,7 +6,7 @@
             General
         </div>
         <div class="panel-body">
-            <p>The experiment ends on <b>{{ deadline }}</b>. However, you may impose
+            <p>The experiment ends on <b>{{ parameters.deadline }}</b>. However, you may impose
                 an earlier deadline for the task if you wish. If so, please do so now.
                 Keep in mind that the deadline will be strictly enforced. For example,
                 if you impose a deadline for tomorrow at 9:00PM and you do not complete
@@ -15,7 +15,7 @@
 
             <form action="{{ currentUrl() }}" method="post">
                 <div class="form-group">
-                    <label>First Deadline</label>
+                    <label>First Deadline (Before {{ parameters.first_deadline }})</label>
                     <div class="form-inline">
                         <div class="input-group date col-md-3">
                             <input type="text" class="form-control first_deadline" placeholder="Date and Time" name="first_deadline" value="{{ flash.entries.first_deadline }}" />
@@ -25,11 +25,16 @@
                                 <span class="alert alert-danger">{{ error }}</span>
                             {% endfor %}
                         {% endif %}
+                        {% if flash.errors.semantic.first_deadline %}
+                            {% for error in flash.errors.semantic.first_deadline %}
+                                <span class="alert alert-danger">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Second Deadline</label>
+                    <label>Second Deadline (Before {{ parameters.second_deadline }})</label>
                     <div class="form-inline">
                         <div class="input-group date col-md-3">
                             <input type="text" class="form-control second_deadline" placeholder="Date and Time" name="second_deadline" value="{{ flash.entries.second_deadline }}" />
@@ -39,17 +44,27 @@
                                 <span class="alert alert-danger">{{ error }}</span>
                             {% endfor %}
                         {% endif %}
+                        {% if flash.errors.semantic.second_deadline %}
+                            {% for error in flash.errors.semantic.second_deadline %}
+                                <span class="alert alert-danger">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Third Deadline</label>
+                    <label>Third Deadline (Before {{ parameters.third_deadline }})</label>
                     <div class="form-inline">
                         <div class="input-group date col-md-3">
                             <input type="text" class="form-control third_deadline" placeholder="Date and Time" name="third_deadline" value="{{ flash.entries.third_deadline }}" />
                         </div>
                         {% if flash.errors.third_deadline %}
                             {% for error in flash.errors.third_deadline %}
+                                <span class="alert alert-danger">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                        {% if flash.errors.semantic.third_deadline %}
+                            {% for error in flash.errors.semantic.third_deadline %}
                                 <span class="alert alert-danger">{{ error }}</span>
                             {% endfor %}
                         {% endif %}
