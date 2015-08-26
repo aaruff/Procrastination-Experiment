@@ -123,7 +123,7 @@ class Session
 
     public static function getHold()
     {
-        return $_SESSION[self::$HOLD];
+        return self::getItem(self::$HOLD, false);
     }
 
     /**
