@@ -43,10 +43,10 @@ class CertificateForm extends Form implements Saveable
     protected function getValidators()
     {
         $validators = [];
-        $validators[self::$CERTIFICATE_PER_YEAR] = new IntegerValidator(0, 200);
+        $validators[self::$CERTIFICATE_PER_YEAR] = new IntegerValidator(0, 10);
         $validators[self::$TEMPTATION] = new IntegerValidator(1, 3);
-        $validators[self::$TEMPTATION_CERTIFICATE_PER_YEAR] = new IntegerValidator(0, 200);
-        $validators[self::$NIGHTS_PER_YEAR] = new IntegerValidator(0, 200);
+        $validators[self::$TEMPTATION_CERTIFICATE_PER_YEAR] = new IntegerValidator(0, 10);
+        $validators[self::$NIGHTS_PER_YEAR] = new IntegerValidator(0, 10);
         return $validators;
     }
 }

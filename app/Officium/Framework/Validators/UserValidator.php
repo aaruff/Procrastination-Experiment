@@ -22,20 +22,20 @@ class UserValidator extends Validator
 
     /**
      * Validates the entry provided.
-     * @param $credentials
+     * @param $entries
      *
      * @return boolean
      */
-    public function validate($credentials)
+    public function validate($entries)
     {
         $this->clearErrors();
 
-        if ( ! isset($credentials[self::$LOGIN]) || ! isset($credentials[self::$PASSWORD])) {
+        if ( ! isset($entries[self::$LOGIN]) || ! isset($entries[self::$PASSWORD])) {
             $this->setErrors([self::$LOGIN => 'Invalid Login/Password credentials.']);
             return false;
         }
 
-        return $this->validateCredentials($credentials[self::$LOGIN], $password = $credentials[self::$PASSWORD]);
+        return $this->validateCredentials($entries[self::$LOGIN], $password = $entries[self::$PASSWORD]);
     }
 
     /**
