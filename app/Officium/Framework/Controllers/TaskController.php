@@ -26,24 +26,31 @@ class TaskController
 
         $game = new SubjectGame($subject);
         if ($game->isOver()) {
-            $subject = Session::getSubject();
             $subject->setNextState();
             $subject->save();
             $app->redirect(OutgoingQuestionnaireMap::toUri());
             return;
         }
 
-
-        if ( ! Session::getHold()) {
-            $problem = new Problem($subject->getId());
-            Session::setProblemTaskNumber($taskNumber);
-            Session::setProblemSolution($problem->getPhrases());
-            Session::setProblemUrl($problem->getImageFileName());
+        // Generate problem only if one doesn't exist.
+        $problem = Session::getTaskProblem($taskNumber);
+        if ($problem == null) {
+            $problem = new Problem($taskNumber, $subject->getId());
+            Session::setTaskProblem($taskNumber, $problem);
         }
 
-        Session::setHold(false);
-        $form = new Form($subject);
-        $app->render(Map::toTemplate(), ['parameters'=>$form->getFormParameters(Session::getSubject())]);
+        // If the problem is on hold keep the problem and release the lock.
+        if ( $problem->isOnHold()) {
+            $problem->releaseHold();
+        }
+        // Otherwise reissue the problem
+        else {
+            $problem->reissue();
+            Session::setTaskProblem($taskNumber, $problem);
+        }
+
+        $form = new Form($subject, $taskNumber, $problem);
+        $app->render(Map::toTemplate(), ['parameters'=>$form->getFormParameters()]);
     }
 
     /**
@@ -54,14 +61,17 @@ class TaskController
         $app = Slim::getInstance();
         $subject = Session::getSubject();
 
-        $form = new Form();
+        $problem = Session::getTaskProblem($taskNumber);
+        $form = new Form($subject, $taskNumber, $problem);
         if ( ! $form->validate($app->request->post())) {
             EventLog::logEvent($subject, EventLog::INCORRECT_SUBMISSION, $taskNumber);
 
-            Session::setHold(true);
+            $game = new SubjectGame($subject);
+            if ($game->getTaskState($taskNumber) == $game::PENALIZED_PAYOFF) {
+                $app->redirect(LandingPageMap::toUri());
+            }
 
-            $app->flash('flash', $form->getEntriesWithErrors());
-            $app->redirect(Map::toUri($taskNumber));
+            $app->render(Map::toTemplate(), ['parameters'=>$form->getFormParameters()]);
             return;
         }
 
