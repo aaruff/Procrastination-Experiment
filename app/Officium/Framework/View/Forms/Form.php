@@ -71,7 +71,7 @@ abstract class Form implements FormInterface
     }
 
     /**
-     * @return \string[]
+     * @return string[]
      */
     public function getEntries()
     {
@@ -111,7 +111,7 @@ abstract class Form implements FormInterface
      */
     public function getEntriesWithErrors()
     {
-        return ['errors'=>$this->getErrors(), 'entries'=>$this->getEntries()];
+        return ['validation_error'=>true, 'errors'=>$this->getErrors(), 'entries'=>$this->getEntries()];
     }
 
 
@@ -178,6 +178,25 @@ abstract class Form implements FormInterface
     {
         $entries = $this->getEntries();
         return floatval($entries[$id]);
+    }
+
+    /**
+     * Returns the string array entries indexed by the id provided.
+     *
+     * @param string $id
+     * @return string[]
+     */
+    protected function getAlphaArrayEntry($id)
+    {
+        $entries = $this->getEntries();
+        $alphaValues = [];
+        if (isset($entries[$id]) && is_array($entries[$id])) {
+            foreach ($entries[$id] as $key => $value) {
+                $alphaValues[$key] = filter_var($value, FILTER_SANITIZE_STRING);
+            }
+        }
+
+        return $alphaValues;
     }
 
     /**
