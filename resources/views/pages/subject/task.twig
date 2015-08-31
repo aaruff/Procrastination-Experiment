@@ -1,6 +1,21 @@
 {% extends 'pages/subject/problem_master.twig' %}
 
 {% block body %}
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Error Found</h4>
+            </div>
+            <div class="modal-body">
+                <p>One or more of the phrases are not in alphabetical order. Please evaluate your submission and re-submit it.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="heading">
     <p>As {{ flash.parameters.ctime }} the payoff for completing task {{ parameters.tasknumber }} is ${{ parameters.taskpayoff }}.
     As of {{ parameters.ctime }} the payoff for completing the currently available task(s) are:</p>
@@ -62,4 +77,14 @@
 
     </form>
 </div>
+{% endblock %}
+
+{% block js %}
+    {% if parameters.errors %}
+        <script type="text/javascript">
+            $(window).load(function(){
+                $('#myModal').modal('show');
+            });
+        </script>
+    {%  endif %}
 {% endblock %}
