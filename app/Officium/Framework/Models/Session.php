@@ -2,16 +2,14 @@
 
 namespace Officium\Framework\Models;
 
+use Officium\Experiment\Problem;
+
 class Session
 {
     private static $SURVEY_ID = 'survey';
     private static $USER_ID = 'user';
     private static $ROLE = 'role';
     private static $PROBLEM = 'problem';
-    private STATIC $TASK_NUMBER = 'task_number';
-    private static $SOLUTION = 'solution';
-    private static $PROBLEM_URL = 'url';
-    private static $HOLD = 'hold';
 
     public static function logoutUser()
     {
@@ -54,27 +52,7 @@ class Session
      */
     public static function getUserId()
     {
-        return self::getItem(self::$USER_ID, 0);
-    }
-
-    /**
-     * Return the task's problem solution.
-     *
-     * @return String[]
-     */
-    public static function getProblemSolution()
-    {
-        return $_SESSION[self::$PROBLEM][self::$SOLUTION];
-    }
-
-    public static function getProblemTaskNumber()
-    {
-        return $_SESSION[self::$PROBLEM][self::$TASK_NUMBER];
-    }
-
-    public static function getProblemUrl()
-    {
-        return $_SESSION[self::$PROBLEM][self::$PROBLEM_URL];
+        return self::getSingleKeyItem(self::$USER_ID, 0);
     }
 
     /**
@@ -85,45 +63,6 @@ class Session
     public static function setSurveyId($surveyId)
     {
         $_SESSION[self::$SURVEY_ID] = $surveyId;
-    }
-
-    /**
-     * Save the tasks problem solution.
-     * @param array $solution
-     */
-    public static function setProblemSolution(array $solution)
-    {
-        $_SESSION[self::$PROBLEM][self::$SOLUTION] = $solution;
-    }
-
-    /**
-     * Saves the current problem task number.
-     * @param $taskNumber
-     */
-    public static function setProblemTaskNumber($taskNumber)
-    {
-        $_SESSION[self::$PROBLEM][self::$TASK_NUMBER] = $taskNumber;
-    }
-
-    /**
-     * @param $url
-     */
-    public static function setProblemUrl($url)
-    {
-        $_SESSION[self::$PROBLEM][self::$PROBLEM_URL] = $url;
-    }
-
-    /**
-     * @param boolean $hold
-     */
-    public static function setHold($hold)
-    {
-        $_SESSION[self::$HOLD] = $hold;
-    }
-
-    public static function getHold()
-    {
-        return self::getItem(self::$HOLD, false);
     }
 
     /**
@@ -143,7 +82,7 @@ class Session
      */
     public static function isSubject()
     {
-        return self::isLoggedIn() && self::getItem(self::$ROLE) == User::getSubjectRoleNumber();
+        return self::isLoggedIn() && self::getSingleKeyItem(self::$ROLE) == User::getSubjectRoleNumber();
     }
 
     /**
@@ -153,7 +92,29 @@ class Session
      */
     public static function isExperimenter()
     {
-        return self::isLoggedIn() && self::getItem(self::$ROLE) == User::getExperimenterRoleNumber();
+        return self::isLoggedIn() && self::getSingleKeyItem(self::$ROLE) == User::getExperimenterRoleNumber();
+    }
+
+    public static function setTaskProblem($taskNumber, Problem $problem)
+    {
+        $_SESSION[self::$PROBLEM][$taskNumber] = serialize($problem);
+    }
+
+    /**
+     * Returns the task's problem if set, otherwise null is returned.
+     *
+     * @param int $taskNumber
+     * @return Problem|null
+     */
+    public static function getTaskProblem($taskNumber)
+    {
+        $problem = self::getDoubleKeyItem(self::$PROBLEM, $taskNumber);
+
+        if ($problem != null) {
+            return unserialize($problem);
+        }
+
+        return null;
     }
 
     /* ------------------------------------------------------------------------------------------
@@ -165,9 +126,24 @@ class Session
      * @param $default
      * @return mixed
      */
-    private static function getItem($key, $default = null)
+    private static function getSingleKeyItem($key, $default = null)
     {
         return (isset($_SESSION[$key])) ? $_SESSION[$key] : $default;
+    }
+
+    /**
+     * @param $primaryKey
+     * @param $secondaryKey
+     * @param $default
+     * @return mixed
+     */
+    private static function getDoubleKeyItem($primaryKey, $secondaryKey, $default = null)
+    {
+        if ( ! isset($_SESSION[$primaryKey]) || ! isset($_SESSION[$primaryKey][$secondaryKey])) {
+            return $default;
+        }
+
+        return $_SESSION[$primaryKey][$secondaryKey];
     }
 
 }
