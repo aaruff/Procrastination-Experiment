@@ -2,16 +2,26 @@
 
 namespace Officium\Experiment;
 
-class Problem
+class Problem implements \Serializable
 {
+    private $taskNumber;
     private $subjectId;
     private $phrases;
     private $timeIssued;
     private $fileName;
 
-    public function __construct($subjectId)
+
+    private $hold = false;
+
+    public function __construct($taskNumber, $subjectId)
     {
+        $this->taskNumber = $taskNumber;
         $this->subjectId = $subjectId;
+        $this->generate_image();
+    }
+
+    public function reissue()
+    {
         $this->generate_image();
     }
 
@@ -34,6 +44,29 @@ class Problem
     public function getImageFileName()
     {
         return $this->fileName;
+    }
+
+    public function isOnHold()
+    {
+        return $this->hold;
+    }
+
+    /**
+     * Places a hold on the reissue of problems for this task.
+     * @return boolean
+     */
+    public function setHold()
+    {
+        $this->hold = true;
+    }
+
+    /**
+     * Places a hold on the reissue of problems for this task.
+     * @return boolean
+     */
+    public function releaseHold()
+    {
+        $this->hold = false;
     }
 
     /**
@@ -178,5 +211,44 @@ class Problem
     public function setSubjectId($subjectId)
     {
         $this->subjectId = $subjectId;
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.1.0)<br/>
+     * String representation of object
+     * @link http://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     */
+    public function serialize()
+    {
+        return serialize([
+            'subject_id' => $this->subjectId,
+            'task_number' => $this->taskNumber,
+            'phrases' => $this->phrases,
+            'time_issued' => $this->timeIssued,
+            'image_filename' => $this->fileName,
+            'hold' => $this->hold
+        ]);
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.1.0)<br/>
+     * Constructs the object
+     * @link http://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     */
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+
+        $this->subjectId = $data['subject_id'];
+        $this->taskNumber = $data['task_number'];
+        $this->phrases = $data['phrases'];
+        $this->timeIssued = $data['time_issued'];
+        $this->fileName = $data['image_filename'];
+        $this->hold = $data['hold'];
     }
 }
