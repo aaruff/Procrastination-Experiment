@@ -9,6 +9,7 @@ use Officium\Framework\Models\Saveable;
 use Officium\Framework\Models\User;
 use Officium\Framework\Validators\IntegerValidator;
 use Officium\Framework\Validators\ProblemValidator;
+use Officium\Experiment\Problem;
 use Slim\Slim;
 
 class TaskForm extends Form implements Saveable
@@ -17,6 +18,22 @@ class TaskForm extends Form implements Saveable
 
     private static $TASK_NUMBER = 'task_number';
     private static $SOLUTION = 'solution';
+
+    private $subject;
+    private $taskNumber;
+    private $problem;
+
+    /**
+     * @param Subject $subject
+     * @param Problem $problem
+     * @param int $taskNumber
+     */
+    public function __construct(Subject $subject, $taskNumber, Problem $problem)
+    {
+        $this->subject = $subject;
+        $this->taskNumber = $taskNumber;
+        $this->problem = $problem;
+    }
 
     /* ------------------------------------------------------------------------------------------
      *                                      Public
@@ -31,13 +48,10 @@ class TaskForm extends Form implements Saveable
      */
     public function save(User $user)
     {
-        $subject = $user->getSubject();
+        $subjectTask = $this->subject->getSubjectTask($this->taskNumber);
 
-        $taskNumber = $this->getIntEntry(self::$TASK_NUMBER);
-        $subjectTask = $subject->getSubjectTask($taskNumber);
-
-        $game = new SubjectGame($subject);
-        $subjectTask->setPayoff($game->getTaskPayoff($taskNumber));
+        $game = new SubjectGame($this->subject);
+        $subjectTask->setPayoff($game->getTaskPayoff($this->taskNumber));
 
         $subjectTask->setCompleted(true);
         $subjectTask->setTimeCompleted(new \DateTime('now'));
@@ -52,26 +66,24 @@ class TaskForm extends Form implements Saveable
         }
 
 
-        $this->flashResults($taskNumber);
+        $this->flashProblemCompletionRecords($this->taskNumber);
     }
 
     /**
      * Returns the session start and end date time.
-     * @param Subject $subject
      * @return array
      */
-    public function getFormParameters(Subject $subject)
+    public function getFormParameters()
     {
-        $session = $subject->getSession();
-        $game = new SubjectGame($subject);
+        $session = $this->subject->getSession();
+        $game = new SubjectGame($this->subject);
 
         $now = new \DateTime('now');
 
         $otherTasks = [];
-        $taskNumber = Session::getProblemTaskNumber();
         $numTasks = $game->getNumTasks();
         for ($i = 1; $i <= $numTasks; ++$i) {
-            if ($i == $taskNumber || ! $game->isTaskAccessible($i)) {
+            if ($i == $this->taskNumber || ! $game->isTaskAccessible($i)) {
                 continue;
             }
 
@@ -81,20 +93,30 @@ class TaskForm extends Form implements Saveable
             $otherTasks[] = $task;
         }
 
+        $app = Slim::getInstance();
+        $phrases = $this->getAlphaArrayEntry(self::$SOLUTION);
+        if (empty($phrases) && $app->config('debug')) {
+            $phrases = $this->problem->getPhrases();
+        }
 
+        $errors = [];
+        if( ! empty($this->getErrors())) {
+            $errors = $this->getErrors();
+        }
 
         // Get other available task deadlines and times.
         $formData = [
-            'task_number'=> $taskNumber,
+            'task_number'=> $this->taskNumber,
             'ctime' => $now->format('m/d/Y g:i a'),
-            'taskpayoff'=>$game->getTaskPayoff($taskNumber),
-            'task_deadline'=>$game->getDeadline($taskNumber),
-            'problem_deadline'=>$game->getProblemDeadline($taskNumber),
+            'taskpayoff'=>$game->getTaskPayoff($this->taskNumber),
+            'task_deadline'=>$game->getDeadline($this->taskNumber),
+            'problem_deadline'=>$game->getProblemDeadline($this->taskNumber),
             'start'=>$session->getStartDateTime()->format(self::$DISPLAY_DATE_TIME_FORMAT),
             'end'=>$session->getEndDateTime()->format(self::$DISPLAY_DATE_TIME_FORMAT),
-            'problem_url'=>Session::getProblemUrl(),
-            'phrases'=>Session::getProblemSolution(),
-            'other_tasks'=>$otherTasks
+            'problem_url'=>$this->problem->getImageFileName(),
+            'phrases'=>$phrases,
+            'other_tasks'=>$otherTasks,
+            'errors'=>$errors
         ];
 
         return $formData;
@@ -112,7 +134,7 @@ class TaskForm extends Form implements Saveable
     protected function getValidators()
     {
         $validators = [];
-        $validators[self::$SOLUTION] = new ProblemValidator(Session::getProblemSolution());
+        $validators[self::$SOLUTION] = new ProblemValidator($this->problem->getPhrases());
         $validators[self::$TASK_NUMBER] = new IntegerValidator(1, 100);
 
         return $validators;
@@ -124,7 +146,7 @@ class TaskForm extends Form implements Saveable
     /**
      * @param $taskNumber
      */
-    private function flashResults($taskNumber)
+    private function flashProblemCompletionRecords($taskNumber)
     {
         $app = Slim::getInstance();
 
