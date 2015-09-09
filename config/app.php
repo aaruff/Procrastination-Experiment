@@ -5,6 +5,7 @@ return array(
     'mode' => 'development',
     'base_url' => 'http://officium:8000/',
     'debug' => true,
+    'app_debug'=> true,
     'templates.path' => BASE_DIR .'/resources/views',
     'pdo' => array(
         'default' => array(
