@@ -44,6 +44,11 @@ class SubjectGame
         return $this->getNumActiveTasks() == 0;
     }
 
+    /**
+     * Returns the number of tasks that can be worked on.
+     *
+     * @return int
+     */
     private function getNumActiveTasks()
     {
         $numTasks = $this->getNumTasks();
@@ -58,6 +63,65 @@ class SubjectGame
         return $activeTaskCount;
     }
 
+    /**
+     * Returns true if there is at least one task, other than $taskNumber, that is in the FIXED_PAYOFF state,
+     * otherwise false is returned.
+     *
+     * @param $taskNumber
+     * @return bool
+     */
+    public function isThereAFixedPayoffTaskAvailable($taskNumber)
+    {
+        $numTasks = $this->getNumTasks();
+        for ($task = 1; $task <= $numTasks; ++$task) {
+            if ($task != $taskNumber && $this->isTaskPayoffFixed($task)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns true if the specified task is in the fixed payoff state, otherwise false is returned.
+     *
+     * @param $taskNumber
+     * @return bool
+     */
+    public function isTaskPayoffFixed($taskNumber)
+    {
+        return $this->getTaskState($taskNumber) == self::FIXED_PAYOFF;
+    }
+
+    /**
+     * Returns true if the subject must re-evaluate which task to work on (i.e, when the current task is in
+     * the penalty state and their is another non-penalty state task available), otherwise false is returned.
+     *
+     * @param $taskNumber
+     * @return bool
+     */
+    public function isTaskReEvaluationRequired($taskNumber)
+    {
+        return $this->isTaskPayoffPenalized($taskNumber) && $this->isThereAFixedPayoffTaskAvailable($taskNumber);
+    }
+
+    /**
+     * Returns true if the specified task is in the penalized state, otherwise false is returned.
+     *
+     * @param $taskNumber
+     * @return bool
+     */
+    public function isTaskPayoffPenalized($taskNumber)
+    {
+        return $this->getTaskState($taskNumber) == self::PENALIZED_PAYOFF;
+    }
+
+    /**
+     * Returns the state for the specified task.
+     *
+     * @param $taskNumber
+     * @return int
+     */
     public function getTaskState($taskNumber)
     {
         $subjectTask = $this->subject->getSubjectTask($taskNumber);
@@ -99,30 +163,15 @@ class SubjectGame
     }
 
     /**
-     * Returns true if all other tasks with a ID less than $taskNumber is either in the PENALIZED_PAYOFF
-     * or in the NO_PAYOFF state.
+     * Returns true if the task is either in the fixed or penalized payoff state.
      *
      * @param int $taskNumber
      * @return boolean
      */
     public function isTaskAccessible($taskNumber)
     {
-        // Tasks are not available when they have been completed.
-        if ($this->isTaskComplete($taskNumber)) {
-            return false;
-        }
-
-        $numTasks = $this->getNumTasks();
-        $numFixedPayoffs = 0;
-        for ($i = 1; $i <= $numTasks; ++$i) {
-            if ($i == $taskNumber) {
-                return $numFixedPayoffs == 0;
-            }
-
-            if ($this->getTaskState($i) == self::FIXED_PAYOFF) {
-                ++$numFixedPayoffs;
-            }
-        }
+        $taskState = $this->getTaskState($taskNumber);
+        return $taskState == self::FIXED_PAYOFF || $taskState == self::PENALIZED_PAYOFF;
     }
 
     public function getProblemDeadline($taskNumber)
@@ -227,7 +276,7 @@ class SubjectGame
      * @param $taskNumber
      * @return string Formatted task deadline
      */
-    public function getDeadline($taskNumber)
+    public function getDeadlineString($taskNumber)
     {
         return $this->getTaskDeadline($taskNumber)->format('m/d/Y g:i a');
     }
