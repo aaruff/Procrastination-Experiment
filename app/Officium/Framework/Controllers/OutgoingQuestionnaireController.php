@@ -12,18 +12,20 @@ class OutgoingQuestionnaireController
     public function get()
     {
         $app = Slim::getInstance();
+        $subject = Session::getSubject();
 
-        $form = new Form();
+        $form = new Form($subject);
         $app->render(Map::toTemplate(), ['parameters'=>$form->getFormParameters()]);
     }
 
     public function post()
     {
         $app = Slim::getInstance();
+        $subject = Session::getSubject();
 
-        $form = new Form();
+        $form = new Form($subject);
         if ( ! $form->validate($app->request->post())) {
-            $app->flash('flash', $form->getEntriesWithErrors());
+            $app->flash('post', $form->getEntriesWithErrors());
             $app->redirect(Map::toUri());
             return;
         }
