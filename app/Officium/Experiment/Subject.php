@@ -49,6 +49,22 @@ class Subject extends Model
         return $this->hasMany(get_class(new SubjectTask()));
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function academicObligations()
+    {
+        return $this->hasOne(get_class(new AcademicObligationSurvey()));
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function externalObligations()
+    {
+        return $this->hasOne(get_class(new ExternalObligationSurvey()));
+    }
+
     /* ------------------------------------------------------------------------------------------
      *                                      Public
      * ------------------------------------------------------------------------------------------ */
@@ -128,6 +144,22 @@ class Subject extends Model
     public function getSubjectTasks()
     {
         return $this->subjectTasks;
+    }
+
+    /**
+     * @return \Officium\Experiment\AcademicObligationSurvey
+     */
+    public function getAcademicObligations()
+    {
+        return $this->academicObligations;
+    }
+
+    /**
+     * @return \Officium\Experiment\ExternalObligationSurvey
+     */
+    public function getExternalObligations()
+    {
+        return $this->externalObligations;
     }
 
     /**
