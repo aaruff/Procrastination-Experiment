@@ -4,7 +4,6 @@ namespace Officium\Framework\Controllers;
 
 use Officium\Experiment\SubjectGame;
 use Officium\Framework\Maps\LandingPageMap;
-use Officium\Framework\Maps\OutgoingQuestionnaireMap;
 use Officium\Framework\Maps\TaskMap as Map;
 use Officium\Framework\View\Forms\TaskForm as Form;
 use Officium\Framework\Models\Session;
@@ -25,29 +24,42 @@ class TaskController
         EventLog::logEvent($subject, EventLog::NEW_PROBLEM_ISSUED, $taskNumber);
 
         $game = new SubjectGame($subject);
-        if ($game->isOver()) {
-            $subject->setNextState();
-            $subject->save();
-            $app->redirect(OutgoingQuestionnaireMap::toUri());
+        $problem = Session::getTaskProblem($taskNumber, $subject->getId());
+
+        $numTasks = $game->getNumTasks();
+        for ($tNumber = 1; $tNumber <= $numTasks; ++$tNumber) {
+            if ($tNumber == $taskNumber) {
+               continue;
+            }
+
+            $tProblem = Session::getTaskProblem($tNumber, $subject->getId());
+            $tProblem->reissue();
+            Session::setTaskProblem($tProblem);
+        }
+
+
+
+        // Route the subject to the landing page when the current task should be re-evaluated
+        if ($game->isTaskReEvaluationRequired($taskNumber) && $problem->isInInitialState()) {
+            $problem->setState(Problem::PROMPT_TO_CONTINUE);
+            Session::setTaskProblem($problem);
+
+            $form = new Form($subject, $taskNumber, $problem);
+            $form->flashProblemTransitionToPenaltyState($taskNumber);
+            $app->redirect(LandingPageMap::toUri());
             return;
         }
 
-        // Generate problem only if one doesn't exist.
-        $problem = Session::getTaskProblem($taskNumber);
-        if ($problem == null) {
-            $problem = new Problem($taskNumber, $subject->getId());
-            Session::setTaskProblem($taskNumber, $problem);
+        // Handle re-issuing of the problem
+        if ($game->isTaskPayoffPenalized($taskNumber) && $problem->isInPromptToContinueState()) {
+            $problem->setState(Problem::CONFIRMED);
+        }
+        else {
+            $problem->clearSolution();
+            $problem->reissue();
         }
 
-        // If the problem is on hold keep the problem and release the lock.
-        if ( $problem->isOnHold()) {
-            $problem->releaseHold();
-        }
-        // Otherwise reissue the problem
-        else {
-            $problem->reissue();
-            Session::setTaskProblem($taskNumber, $problem);
-        }
+        Session::setTaskProblem($problem);
 
         $form = new Form($subject, $taskNumber, $problem);
         $app->render(Map::toTemplate(), ['parameters'=>$form->getFormParameters()]);
@@ -61,31 +73,32 @@ class TaskController
         $app = Slim::getInstance();
         $subject = Session::getSubject();
 
-        $problem = Session::getTaskProblem($taskNumber);
+        $problem = Session::getTaskProblem($taskNumber, $subject->getId());
         $form = new Form($subject, $taskNumber, $problem);
         if ( ! $form->validate($app->request->post())) {
             EventLog::logEvent($subject, EventLog::INCORRECT_SUBMISSION, $taskNumber);
 
+            $problem->setSolution($form->getSolution());
+
             $game = new SubjectGame($subject);
-            if ($game->getTaskState($taskNumber) == $game::PENALIZED_PAYOFF) {
+            // Route the subject to the landing page when the current task should be re-evaluated
+            if ($game->isTaskReEvaluationRequired($taskNumber) && $problem->isInInitialState()) {
+                $problem->setState(Problem::PROMPT_TO_CONTINUE);
+                Session::setTaskProblem($problem);
+
+                $form->flashProblemTransitionToPenaltyState($taskNumber);
                 $app->redirect(LandingPageMap::toUri());
+                return;
             }
 
             $app->render(Map::toTemplate(), ['parameters'=>$form->getFormParameters()]);
             return;
         }
 
+        EventLog::logEvent($subject, EventLog::CORRECT_SUBMISSION, $taskNumber);
         $form->save(Session::getUser());
 
-        EventLog::logEvent($subject, EventLog::CORRECT_SUBMISSION, $taskNumber);
-
-        $game = new SubjectGame($subject);
-        if ($game->isOver()) {
-            $app->redirect(OutgoingQuestionnaireMap::toUri());
-        }
-        else {
-            $app->redirect(LandingPageMap::toUri());
-        }
+        $app->redirect(LandingPageMap::toUri());
     }
 
 }
