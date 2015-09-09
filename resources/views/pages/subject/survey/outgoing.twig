@@ -1,148 +1,333 @@
 {% extends 'pages/subject/survey/form.twig' %}
 
 {% block formbody %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-           Outgoing Questionnaire
+
+<form action="{{ currentUrl() }}" method="post">
+
+<div class="panel panel-default">
+    <div class="panel-heading">Outgoing Questionnaire</div>
+    <div class="panel-body">
+        <p>
+            Looking back over the duration of the experiment, please list any unexpected events that
+            occurred and provide an estimate of how much time was required to attend to them.
+        </p>
+    </div>
+
+    <div class="panel-body">
+        <table class="table">
+            <tr>
+            <th>You Reported</th><th>Same/More/Less</th><th>Actual Time Spent (Hours)</th>
+            </tr>
+            <tr>
+                <td>Minor Assignments: {{ flash.parameters.minor_assignments }} hours</td>
+                <td>
+                    <select name="compared_minor_assignment" class="form-control">
+                        <option value="" ></option>
+                        <option value="1" {% if flash.post.entries.compared_minor_assignment == 1 %} selected="selected" {% endif %}>same</option>
+                        <option value="2" {% if flash.post.entries.compared_minor_assignment == 2 %} selected="selected" {% endif %}>more</option>
+                        <option value="3" {% if flash.post.entries.compared_minor_assignment == 3 %} selected="selected" {% endif %}>less</option>
+                    </select>
+                    {% if flash.post.errors.compared_minor_assignment %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.compared_minor_assignment %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="minor_assignment_hours" value="{{ flash.post.entries.minor_assignment_hours }}" />
+                    {% if flash.post.errors.minor_assignment_hours %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.minor_assignment_hours %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <td>Major Assignments/Term Papers: {{ flash.parameters.major_assignments }} hours</td>
+                <td>
+                    <select name="compared_major_assignment" class="form-control">
+                        <option value="" ></option>
+                        <option value="1" {% if flash.post.entries.compared_major_assignment == 1 %} selected="selected" {% endif %}>same</option>
+                        <option value="2" {% if flash.post.entries.compared_major_assignment == 2 %} selected="selected" {% endif %}>more</option>
+                        <option value="3" {% if flash.post.entries.compared_major_assignment == 3 %} selected="selected" {% endif %}>less</option>
+                    </select>
+                    {% if flash.post.errors.compared_major_assignment %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.compared_major_assignment %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="major_assignment_hours" value="{{ flash.post.entries.major_assignment_hours }}" />
+                    {% if flash.post.errors.major_assignment_hours %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.major_assignment_hours %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <td>Exams: {{ flash.parameters.exams }}</td>
+                <td>
+                    <select name="compared_exams" class="form-control">
+                        <option value="" ></option>
+                        <option value="1" {% if flash.post.entries.compared_exams == 1 %} selected="selected" {% endif %}>same</option>
+                        <option value="2" {% if flash.post.entries.compared_exams == 2 %} selected="selected" {% endif %}>more</option>
+                        <option value="3" {% if flash.post.entries.compared_exams == 3 %} selected="selected" {% endif %}>less</option>
+                    </select>
+                    {% if flash.post.errors.compared_exams %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.compared_exams %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="exam_hours" value="{{ flash.post.entries.exam_hours }}" />
+                    {% if flash.post.errors.exam_hours %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.exam_hours %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <td>Coursework: {{ flash.parameters.coursework }} hours</td>
+                <td>
+                    <select name="compared_coursework" class="form-control">
+                        <option value="" ></option>
+                        <option value="1" {% if flash.post.entries.compared_coursework == 1 %} selected="selected" {% endif %}>same</option>
+                        <option value="2" {% if flash.post.entries.compared_coursework == 2 %} selected="selected" {% endif %}>more</option>
+                        <option value="3" {% if flash.post.entries.compared_coursework == 3 %} selected="selected" {% endif %}>less</option>
+                    </select>
+                    {% if flash.post.errors.compared_coursework %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.compared_coursework %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="coursework_hours" value="{{ flash.post.entries.coursework_hours }}" />
+                    {% if flash.post.errors.coursework_hours %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.coursework_hours %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+
+            {# conditionally displayed #}
+            <tr>
+                <td>Work: {{ flash.parameters.work }} hours</td>
+                <td>
+                    <select name="compared_work" class="form-control">
+                        <option value="" ></option>
+                        <option value="1" {% if flash.post.entries.compared_work == 1 %} selected="selected" {% endif %}>same</option>
+                        <option value="2" {% if flash.post.entries.compared_work == 2 %} selected="selected" {% endif %}>more</option>
+                        <option value="3" {% if flash.post.entries.compared_work == 3 %} selected="selected" {% endif %}>less</option>
+                    </select>
+                    {% if flash.post.errors.compared_work %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.compared_work %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="work_hours" value="{{ flash.post.entries.work_hours }}" />
+                    {% if flash.post.errors.work_hours %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.work_hours %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <td>Social Obligations: {{ flash.parameters.social }} hours</td>
+                <td>
+                    <select name="compared_social" class="form-control">
+                        <option value="" ></option>
+                        <option value="1" {% if flash.post.entries.compared_social == 1 %} selected="selected" {% endif %}>same</option>
+                        <option value="2" {% if flash.post.entries.compared_social == 2 %} selected="selected" {% endif %}>more</option>
+                        <option value="3" {% if flash.post.entries.compared_social == 3 %} selected="selected" {% endif %}>less</option>
+                    </select>
+                    {% if flash.post.errors.compared_social %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.compared_social %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="social_hours" value="{{ flash.post.entries.social_hours }}" />
+                    {% if flash.post.errors.social_hours %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.social_hours %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <td>Family Obligations: {{ flash.parameters.family }} hours</td>
+                <td>
+                    <select name="compared_family" class="form-control">
+                        <option value="" ></option>
+                        <option value="1" {% if flash.post.entries.compared_family == 1 %} selected="selected" {% endif %}>same</option>
+                        <option value="2" {% if flash.post.entries.compared_family == 2 %} selected="selected" {% endif %}>more</option>
+                        <option value="3" {% if flash.post.entries.compared_family == 3 %} selected="selected" {% endif %}>less</option>
+                    </select>
+                    {% if flash.post.errors.compared_family %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.compared_family %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="family_hours" value="{{ flash.post.entries.family_hours }}" />
+                    {% if flash.post.errors.family_hours %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in flash.post.errors.family_hours %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+
+        <div class="form-group">
+            <label for="aht">How much time did you spend on all three tasks (in hours)?
+                <input id="aht" type="text" class="form-control" name="hours_all_tasks" value="{{ flash.post.entries.hours_all_tasks }}" />
+                {% if flash.post.errors.hours_all_tasks %}
+                    <div class="alert alert-danger">
+                        <ul>
+                            {% for error in flash.post.errors.hours_all_tasks %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </label>
         </div>
-        <div class="panel-body">
-            <form action="{{ currentUrl() }}" method="post">
-                <p>
-                Looking back over the duration of the experiment, please list any unexpected events that
-                occurred and provide an estimate of how much time was required to attend to them.</p>
 
-                <!--  QUESTION 19 -->
-                <div class="question">
-                    <label>1) At the beginning of the experiment, you reported that you anticipated having completed
-                        {{ minor_assignments }} minor assignments. Looking back, did you have more or less than anticipated?
-                        <select name="19" class="form-control">
-                            <option value="" >Selection Required</option>
-                            <option value="1" {% if flash.entries.minor == 1 %} selected="selected" {% endif %}>same</option>
-                            <option value="2" {% if flash.entries.minor == 2 %} selected="selected" {% endif %}>more</option>
-                            <option value="3" {% if flash.entries.minor == 3 %} selected="selected" {% endif %}>less</option>
-                        </select>
-                    </label>
-                    <div class="sub_question">
-                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
-                        <input type="text" name="hours_on_minor" placeholder="Hours Total" value="{{ hours_on_minor }}" />
-                    </div>
-                </div>
-
-                <!--  QUESTION 20 -->
-                <div class="question">
-                    <label>2) At the beginning of the experiment, you reported that you anticipated having completed
-                        {{ major_assigments }} major assignments / term papers. Looking back, did you have more or less than anticipated?</label>
-                    <select name="20" class="form-control">
-                        <option value="" >Selection Required</option>
-                        <option value="1" {% if flash.entries.major == 1 %} selected="selected" {% endif %}>same</option>
-                        <option value="2" {% if flash.entries.major == 2 %} selected="selected" {% endif %}>more</option>
-                        <option value="3" {% if flash.entries.major == 3 %} selected="selected" {% endif %}>less</option>
-                    </select>
-                    <div class="sub_question">
-                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
-                        <input type="text" name="hours_on_major" placeholder="Hours Total" value="{{ hours_on_major }}" />
-                    </div>
-                </div>
-
-                <!--  QUESTION 21 -->
-                <div class="question">
-                    <label>3) At the beginning of the experiment, you reported that you anticipated having completed
-                        {{ exams }} exams. Looking back, did you have more or less than anticipated?</label>
-                    <select name="21" class="form-control">
-                        <option value="" >Selection Required</option>
-                        <option value="1" {% if flash.entries.exams == 1 %} selected="selected" {% endif %}>same</option>
-                        <option value="2" {% if flash.entries.exams == 2 %} selected="selected" {% endif %}>more</option>
-                        <option value="3" {% if flash.entries.exams == 3 %} selected="selected" {% endif %}>less</option>
-                    </select>
-                    <div class="sub_question">
-                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
-                        <input type="text" name="hours_on_exams" placeholder="Hours Total" value="{{ hours_on_exams }}" />
-                    </div>
-                </div>
-
-
-                <!--  QUESTION 22 -->
-                <div class="question">
-                    <label>4) At the beginning of the experiment, you reported that you anticipated spending
-                        {{ coursework }} hours on course work. Looking back, did you have more or less than anticipated?</label>
-                    <select name="22" class="form-control">
-                        <option value="" >Selection Required</option>
-                        <option value="1" {% if flash.entries.coursework == 1 %} selected="selected" {% endif %}>same</option>
-                        <option value="2" {% if flash.entries.coursework == 2 %} selected="selected" {% endif %}>more</option>
-                        <option value="3" {% if flash.entries.coursework == 3 %} selected="selected" {% endif %}>less</option>
-                    </select>
-                    <div class="sub_question">
-                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
-                        <input type="text" name="hours_on_coursework" placeholder="Hours Total" value="{{ hours_on_coursework }}" />
-                    </div>
-                </div>
-
-                <!--  QUESTION 23 -->
-                <div class="question">
-                    <label>5) At the beginning of the experiment, you reported that you anticipated spending
-                        {{ work }} hours on your job. Looking back, did you have more or less than anticipated?</label>
-                    <select name="23" class="form-control">
-                        <option value="" >Selection Required</option>
-                        <option value="1" {% if flash.entries.work == 1 %} selected="selected" {% endif %}>same</option>
-                        <option value="2" {% if flash.entries.work == 2 %} selected="selected" {% endif %}>more</option>
-                        <option value="3" {% if flash.entries.work == 3 %} selected="selected" {% endif %}>less</option>
-                    </select>
-                    <div class="sub_question">
-                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
-                        <input type="text" name="hours_on_work" placeholder="Hours Total" value="{{ hours_on_work }}" />
-                    </div>
-                </div>
-
-                <!--  QUESTION 24 -->
-                <div class="question">
-                    <label>6) At the beginning of the experiment, you reported that you anticipated spending
-                        {{ social_obligations }} hours on social / recreational activities. Looking back, did you have more or less than anticipated?</label>
-                    <select name="24" class="form-control">
-                        <option value="" >Selection Required</option>
-                        <option value="1" {% if flash.entries.social_obligations == 1 %} selected="selected" {% endif %}>same</option>
-                        <option value="2" {% if flash.entries.social_obligations == 2 %} selected="selected" {% endif %}>more</option>
-                        <option value="3" {% if flash.entries.social_obligations == 3 %} selected="selected" {% endif %}>less</option>
-                    </select>
-                    <div class="sub_question">
-                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
-                        <input type="text" name="hours_on_social_obligations" placeholder="Hours Total" value="{{ hours_on_social_obligations }}" />
-                    </div>
-                </div>
-
-                <!--  QUESTION 25 -->
-                <div class="question">
-                    <label>7) At the beginning of the experiment, you reported that you anticipated spending
-                        {{ family }} hours on family obligations. Looking back, did you have more or less than anticipated?</label>
-                    <select name="25" class="form-control">
-                        <option value="" >Selection Required</option>
-                        <option value="1" {% if flash.entries.family_obligations == 1 %} selected="selected" {% endif %}>same</option>
-                        <option value="2" {% if flash.entries.family_obligations == 2 %} selected="selected" {% endif %}>more</option>
-                        <option value="3" {% if flash.entries.family_obligations == 3 %} selected="selected" {% endif %}>less</option>
-                    </select>
-                    <div class="sub_question">
-                        <label> If you spent more or less time on the above, please specify how many hours in total were spent:</label>
-                        <input type="text" name="hours_on_family_obligations" placeholder="Hours Total" value="{{ hours_on_family_obligations }}" />
-                    </div>
-                </div>
-
-                <!--  QUESTION 26 -->
-                <div class="question">
-                    <label>8) How much time did you spend on all three tasks (in hours)?
-                        <input type="text" class="textfield" name="question_26" placeholder="Hours Total" value="{{ hours_on_tasks }}" />
-                    </label>
-                </div>
-
-                <!--  QUESTION 28 -->
-                <div class="question">
-                    <label class="question">
-                        10) Please describe the process you used in order to carry out the tasks.
-                    </label>
-                    <textarea placeholder="Describe your strategy" cols="40" rows="2" name="question_28"></textarea>
-                </div>
-
-                <input type="submit" name="submit" value="Submit Survey" class="button"/>
-            </form>
+        <div class="form-group">
+            <label for="strat"> Please describe the process you used in order to carry out the tasks.</label>
+            <textarea id="strat"class="form-control" cols="40" rows="2" name="strategy">{{ flash.post.entries.strategy }}</textarea>
         </div>
+
+        {# Conditionally displayed #}
+        <div class="form-group">
+            <label for="dl">If you chose a different deadline from the default, please explain why you chose to do so.</label>
+            <textarea id="dl"class="form-control" cols="40" rows="2" name="alt_deadline">{{ flash.post.entries.alt_deadline }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="se">Before starting to work on the tasks, did you explicitly schedule dates and times in which to work on the tasks?</label>
+            <select id="wlt" name="schedule_effort" class="form-control">
+                <option value="" ></option>
+                <option value="no" {% if flash.entries.schedule_effort == "no" %} selected="selected" {% endif %}>no</option>
+                <option value="yes" {% if flash.entries.schedule_effort == "yes" %} selected="selected" {% endif %}>yes</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="fs">If you did make a schedule, were you able to follow it?</label>
+            <select id="fs" name="schedule_followed" class="form-control">
+                <option value="" ></option>
+                <option value="no" {% if flash.entries.schedule_followed == "no" %} selected="selected" {% endif %}>no</option>
+                <option value="yes" {% if flash.entries.schedule_followed == "yes" %} selected="selected" {% endif %}>yes</option>
+            </select>
+
+            <label for="fsw">Please explain why, or why not?</label>
+            <textarea id="fsw" class="form-control" cols="40" rows="2" name="why_schedule_followed">{{ schedule_followed_why }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="wlt">Did you ever decide to work on a task which was late (i.e., penalties were being incurred)
+                when you could have worked on a task which was not late?
+            </label>
+            <select id="wlt" name="worked_late_task" class="form-control">
+                <option value="" ></option>
+                <option value="no" {% if flash.entries.worked_late_task == "yes" %} selected="selected" {% endif %}>no</option>
+                <option value="yes" {% if flash.entries.worked_late_task == "yes" %} selected="selected" {% endif %}>yes</option>
+            </select>
+
+            <label for="wwlt">Please explain why, or why not?</label>
+            <input id="wwlt" type="text" class="form-control" name="why_work_late_task" value="{{ why_work_late_task }}" />
+        </div>
+
+        <div class="form-group">
+            <label for="rek">On a scale from 1 to 5, with 1 being not at all and 5 being very much so, how much did you enjoy the task?</label>
+            <select id="rek" name="enjoyed_task" class="form-control">
+                <option value="" ></option>
+                <option value="1" {% if flash.entries.enjoyed_task == 1 %} selected="selected" {% endif %}>1</option>
+                <option value="2" {% if flash.entries.enjoyed_task == 2 %} selected="selected" {% endif %}>2</option>
+                <option value="3" {% if flash.entries.enjoyed_task == 3 %} selected="selected" {% endif %}>3</option>
+                <option value="4" {% if flash.entries.enjoyed_task == 4 %} selected="selected" {% endif %}>4</option>
+                <option value="5" {% if flash.entries.enjoyed_task == 5 %} selected="selected" {% endif %}>5</option>
+            </select>
+        </div>
+
+        <input type="submit" name="submit" value="Submit Survey" class="button"/>
+    </div>
+</div>
+</form>
 {% endblock %}
 
 {% block js %}
