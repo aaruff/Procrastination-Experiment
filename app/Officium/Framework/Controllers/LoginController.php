@@ -23,6 +23,7 @@ class LoginController
      */
     public function get()
     {
+        Session::logoutUser();
         $app = Slim::getInstance();
         $app->render(LoginMap::toTemplate(), $app->flashData());
     }
