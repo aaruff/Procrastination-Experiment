@@ -101,6 +101,35 @@ create table event_logs(
   created_at timestamp not null
 ) ENGINE=InnoDB;
 
+#----------------------------------------
+# Outgoing Survey Tables
+#----------------------------------------
+drop table if exists outgoing_surveys;
+create table outgoing_surveys (
+  id					integer auto_increment primary key,
+  subject_id integer not null,
+  compared_minor_assignments integer not null,
+  hours_minor_assignments integer null,
+  compared_major_assignments integer not null,
+  hours_major_assignments integer null,
+  compared_exams integer not null,
+  hours_exams integer null,
+  compared_work integer not null,
+  hours_work integer null,
+  compared_social integer not null,
+  hours_social integer null,
+  compared_family integer not null,
+  hours_family integer null,
+  hours_all_tasks integer null,
+  strategy varchar(255) null,
+  deadline_changed varchar(255) null,
+  schedule_used bool null,
+  follow_schedule bool null,
+  schedule_explained varchar(255) null,
+  worked_late_task bool null,
+  why_late_task varchar(255) null,
+  enjoyed_tasks boolean null
+) ENGINE InnoDB;
 
 #----------------------------------------
 # Incoming Survey Tables
