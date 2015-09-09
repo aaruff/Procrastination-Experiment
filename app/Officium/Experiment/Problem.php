@@ -5,19 +5,84 @@ namespace Officium\Experiment;
 class Problem implements \Serializable
 {
     private $taskNumber;
+
     private $subjectId;
     private $phrases;
     private $timeIssued;
     private $fileName;
+    private $solution = [];
+
+    private $state;
+
+    const INITIAL = 0;
+    const PROMPT_TO_CONTINUE = 1;
+    const CONFIRMED = 2;
 
 
-    private $hold = false;
+
+    private $hold;
 
     public function __construct($taskNumber, $subjectId)
     {
+        $this->state = self::INITIAL;
         $this->taskNumber = $taskNumber;
         $this->subjectId = $subjectId;
         $this->generate_image();
+
+    }
+
+    /**
+     * @return array
+     */
+    public function getSolution()
+    {
+        return $this->solution;
+    }
+
+    /**
+     * @param array $solution
+     */
+    public function setSolution($solution)
+    {
+        $this->solution = $solution;
+    }
+
+    public function clearSolution()
+    {
+        $this->solution = [];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTaskNumber()
+    {
+        return $this->taskNumber;
+    }
+
+    /**
+     * Returns true if the problem is in the PROMPT_TO_CONTINUE state.
+     *
+     * @return bool
+     */
+    public function isInPromptToContinueState()
+    {
+        return $this->state == self::PROMPT_TO_CONTINUE;
+    }
+
+    /**
+     * Returns true if the problem is in the CONFIRMED state.
+     *
+     * @return bool
+     */
+    public function isInConfirmedState()
+    {
+        return $this->state == self::CONFIRMED;
+    }
+
+    public function isInInitialState()
+    {
+        return $this->state == self::INITIAL;
     }
 
     public function reissue()
@@ -44,29 +109,6 @@ class Problem implements \Serializable
     public function getImageFileName()
     {
         return $this->fileName;
-    }
-
-    public function isOnHold()
-    {
-        return $this->hold;
-    }
-
-    /**
-     * Places a hold on the reissue of problems for this task.
-     * @return boolean
-     */
-    public function setHold()
-    {
-        $this->hold = true;
-    }
-
-    /**
-     * Places a hold on the reissue of problems for this task.
-     * @return boolean
-     */
-    public function releaseHold()
-    {
-        $this->hold = false;
     }
 
     /**
@@ -198,22 +240,6 @@ class Problem implements \Serializable
     }
 
     /**
-     * @return mixed
-     */
-    public function getSubjectId()
-    {
-        return $this->subjectId;
-    }
-
-    /**
-     * @param mixed $subjectId
-     */
-    public function setSubjectId($subjectId)
-    {
-        $this->subjectId = $subjectId;
-    }
-
-    /**
      * (PHP 5 &gt;= 5.1.0)<br/>
      * String representation of object
      * @link http://php.net/manual/en/serializable.serialize.php
@@ -227,7 +253,9 @@ class Problem implements \Serializable
             'phrases' => $this->phrases,
             'time_issued' => $this->timeIssued,
             'image_filename' => $this->fileName,
-            'hold' => $this->hold
+            'hold' => $this->hold,
+            'state' => $this->state,
+            'solution' => $this->solution
         ]);
     }
 
@@ -250,5 +278,23 @@ class Problem implements \Serializable
         $this->timeIssued = $data['time_issued'];
         $this->fileName = $data['image_filename'];
         $this->hold = $data['hold'];
+        $this->state = $data['state'];
+        $this->solution = $data['solution'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param int $state
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
     }
 }
