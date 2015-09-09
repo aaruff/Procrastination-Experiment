@@ -23,7 +23,7 @@ class LandingPageTable
             $row['state'] = $game->getTaskState($i);
             $row['url'] = TaskMap::toUri($i);
             $row['number'] = $i;
-            $row['deadline'] = $game->getDeadline($i);
+            $row['deadline'] = $game->getDeadlineString($i);
             $row['countdown'] = $game->getTimeRemaining($i);
             $row['pay'] = $game->getTaskPayoff($i);
 
