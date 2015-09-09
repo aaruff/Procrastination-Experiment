@@ -44,6 +44,13 @@ class ThreeTaskPenaltyStateMap implements StateMap
                 elseif(TaskMap::isUri($uri)) {
                     $taskNumber = TaskMap::getTaskNumber($uri);
                     $game = new SubjectGame($this->subject);
+
+                    if ($game->isOver()) {
+                        $this->subject->setNextState();
+                        $this->subject->save();
+                        return false;
+                    }
+
                     return $game->isTaskAccessible($taskNumber);
                  }
                 else {
@@ -78,6 +85,8 @@ class ThreeTaskPenaltyStateMap implements StateMap
                 return RankTaskCompletionMap::toUri();
             case ThreeTaskPenaltyGameState::TASK:
                 return LandingPageMap::toUri();
+            case ThreeTaskPenaltyGameState::OUTGOING_SURVEY:
+                return OutgoingQuestionnaireMap::toUri();
             default:
                 return LoginMap::toUri();
         }
