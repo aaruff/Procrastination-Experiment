@@ -83,44 +83,68 @@ class TaskForm extends Form implements Saveable
         $otherTasks = [];
         $numTasks = $game->getNumTasks();
         for ($i = 1; $i <= $numTasks; ++$i) {
-            if ($i == $this->taskNumber || ! $game->isTaskAccessible($i)) {
+            if ($i == $this->taskNumber || !$game->isTaskAccessible($i)) {
                 continue;
             }
 
             $task['number'] = $i;
             $task['task_deadline'] = $game->getTaskState($i);
             $task['payoff'] = $game->getTaskPayoff($i);
+
             $otherTasks[] = $task;
         }
 
         $app = Slim::getInstance();
-        $phrases = $this->getAlphaArrayEntry(self::$SOLUTION);
-        if (empty($phrases) && $app->config('debug')) {
+
+        $phrases = $this->problem->getSolution();
+        if ($app->config('app_debug') && empty($this->problem->getSolution())) {
             $phrases = $this->problem->getPhrases();
         }
 
         $errors = [];
-        if( ! empty($this->getErrors())) {
+        if (!empty($this->getErrors())) {
             $errors = $this->getErrors();
         }
 
         // Get other available task deadlines and times.
         $formData = [
-            'task_number'=> $this->taskNumber,
+            'task_number' => $this->taskNumber,
             'ctime' => $now->format('m/d/Y g:i a'),
-            'taskpayoff'=>$game->getTaskPayoff($this->taskNumber),
-            'task_deadline'=>$game->getDeadline($this->taskNumber),
-            'problem_deadline'=>$game->getProblemDeadline($this->taskNumber),
-            'start'=>$session->getStartDateTime()->format(self::$DISPLAY_DATE_TIME_FORMAT),
-            'end'=>$session->getEndDateTime()->format(self::$DISPLAY_DATE_TIME_FORMAT),
-            'problem_url'=>$this->problem->getImageFileName(),
-            'phrases'=>$phrases,
-            'other_tasks'=>$otherTasks,
-            'errors'=>$errors
+            'taskpayoff' => $game->getTaskPayoff($this->taskNumber),
+            'task_deadline' => $game->getDeadlineString($this->taskNumber),
+            'problem_deadline' => $game->getProblemDeadline($this->taskNumber),
+            'start' => $session->getStartDateTime()->format(self::$DISPLAY_DATE_TIME_FORMAT),
+            'end' => $session->getEndDateTime()->format(self::$DISPLAY_DATE_TIME_FORMAT),
+            'problem_url' => $this->problem->getImageFileName(),
+            'phrases' => $phrases,
+            'other_tasks' => $otherTasks,
+            'errors' => $errors
         ];
 
         return $formData;
     }
+
+    /**
+     * Returns the current solution.
+     *
+     * @return \string[]
+     */
+    public function getSolution()
+    {
+        return $this->getAlphaArrayEntry(self::$SOLUTION);
+    }
+
+    public function flashProblemTransitionToPenaltyState($taskNumber)
+    {
+        $app = Slim::getInstance();
+
+        $app->flash('kind', 'danger');
+        $app->flash('dialog', true);
+        $app->flash('header', "Incorrect Problem Solution for Task $taskNumber");
+        $app->flash('body', "Reevaluation message");
+        $app->flashKeep();
+    }
+
 
     /* ------------------------------------------------------------------------------------------
      *                                      Protected
@@ -150,6 +174,7 @@ class TaskForm extends Form implements Saveable
     {
         $app = Slim::getInstance();
 
+        $app->flash('kind', 'success');
         $app->flash('dialog', true);
         $app->flash('header', "Task $taskNumber Complete");
         $app->flash('body', "Task $taskNumber problem has been successfully completed.");
