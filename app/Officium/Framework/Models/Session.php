@@ -13,9 +13,7 @@ class Session
 
     public static function logoutUser()
     {
-        unset($_SESSION[self::$USER_ID]);
-        unset($_SESSION[self::$ROLE]);
-        unset($_SESSION[self::$SURVEY_ID]);
+        session_unset();
     }
 
     /**
@@ -95,26 +93,32 @@ class Session
         return self::isLoggedIn() && self::getSingleKeyItem(self::$ROLE) == User::getExperimenterRoleNumber();
     }
 
-    public static function setTaskProblem($taskNumber, Problem $problem)
+    /**
+     * Saves the task problem to session storage.
+     *
+     * @param Problem $problem
+     */
+    public static function setTaskProblem(Problem $problem)
     {
-        $_SESSION[self::$PROBLEM][$taskNumber] = serialize($problem);
+        $_SESSION[self::$PROBLEM][$problem->getTaskNumber()] = serialize($problem);
     }
 
     /**
      * Returns the task's problem if set, otherwise null is returned.
      *
      * @param int $taskNumber
-     * @return Problem|null
+     * @param int $subjectId
+     * @return Problem
      */
-    public static function getTaskProblem($taskNumber)
+    public static function getTaskProblem($taskNumber, $subjectId)
     {
         $problem = self::getDoubleKeyItem(self::$PROBLEM, $taskNumber);
 
-        if ($problem != null) {
-            return unserialize($problem);
+        if ($problem == null) {
+            return new Problem($taskNumber, $subjectId);
         }
 
-        return null;
+        return unserialize($problem);
     }
 
     /* ------------------------------------------------------------------------------------------
