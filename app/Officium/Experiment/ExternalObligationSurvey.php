@@ -69,5 +69,35 @@ class ExternalObligationSurvey extends Model
         $this->hours_family_obligations = $hours;
     }
 
+    /**
+     * @return bool
+     */
+    public function getEmployed()
+    {
+        return $this->employed;
+    }
 
+    /**
+     * @return int
+     */
+    public function getHoursWork()
+    {
+        return $this->hours_work;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHoursSocialObligations()
+    {
+        return $this->hours_social_obligations;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHoursFamilyObligations()
+    {
+        return $this->hours_family_obligations;
+    }
 }

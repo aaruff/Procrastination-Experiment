@@ -75,5 +75,36 @@ class AcademicObligationSurvey extends Model
         $this->num_minor_assignments = $number;
     }
 
+    /**
+     * @return int
+     */
+    public function getNumMinorAssignments()
+    {
+        return $this->num_minor_assignments;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumMajorAssignments()
+    {
+        return $this->num_major_assignments;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumExams()
+    {
+        return $this->num_exams;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHoursCoursework()
+    {
+        return $this->hours_course_work;
+    }
 
 }
