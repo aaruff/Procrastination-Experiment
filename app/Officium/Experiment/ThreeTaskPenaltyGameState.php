@@ -14,7 +14,7 @@ class ThreeTaskPenaltyGameState implements State
     const RANK_TASK_COMPLETION = 6;
     const TASK = 7;
     const OUTGOING_SURVEY = 8;
-    const GAME_OVER = -1;
+    const GAME_OVER = 9;
 
     /**
      * @var Subject $subject
