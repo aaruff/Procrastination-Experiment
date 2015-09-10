@@ -150,22 +150,53 @@ abstract class Form implements FormInterface
      * Returns the specified int entry qualified by its id.
      *
      * @param $id
+     * @param bool
+     *
      * @return int
      */
-    protected function getIntEntry($id)
+    protected function getIntEntry($id, $required = true)
     {
         $entries = $this->getEntries();
+
+        if ( ! $required && ( ! isset($entries[$id]) || $entries[$id] == '')) {
+            return null;
+        }
+
         return intval($entries[$id]);
     }
 
     /**
-     * Returns the boolean value indexed by the given id.
-     * @param $id
-     * @return mixed
+     * Returns null if the entry is not set and isn't required, otherwise the sanitized string entry is returned.
+     *
+     * @param int $id
+     * @param bool|true $required
+     * @return mixed|string
      */
-    protected function getBooleanEntry($id)
+    protected function getTextEntry($id, $required = true)
     {
         $entries = $this->getEntries();
+
+        if ( ! $required && ( ! isset($entries[$id]) || $entries[$id] == '')) {
+            return null;
+        }
+
+        return filter_var($entries[$id], FILTER_SANITIZE_STRING);
+    }
+
+    /**
+     *
+     * Returns the boolean value indexed by the given id.
+     * @param $id
+     * @param bool|true $required
+     * @return mixed
+     */
+    protected function getBooleanEntry($id, $required = true)
+    {
+        $entries = $this->getEntries();
+        if ( ! $required && ( ! isset($entries[$id]) || $entries[$id] == '')) {
+            return null;
+        }
+
         return filter_var($entries[$id], FILTER_VALIDATE_BOOLEAN);
     }
 
