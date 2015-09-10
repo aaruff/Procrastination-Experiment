@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OutgoingSurvey extends Model
 {
-    protected $table = 'academic_obligation_surveys';
+    protected $table = 'outgoing_surveys';
 
     /* ------------------------------------------------------------------------------------------
      *                                Eloquent Relations
@@ -60,9 +60,24 @@ class OutgoingSurvey extends Model
         $this->hours_major_assignments = $hours;
     }
 
-
+    /**
+     * @param int $comparedCourseWork
+     */
+    public function setComparedCoursework($comparedCourseWork)
+    {
+        $this->compared_coursework = $comparedCourseWork;
+    }
 
     /**
+     * @param int $hoursCoursework
+     */
+    public function setHoursCoursework($hoursCoursework)
+    {
+        $this->hours_coursework = $hoursCoursework;
+    }
+
+    /**
+     *
      * @param int $comparedExams
      */
     public function setComparedExams($comparedExams)
@@ -175,16 +190,32 @@ class OutgoingSurvey extends Model
         $this->schedule_explained = $scheduleExplained;
     }
 
-    /**
-     * @param bool $lateTaskWorkedOnExplained
-     */
-    public function setLateTaskWorkedOnExplained($lateTaskWorkedOnExplained)
+    public function setLateTaskedWorkedOn($workedOnLateTask)
     {
-        $this->why_late_task = $lateTaskWorkedOnExplained;
+        $this->worked_late_task = $workedOnLateTask;
     }
 
+    /**
+     * @param bool $lateTaskExplained
+     */
+    public function setLateTaskExplained($lateTaskExplained)
+    {
+        $this->late_task_explained = $lateTaskExplained;
+    }
+
+    /**
+     * @param bool $enjoyedTasks
+     */
     public function setTaskEnjoyment($enjoyedTasks)
     {
         $this->enjoyed_tasks = $enjoyedTasks;
+    }
+
+    /**
+     * @param int $hoursSpent
+     */
+    public function setHoursSpentAllTasks($hoursSpent)
+    {
+        $this->hours_all_tasks = $hoursSpent;
     }
 }
