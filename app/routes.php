@@ -16,6 +16,7 @@ use Officium\Framework\Maps\RankTaskCompletionMap;
 use Officium\Framework\Maps\TaskMap;
 use Officium\Framework\Maps\LandingPageMap;
 use Officium\Framework\Maps\OutgoingQuestionnaireMap;
+use Officium\Framework\Maps\GameOverMap;
 
 //---------------------------------------------------
 // User Routes
@@ -68,6 +69,12 @@ Route::get(LandingPageMap::toUri(), LandingPageMap::toController());
 Route::get(TaskMap::toUri(), TaskMap::toController())->conditions(TaskMap::$CONDITIONS);
 Route::post(TaskMap::toUri(), TaskMap::toController(Map::$POST))->conditions(TaskMap::$CONDITIONS);
 
+// - Outgoing Questionnaire
+Route::get(OutgoingQuestionnaireMap::toUri(), OutgoingQuestionnaireMap::toController());
+Route::post(OutgoingQuestionnaireMap::toUri(), OutgoingQuestionnaireMap::toController(Map::$POST));
+
+// - Outgoing Questionnaire
+Route::get(GameOverMap::toUri(), GameOverMap::toController());
 
 //---------------------------------------------------
 // Experimenter Routes
@@ -81,5 +88,3 @@ Route::post(SessionMap::toUri(), SessionMap::toController(Map::$POST));
 
 Route::get(TreatmentMap::toUri(TreatmentMap::$ID), TreatmentMap::toController());
 
-Route::get(OutgoingQuestionnaireMap::toUri(), OutgoingQuestionnaireMap::toController());
-Route::post(OutgoingQuestionnaireMap::toUri(), OutgoingQuestionnaireMap::toController(Map::$POST));
