@@ -4,7 +4,6 @@ namespace Officium\Framework\Maps;
 
 use Officium\Experiment\Subject;
 use Officium\Experiment\ThreeTaskPenaltyGameState;
-use Slim\Slim;
 use Officium\Experiment\SubjectGame;
 
 class ThreeTaskPenaltyStateMap implements StateMap
@@ -13,7 +12,6 @@ class ThreeTaskPenaltyStateMap implements StateMap
      * @var \Officium\Experiment\Subject
      */
     private $subject;
-    private $tasks;
 
     public function __construct(Subject $subject)
     {
@@ -58,6 +56,8 @@ class ThreeTaskPenaltyStateMap implements StateMap
                 }
             case ThreeTaskPenaltyGameState::OUTGOING_SURVEY:
                 return OutgoingQuestionnaireMap::isUri($uri);
+            case ThreeTaskPenaltyGameState::GAME_OVER:
+                return GameOverMap::isUri($uri);
             default:
                 return false;
         }
@@ -87,6 +87,8 @@ class ThreeTaskPenaltyStateMap implements StateMap
                 return LandingPageMap::toUri();
             case ThreeTaskPenaltyGameState::OUTGOING_SURVEY:
                 return OutgoingQuestionnaireMap::toUri();
+            case ThreeTaskPenaltyGameState::GAME_OVER:
+                return GameOverMap::toUri();
             default:
                 return LoginMap::toUri();
         }
