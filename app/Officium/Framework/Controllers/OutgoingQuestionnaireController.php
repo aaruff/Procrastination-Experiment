@@ -2,8 +2,9 @@
 
 namespace Officium\Framework\Controllers;
 
+use Officium\Framework\Maps\GameOverMap;
 use Officium\Framework\Maps\OutgoingQuestionnaireMap as Map;
-use Officium\Framework\View\Forms\OutgoingQuestionnaireForm as Form;
+use Officium\Framework\View\Forms\OutgoingSurveyForm as Form;
 use Officium\Framework\Models\Session;
 use Slim\Slim;
 
@@ -32,7 +33,7 @@ class OutgoingQuestionnaireController
 
         $form->save(Session::getUser());
 
-        //$app->redirect(LandingPageMap::toUri());
+        $app->redirect(GameOverMap::toUri());
     }
 
 }
