@@ -114,6 +114,8 @@ create table outgoing_surveys (
   hours_major_assignments integer null,
   compared_exams integer not null,
   hours_exams integer null,
+  compared_coursework integer not null,
+  hours_coursework integer null,
   compared_work integer not null,
   hours_work integer null,
   compared_social integer not null,
@@ -127,8 +129,10 @@ create table outgoing_surveys (
   follow_schedule bool null,
   schedule_explained varchar(255) null,
   worked_late_task bool null,
-  why_late_task varchar(255) null,
-  enjoyed_tasks boolean null
+  late_task_explained varchar(255) null,
+  enjoyed_tasks boolean null,
+  updated_at timestamp not null,
+  created_at timestamp not null
 ) ENGINE InnoDB;
 
 #----------------------------------------
