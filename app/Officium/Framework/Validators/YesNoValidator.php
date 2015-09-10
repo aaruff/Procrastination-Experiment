@@ -7,7 +7,7 @@ use Respect\Validation\Exceptions\NestedValidationExceptionInterface;
 
 class YesNoValidator extends Validator
 {
-    private $entryRequired;
+    private $required;
     private $mustBeYes;
 
     /**
@@ -16,7 +16,7 @@ class YesNoValidator extends Validator
      */
     public function __construct($entryRequired = true, $mustBeYes = false)
     {
-        $this->entryRequired = $entryRequired;
+        $this->required = $entryRequired;
         $this->mustBeYes = $mustBeYes;
     }
 
@@ -28,7 +28,19 @@ class YesNoValidator extends Validator
     public function validate($entry)
     {
         $this->clearErrors();
-        if ( $this->entryRequired && empty($entry)) {
+
+        if (empty($entry)) {
+            if ($this->required) {
+                $this->setErrors(['This field is required.']);
+                return false;
+            }
+            // empty allowed
+            else {
+                return true;
+            }
+        }
+
+        if ( $this->required && empty($entry)) {
             $this->setErrors(['This field is required.']);
             return false;
         }
