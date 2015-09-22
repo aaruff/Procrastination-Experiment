@@ -64,6 +64,23 @@ class SubjectGame
     }
 
     /**
+     * Returns true if all tasks have been completed, otherwise false is returned.
+     *
+     * @return bool
+     */
+    public function areAllTasksComplete()
+    {
+        $numTasks = $this->getNumTasks();
+        for ($task = 1; $task <= $numTasks; ++$task) {
+            if ( ! $this->getTaskState($task) == self::COMPLETED) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Returns true if there is at least one task, other than $taskNumber, that is in the FIXED_PAYOFF state,
      * otherwise false is returned.
      *
