@@ -88,7 +88,7 @@ create table subject_tasks(
 #--
 # Task Log: Stores task submission events
 #
-# Event Types -- Issued = 1, Failure = 2, Display Task = 3, Complete Task = 4,
+# Event Types: See EventLog class
 #--
 drop table if exists event_logs;
 create table event_logs(
@@ -97,6 +97,7 @@ create table event_logs(
   task_id	integer not null,
   event integer not null,
   date_time datetime not null,
+  payoff double default 0.0,
   updated_at timestamp not null,
   created_at timestamp not null
 ) ENGINE=InnoDB;
