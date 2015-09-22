@@ -2,6 +2,7 @@
 
 namespace Officium\Framework\Controllers;
 
+use Officium\Experiment\EventLog;
 use Officium\Framework\Maps\GeneralAcademicMap;
 use Officium\Framework\Maps\SurveyMap;
 use Officium\Framework\Maps\LoginMap;
@@ -47,6 +48,9 @@ class LoginController
         $user = $form->getUser();
         Session::loginUser($user);
 
+        if ( ! $user->isExperimenter()) {
+            EventLog::logEvent($user->getSubject(), EventLog::USER_LOGIN);
+        }
         $app->response->redirect(($user->isExperimenter()) ? DashboardMap::toUri() : GeneralAcademicMap::toUri());
     }
 
