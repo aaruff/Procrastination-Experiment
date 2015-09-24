@@ -25,36 +25,39 @@
                 <th>Task</th><th>Deadline</th><th>Time Remaining</th><th>Payoff</th><th></th>
             </tr>
             {% for row in rows %}
-                <tr class="{{ row.state == state.complete or row.state == state.zero ? 'text-muted' : '' }}">
+                <tr class="{{ row.access ? : 'text-muted' }}">
                     <td>{{ row.number }}</td>
                     <td>
-                    {% if row.state == state.fixed or row.state == state.penalty %}
-                        {{ row.deadline }}
-                    {% endif %}
+                        {% if row.state == state.fixed or row.state == state.penalty %}
+                            {{ row.deadline }}
+                        {% endif %}
                     </td>
                     <td>
-                    {% if row.state == state.fixed or row.state == state.penalty %}
-                        {{ row.countdown }}
-                    {% endif %}
+                        {% if row.state == state.fixed or row.state == state.penalty %}
+                            {{ row.countdown }}
+                        {% endif %}
                     </td>
                     <td>{{ row.pay }}</td>
                     <td>
-                        {% if row.state == state.fixed %}
-                            <a class="btn btn-primary" href="{{ row.url }}">Work on Task {{ row.number }}</a>
-                        {% elseif row.state == state.penalty %}
-                            <a class="btn btn-default" href="{{ row.url }}">Work on Task {{ row.number }}</a>
-                        {% elseif row.state == state.expired %}
-                            <span>This task has expired.</span>
+                    {% if row.access %}
+                        <a class="btn {{ row.state == state.fixed ? 'btn-primary' : 'btn-default'  }}" href="{{ row.url }}">Work on Task {{ row.number }}</a>
+                    {% else %}
+                        <span>
+                        {% if row.state == state.expired %}
+                            This task has expired.
                         {% elseif row.state == state.complete %}
-                            <span>This task has been completed.</span>
+                            This task has been completed.
                         {% else %}
-                            <span>This task is no longer available.</span>
+                            This task is currently unavailable.
                         {% endif %}
+                        </span>
+                    {% endif %}
                     </td>
                 </tr>
             {% endfor %}
         </table>
-        <p>Note: The penalty rate is ${{ rate }} per hour until the payoff is $0.</p>
+        <p>Note 1: The penalty rate is ${{ rate }} per hour until the payoff is $0.</p>
+        <p>Note 2: All times are displayed based on the current time in New York City.</p>
     </div>
 </div>
 {% endblock %}
