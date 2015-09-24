@@ -16,7 +16,7 @@ class LandingPageTable
         $rows['rate'] = $game->getPenaltyRatePerHour(1);
         $rows['state']['fixed'] = $game::FIXED_PAYOFF;
         $rows['state']['penalty'] = $game::PENALIZED_PAYOFF;
-        $rows['state']['zero'] = $game::NO_PAYOFF;
+        $rows['state']['expired'] = $game::NO_PAYOFF;
         $rows['state']['complete'] = $game::COMPLETED;
         for ($i = 1; $i <= $numTasks; ++$i) {
             $row['access'] = $game->isTaskAccessible($i);
