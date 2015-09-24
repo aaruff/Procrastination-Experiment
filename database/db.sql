@@ -98,6 +98,7 @@ create table event_logs(
   event integer not null,
   date_time datetime not null,
   payoff double default 0.0,
+  num_entries integer default 0,
   updated_at timestamp not null,
   created_at timestamp not null
 ) ENGINE=InnoDB;
