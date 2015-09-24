@@ -180,15 +180,26 @@ class SubjectGame
     }
 
     /**
-     * Returns true if the task is either in the fixed or penalized payoff state.
+     * Returns true if the task is either in the fixed or penalized payoff state, and there are no other tasks before it
+     * that are in the fixed payoff state, otherwise false is returned.
      *
      * @param int $taskNumber
      * @return boolean
      */
     public function isTaskAccessible($taskNumber)
     {
+        for ($task = 1; $task < $taskNumber; ++$task) {
+            if ($this->getTaskState($task) == self::FIXED_PAYOFF) {
+                return false;
+            }
+        }
+
         $taskState = $this->getTaskState($taskNumber);
-        return $taskState == self::FIXED_PAYOFF || $taskState == self::PENALIZED_PAYOFF;
+        if ($taskState == self::FIXED_PAYOFF || $taskState == self::PENALIZED_PAYOFF) {
+            return true;
+        }
+
+        return false;
     }
 
     public function getProblemDeadline($taskNumber)
