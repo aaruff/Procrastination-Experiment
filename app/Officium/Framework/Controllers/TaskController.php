@@ -89,10 +89,10 @@ class TaskController
         // Invalid Solution
         if ( ! $form->validate($app->request->post())) {
             if ($game->isTaskPayoffPenalized($taskNumber)) {
-                EventLog::logEvent($subject, EventLog::INCORRECT_PENALIZED_PROBLEM_SUBMITTED, $taskNumber, $payoff);
+                EventLog::logEvent($subject, EventLog::INCORRECT_PENALIZED_PROBLEM_SUBMITTED, $taskNumber, $payoff, $form->getNumberPhrasesEntered());
             }
             else {
-                EventLog::logEvent($subject, EventLog::INCORRECT_PROBLEM_SUBMITTED, $taskNumber, $payoff);
+                EventLog::logEvent($subject, EventLog::INCORRECT_PROBLEM_SUBMITTED, $taskNumber, $payoff, $form->getNumberPhrasesEntered());
             }
 
             $problem->setSolution($form->getSolution());
