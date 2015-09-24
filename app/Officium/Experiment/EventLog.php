@@ -23,13 +23,13 @@ class EventLog extends Model
     const CORRECT_PROBLEM_SUBMITTED = 8;
     const CORRECT_PENALIZED_PROBLEM_SUBMITTED = 9;
 
-    const PENALIZED_TASK_CHOSEN_POST_REDIRECT = 10;
+    const TASK_PENALTY_TRANSITION = 10;
 
-    const OUTGOING_QUESTIONNAIRE_COMPLETED = 11;
+    const PENALIZED_TASK_CHOSEN_POST_REDIRECT = 11;
 
     const ALL_TASKS_COMPLETED = 12;
 
-    const TASK_PENALTY_TRANSITION = 13;
+    const OUTGOING_QUESTIONNAIRE_COMPLETED = 13;
 
 
     /*
@@ -44,14 +44,16 @@ class EventLog extends Model
      * @param $eventType
      * @param int $taskNumber
      * @param double $payoff
+     * @param int $numEntries
      */
-    public static function logEvent(Subject $subject, $eventType, $taskNumber = self::NO_TASK, $payoff = 0.0)
+    public static function logEvent(Subject $subject, $eventType, $taskNumber = self::NO_TASK, $payoff = 0.0, $numEntries = 0)
     {
         $eventLog = new EventLog();
         $eventLog->setSubjectId($subject->getId());
         $eventLog->setEventType($eventType);
         $eventLog->setDateTime(new \DateTime("now"));
         $eventLog->setPayoff($payoff);
+        $eventLog->setNumEntries($numEntries);
 
         if ($taskNumber > 0) {
             $eventLog->setTaskNumber($taskNumber);
@@ -74,6 +76,14 @@ class EventLog extends Model
     public function setDateTime(\DateTime $datetime)
     {
         $this->date_time = $datetime;
+    }
+
+    /**
+     * @param int $numEntries
+     */
+    public function setNumEntries($numEntries)
+    {
+        $this->num_entries = $numEntries;
     }
 
     /**
