@@ -124,6 +124,19 @@ class TaskForm extends Form implements Saveable
         return $formData;
     }
 
+    public function getNumberPhrasesEntered()
+    {
+        $solution = $this->getSolution();
+        $numPhrasesEntered = 0;
+        foreach ($solution as $entry) {
+            if ( ! empty($entry)) {
+                ++$numPhrasesEntered;
+            }
+        }
+
+        return $numPhrasesEntered;
+    }
+
     /**
      * Returns the current solution.
      *
