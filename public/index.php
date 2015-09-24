@@ -22,11 +22,19 @@ date_default_timezone_set(getenv('TIME_ZONE'));
 $appConfig = require BASE_DIR . '/config/app.php';
 
 $app = new Slim\Slim($appConfig);
+
 $app->add(new \Officium\Framework\Middleware\AuthMiddleware());
 
 use Statical\SlimStatic\SlimStatic;
 Slimstatic::boot($app);
 Statical::addNamespace('*', 'Officium\\*');
+
+/*---------------------------------------------------
+ * Prevent Caching
+ *--------------------------------------------------- */
+$app->response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate');
+$app->response->headers->set('Pragma', 'no-cache');
+$app->response->headers->set('Expires', '0');
 
 /*---------------------------------------------------
  * Database
