@@ -1,4 +1,3 @@
 ## TODO
 
-External Obligation Survey: 
-- Do not require work hours field if employed is set to "No".
+- Add number of entries submitted when a problem is submitted.
