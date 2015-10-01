@@ -23,8 +23,9 @@ $appConfig = require BASE_DIR . '/config/app.php';
 
 $app = new Slim\Slim($appConfig);
 
-$app->add(new \Officium\Framework\Middleware\AuthMiddleware());
-
+/*---------------------------------------------------
+ * Setup Slim Static Library
+ *--------------------------------------------------- */
 use Statical\SlimStatic\SlimStatic;
 Slimstatic::boot($app);
 Statical::addNamespace('*', 'Officium\\*');
@@ -62,5 +63,10 @@ require BASE_DIR . '/app/routes.php';
 $template = $app->view();
 $template->parserOptions = require BASE_DIR . '/config/twig.php';
 $template->parserExtensions = array(new \Slim\Views\TwigExtension(), new \Twig_Extension_Debug());
+
+/*---------------------------------------------------
+ * Set Auth Middleware
+ *--------------------------------------------------- */
+$app->add(new \Officium\Framework\Middleware\AuthMiddleware());
 
 $app->run();
