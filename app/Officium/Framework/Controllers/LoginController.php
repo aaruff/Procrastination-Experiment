@@ -3,7 +3,8 @@
 namespace Officium\Framework\Controllers;
 
 use Officium\Experiment\EventLog;
-use Officium\Framework\Maps\GeneralAcademicMap;
+use Officium\Experiment\StateMapFactory;
+use Officium\Experiment\Subject;
 use Officium\Framework\Maps\SurveyMap;
 use Officium\Framework\Maps\LoginMap;
 use Officium\Framework\Models\Session;
@@ -51,7 +52,14 @@ class LoginController
         if ( ! $user->isExperimenter()) {
             EventLog::logEvent($user->getSubject(), EventLog::USER_LOGIN);
         }
-        $app->response->redirect(($user->isExperimenter()) ? DashboardMap::toUri() : GeneralAcademicMap::toUri());
+
+        if ($user->isExperimenter()) {
+            $app->response->redirect(DashboardMap::toUri());
+        }
+        else {
+            $stateMap = StateMapFactory::getStateMap(Subject::getByUserId(Session::getUserId()));
+            $app->response->redirect($stateMap->getStateUri());
+        }
     }
 
 }
