@@ -17,12 +17,19 @@ use Officium\Framework\Maps\TaskMap;
 use Officium\Framework\Maps\LandingPageMap;
 use Officium\Framework\Maps\OutgoingQuestionnaireMap;
 use Officium\Framework\Maps\GameOverMap;
+use Officium\Framework\Maps\FileNotFoundMap;
+
+//---------------------------------------------------
+// Error Routes
+//---------------------------------------------------
+Route::get(FileNotFoundMap::toUri(), FileNotFoundMap::toController());
 
 //---------------------------------------------------
 // User Routes
 //---------------------------------------------------
 Route::get(LoginMap::toUri(), LoginMap::toController());
 Route::post(LoginMap::toUri(), LoginMap::toController(LoginMap::$POST));
+
 
 //---------------------------------------------------
 // Subject Routes
@@ -75,6 +82,7 @@ Route::post(OutgoingQuestionnaireMap::toUri(), OutgoingQuestionnaireMap::toContr
 
 // - Outgoing Questionnaire
 Route::get(GameOverMap::toUri(), GameOverMap::toController());
+
 
 //---------------------------------------------------
 // Experimenter Routes
