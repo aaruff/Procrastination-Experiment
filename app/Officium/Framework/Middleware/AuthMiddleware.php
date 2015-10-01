@@ -2,11 +2,13 @@
 namespace Officium\Framework\Middleware;
 
 use Officium\Experiment\StateMapFactory;
+use Officium\Framework\Maps\FileNotFoundMap;
 use Slim\Slim;
 use \Slim\Middleware;
 use Officium\Framework\Maps\LoginMap;
 use Officium\Framework\Models\Session;
 use Officium\Experiment\Subject;
+use Officium\Framework\Validators\ExperimentRouteValidator;
 
 class AuthMiddleware extends Middleware
 {
@@ -21,22 +23,32 @@ class AuthMiddleware extends Middleware
         $app = Slim::getInstance();
         $uri = $app->request()->getResourceUri();
 
-        if (LoginMap::isUri($uri) || Session::isExperimenter()) {
+        // Allow login requests, and those by the experimenter, to be handled by the framework.
+        if (LoginMap::isUri($uri) || FileNotFoundMap::isUri($uri) || Session::isExperimenter()) {
             $this->next->call();
             return;
         }
 
+        // Any request not coming from a logged in user will be redirected to the login page.
         if ( ! Session::isSubject()) {
-            $this->app->redirect(LoginMap::toUri());
+            $app->response()->redirect(LoginMap::toUri(), 401);
             return;
         }
 
-        /* @var \Officium\Framework\Maps\ThreeTaskPenaltyStateMap $stateMap */
         $stateMap = StateMapFactory::getStateMap(Subject::getByUserId(Session::getUserId()));
-        if ( ! $stateMap->isStateValidUri($uri)) {
-            $this->app->redirect($stateMap->getStateUri());
-            return;
-        }
+        $isExperimentRoute = function () use ($app, $uri, $stateMap) {
+            if ( ! ExperimentRouteValidator::isExperimentRoute($uri)) {
+                throw new \Exception('Resource Not Found');
+            }
+
+            /* @var \Officium\Framework\Maps\ThreeTaskPenaltyStateMap $stateMap */
+            if ( ! $stateMap->isStateValidUri($uri)) {
+                $app->response()->redirect(FileNotFoundMap::toUri());
+                return;
+            }
+        };
+
+        $app->hook('slim.before.dispatch', $isExperimentRoute);
 
         $this->next->call();
     }
