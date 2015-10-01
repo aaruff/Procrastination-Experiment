@@ -20,7 +20,7 @@ class AcademicObligationMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/survey/ao';
+        return '/session/survey/ao';
     }
 
     /**

@@ -12,7 +12,7 @@ class TreatmentMap extends ResourceMap
      */
     public static function toUri($id = '')
     {
-        $uri = '/experiment/treatment';
+        $uri = '/session/treatment';
         if ($id == self::$ID) {
             return $uri . '/:id';
         }

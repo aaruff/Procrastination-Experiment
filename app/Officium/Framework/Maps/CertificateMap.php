@@ -20,7 +20,7 @@ class CertificateMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/survey/c';
+        return '/session/survey/c';
     }
 
     /**

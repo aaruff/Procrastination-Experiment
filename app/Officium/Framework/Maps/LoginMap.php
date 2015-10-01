@@ -15,7 +15,7 @@ class LoginMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/login';
+        return '/session/login';
     }
 
     /**

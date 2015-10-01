@@ -20,7 +20,7 @@ class GeneralAcademicMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/survey/ga';
+        return '/session/survey/ga';
     }
 
     /**

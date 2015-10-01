@@ -20,7 +20,7 @@ class OutgoingQuestionnaireMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/out';
+        return '/session/out';
     }
 
     /**

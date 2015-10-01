@@ -20,7 +20,7 @@ class ExternalObligationMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/survey/eo';
+        return '/session/survey/eo';
     }
 
     /**

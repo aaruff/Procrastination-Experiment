@@ -20,7 +20,7 @@ class GameOverMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/experiment/over';
+        return '/session/over';
     }
 
     /**

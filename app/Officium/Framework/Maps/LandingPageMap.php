@@ -8,7 +8,7 @@ class LandingPageMap extends ResourceMap
 {
     public static function toUri()
     {
-        return '/task/home';
+        return '/session/landing';
     }
 
     /**

@@ -11,7 +11,7 @@ class SessionMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/experiment/session/add';
+        return '/session/new';
     }
 
     /**

@@ -19,7 +19,7 @@ class DashboardMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/experiment/dashboard';
+        return '/session/dashboard';
     }
 
     /**

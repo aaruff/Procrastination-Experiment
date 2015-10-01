@@ -20,7 +20,7 @@ class RankTaskCompletionMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/rtc';
+        return '/session/rtc';
     }
 
     /**

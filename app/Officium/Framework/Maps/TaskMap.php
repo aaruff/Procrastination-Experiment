@@ -22,7 +22,7 @@ class TaskMap extends ResourceMap
      */
     public static function toUri($id = ':id')
     {
-        return "/task/$id";
+        return "/session/task/$id";
     }
 
     /**
@@ -36,8 +36,7 @@ class TaskMap extends ResourceMap
 
     public static function getTaskNumber($uri)
     {
-        $parts = explode('/', $uri);
-        return intval($parts[2]);
+        return intval(basename($uri));
     }
 
     /**

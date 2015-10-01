@@ -20,7 +20,7 @@ class AttentiveRankMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/survey/att';
+        return '/session/survey/att';
     }
 
     /**

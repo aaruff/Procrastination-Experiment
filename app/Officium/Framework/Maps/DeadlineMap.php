@@ -20,7 +20,7 @@ class DeadlineMap extends ResourceMap
      */
     public static function toUri()
     {
-        return '/dl';
+        return '/session/survey/dl';
     }
 
     /**
