@@ -114,15 +114,17 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">Allow Subjects to Modify Deadlines</label>
+                        <label class="col-xs-3 control-label">Subjects Deadlines</label>
                         <div class="checkbox col-xs-9">
-                            <label>
-                                <input name="adjustableDeadline" type="checkbox" value="yes"> Yes
-                            </label>
-                            {%  if flash.errors.deadlines %}
+                            <select name="adjustableDeadline" id="workin" class="form-control">
+                                <option value="">Select One</option>
+                                <option value="yes" {% if flash.entries.adjustableDeadline == "yes" %} selected="selected" {% endif %}>Enabled</option>
+                                <option value="no" {% if flash.entries.adjustableDeadline == "no" %} selected="selected" {% endif %}>Disabled</option>
+                            </select>
+                            {%  if flash.errors.adjustableDeadline %}
                                 <div class="alert alert-danger">
                                     <ul>
-                                        {% for error in flash.errors.size %}
+                                        {% for error in flash.errors.adjustableDeadline %}
                                             <li>{{ error }}</li>
                                         {% endfor %}
                                     </ul>

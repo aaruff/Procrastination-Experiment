@@ -7,11 +7,11 @@ use Officium\Experiment\Session;
 use Officium\Experiment\Task;
 use Officium\Framework\Models\Saveable;
 use Officium\Framework\Models\User;
-use Officium\Framework\Validators\CheckboxValidator;
 use Officium\Framework\Validators\IntegerValidator;
 use Officium\Framework\Validators\FloatValidator;
 use Officium\Framework\Validators\DateTimeValidator;
 use Officium\Experiment\Treatment;
+use Officium\Framework\Validators\YesNoValidator;
 
 class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
 {
@@ -46,7 +46,7 @@ class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
         $validators[self::$SIZE] = new IntegerValidator();
         $validators[self::$START] = new DateTimeValidator();
         $validators[self::$END] = new DateTimeValidator();
-        $validators[self::$ADJUSTABLE_DEADLINE] = new CheckboxValidator();
+        $validators[self::$ADJUSTABLE_DEADLINE] = new YesNoValidator();
         $validators[self::$TASK_ONE_DEADLINE] = new DateTimeValidator();
         $validators[self::$TASK_TWO_DEADLINE] = new DateTimeValidator();
         $validators[self::$TASK_THREE_DEADLINE] = new DateTimeValidator();
@@ -83,7 +83,7 @@ class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
     /**
      * @return bool
      */
-    private function getSecondaryDeadlineEnabled()
+    private function getAdjustableDeadline()
     {
         $entries = $this->getEntries();
         // When it's not empty and has passed validation so the option must be set to true.
@@ -174,7 +174,7 @@ class ThreeTaskPenaltyTreatmentForm extends Form implements Saveable
             $task->setTreatmentId($treatment->getId());
             $task->setPenaltyRateEnabled(true);
             $task->setPrimaryDeadline($this->getDeadline($task->getNumber()));
-            $task->setSecondaryDeadlineEnabled($this->getSecondaryDeadlineEnabled());
+            $task->setSecondaryDeadlineEnabled($this->getAdjustableDeadline());
             $task->setTimeLimit($this->getIntEntry(self::$TASK_TIME_LIMIT));
             $task->setPayoff($this->getFloatEntry(self::$PAYOFF));
             $task->setPenaltyRate($this->getFloatEntry(self::$PENALTY_RATE));
