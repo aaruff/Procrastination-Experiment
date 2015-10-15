@@ -2,6 +2,7 @@
 
 namespace Officium\Framework\Controllers;
 
+use Officium\Experiment\StateMapFactory;
 use Officium\Framework\Models\Session;
 use Officium\Framework\View\Forms\IncomingSurveys\SubjectDeadlineForm as Form;
 use Slim\Slim;
@@ -41,6 +42,7 @@ class DeadlineController
         $subject->save();
 
         // Update state and move on
-        $app->redirect(Map::toUri());
+        $stateMap = StateMapFactory::getStateMap($subject);
+        $app->redirect($stateMap->getstateuri());
     }
 }

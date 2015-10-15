@@ -3,6 +3,7 @@
 namespace Officium\Framework\Controllers;
 
 use Officium\Experiment\EventLog;
+use Officium\Experiment\StateMapFactory;
 use Officium\Framework\Maps\GameOverMap;
 use Officium\Framework\Maps\OutgoingQuestionnaireMap as Map;
 use Officium\Framework\View\Forms\OutgoingSurveyForm as Form;
@@ -35,7 +36,8 @@ class OutgoingQuestionnaireController
         EventLog::logEvent($subject, EventLog::OUTGOING_QUESTIONNAIRE_COMPLETED);
         $form->save(Session::getUser());
 
-        $app->redirect(GameOverMap::toUri());
+        $stateMap = StateMapFactory::getStateMap($subject);
+        $app->redirect($stateMap->getstateuri());
     }
 
 }

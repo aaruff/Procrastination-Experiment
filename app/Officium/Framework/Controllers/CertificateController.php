@@ -2,6 +2,7 @@
 
 namespace Officium\Framework\Controllers;
 
+use Officium\Experiment\StateMapFactory;
 use Slim\Slim;
 use Officium\Framework\View\Forms\IncomingSurveys\CertificateForm as Form;
 use Officium\Framework\Maps\CertificateMap as Map;
@@ -38,6 +39,7 @@ class CertificateController
         $subject->setNextState();
         $subject->save();
 
-        $app->redirect(Map::toUri());
+        $stateMap = StateMapFactory::getStateMap($subject);
+        $app->redirect($stateMap->getstateuri());
     }
 }

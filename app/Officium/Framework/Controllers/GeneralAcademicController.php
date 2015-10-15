@@ -2,6 +2,7 @@
 
 namespace Officium\Framework\Controllers;
 
+use Officium\Experiment\StateMapFactory;
 use Officium\Framework\Maps\GeneralAcademicMap as Map;
 use Officium\Framework\Models\Session;
 use Officium\Framework\View\Forms\IncomingSurveys\GeneralAcademicForm as Form;
@@ -38,6 +39,7 @@ class GeneralAcademicController
         $subject->setNextState();
         $subject->save();
 
-        $app->redirect(Map::toUri());
+        $stateMap = StateMapFactory::getStateMap($subject);
+        $app->redirect($stateMap->getstateuri());
     }
 }
