@@ -8,7 +8,7 @@
                 <div class="alert alert-danger">
                     <strong>Oops!</strong> I looks like there are a few errors in your submission. Please check your entries and try again.<br><br>
                     <ul>
-                        {% for error in flash.errors.rate %}
+                        {% for error in flash.errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
                     </ul>
@@ -171,7 +171,7 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Penalty Rate</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control"  name="penaltyRate" placeholder="Penalty Rate" value="{{  flash.entries.penalty  }}" />
+                            <input type="text" class="form-control"  name="penaltyRate" placeholder="Penalty Rate" value="{{  flash.entries.penaltyRate  }}" />
                             {%  if flash.errors.penaltyRate %}
                                 <div class="alert alert-danger">
                                     <ul>
