@@ -44,7 +44,8 @@ class AuthMiddleware extends Middleware
             /* @var \Officium\Framework\Maps\ThreeTaskPenaltyStateMap $stateMap */
             if ( ! $stateMap->isStateValidUri($uri)) {
                 $app->response()->redirect(FileNotFoundMap::toUri());
-                return;
+                $app->getLog()->error("Invalid Uri: " . $uri);
+                throw new \Exception('Invalid URI');
             }
         };
 
