@@ -15,10 +15,14 @@ return array(
             'options' => array()
         ),
     ),
-    // cookie config
+    // cookies
     'cookies.encrypt' => true,
     'cookies.secret_key' => getenv('SECRET_KEY'),
     'cookies.lifetime' => getenv('SECRET_KEY'),
     'cookies.cipher' => MCRYPT_RIJNDAEL_256,
-    'cookies.cipher_mode' => MCRYPT_MODE_CBC
+    'cookies.cipher_mode' => MCRYPT_MODE_CBC,
+    // logging
+    'log.enabled' => true,
+    'log.level' => \Slim\Log::DEBUG,
+    'log.writer' => new \Slim\Logger\DateTimeFileWriter(['path'=>getenv('LOG_DIR')])
 );
