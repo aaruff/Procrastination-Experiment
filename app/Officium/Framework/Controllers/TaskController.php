@@ -4,6 +4,7 @@ namespace Officium\Framework\Controllers;
 
 use Officium\Experiment\SubjectGame;
 use Officium\Framework\Maps\LandingPageMap;
+use Officium\Framework\Maps\OutgoingQuestionnaireMap;
 use Officium\Framework\Maps\TaskMap as Map;
 use Officium\Framework\View\Forms\TaskForm as Form;
 use Officium\Framework\Models\Session;
@@ -123,6 +124,8 @@ class TaskController
 
         if ($game->areAllTasksComplete()) {
             EventLog::logEvent($subject, EventLog::ALL_TASKS_COMPLETED);
+            $app->redirect(OutgoingQuestionnaireMap::toUri());
+            return;
         }
 
         $app->redirect(LandingPageMap::toUri());
