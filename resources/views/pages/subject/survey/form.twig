@@ -30,7 +30,6 @@
     <link href="{{ baseUrl() }}/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- Date Picker -->
-    <link rel="stylesheet" href="{{ baseUrl() }}/resources/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="{{ baseUrl() }}/resources/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -61,7 +60,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class=><a href="{{ baseUrl }}/login">Logout</a></li>
+                    <li class=><a href="{{ baseUrl() }}/session/login">Logout</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -91,8 +90,6 @@
 <script src="/resources/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <!-- Date and Date Time Picker -->
-<script type="text/javascript" src="/resources/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript" src="/resources/jquery-timepicker-jt/jquery.timepicker.min.js"></script>
 <script type="text/javascript" src="/resources/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 
 <!-- Metis Menu Plugin JavaScript -->
