@@ -6,8 +6,15 @@ class ArrayValidator extends Validator
 {
     private $required;
     private $validator;
+    private $key;
 
-    public function __construct(Validator $validator, $required = true) {
+    /**
+     * @param $key
+     * @param Validator $validator
+     * @param bool|true $required
+     */
+    public function __construct($key, Validator $validator, $required = true) {
+        $this->key = $key;
         $this->validator = $validator;
         $this->required = $required;
     }
@@ -22,18 +29,18 @@ class ArrayValidator extends Validator
         $this->clearErrors();
 
         if ($this->required && ( ! is_array($entry) || count($entry) == 0 )) {
-            $this->setErrors('This item is required.');
+            $this->setErrors([$this->key=>'This item is required.']);
             return false;
         }
 
         $errors = [];
         for ($i = 0; $i < count($entry); ++$i) {
             if ( ! $this->validator->validate($entry[$i])) {
-                $errors[] = $this->validator->getErrors();
+                $errors[] = implode(', ', $this->validator->getErrors());
             }
         }
 
-        $this->setErrors($errors);
+        $this->setErrors([$this->key=>$errors]);
         return empty($errors);
     }
 }
