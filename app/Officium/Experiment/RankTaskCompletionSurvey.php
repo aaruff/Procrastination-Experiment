@@ -35,33 +35,16 @@ class RankTaskCompletionSurvey extends Model
     /**
      * @param int $rank
      */
-    public function setNoTaskRank($rank)
+    public function setNumberCompleted($numberCompleted)
     {
-        $this->none = $rank;
+        $this->number_completed = $numberCompleted;
     }
 
     /**
      * @param int $rank
      */
-    public function setOneTaskRank($rank)
+    public function setRank($rank)
     {
-        $this->one_task = $rank;
+        $this->rank = $rank;
     }
-
-    /**
-     * @param int $rank
-     */
-    public function setTwoTaskRank($rank)
-    {
-        $this->two_tasks = $rank;
-    }
-
-    /**
-     * @param int $rank
-     */
-    public function setAllTaskRank($rank)
-    {
-        $this->all_tasks = $rank;
-    }
-
 }
