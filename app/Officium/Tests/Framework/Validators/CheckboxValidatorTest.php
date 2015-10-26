@@ -13,7 +13,6 @@ class CheckboxValidatorTest extends \PHPUnit_Framework_TestCase
     {
         $checkboxValidator = new CheckboxValidator();
         $this->assertTrue($checkboxValidator->validate('on'));
-        $this->assertTrue($checkboxValidator->validate(''));
     }
 
     /**
