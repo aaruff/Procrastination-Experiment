@@ -55,7 +55,7 @@ abstract class Validator
 
     /**
      * Sets the error message.
-     * @param $errors
+     * @param array $errors
      */
     public function setErrors($errors)
     {
