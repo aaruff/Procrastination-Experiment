@@ -73,9 +73,9 @@ class AcademicObligationForm extends Form implements Saveable
         $validators[self::$NUM_MINOR] = new IntegerValidator(0, 40);
         $validators[self::$NUM_MAJOR] = new IntegerValidator(0, 40);
         $validators[self::$NUM_EXAM] = new IntegerValidator(0, 40);
-        $validators[Deadline::$MINOR_DEADLINE_ID] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
-        $validators[Deadline::$MAJOR_DEADLINE_ID] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
-        $validators[Deadline::$EXAM_DEADLINE_ID] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
+        $validators[Deadline::$MINOR_DEADLINE_ID] = new ArrayValidator(Deadline::$MINOR_DEADLINE_ID, new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
+        $validators[Deadline::$MAJOR_DEADLINE_ID] = new ArrayValidator(Deadline::$MINOR_DEADLINE_ID, new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
+        $validators[Deadline::$EXAM_DEADLINE_ID] = new ArrayValidator(Deadline::$MINOR_DEADLINE_ID, new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
 
         return $validators;
     }
