@@ -1,0 +1,28 @@
+---
+ip: "192.168.10.10"
+memory: 2048
+cpus: 1
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: ~/Dropbox/aruff/Projects/Bisin/Officium
+      to: /home/vagrant/code/officium
+
+sites:
+    - map: officium.app
+      to: /home/vagrant/code/officium/public
+
+variables:
+    - key: APP_ENV
+      value: local
+
+databases:
+    - name: pro
+      user: pro
+      pass: secret
+      schema: /home/vagrant/code/officium/database/db.sql
+      seed: /home/vagrant/code/officium/database/seed.sql
