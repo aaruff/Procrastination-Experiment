@@ -5,7 +5,7 @@ namespace Officium\Framework\Validators;
 
 use Officium\Framework\Models\User;
 
-class UserValidator extends Validator
+class UserValidator extends Validator implements SymanticValidator
 {
     private static $LOGIN = 'login';
     private static $PASSWORD = 'password';
