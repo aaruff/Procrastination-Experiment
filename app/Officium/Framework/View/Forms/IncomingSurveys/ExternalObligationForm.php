@@ -80,14 +80,14 @@ class ExternalObligationForm extends Form implements Saveable
         $validators[self::$HOURS_SOCIAL] = new IntegerValidator(0, 200);
         $validators[self::$HOURS_FAMILY] = new IntegerValidator(0, 200);
 
-        $workStartValidator = new ConditionalValidator([[self::$EMPLOYED, new YesNoValidator(true, true)]], Deadline::$WORK_START_DATE_TIME, new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false)));
-        $workEndValidator = new ConditionalValidator([[self::$EMPLOYED, new YesNoValidator(true, true)]], Deadline::$WORK_START_DATE_TIME, new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false)));
+        $workStartValidator = new ConditionalValidator([[self::$EMPLOYED, new YesNoValidator(true, true)]], Deadline::$WORK_START_DATE_TIME, new ArrayValidator(Deadline::$WORK_START_DATE_TIME, new DateTimeValidator(self::$DATE_TIME_FORMAT, false)));
+        $workEndValidator = new ConditionalValidator([[self::$EMPLOYED, new YesNoValidator(true, true)]], Deadline::$WORK_START_DATE_TIME, new ArrayValidator(Deadline::$WORK_START_DATE_TIME, new DateTimeValidator(self::$DATE_TIME_FORMAT, false)));
         $validators[Deadline::$WORK_START_DATE_TIME] = $workStartValidator;
         $validators[Deadline::$WORK_END_DATE_TIME] = $workEndValidator;
-        $validators[Deadline::$SOCIAL_START_DATE_TIME] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
-        $validators[Deadline::$SOCIAL_END_DATE_TIME] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
-        $validators[Deadline::$FAMILY_START_DATE_TIME] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
-        $validators[Deadline::$FAMILY_END_DATE_TIME] = new ArrayValidator(new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
+        $validators[Deadline::$SOCIAL_START_DATE_TIME] = new ArrayValidator(Deadline::$SOCIAL_START_DATE_TIME, new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
+        $validators[Deadline::$SOCIAL_END_DATE_TIME] = new ArrayValidator(Deadline::$SOCIAL_END_DATE_TIME, new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
+        $validators[Deadline::$FAMILY_START_DATE_TIME] = new ArrayValidator(Deadline::$FAMILY_START_DATE_TIME, new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
+        $validators[Deadline::$FAMILY_END_DATE_TIME] = new ArrayValidator(Deadline::$FAMILY_END_DATE_TIME, new DateTimeValidator(self::$DATE_TIME_FORMAT, false));
         return $validators;
     }
 
