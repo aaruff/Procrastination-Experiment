@@ -5,7 +5,8 @@ namespace Officium\Framework\View\Forms;
 use Officium\Framework\Validators\Validator;
 
 /**
- * Class Form
+ * The Form class is the parent class for all forms, and is used to store and validate its entries.
+ *
  * @package Officium\Framework\Forms
  */
 abstract class Form implements FormInterface
@@ -23,7 +24,7 @@ abstract class Form implements FormInterface
      *
      * @var string
      */
-    protected static $SEMATIC_ERROR = 'semantic';
+    protected static $SEMANTIC_ERROR = 'semantic';
 
     /**
      * @var string[]
@@ -40,7 +41,38 @@ abstract class Form implements FormInterface
      * ------------------------------------------------------------------------------------------ */
 
     /**
-     * Returns the form's validators
+     * This validate function is used by the form to validate form entries. The return value is an array of validators,
+     * indexed by their entry key, or by the semantic validator key. There are two kinds of validators syntactic,
+     * and semantic.
+     *
+     * Syntactic Validators:
+     * -------------------------
+     * Are used to validate individual entries, or an array of entries.
+     * Syntactic validators are provided to this validator via the getValidators() function, set in the child class.
+     *
+     *  Usage:
+     *  ------
+     *       return ['key'=> new Validator()]
+     *
+     *  Where the key is the entry key, and "new Validator()" is the validator used to validate the provided entry.
+     *  Multiple validators can be used for a single entry as follows:
+     *       return ['key'=> new ValidatorOne(), 'key' => new ValidatorTwo()]
+     *
+     * Semantic Validators:
+     * --------------------------
+     * Are used to validate the semantic meaning of an entry, or entries. Usually more than one entry must be inspected
+     * after the syntactic validation has been performed in order to determine its validity. Semantic validators are
+     * executed only if all the syntactic validators have passed. Semantic validators are set in the return array of the
+     * getValidators() function, which is extended by all form classes.
+     *
+     *  Usage:
+     *  ------
+     *       return [Form::$SEMANTIC_VALIDATORS => [new Validator()]]
+     *  or
+     *       return [FORM::$SEMANTIC_VALIDATORS => ['key'=>new Validator()]
+     *
+     * If an entry key is used as the validators key it will be used as the key for any corresponding errors that
+     * are found upon validation. If no key is used the the corresponding validator errors will be numerically indexed.
      *
      * @return \Officium\Framework\Validators\Validator[]
      */
@@ -51,6 +83,9 @@ abstract class Form implements FormInterface
      * ------------------------------------------------------------------------------------------ */
 
     /**
+     * The validate function uses the validators retrieved from the getValidators() function to validate
+     * form entries.
+     *
      * @param string[] $unfiltered
      * @return bool
      */
@@ -231,6 +266,25 @@ abstract class Form implements FormInterface
     }
 
     /**
+     * Returns the int array entries indexed by the provided id.
+     *
+     * @param string $id
+     * @return string[]
+     */
+    protected function getIntArrayEntry($id)
+    {
+        $entries = $this->getEntries();
+        $entryArray = [];
+        if (isset($entries[$id]) && is_array($entries[$id])) {
+            foreach ($entries[$id] as $key => $value) {
+                $entryArray[$key] = intval($value);
+            }
+        }
+
+        return $entryArray;
+    }
+
+    /**
      * Returns the specified float entry qualified by its id.
      * @param $id
      * @return string
@@ -328,7 +382,7 @@ abstract class Form implements FormInterface
         }
 
         if ( ! empty($generalErrors)) {
-            $this->errors[self::$SEMATIC_ERROR] = $generalErrors;
+            $this->errors[self::$SEMANTIC_ERROR] = $generalErrors;
         }
 
         return empty($generalErrors);
