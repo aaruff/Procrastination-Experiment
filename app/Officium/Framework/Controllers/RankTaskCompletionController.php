@@ -18,7 +18,8 @@ class RankTaskCompletionController
     public function get()
     {
         $app = Slim::getInstance();
-        $app->render(Map::toTemplate(), $app->flashData());
+        $form = new Form();
+        $app->render(Map::toTemplate(), ['parameters'=>$form->getFormParameters()]);
     }
 
     /**
@@ -27,10 +28,9 @@ class RankTaskCompletionController
     public function post()
     {
         $app = Slim::getInstance();
-
         $form = new Form();
         if ( ! $form->validate($app->request->post())) {
-            $app->flash('flash', $form->getEntriesWithErrors());
+            $app->flash('post', $form->getEntriesWithErrors());
             $app->redirect(Map::toUri());
             return;
         }
