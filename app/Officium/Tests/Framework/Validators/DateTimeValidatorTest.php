@@ -8,6 +8,11 @@ use Officium\Framework\Validators\DateTimeValidator;
 
 class DateTimeValidatorTest extends \PHPUnit_Framework_TestCase
 {
+    public function __construct()
+    {
+        parent::__construct();
+        date_default_timezone_set('America/New_York');
+    }
 
     /**
      * @test
