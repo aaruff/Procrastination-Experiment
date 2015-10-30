@@ -15,6 +15,8 @@ class StateMapFactory
         if ($treatment->getType() == Treatment::$THREE_TASK_TIME_LIMIT_PENALTY_ADJUSTABLE_DEADLINE) {
             return new ThreeTaskPenaltyStateMap($subject);
         }
+
+        throw new \Exception('Failed to find the specified treatment type.');
     }
 
 }
