@@ -2,6 +2,7 @@
 namespace Officium\Framework\Middleware;
 
 use Officium\Experiment\StateMapFactory;
+use Officium\Framework\Exceptions\StateRouteMissMatchException;
 use Officium\Framework\Maps\FileNotFoundMap;
 use Slim\Slim;
 use \Slim\Middleware;
@@ -9,6 +10,7 @@ use Officium\Framework\Maps\LoginMap;
 use Officium\Framework\Models\Session;
 use Officium\Experiment\Subject;
 use Officium\Framework\Validators\ExperimentRouteValidator;
+use Officium\Framework\Exceptions\InvalidRouteException;
 
 class AuthMiddleware extends Middleware
 {
@@ -38,14 +40,14 @@ class AuthMiddleware extends Middleware
         $stateMap = StateMapFactory::getStateMap(Subject::getByUserId(Session::getUserId()));
         $isExperimentRoute = function () use ($app, $uri, $stateMap) {
             if ( ! ExperimentRouteValidator::isExperimentRoute($uri)) {
-                throw new \Exception('Resource Not Found');
+                throw new InvalidRouteException($uri);
             }
 
             /* @var \Officium\Framework\Maps\ThreeTaskPenaltyStateMap $stateMap */
             if ( ! $stateMap->isStateValidUri($uri)) {
                 $app->response()->redirect(FileNotFoundMap::toUri());
-                $app->getLog()->error("Invalid Uri: " . $uri);
-                throw new \Exception('Invalid URI');
+                $expectedUri = $stateMap->getStateUri();
+                throw new StateRouteMissMatchException($uri, $expectedUri);
             }
         };
 
